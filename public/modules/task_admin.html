@@ -1,0 +1,665 @@
+<link href="./assets/libs/switchery/dist/switchery.min.css" rel="stylesheet" type="text/css" />
+<link href="./assets/libs/jquery-fileupload/css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
+<!-- start page title -->
+<div class="row mt-3 mb-1" >
+    <div class="col-12">
+        <div class="page-title-box" id="buttonsDiv">
+            <h4 class="page-title" style="float:left">TASK SCHEDULER</h4>
+			<div class="mt-3" style="float:right">
+				<button type="button" id="showSearchDiv" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-magnify"></i> Search</button>
+				<button type="button" class="btn btn-warning waves-effect waves-light fileinput-button" id="btn_upload_schedule" >
+					<i class="mdi mdi-upload"></i> Upload Schedule
+					<input id="fileupload_schedule" type="file" name="qqfile" >
+				</button>
+				<div id="files_schedule" class="d-none"></div>
+				<a href="http://msphitect.ddns.net:8282/cms/public/download.php?key=&type=task_template" class="btn btn-blue waves-effect waves-light" ><i class="mdi mdi-download"></i> Download Template</a>
+				<!-- <button type="button" id="btn_list_edit" class="btn btn-pink waves-effect waves-light" ><i class="fa fa-edit"></i> Edit</button> -->
+				<button type="button" id="btn_new" class="btn btn-danger waves-effect waves-light" ><i class="mdi mdi-plus-circle me-1"></i> New Task</button>
+			</div>
+        </div>
+		<div class="page-title-box header-with-backBtn" style="display:none;">
+            <h4 class="page-title" style="float:left">TASK SCHEDULER</h4>
+			<div class="mt-3" style="float:right">
+				<a href="javascript:void(0);" id="closeTaskWindow" class="btn btn-secondary"><i class="fe-arrow-left me-1"></i>Back</a>
+			</div>
+        </div>
+    </div>
+</div>
+<!-- SEARCH DIV -->
+<div class="col-xl-12 mb-4" id="searchDiv" style="display:none;">
+	<div class="card mb-0">
+		<div class="col-xl-12" style="text-align:right">
+			<div class="modal-header bg-light">
+				<h4 class="modal-title" ><i class="mdi mdi-magnify" aria-hidden="true"></i> Search</h4>
+				<button type="button" id="closeSearch" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+			</div>
+		</div>
+		<div class="card-body">
+			<!-- SEARCH ROW 1 -->
+				<div class="col-xl-12">
+					<div class="col-xl-6 searchCol">
+						 <div class="row">
+							<div class="col-md-12">
+								<label for="simpleinput" class="form-label">Title</label>
+								<input type="text" id="txt_title_search" placeholder="Required" required="required" class="form-control">
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-6 searchCol">
+						 <div class="row">
+							<div class="col-md-12">
+								<label for="simpleinput" class="form-label">Priority</label>
+								<select class="form-control priority" id="search_priority" data-toggle="select2" data-width="100%">
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			<!-- SEARCH ROW 1 -->
+			<!-- SEARCH ROW 2 -->
+				<div class="col-xl-12">
+					<div class="col-xl-6 searchCol">
+						 <div class="row">
+							<div class="col-md-12">
+								<label for="simpleinput" class="form-label">Assign To</label>
+								<select class="form-control assignTo" id="search_assignee" data-toggle="select2" data-width="100%">
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-6 searchCol">
+						 <div class="row">
+							<div class="col-md-12">
+								<label for="simpleinput" class="form-label">Created By</label>
+								<select class="form-control createdBy" id="search_emp" data-toggle="select2" data-width="100%">
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			<!-- SEARCH ROW 2 -->
+			<!-- SEARCH ROW 3 -->
+				<div class="col-xl-12">
+					<div class="col-xl-6 searchCol">
+						 <div class="row">
+							<div class="col-md-12">
+								<label for="simpleinput" class="form-label">Department</label>
+								<select class="form-control"  id="searchDepartment" data-toggle="select2" data-width="100%">
+									<option>Select</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-6 searchCol">
+						 <div class="row">
+							<div class="col-md-12">
+								<label for="simpleinput" class="form-label">Status</label>
+								<select id="dd_status_search" class="form-control" data-width="100%" multiple="multiple">
+							
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			<!-- SEARCH ROW 3 -->
+			<!-- SEARCH ROW 4 -->
+				<div class="col-xl-12" style="text-align:right;overflow:auto;">
+					<div class="mt-3">
+						
+						<button type="button" id="btn_dept_reset" class="btn btn-light waves-effect waves-light" ><i class="mdi mdi-refresh"></i> Reset</button>
+						<button type="submit" id="btn_search" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-magnify"></i> Search</button>
+					</div>
+				</div>
+			<!-- SEARCH ROW 4 -->
+		</div>
+	</div>
+</div>
+<!-- SEARCH DIV --> 
+<!-- end page title --> 
+
+<div class="" id="list_task"></div>
+<div style="text-align:center" class="m-1">
+<button id="div_load_more" type="button" class="btn btn-sm btn-info waves-effect waves-light rounded-pill ">
+                                <i class="fa fa-arrow-down"></i>&nbsp;&nbsp;Load More&nbsp;&nbsp;<i class="fa fa-arrow-up"></i>
+                            </button>
+</div>
+
+<div class="row" id="new_div" style="display: none">
+
+                    <div class="col-sm-12">
+
+                        <div class="panel panel-primary">
+							<div class="card mb-0 no-shadow">
+								<div class="col-xl-12">
+									<div class="modal-header bg-light white-background">
+										<h4 class="modal-title" ><i class="mdi mdi-clipboard-plus" aria-hidden="true"></i> <span id="h4_primary_no">Task</span></h4>
+										
+									</div>
+								</div>
+							</div>
+                            <div class="panel-body">
+                            	<div class="row">
+	                            	<div class="col-md-12">
+		                                <form class="form-horizontal" data-validate="parsley" id="detail_form">
+						                        <div class="row mb-3">
+													<div class="col-md-11" style="padding-right:0;" >
+														<label for="simpleinput" class="form-label">Task Title</label>
+														<input type="text" id="txt_task" placeholder="Required" required="required" class="form-control">
+														
+													</div>
+													<div class="col-md-1" style="margin-top:1.75rem;padding-left:0;">
+														<button type="button"  id="btn_pickup" class="btn btn-warning waves-effect waves-light" >Pickup</button>
+													</div>
+												</div>
+						                  
+						
+						                    <div class="row mb-3">
+													<div class="col-md-12" >
+														<label for="simpleinput" class="form-label">Description</label>
+														<textarea id="txtarea_descr" class="form-control fullscreen" rows="5" placeholder="Required" required="required"></textarea>
+													</div>
+											</div>
+						                   
+											<div class="row mb-3">
+												<div class="col-md-6" >
+													<label for="simpleinput" class="form-label">SBG</label>
+													<select id="dd_sbg" required="required" class="form-control country" data-toggle="select2" data-width="100%">
+														<option>Select</option>
+													</select>
+												</div>
+												<div class="col-md-6" >
+													<label for="simpleinput" class="form-label">SBD</label>
+													<select id="dd_sbd" required="required" class="form-control country" data-toggle="select2" data-width="100%">
+														<option>Select</option>
+													</select>
+												</div>
+											</div>
+										
+											<div class="row mb-3">
+												<div class="col-md-6" >
+													<label for="simpleinput" class="form-label">Company</label>
+													<select id="dd_company" required="required" class="form-control company" data-toggle="select2" data-width="100%">
+														<option>Select</option>
+													</select>
+												</div>
+												<div class="col-md-6" >
+													<label for="simpleinput" class="form-label">Task Group</label>
+													<select id="dd_group" required="required" class="form-control country" data-toggle="select2" data-width="100%">
+														<option>Select</option>
+													</select>
+												</div>
+											</div>
+											
+											<div class="row mb-3">
+												<div class="col-md-6" >
+													<label for="simpleinput" class="form-label">Task Type</label>
+													<select id="dd_type" required="required" class="form-control country" data-toggle="select2" data-width="100%">
+														<option>Select</option>
+													</select>
+												</div>
+												<div class="col-md-6" >
+													<label for="simpleinput" class="form-label">Priority</label>
+													<select id="dd_priority" required="required" class="form-control country" data-toggle="select2" data-width="100%">
+														<option>Select</option>
+													</select>
+												</div>
+											</div>
+											<div class="row mb-3">
+												<div class="col-md-6" >
+													<label for="simpleinput" class="form-label">Status</label><br>
+													<input type="checkbox" id="chk_status" name="chk_status" checked class="js-switch" data-color="#99d683" />
+													<label class="col-sm-3 control-label" id="lbl_status" style="text-align:right">ACTIVE</label>
+												</div>
+												<div class="col-md-6" >
+													<label for="simpleinput" class="form-label">Department</label>
+													<select class="form-control" id="formDepartment" data-toggle="select2" data-width="100%">
+														<option>Select</option>
+													</select>
+												</div>
+											</div>
+											<div class="row mb-3">
+												<div class="col-md-6 text-right" ><button class="btn btn-primary waves-effect waves-light" id="btn_duplicate"><i class="fa fa-random"></i> Duplicate</a></div>
+												<div class="col-md-6" ></div>
+											</div>
+											<div class="row mb-3" id="div_dd_schedule">
+												<div class="col-md-6" >
+													<label for="simpleinput" class="form-label">Schedule/One Time</label>
+													<select class="form-control" id="dd_schedule_or_one_time" data-toggle="select2" data-width="100%">
+														<option value="0">One Time</option>
+		                                                <option value="1">Schedule</option>
+													</select>
+												</div>
+												<div class="col-md-6" >
+													<label for="simpleinput" class="form-label">Due date</label>
+													<input required type="text" id="dp_due_date" class="form-control flatpickr-input" placeholder="dd-mmm-yyyy" readonly="readonly">
+												</div>
+											</div>
+											<div id="div_task_schedule" style="display:none">
+												<div class="row mb-3">
+													<div class="col-md-6" >
+														<label for="simpleinput" class="form-label">Roll Over</label><br>
+														<input type="checkbox" id="chk_roll_over" name="chk_roll_over" checked class="js-switch form-control" data-color="#99d683" />
+													</div>
+													<div class="col-md-6" id="div_roll_over" style="display: none" >
+														<label for="simpleinput" class="form-label">Freeze Date</label>
+														<input id="dp_freeze_date" type="text" class="form-control flatpickr-input" placeholder="dd-mmm-yyyy" readonly="readonly" required="required">
+													</div>
+												</div>
+												<div class="row mb-3">
+													<div class="col-md-12" >
+														<label for="simpleinput" class="form-label">Schedule Description</label>
+														<h5 id="lbl_schedule_desc" class="mt-0">This task scheduled to repeat Monthly, it will start on <b>2019-07-01 09:00</b><br> next run time will be on <b>[ 2019-07-01 09:00 ]</b></h5>
+													</div>
+													<div class="col-md-6" >
+													</div>
+												</div>
+												<div class="row mb-3">
+													<div class="col-md-6" >
+														<div class="row">
+															<div class="col-md-6" >
+																<label for="simpleinput" class="form-label">Start On</label>
+																<input id="dp_start_date" type="text" class="form-control flatpickr-input"  placeholder="dd-mmm-yyyy" required="required">
+															</div>
+														</div>
+													</div>
+													<div class="col-md-6" >
+														<label for="simpleinput" class="form-label">Expire On</label>
+														<input id="dp_expire_date" type="text" class="form-control flatpickr-input"  placeholder="dd-mmm-yyyy">
+													</div>
+												</div>
+												<div class="row mb-3">
+													<div class="col-md-6" >
+														<label for="simpleinput" class="form-label">Schedule Type</label><br>
+														<button class="btn btn-dark waves-effect waves-light" id="btn_daily">Daily</button>
+														<button class="btn btn-primary waves-effect waves-light" id="btn_weekly">Weekly</button>
+														<button class="btn btn-pink waves-effect waves-light" id="btn_monthly">Monthly</button>
+														<button class="btn btn-info waves-effect waves-light" 	id="btn_quarterly">Quarterly</button>
+														<button class="btn btn-warning waves-effect waves-light" id="btn_biannually">Biannually</button>
+														<button class="btn btn-success waves-effect waves-light" id="btn_yearly">Yearly</button>
+													</div>
+													<div class="col-md-6" >
+													</div>
+												</div>
+												<div class="row mb-3">
+													<div class="col-md-6" >
+														<label for="simpleinput" class="form-label">Reviewer</label>
+														<select class="form-control" id="dd_reviewer" data-toggle="select2" data-width="100%">
+														</select>
+													</div>
+													<div class="col-md-6" >
+														<label for="simpleinput" class="form-label">Approver</label>
+														<select class="form-control" id="dd_approver" data-toggle="select2" data-width="100%">
+														</select>
+													</div>
+												</div>
+												<div class="row mb-3">
+													<div class="col-md-6" >
+														<label for="simpleinput" class="form-label">Assignee Due Date</label>
+														<select id="dd_due_days" style="width:100%" class="form-control" required="required">
+			                                            	<option value="1">1 Day</option>    
+			                                            </select>
+														<p class="text-left text-danger"><strong>*From the date of the task generated</strong></p>
+													</div>
+													<div class="col-md-6" >
+													</div>
+												</div>
+												<div class="row mb-3">
+													<div class="col-md-6" >
+														<label for="simpleinput" class="form-label">Reviewer Due Date</label>
+														<select id="dd_reviewer_due_days" style="width:100%" class="form-control" required="required">
+			                                            	<option value="1">1 Day</option>    
+			                                            </select>
+														<p class="text-left text-danger"><strong>*From the date of the task generated</strong></p>
+													</div>
+													<div class="col-md-6" >
+													</div>
+												</div>
+												<div class="row mb-3">
+													<div class="col-md-6" >
+														<label for="simpleinput" class="form-label">Approver Due Date</label>
+														<select id="dd_approver_due_days" style="width:100%" class="form-control" required="required">
+			                                            	<option value="1">1 Day</option>    
+			                                            </select>
+														<p class="text-left text-danger"><strong>*From the date of the task generated</strong></p>
+													</div>
+													<div class="col-md-6" >
+													</div>
+												</div>	
+											</div>
+											<div class="row mb-3" id="div_footer">
+												<div class="col-md-6"></div>
+												<div class="col-md-6" style="text-align:right;" id="div_btn">
+													<button type="button" id="btn_cancel" class="btn btn-light waves-effect waves-light" ><i class="mdi mdi-refresh"></i> Reset</button>
+													 <button type="button" id="btn_save" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-content-save-outline"></i> Save</button>
+												</div>
+											</div>
+		                                </form>
+									</div>
+								</div>
+								<!-- Assignee -->
+								<div class="row" id="div_assignee">
+									<div class="col-lg-12">
+										<div class="card mb-2">
+											<div class="card-header">
+												<div class="row justify-content-between">
+													<div class="col-auto">
+														<h4>Assignee</h4>
+														<label id="loading" style="font-style:italic;float:left;font-weight:normal;"></label>
+													</div>
+													<div class="col-sm-6">
+														<div class="text-sm-end">
+															<!-- <button type="button" class="btn btn-success waves-effect waves-light me-1"><i class="mdi mdi-cog"></i></button> -->
+															<button type="button" class="btn btn-danger waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#addEditAssigneeModal"><i class="mdi mdi-plus-circle me-1"></i> Add New</button>
+														</div>
+													</div><!-- end col-->
+												</div>
+											</div>
+											<div class="card-body">
+												
+												<div class="row">
+													<div id="assignee_list"></div>
+												</div>
+												
+											</div> <!-- end card-body-->
+										</div> <!-- end card-->
+
+										
+
+									</div> <!-- end col -->
+								</div>
+								<!-- end row -->
+								<!-- <div class="card" id="div_assignee">
+									<div class="card-body">
+										<h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Assignee</h5>
+										<div class="col-xl-12">
+											<form class="form-horizontal" data-validate="parsley" id="assignee_form">
+												<table  data-buttons-class="xs btn-light" class="table-bordered custom" id="tbl_assign_to">
+													<thead class="table-light">
+														<tr>
+															<th width="25%">Assign To</th>
+															<th  >Action</th>
+															<th width="15%">Deadline</th>
+															<th width="15%">Status</th>
+															<th >Action</th>
+														</tr>
+													</thead>
+												
+												
+													<tbody>
+														<tr id="base_row_assignee">
+															<td>
+																<select id="dd_assign_to" class="form-control" required="true" style="width:100%;">
+																	<optgroup label="Individual" id="dd_assign_to_individual">
+																	</optgroup>
+																	<optgroup label="Company" id="dd_assign_to_company">
+																	</optgroup>
+																</select>
+															</td>
+															<td>
+																<input type="text" class="form-control marginBottom10px" id="txt_action" maxlength="200" required="required" >
+															</td>
+															<td>
+																<input type="text" id="deadline_date" class="form-control flatpickr-input"  placeholder="dd-mmm-yyyy" required="required">
+															</td>
+															<td>
+																<select id="dd_status" style="width:100%" class="form-control">
+																</select>
+															</td>
+															<td>
+																<span class="btn btn-blue waves-effect waves-light fileinput-button btn-xs" id="btn_add_image">
+																	<span><i class="mdi mdi-upload"></i></span>
+																	<input id="doc_upload" type="file" name="qqfile">
+																</span>
+																<button id="btn_add_assignee" type="button" class="btn btn-info waves-effect waves-light btn-xs" data-mode="0">
+																	Add
+																</button>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</form>
+											<div id="files_div">
+												<div class="form-group">
+													<div id="doc_upload_files" class="col-sm-12"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div> -->
+								
+								
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<!-- end row -->
+
+<div class="modal fade" id="task_template_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form class="form-horizontal" data-validate="parsley">
+                <div class="modal-header" >
+                    
+                    <h4 class="modal-title" style="float:left" id="myModalLabel">Tasks</h4>
+					<button type="button" style="float:right" class="bootbox-close-button close"  data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                    
+                    	<div class="row mb-3 mt-3">
+							<div class="col-md-10" style="padding-left:24px;padding-right:0;" >
+								<label for="simpleinput" class="form-label">Title</label>
+								<input type="text" id="txt_tt_title_search" placeholder="Required" required="required" class="form-control">
+								
+							</div>
+							<div class="col-md-2" style="margin-top:1.75rem;padding-left:0;">
+								<button type="button"  id="btn_tt_search" class="btn btn-info waves-effect waves-light" ><i class="mdi mdi-magnify"></i> Search</button>
+							</div>
+						</div>
+						
+						
+                    
+                        <div id="list_task_template" class="col-sm-12">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody id="tbl_task_template_body">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Modal Remark List Start-->
+<div class="modal fade" id="checklistModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="form-horizontal" data-validate="parsley" id="remark_form">
+            <div class="modal-header">
+                <h4 class="modal-title" style="float:left;" id="myModalLabel">CheckList</h4>
+				<button type="button" style="float:right;" class="bootbox-close-button close"  data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="panel_checklist">
+				<input type="hidden" id="txt_assignee_id" />
+				<ul class="panel-tasks" >
+				</ul>
+				<div class="col-md-14">
+					<div class="input-group">
+						<input type="text" id="txt_checklist" class="form-control" placeholder="Checklist Description" maxlength="40">
+						<span class="input-group-btn">
+							<button type="button" id="btn_add_checklist" class="btn btn-success"><i class="fa fa-plus"></i></button>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="row" data-plugin="dragula" data-containers='["ul_checklist"]' data-handleClass="dragula-handle">
+				<div class="col-md-12">
+						<div class="bg-light">
+							<div  class="py-2" id="ul_checklist"></div> <!-- end company-list-1-->
+						</div> <!-- end div.bg-light-->
+				</div> <!-- end col -->
+			</div>
+        </form>
+    </div>
+</div>
+<div class="row" id="div_edit_batch" style="display:none">
+	<div class="card">
+		<div class="card-body">
+			<div class="col-xl-12">
+				<form class="form-horizontal" data-validate="parsley" id="batch_edit_form">
+					<div class="row mb-3">
+						<div class="col-md-6">
+							<label for="simpleinput" class="form-label">Status</label><br>
+							<input type="checkbox" id="chk_status_all" name="chk_status_all" checked class="js-switch" data-color="#99d683" />&emsp;<button type="button" id="btn_batch_status_edit" class="btn btn-success"><i class="fa fa-check"></i></button>
+						</div>
+						
+						<div class="col-md-6">
+							<div class="row">
+								<div class="col-md-10">
+									<label for="simpleinput" class="form-label">Assign To</label>
+									<select id="dd_batch_assign" style="width:100%" class="form-control" >
+										<option value="">Please Select</option>
+									</select>
+								</div>
+								<div class="col-md-2">
+									<label for="simpleinput" class="form-label">&nbsp;</label><br>
+									<button type="button" id="btn_add_batch_assign" class="btn btn-success"><i class="fa fa-check"></i></button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col-md-6">
+							<label for="simpleinput" class="form-label">Check All</label><br>
+							<input type="checkbox" class="form-check-input midsize-checkbox" style="margin-left:15px;" id="chk_all" name="chk_all" /> 
+						</div>
+						<div class="col-md-6" style="text-align:right">
+							<label for="simpleinput" class="form-label">&nbsp;</label><br>
+							<button type="button" id="btn_cancel" class="btn btn-warning waves-effect waves-light" ><i class="mdi mdi-refresh"></i> Reset</button>
+							 <button type="button" id="btn_save" class="btn btn-info waves-effect waves-light" ><i class="mdi mdi-content-save-outline"></i> Save</button>
+						</div>
+					</div>          	
+				</form>
+			</div>
+		</div>
+	</div>
+</div></div>
+<div class="modal fade" id="upload_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form class="form-horizontal" data-validate="parsley">
+                <div class="modal-header">
+                    <h4 class="modal-title" style="float:left" id="myModalLabel">Schedule Upload</h4>
+					<button type="button" style="float:right" class="bootbox-close-button close"  data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div id="list_upload" class="col-sm-12">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Title</th>
+                                    <th>Company Name</th>
+                                    <th>Task Type</th>
+                                    <th>Schedule Type</th>
+                                    <th>Priority</th>
+                                    <th>Start Date</th>
+                                    <th>Expiry Date</th>
+                                </tr>
+                                </thead>
+                                <tbody id="tbl_upload_body">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light waves-effect waves-light" data-bs-dismiss="modal">Cancel</button>
+					<button type="button" id="btn_add_upload_batch" class="btn btn-info waves-effect waves-light" ><i class="mdi mdi-content-save-outline"></i> Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Assignee Add/Edit Modal -->
+	<div class="modal fade" id="addEditAssigneeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header bg-light">
+					<h4 class="modal-title" id="assigneeModalLabel">Add New Assignee</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+				</div>
+				<div class="modal-body p-4">
+					<form class="form-horizontal" data-validate="parsley" id="assignee_form">
+						<input type="hidden" id="task_creation_date">
+						<div class="mb-2">
+							<label for="dd_assign_to" class="form-label">Assignee</label>
+							<div class="errorContainer">
+								<select id="dd_assign_to" class="form-control select2" data-toggle="select2" data-width="100%" required>
+									<optgroup label="Individual" id="dd_assign_to_individual">
+									</optgroup>
+									<optgroup label="Company" id="dd_assign_to_company">
+									</optgroup>
+								</select>
+							</div>
+							
+						</div>
+						<div class="mb-2">
+							<label for="txt_action" class="form-label">Action</label>
+							<div class="errorContainer">
+								<input type="text" class="form-control" id="txt_action" required>
+							</div>
+						</div>
+						
+						
+
+						<div class="mb-2">
+							<label for="dd_status" class="form-label">Status</label>
+							<div class="errorContainer">
+								<select id="dd_status" class="form-control select2" data-toggle="select2" data-width="100%" required>
+									
+								</select>
+							</div>
+							
+						</div>
+
+						<span class="btn btn-blue waves-effect waves-light fileinput-button btn-xs" >
+							<span><i class="mdi mdi-upload"></i> Browse</span>
+							<input id="doc_upload" type="file" name="qqfile">
+						</span>
+
+						<div class="mb-3" id="files_div">
+							<div class="form-group">
+								<div id="doc_upload_files" class="col-sm-12"></div>
+							</div>
+						</div>
+	
+						<div class="text-end">
+							<button type="button" id="btn_cancel_assignee" class="btn btn-light waves-effect waves-light m-1" data-bs-dismiss="modal"><i class="fa fa-times me-1"></i> Cancel</button>
+							<button type="button" id="btn_add_assignee" class="btn btn-success waves-effect waves-light mt-1 mb-1 ladda-button" data-color="green" data-style="expand-left"><i class="fa fa-check me-1"></i> Save</button>
+						</div>
+					</form>
+					
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+<script src="./assets/libs/switchery/dist/switchery.min.js"></script>
+<script src="./assets/js/moment.js/2.18.1/moment.min.js"></script>
+<script src="./assets/libs/flatpickr/flatpickr.min.js"></script>
+<script src="./assets/libs/dragula/dragula.min.js"></script>
+<script src="./assets/js/pages/dragula.init.js"></script>

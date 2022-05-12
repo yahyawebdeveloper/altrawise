@@ -1,0 +1,165 @@
+<!-- start page title -->
+<div class="row mt-3 mb-1">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-right">
+                <a href="javascript:void(0);" id="btn_search" class="btn btn-success mb-2"><i class="fe-search me-1"></i>Search</a>
+                <a href="javascript:void(0);" id="btn_add" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-1"></i>Add</a>
+                <!-- <button type="button" class="btn btn-danger waves-light waves-effect btn-sm" id="toastr-four">Click me</button> -->
+            </div>
+            <h4 class="page-title">Cutter Management</h4>
+        </div>
+    </div>
+</div>     
+<!-- end page title --> 
+
+<div id="addForm" class="row" style="display: none;">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="text-uppercase bg-light p-2 mt-0">Cutter ID : -</h5>
+
+                <form class="form-horizontal" id="detail_form">
+                    <div class="form-group">					
+                        <label class="col-sm-2 control-label">Cutter Size</label>
+                        <div class="col-sm-4 errorContainer">
+                            <input type="text" class="form-control" id="txt_cutter_desc" placeholder="Cutter Size" required>
+                        </div>
+                        <label class="col-sm-2 control-label">Category</label>
+                        <div class="col-sm-4 errorContainer">
+                            <select id="dd_cutter_category" class="form-control populate" data-width="100%" required>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">					
+                        <label class="col-sm-2 control-label">Ups</label>
+                        <div class="col-sm-4 errorContainer">
+                            <input type="text" class="form-control" id="txt_ups" placeholder="Ups" required>
+                        </div>
+                        <label class="col-sm-2 control-label">Remarks</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="txt_remarks" placeholder="Remarks">
+                        </div>
+                    </div>
+
+                    <div class="form-group align-right">
+                        <button id="btn_cancel" type="button" class="btn btn-light waves-effect waves-light m-1"><i class="fa fa-times me-1"></i> Cancel</button>
+                        <button id="btn_save" type="button" class="btn btn-success waves-effect waves-light mt-1 mb-1 ladda-button" data-color="green" data-style="expand-left"><i class="fa fa-check me-1"></i> Save</button>
+                    </div>
+                </form>
+            </div>
+        </div> <!-- end card -->
+    </div> <!-- end col -->
+</div>
+
+<div id="searchPanel" class="row" style="display: none;">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="float-end">
+                    <a id="btn_close_search" href="javascript:void(0)">
+                        <i class="mdi mdi-close-box m-0 text-muted h3"></i>
+                    </a>
+                </div>
+                <form class="form-horizontal">
+                    <div class="form-group">					
+                        <label class="col-sm-2 control-label">Cutter No</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="txt_cutter_no_search" placeholder="Cutter No">
+                        </div>
+                        <label class="col-sm-2 control-label">Cutter Size</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="txt_cutter_desc_search" placeholder="Cutter Size">
+                        </div>
+                    </div>
+
+                    <div class="form-group">					
+                        <label class="col-sm-2 control-label">Remarks</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="txt_remarks_search" placeholder="Remarks">
+                        </div>
+                        <label class="col-sm-2 control-label">Category</label>
+                        <div class="col-sm-4">
+                            <select id="dd_cutter_category_search" class="form-control populate" data-width="100%">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">					
+                        <label class="col-sm-2 control-label">Ups</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="txt_ups_search" placeholder="Ups">
+                        </div>
+                        <label class="col-sm-2 control-label">Cutter Image (Available)</label>
+                        <div class="col-sm-4">
+                            <select id="dd_is_image" class="form-control populate" data-width="100%">
+                                <option value="">Please Select</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group align-right">
+                        <button id="btn_reset" type="button" class="btn btn-light waves-effect waves-light m-1"><i class="fe-refresh-cw me-1"></i> Reset</button>
+                        <button id="btn_search_action" type="button" class="btn btn-success waves-effect waves-light mt-1 mb-1"><i class="fe-search me-1"></i> Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="tblList" class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="dropdown float-end">
+                    <a href="#" class="dropdown-toggle card-drop arrow-none" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="mdi mdi-dots-horizontal m-0 text-muted h3"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item" href="#">Export as Excel</a>
+                        <a class="dropdown-item" href="#">Export as PDF</a>
+                    </div>
+                </div>
+                <div class="table-responsive mt-3">
+                    <table id="tbl_list" class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Cutter No</th>
+                                <th>Cutter Size</th>
+                                <th>UPS</th>
+                                <th>Category</th>
+                                <th>Remarks</th>
+                                <th>Status</th>
+                                <th>Cutter Image</th>
+                                <th>Created By</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-center">
+                        <button id="btn_load_more" type="button" class="btn btn-sm btn-info waves-effect waves-light rounded-pill ">
+                            <i class="fa fa-arrow-down"></i>&nbsp;&nbsp;Load More&nbsp;&nbsp;<i class="fa fa-arrow-up"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end card-->
+    </div> <!-- end col -->
+</div>
+<!-- end row -->
+
+<script src="./modules/quotation.js"></script>
+
+
+                
+
+
+        

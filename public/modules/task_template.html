@@ -1,0 +1,401 @@
+<link href="./assets/libs/mohithg-switchery/switchery.min.css" rel="stylesheet" type="text/css" />
+<link href="./assets/libs/jquery-fileupload/css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
+
+<!-- start page title -->
+<div class="row mt-3 mb-1">
+    <div class="col-12">
+        <div class="page-title-box header-with-defaultBtn">
+            <h4 class="page-title" style="float:left">TASKS TEMPLATE</h4>
+			<div class="mt-3" style="float:right">
+				<button type="button" id="showSearchDiv" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-magnify"></i> Search</button>
+				<button type="button" id="btn_new" class="btn btn-danger waves-effect waves-light" ><i class="mdi mdi-plus-circle me-1"></i> New Task Template</button>
+			</div>
+        </div>
+		<div class="page-title-box header-with-backBtn" style="display:none;">
+            <h4 class="page-title" style="float:left">TASKS TEMPLATE</h4>
+			<div class="mt-3" style="float:right">
+				<a href="javascript:void(0);" id="closeTaskWindow" class="btn btn-secondary"><i class="fe-arrow-left me-1"></i>Back</a>
+			</div>
+        </div>
+    </div>
+</div>
+<!-- SEARCH DIV -->
+<div class="col-xl-12 mb-4" id="searchDiv" style="display:none;">
+	<div class="card mb-0">
+		<div class="col-xl-12" style="text-align:right">
+			 <!-- <h4 class="page-title customized">Search</h4>
+			<button type="button" id="closeSearch" class="btn waves-effect waves-light" ><b>X</b></button> -->
+			<div class="modal-header bg-light">
+				<h4 class="modal-title" ><i class="mdi mdi-magnify" aria-hidden="true"></i> Search</h4>
+				<button type="button" id="closeSearch" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+			</div>
+		</div>
+		<div class="card-body">
+			<!-- SEARCH ROW 1 -->
+				<div class="col-xl-12">
+					<div class="col-xl-6 searchCol">
+						 <div class="row">
+							<div class="col-md-12">
+								<label for="simpleinput" class="form-label">Title</label>
+								<input type="text" id="txt_title_search" placeholder="Required" required="required" class="form-control">
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-6 searchCol">
+						 <div class="row">
+							<div class="col-md-12">
+								<label for="simpleinput" class="form-label">Status</label><br>
+								<input type="checkbox" id="chk_status_search"  name="chk_status_search" checked class="js-switch" data-color="#99d683" />
+								&emsp;<label class="control-label" id="lbl_status1" style="text-align:left">ACTIVE</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			<!-- SEARCH ROW 1 -->
+			
+
+			<!-- SEARCH ROW 4 -->
+				<div class="col-xl-12" style="text-align:right;overflow:auto;">
+					<div class="mt-3">
+						<button type="button" id="btn_reset" class="btn btn-light waves-effect waves-light" ><i class="mdi mdi-refresh"></i> Reset</button>
+						<button type="submit" id="btn_search" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-magnify"></i> Search</button>
+					</div>
+				</div>
+			<!-- SEARCH ROW 4 -->
+		</div>
+	</div>
+</div>
+<!-- SEARCH DIV --> 
+<!-- end page title --> 
+
+
+<div id="list_div">
+	<div id="tblList" >
+		<div class="row" id="list_task_group">
+		</div>
+		<div class="row" id="list_task">
+		</div>
+	</div>
+</div>
+
+<div class="row" id="new_div" style="display: none">
+	<div class="">
+		<div class="col-sm-12">
+
+			<div class="panel panel-primary">
+				<!--  <div class="panel-heading">
+					<h4 id="h4_primary_no">Task Number : -</h4>
+					<div class="options">
+						<a href="#" id="btn_back" class="btn-panel-opts" title="Back to list">
+							<i class="fa fa-arrow-circle-left fa-lg fa-fw" aria-hidden="true"></i>
+							<span class="hidden-xs">Back to list</span>
+						</a>
+					</div>
+				</div> -->
+				<div class="card mb-0 no-shadow">
+					<div class="col-xl-12">
+						<div class="modal-header bg-light white-background">
+							<h4 class="modal-title" ><i class="mdi mdi-clipboard-plus" aria-hidden="true"></i> <span id="h4_primary_no">ID</span></h4>
+							
+						</div>
+					</div>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-12">
+							<form class="form-horizontal" data-validate="parsley" id="detail_form">
+
+								
+									<div class="row mb-3">
+										<div class="col-md-12" >
+											<label for="simpleinput" class="form-label">Task Title</label>
+											<input type="text" id="txt_task" placeholder="Required" required="required" class="form-control">
+										</div>
+									</div>
+								
+			
+								<div class="row mb-3">
+										<div class="col-md-12" >
+											<label for="simpleinput" class="form-label">Description</label>
+											<textarea id="txtarea_descr" class="form-control fullscreen" rows="5" placeholder="Required" required="required"></textarea>
+										</div>
+								</div>
+								
+								<div class="row mb-3">
+									<div class="col-md-6" >
+										<label for="simpleinput" class="form-label">SBG</label>
+										<select id="dd_sbg" required="required" class="form-control country" data-toggle="select2" data-width="100%">
+											<option value="">Select</option>
+										</select>
+									</div>
+									<div class="col-md-6" >
+										<label for="simpleinput" class="form-label">SBD</label>
+										<select id="dd_sbd" required="required" class="form-control country" data-toggle="select2" data-width="100%">
+											<option value="">Select</option>
+										</select>
+									</div>
+								</div>
+							
+								<div class="row mb-3">
+									<div class="col-md-6" >
+										<label for="simpleinput" class="form-label">OC</label>
+										<select id="dd_oc" required="required" class="form-control country" data-toggle="select2" data-width="100%">
+											<option value="">Select</option>
+										</select>
+									</div>
+									<div class="col-md-6" >
+										<label for="simpleinput" class="form-label">Department</label>
+										<select id="dd_dept" required="required" class="form-control country" data-toggle="select2" data-width="100%">
+										</select>
+									</div>
+								</div>
+								
+								<div class="row mb-3">
+									<div class="col-md-6" >
+										<label for="simpleinput" class="form-label">Task Type</label>
+										<select id="dd_type" required="required" class="form-control country" data-toggle="select2" data-width="100%">
+											<option>Select</option>
+										</select>
+									</div>
+									<div class="col-md-6" >
+										<label for="simpleinput" class="form-label">Priority</label>
+										<select id="dd_priority" required="required" class="form-control country" data-toggle="select2" data-width="100%">
+											<option>Select</option>
+										</select>
+									</div>
+								</div>
+								
+								<div class="row mb-3">
+									<div class="col-md-6" >
+										<label for="simpleinput" class="form-label">Due date</label>
+										<input required type="text" id="dp_date" class="form-control flatpickr-input" placeholder="dd-mmm-yyyy" readonly="readonly">
+									</div>
+									<div class="col-md-6" >
+										<label for="simpleinput" class="form-label">Task Group</label>
+										<select id="dd_group" required="required" class="form-control country" data-toggle="select2" data-width="100%">
+											<option>Select</option>
+										</select>
+									</div>
+								</div>
+								
+								<div class="row mb-3">
+									<div class="col-md-3" >
+										<label for="simpleinput" class="form-label">Status</label>
+										<div class="dropdown">
+												<button class="btn btn-light dropdown-toggle" type="button" id="btn_status" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+													<span id="btn_status_text">Dropdown button</span> <i class="mdi mdi-chevron-down"></i>
+												</button>
+												<div class="dropdown-menu" aria-labelledby="btn_status" style="text-align:left;">
+													
+												</div>
+										</div>
+									</div>
+									<div class="col-md-3" >
+										<label for="simpleinput" class="form-label">Active/In-active</label><br>
+										<input type="checkbox" id="chk_status" name="chk_status" checked class="js-switch" data-color="#99d683" />
+										&emsp;<label class="col-sm-6 control-label" id="lbl_status" style="text-align:left">ACTIVE</label>
+									</div>
+									<div class="col-md-6 mt-3" style="text-align:right;" id="div_btn">
+										<button type="button" id="btn_cancel" class="btn btn-light waves-effect waves-light" ><i class="mdi mdi-refresh"></i> Reset</button>
+											<button type="button" id="btn_save" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-content-save-outline"></i> Save</button>
+									</div>
+								</div>
+								<div class="form-group" id="div_approval_trail" style="display: none">
+									<label for="dp_date" class="control-label col-sm-2">Approval Trail</label>
+									<div class="col-sm-10" id="div_approval_trails">
+										
+									</div>
+								</div>
+							
+
+							</form>
+						</div>
+						<!-- <div class="col-md-4">
+							<div class="panel panel-primary">
+								<div class="panel-heading">
+										<h4><i class="icon-highlight fa fa-check"></i> CheckList</h4>
+								</div>
+								<div class="panel-body" id="panel_checklist">
+									<ul class="panel-tasks" id="ul_checklist">
+
+									</ul>
+									<div class="col-md-14">
+										<div class="input-group">
+											<input type="text" id="txt_checklist" class="form-control" placeholder="Checklist Description" maxlength="40">
+											<span class="input-group-btn">
+												<button type="button" id="btn_add_checklist" class="btn btn-success"><i class="fa fa-plus"></i></button>
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div> -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Assignee -->
+	<div class="row" id="div_assignee">
+		<div class="col-lg-12">
+			<div class="card mb-2">
+				<div class="card-header">
+					<div class="row justify-content-between">
+						<div class="col-auto">
+							<h4>Assignee</h4>
+						</div>
+						<div class="col-sm-6">
+							<div class="text-sm-end">
+								<!-- <button type="button" class="btn btn-success waves-effect waves-light me-1"><i class="mdi mdi-cog"></i></button> -->
+								<button type="button" class="btn btn-danger waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#addEditAssigneeModal"><i class="mdi mdi-plus-circle me-1"></i> Add New</button>
+							</div>
+						</div><!-- end col-->
+					</div>
+				</div>
+				<div class="card-body">
+					
+					<div class="row">
+						<div id="assignee_list"></div>
+					</div>
+					
+				</div> <!-- end card-body-->
+			</div> <!-- end card-->
+
+			
+
+		</div> <!-- end col -->
+	</div>
+	<!-- end row -->
+	<!-- Assignee Add/Edit Modal -->
+	<div class="modal fade" id="addEditAssigneeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header bg-light">
+					<h4 class="modal-title" id="assigneeModalLabel">Add New Assignee</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+				</div>
+				<div class="modal-body p-4">
+					<form class="form-horizontal" data-validate="parsley" id="assignee_form">
+						<input type="hidden" id="task_creation_date">
+						<div class="mb-2">
+							<label for="dd_assign_to" class="form-label">Assignee</label>
+							<div class="errorContainer">
+								<select id="dd_assign_to" class="form-control select2" data-toggle="select2" data-width="100%" required>
+									<optgroup label="Individual" id="dd_assign_to_individual">
+									</optgroup>
+									<optgroup label="Company" id="dd_assign_to_company">
+									</optgroup>
+								</select>
+							</div>
+							
+						</div>
+						<div class="mb-2">
+							<label for="txt_action" class="form-label">Action</label>
+							<input type="text" class="form-control" id="txt_action" required>
+						</div>
+						
+						
+					
+
+						
+	
+						<div class="text-end">
+							<button type="button" id="btn_add_assignee" class="btn btn-success waves-effect waves-light">Save</button>
+							<button type="button" class="btn btn-light waves-effect waves-light" data-bs-dismiss="modal">Cancel</button>
+						</div>
+					</form>
+					
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+</div>
+<!-- end row -->
+
+<div class="modal fade" id="task_template_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form class="form-horizontal" data-validate="parsley">
+                <div class="modal-header" >
+                    
+                    <h4 class="modal-title" style="float:left" id="myModalLabel">Tasks</h4>
+					<button type="button" style="float:right" class="bootbox-close-button close"  data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                    
+                    	<div class="row mb-3 mt-3">
+							<div class="col-md-10" style="padding-left:24px;padding-right:0;" >
+								<label for="simpleinput" class="form-label">Title</label>
+								<input type="text" id="txt_tt_title_search" placeholder="Required" required="required" class="form-control">
+								
+							</div>
+							<div class="col-md-2" style="margin-top:1.75rem;padding-left:0;">
+								<button type="button"  id="btn_tt_search" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-magnify"></i> Search</button>
+							</div>
+						</div>
+						
+						
+                    
+                        <div id="list_task_template1" class="col-sm-12">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody id="tbl_task_template_body">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Modal Remark List Start-->
+<div class="modal fade" id="checklistModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="form-horizontal" data-validate="parsley" id="remark_form">
+            <div class="modal-header">
+                <h4 class="modal-title" style="float:left;" id="myModalLabel">CheckList</h4>
+				<button type="button" style="float:right;" class="bootbox-close-button close"  data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="panel_checklist">
+				<input type="hidden" id="txt_assignee_id" />
+				<ul class="panel-tasks" >
+				</ul>
+				<div class="col-md-14">
+					<div class="input-group">
+						<input type="text" id="txt_checklist" class="form-control" placeholder="Checklist Description" maxlength="40">
+						<span class="input-group-btn">
+							<button type="button" id="btn_add_checklist" class="btn btn-success"><i class="fa fa-plus"></i></button>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="row" data-plugin="dragula" data-containers='["ul_checklist"]' data-handleClass="dragula-handle">
+				<div class="col-md-12">
+						<div class="bg-light">
+							<div  class="py-2" id="ul_checklist"></div> <!-- end company-list-1-->
+						</div> <!-- end div.bg-light-->
+				</div> <!-- end col -->
+			</div>
+        </form>
+    </div>
+</div>
+<!-- Modal Remark List End-->
+
+<script src="./assets/libs/flatpickr/flatpickr.min.js"></script>
+<script src="./assets/js/moment.js/2.18.1/moment.min.js"></script>
+<script src="./assets/libs/dragula/dragula.min.js"></script>
+<script src="./assets/js/pages/dragula.init.js"></script>
+<script src="./assets/libs/mohithg-switchery/switchery.min.js"></script>

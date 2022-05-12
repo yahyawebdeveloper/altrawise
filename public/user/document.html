@@ -1,0 +1,200 @@
+<link href="./assets/libs/jquery-fileupload/css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+  .content-page {
+    margin-left: auto;
+    margin-top: 30px;
+  }
+
+  .table tbody > tr:last-child {
+    border-bottom-style: hidden;
+  }
+
+</style>
+
+<div class="container">
+  <div class="row" id="doc_details">
+    <form class="form-horizontal" id="div_thread">
+
+      <input type="hidden" id="txt_emp_id" value="" />
+      <input type="hidden" id="txt_email_id" value="" />
+      <input type="hidden" id="txt_name" value="" />    
+      <input type="hidden" id="txt_doc_no" value="" />
+      <input type="hidden" id="txt_mobile_no" value="" />    
+      <input type="hidden" id="txt_id" value="" />
+      <input type="hidden" id="doc_verify_method" value="" />
+
+      <!-- Right Sidebar -->
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <!-- Left sidebar -->
+            <div class="inbox-leftbar mt-4" id="list_verifiers_container">
+              <h4 class="header-title mb-3">List of Verifiers</h4>
+
+              <div class="inbox-widget" data-simplebar style="max-height: 600px" id="verifier_container">
+                
+              </div>
+              <!-- end inbox-widget -->
+            </div>
+            <!-- End Left sidebar -->
+            
+            <div class="inbox-rightbar">
+              <div class="mt-4">
+                <h5 class="font-18">
+                  Welcome <span class="approval-name"></span>
+                </h5>
+                Kindly validate the document details and verify it.
+                <hr />
+
+                <div class="table-responsive">
+                  <table class="table table-condensed">
+                    <h4><strong>Document Details</strong></h4>
+                    <tbody>
+                      <tr>
+                        <td>Doc No</td>
+                        <td id="td_doc_no"></td>
+                      </tr>
+                      <tr>
+                        <td>Title</td>
+                        <td id="td_doc_title"></td>
+                      </tr>
+                      <tr>
+                        <td>Category</td>
+                        <td id="td_doc_category"></td>
+                      </tr>
+                      <tr>
+                        <td>Company</td>
+                        <td id="td_employer_name"></td>
+                      </tr>
+                      <tr>
+                        <td>Doc Date</td>
+                        <td id="td_doc_date"></td>
+                      </tr>
+                      <tr>
+                        <td>Due Date</td>
+                        <td id="td_due_date"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <hr />
+              <h5 class="mb-3">Attachments</h5>
+              <div class="row" id="attachments_container"></div>
+              <!-- end row-->
+
+              <div class="row mt-5" id="btn_verify_container">
+                <div class="col-sm-5">
+                  <button type="button" id="btn_start_verify" class="btn btn-warning">
+                    <i class="fa fa-check"></i>&nbsp;Start Verify
+                  </button>
+                  <div class="input-group after_otp" style="display: none">
+                    <input type="text" id="txt_otp" class="form-control" placeholder="Enter OTP"/>
+                    <span class="input-group-btn">
+                      <button type="button" id="btn_verify_document" class="btn btn-success">
+                        <i class="fa fa-check"></i>&nbsp;Submit
+                      </button>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <button style="display: none" id="btn_resend_otp" type="button" class="btn btn-primary after_otp">
+                    <i class="fa fa-refresh"></i>&nbsp;Resend OTP
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- end inbox-rightbar-->
+
+            <div class="clearfix"></div>
+          </div>
+        </div>
+        <!-- end card -->
+      </div>
+      <!-- end Col -->
+
+      <!--Comments Start-->
+      <hr id="div_hr"/>
+      
+      <div class="card">
+          <div class="card-body">
+              <div class="mb-4 mt-0 font-16 d-flex">
+                <div id="trail" class="avatar-initials" width="30" height="30" data-name="User"></div> &nbsp;&nbsp;
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  If you have any queries/concerns, kindly post your comments here.
+                </div>
+              </div>
+              <div class="col-xl-6" style="text-align: right;padding-right: 1px;float:right">
+                  <div class="col-sm-12" id="div_review" style="display: none">
+                      <button id="btn_verify" type="button" class="btn btn-warning-alt ladda-button" style="width: 30%" data-style="expand-right" data-spinner-color="#000000">
+                          <i class="fa fa-inbox text-danger" aria-hidden="true"></i>
+                          <span class="ladda-label">Review It</span>
+                      </button>
+                  </div>
+                  <div class="col-sm-12" id="div_approve" style="display: none">
+                      <button id="btn_approve"  type="button" class="btn btn-danger-alt ladda-button" style="width: 30%" data-style="expand-right">
+                          <i class="fa fa-check text-success" aria-hidden="true"></i>
+                          <span class="ladda-label">Approve It</span>
+                      </button>
+                  </div>
+                  <div class="col-sm-12" id="div_send_review" style="display: none">
+                      <input type="checkbox" id="chk_send_review"  name="chk_send_review" checked class="js-switch" data-color="#99d683" />
+                      <label class="control-label" id="lbl_status" style="text-align:left">Send for Review</label>
+                  </div>
+              </div>
+              
+
+              <div class="border rounded" style="padding:0" id="div_trail_btn">
+                  <textarea id="txt_reply" rows="3" class="form-control border-0 resize-none" placeholder="Your message..."></textarea>
+
+                  <div class="p-2 bg-light d-flex justify-content-between align-items-center">
+                      <div >
+                          <a href="#" id="btn_upload_reply" class="btn btn-sm px-1 btn-light fileinput-button">
+                              <i class="mdi mdi-upload"></i> Browse
+                              <input id="fileupload_reply" type="file" name="qqfile">
+                          </a>
+                          
+                      </div>
+                      <button type="button" id="btn_reply" class="btn btn-sm btn-success"><i class="mdi mdi-send me-1"></i>Submit</button>
+                  </div>
+              </div>
+
+              <div id="files_reply"></div>
+
+              <div class="mt-2" id="div_reply"></div>
+          </div> <!-- end card-body-->
+      </div>
+    </form>
+    <!--Comments End-->
+  </div>
+  <!-- End row -->
+
+  <form action="https://demosignergateway.emsigner.com/eMsecure/V3_0/Index" id="signForm" method="post">
+    <input type="hidden" name="Parameter1" id="Parameter1" value="j8nK2A5wwKD0aJlkm+cenh/Cd/6zqgvLsWA518ngufpNpd9Y7qlCSZZx+FoGHTabPnYUNTkFAxclZGrnfYfeY8sN3xn3xjiuslTXmb07TPFNFQ61wlFnV3NIi3K2Qu3Hcyirmr236D8xWikpiTbK203oRSTUNz1KsZ8CAHnWi7dSh7RfJ6Nz24VkjvGkGNnCYJmsgfXNO1eG99cJqvrkjKmnRbPSZ8i1XFzY9pPnGr8dOsL49i6fqHiO7FMmdgvzccC4TLC7/XqwEaiDwmHTbFj9ZpcBfiKtHIZg73/cY/CZn0StJEKidxQGp2t+vZhEHQcX7BEUtm5M2ZFY3vhRCg=="/>
+    <input type="hidden" name="Parameter2" id="Parameter2" value="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"/>
+    <input type="hidden" name="Parameter3" id="Parameter3" value="HJ/R2yy27DO4jXTTTljMjI7lCX9nRUNwKUUgjLHVfCKHwJgUvN88Hts02tSKmGGH"/>
+  </form>
+
+  <div class="row" id="error_container" style="display: none;">
+    <div
+      class="jumbotron text-center duplicate-message"
+      style="min-height: 250px; background-color: #ffffff"
+    >
+      <h1 class="display-3">WRONG KEY</h1>
+      <hr />
+      <p class="lead">
+        Either your key is missing or wrong. Kindly check with HR for more
+        assistance.
+      </p>
+      <p>
+        Having trouble?
+        <a href="http://msphitect.com.my/msphitect/contact.html?id=contact"
+          >Contact us</a
+        >
+      </p>
+    </div>
+  </div>
+</div>
+
+<script src="./assets/js/moment.js/2.18.1/moment.min.js"></script>

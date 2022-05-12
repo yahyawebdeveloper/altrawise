@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        <meta charset="utf-8" />
+        <title>XITUI</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured customized inventory management system" name="description" />
+        <meta content="Coderthemes" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+        <base href="http://localhost/wta/public/" />
+
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="./assets/images/favicon.ico">
+
+        <!-- Plugins css -->
+        <link href="./assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
+        <link href="./assets/libs/selectize/css/selectize.bootstrap3.css" rel="stylesheet" type="text/css" />
+        
+        <link href="./assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+
+        <link href="./assets/libs/jquery-toast-plugin/jquery.toast.min.css" rel="stylesheet" type="text/css" />
+        
+        <!-- App css -->
+        <link href="./assets/css/config/material/bootstrap.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+        <link href="./assets/css/config/material/app.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
+
+        <link href="./assets/css/config/material/bootstrap-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
+        <link href="./assets/css/config/material/app-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
+
+
+        <!-- icons -->
+        <link href="./assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+
+        <link href="./assets/js/custom/fineuploader/fine-uploader-new.min.css" rel="stylesheet" type="text/css" />
+        <link href="./assets/css/styles.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
+        <link href="./assets/libs/ladda/ladda.min.css" rel="stylesheet" type="text/css" />
+
+        
+    </head>
+
+    <!-- body start -->
+    <body class="loading" data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "light", "size": "default", "showuser": false}, "topbar": {"color": "dark"}, "showRightSidebarOnPageLoad": true}'>
+
+        <!-- Begin page -->
+        <div id="wrapper">
+
+            <!-- Topbar Start -->
+            <div class="navbar-custom">
+                <div class="container-fluid">
+                    <ul class="list-unstyled topnav-menu float-end mb-0">
+                
+                        <li class="dropdown notification-list topbar-dropdown">
+                            <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                <img src="./assets/images/users/user-1.jpg" alt="user-image" class="rounded-circle" id="profile-pic">
+                                <span class="pro-user-name ms-1" id="users_name">
+                                    Geneva <i class="mdi mdi-chevron-down"></i> 
+                                </span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
+                                <!-- item-->
+                                <div class="dropdown-header noti-title">
+                                    <h6 class="text-overflow m-0">Welcome !</h6>
+                                </div>
+                
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <i class="fe-user"></i>
+                                    <span rn="myaccount">My Account</span>
+                                </a>
+                
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <i class="fe-settings"></i>
+                                    <span rn="settings">Settings</span>
+                                </a>
+                
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <i class="fe-lock"></i>
+                                    <span rn="change_password">Change Password</span>
+                                </a>
+                
+                                <div class="dropdown-divider"></div>
+                
+                                <!-- item-->
+                                <a href="signout" class="dropdown-item notify-item" id="mn_signout" data-navigo>
+                                    <i class="fe-log-out"></i>
+                                    <span rn="signout">Logout</span>
+                                </a>
+                
+                            </div>
+                        </li>
+                
+
+                
+                    </ul>
+                
+                    
+                
+                    <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
+                        <li>
+                            <button class="button-menu-mobile waves-effect waves-light">
+                                <i class="fe-menu"></i>
+                            </button>
+                        </li>
+
+                        <li>
+                            <!-- Mobile menu toggle (Horizontal Layout)-->
+                            <a class="navbar-toggle nav-link" data-bs-toggle="collapse" data-bs-target="#topnav-menu-content">
+                                <div class="lines">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </a>
+                            <!-- End mobile menu toggle-->
+                        </li>   
+                        
+                    
+                
+                    
+                    </ul>
+                    <!-- LOGO -->
+                    <div class="logo-box">
+                        <a href="" class="logo logo-dark text-center">
+                            <span class="logo-sm">
+                                <img src="./assets/images/logo-sm.png" alt="" height="22">
+                                <!-- <span class="logo-lg-text-light">UBold</span> -->
+                            </span>
+                            <span class="logo-lg">
+                                <img src="./assets/images/logo-dark.png" alt="" height="20">
+                                <!-- <span class="logo-lg-text-light">U</span> -->
+                            </span>
+                        </a>
+                
+                        <a href="" class="logo logo-light text-center">
+                            <span class="logo-sm">
+                                <img src="./assets/images/logo-sm.png" alt="" height="15">
+                            </span>
+                            <span class="logo-lg">
+                                <img src="./assets/images/logo-light.png" alt="" height="13">
+                            </span>
+                        </a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <!-- end Topbar -->
+
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="left-side-menu">
+
+                <div class="h-100" data-simplebar>
+
+                    <!-- User box -->
+                    <div class="user-box text-center">
+                        <img src="./assets/images/users/user-1.jpg" alt="user-img" title="Mat Helme"
+                            class="rounded-circle avatar-md">
+                        <div class="dropdown">
+                            <a href="javascript: void(0);" class="text-dark dropdown-toggle h5 mt-2 mb-1 d-block"
+                                data-bs-toggle="dropdown" id="lbl_users_name">Geneva Kennedy</a>
+                            <div class="dropdown-menu user-pro-dropdown">
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item" id="mn_left_myaccount">
+                                    <i class="fe-user me-1" ></i>
+                                    <span rn="myaccount">My Account</span>
+                                </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item" id="mn_left_setttings">
+                                    <i class="fe-settings me-1"></i>
+                                    <span rn="settings">Settings</span>
+                                </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <i class="fe-lock me-1"></i>
+                                    <span rn="change_password">Change Password</span>
+                                </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item" id="mn_left_signout">
+                                    <i class="fe-log-out me-1"></i>
+                                    <span rn="signout">Logout</span>
+                                </a>
+
+                            </div>
+                        </div>
+                        <p class="text-muted">Admin Head</p>
+                    </div>
+
+                    <!--- Sidemenu -->
+                    <div id="sidebar-menu">
+
+                        <ul id="side-menu">
+
+                            <!-- <li class="menu-title">Navigation</li> -->
+                
+                            <li class="menuitem-active">
+                                <a href="" data-bs-toggle="collapse" id="mn_dashboard" data-navigo>
+                                    <i class="mdi mdi-view-dashboard-outline"></i>
+                                    <span> Dashboard </span>
+                                </a>
+                            </li>
+
+                            <!-- Documents -->
+                            <li id="document_managment_li">
+                                <a href="#sidebarDocuments" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-archive-outline"></i>
+                                    <span> Document Management </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="sidebarDocuments">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="documents/outbound-documents" id="mn_outbound_documents" data-navigo>Outbound Documents</a>
+                                        </li>
+                                        <li>
+                                            <a href="documents/document-archiving" id="mn_document_archiving" data-navigo>Document Archiving</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <!-- HR -->
+                            <li id="hr_li">
+                                <a href="#sidebarProjects" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-briefcase-check-outline"></i>
+                                    <span> HR </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="sidebarProjects">
+                                    <ul class="nav-second-level">
+                                        <!-- <li>
+                                            <a href="quotation" id="mn_quotation" data-navigo>Quotation</a>
+                                        </li> -->
+                                        <li>
+                                            <a href="users" id="mn_users" data-navigo>Users Management</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            
+                            <li id="crm_li">
+                                <a href="#crm" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-briefcase-check-outline"></i>
+                                    <span> CRM </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="crm">
+                                    <ul class="nav-second-level">
+                                         <li>
+                                            <a href="#sidebarMultilevel4" data-bs-toggle="collapse" class="" aria-expanded="true">
+                                                            Stack Holders <span class="menu-arrow"></span>
+                                                        </a>
+											<div class="collapse show" id="sidebarMultilevel4">
+                                                <ul class="nav-second-level">
+                                                    <li>
+                                                        <a href="stake-holders" id="mn_stake_holders" data-navigo>Listings</a>
+                                                    </li>
+                                                    
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        
+                                    </ul>
+                                </div>
+                            </li>
+
+							<!-- OPRATION START -->
+							<li id="operation_li">
+                                <a href="#sidebarMultilevel" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-account-settings"></i>
+                                    <span> Operation </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="sidebarMultilevel">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="#sidebarMultilevel2" data-bs-toggle="collapse">
+                                                <i class="mdi mdi-clipboard-multiple-outline"></i> <span> Task</span> <span class="menu-arrow"></span>
+                                            </a>
+                                            <div class="collapse" id="sidebarMultilevel2">
+                                                <ul class="nav-second-level">
+                                                    <li>
+                                                        <a href="task/my-task" id="mn_mytask" data-navigo>My Task</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="task/scheduling" id="mn_task_scheduling" data-navigo>Scheduling</a>
+                                                    </li>
+													<li>
+                                                        <a href="task/template" id="mn_task_template"  data-navigo>Template</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+							<!-- OPRATION END -->
+
+                            <li id="utilities_li">
+                                <a href="#sidebarCrm" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-account-multiple-outline"></i>
+                                    <span> Utilities </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="sidebarCrm">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="settings/configuration" id="mn_configuration" data-navigo>Configurations</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li id="payment_voucher_li">
+                                <a href="#sidebarPaymentVoucher" data-bs-toggle="collapse">
+                                    <i class="mdi mdi-account-multiple-outline"></i>
+                                    <span> Finance </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="sidebarPaymentVoucher">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="payment-voucher" id="mn_payment_voucher" data-navigo>Payment Voucher</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            
+
+                        </ul>
+
+                    </div>
+                    <!-- End Sidebar -->
+
+                    <div class="clearfix"></div>
+
+                </div>
+                <!-- Sidebar -left -->
+
+            </div>
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+                <div class="content">
+
+                    <!-- Start Content-->
+                    <div class="container-fluid" id="content_div">    
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                2016 - <script>document.write(new Date().getFullYear())</script> &copy; MSP Hitect (M) Sdn Bhd <a href="" class="text-white-50"></a> 
+                            </div>
+                            <div class="col-md-6">
+                                <!-- <div class="text-md-end footer-links d-none d-sm-block">
+                                    <a href="javascript:void(0);">About Us</a>
+                                    <a href="javascript:void(0);">Help</a>
+                                    <a href="javascript:void(0);">Contact Us</a>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+
+        
+
+
+        <!-- START FILE UPLOAD -->
+        <script type="text/template" id="qq-template-manual-trigger">
+            <div class="qq-uploader-selector qq-uploader" qq-drop-area-text="Drop files here">
+                <div class="qq-total-progress-bar-container-selector qq-total-progress-bar-container">
+                    <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-total-progress-bar-selector qq-progress-bar qq-total-progress-bar"></div>
+                </div>
+                <div class="qq-upload-drop-area-selector qq-upload-drop-area" qq-hide-dropzone>
+                    <span class="qq-upload-drop-area-text-selector"></span>
+                </div>
+                <div class="qq-upload-button-selector qq-upload-button">
+                    <div>Select files</div>
+                </div>
+                <button type="button" id="trigger-upload" class="btn btn-primary">
+                    <i class="icon-upload icon-white"></i> Upload
+                </button> 
+                <span class="qq-drop-processing-selector qq-drop-processing">
+                    <span>Processing dropped files...</span>
+                    <span class="qq-drop-processing-spinner-selector qq-drop-processing-spinner"></span>
+                </span>
+                <ul class="qq-upload-list-selector qq-upload-list" aria-live="polite" aria-relevant="additions removals">
+                    <li>
+                        <div class="qq-progress-bar-container-selector">
+                            <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-progress-bar-selector qq-progress-bar"></div>
+                        </div>
+                        <span class="qq-upload-spinner-selector qq-upload-spinner"></span>
+                        <img class="qq-thumbnail-selector" qq-max-size="100" qq-server-scale>
+                        <span class="qq-upload-file-selector qq-upload-file"></span>
+                        <span class="qq-upload-size-selector qq-upload-size"></span>
+                        <button type="button" class="qq-btn qq-upload-cancel-selector qq-upload-cancel">Cancel</button>
+                        <button type="button" class="qq-btn qq-upload-retry-selector qq-upload-retry">Retry</button>
+                        <button type="button" class="qq-btn qq-upload-delete-selector qq-upload-delete">Delete</button>
+                        <a type="button" class="qq-btn qq-download-option-selector qq-download-option qq-hide" target="_blank">View</a>
+                        <span role="status" class="qq-upload-status-text-selector qq-upload-status-text"></span>
+                    </li>
+                </ul>
+
+                <dialog class="qq-alert-dialog-selector">
+                    <div class="qq-dialog-message-selector"></div>
+                    <div class="qq-dialog-buttons">
+                        <button type="button" class="qq-cancel-button-selector">Close</button>
+                    </div>
+                </dialog>
+
+                <dialog class="qq-confirm-dialog-selector">
+                    <div class="qq-dialog-message-selector"></div>
+                    <div class="qq-dialog-buttons">
+                        <button type="button" class="qq-cancel-button-selector">No</button>
+                        <button type="button" class="qq-ok-button-selector">Yes</button>
+                    </div>
+                </dialog>
+
+                <dialog class="qq-prompt-dialog-selector">
+                    <div class="qq-dialog-message-selector"></div>
+                    <input type="text">
+                    <div class="qq-dialog-buttons">
+                        <button type="button" class="qq-cancel-button-selector">Cancel</button>
+                        <button type="button" class="qq-ok-button-selector">Ok</button>
+                    </div>
+                </dialog>
+            </div>
+        </script>
+        <!-- END FILE UPLOAD -->
+
+
+
+        <!-- Vendor js -->
+        <script src="./assets/js/vendor.min.js"></script>
+
+        <script src="./assets/libs/parsleyjs/parsley.min.js"></script>
+
+        <!-- App js-->
+        <script src="./assets/js/app.min.js"></script>
+        <script src="./assets/libs/ladda/spin.min.js"></script>
+        <script src="./assets/libs/ladda/ladda.min.js"></script>
+        
+        <script src="./assets/js/custom/jAlert-master/dist/jAlert.min.js"></script>
+        <script src="./assets/js/custom/jStorage-master/jstorage.min.js"></script>
+        <script src="./assets/js/custom/jquery.blockUI.js"></script>
+        <script src="./assets/js/custom/jquery.i18n.properties-1.0.9.js"></script>
+        <script src="./assets/libs/jquery-toast-plugin/jquery.toast.min.js"></script>
+        <script src="./assets/js/custom/core.js"></script>
+        <script src="./assets/libs/select2/js/select2.min.js"></script>
+        
+        
+        <script src="./assets/js/custom/fineuploader/all.fine-uploader.min.js"></script>
+
+
+        <!-- Navigo For Routing -->
+        <script src="./assets/js/navigo.min.js"></script>
+        <script src="./assets/js/bootbox/bootbox.min.js"></script>
+		
+		<script src="./assets/libs/jquery-fileupload/js/tmpl.min.js"></script>
+		<script src="./assets/libs/jquery-fileupload/js/vendor/jquery.ui.widget.js"></script>
+        <script src="./assets/libs/jquery-fileupload/js/jquery.fileupload.js"></script>
+        <script src="./assets/libs/jquery-fileupload/js/jquery.fileupload-process.js"></script>
+        <script src="./assets/libs/jquery-fileupload/js/jquery.fileupload-ui.js"></script>
+
+        <script src="index.js"></script>
+
+
+    </body>
+</html>
+<script id="template-upload" type="text/x-tmpl">
+
+	    {% 
+	        let maxFileSize      = 1024 * 1024 * SESSIONS_DATA.FILEUPLOAD_MAXSIZE;
+	        let acceptFileTypes  = o.options.extension != undefined ? o.options.extension : SESSIONS_DATA.FILEUPLOAD_ALLOWED_TYPE;
+			acceptFileTypes = 'png,pdf,jpeg,jpg,txt,doc,docx';
+			let extensions_array = acceptFileTypes.split(',');
+			
+			for (var i=0, file; file=o.files[i]; i++) { 
+			let fileExtension= file.name.split('.').pop();
+	        if($.inArray( fileExtension, extensions_array ) == -1)
+	        {
+
+	            file.error = 'File type not allowed';
+	        }
+	        else if (file.size > maxFileSize) {
+	            file.error = 'File is too large';
+	        }
+	    %}
+	    <div class="list-group-item template-upload p-0 file-upload {% if (!file.error) { %} new {% } %}" style="display:flex">
+	        <div class="col-sm-6" style="float:left;padding: 15px;">
+	            <span class="cancel"><i class="fa fa-times fa-fw" aria-hidden="true"></i></a>
+	            <span class="name">{%=file.name%}</span>
+	        </div>
+	        <div class="col-sm-2" style="float:left;padding: 15px;">
+	            <p class="size" style="margin:0;">{%=o.formatFileSize(file.size)%}</p>
+	        </div>
+	        <div class="col-sm-4 progress" style="float:left;margin-top:20px;">
+	            <div style="margin-top:0px;margin-bottom:0px;" style="width:100%;" class="progress-bar progress-bar-striped bg-success" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+	                
+	            </div>
+	            {% if (file.error) { %}
+	            <div><span class="label label-danger">Error</span> {%=file.error%} </div>
+	            {% } %}
+	        </div>
+	    </div>
+	    {% } %}
+</script>
+	
+<!-- The template to display files available for download -->
+<script id="template-download" type="text/x-tmpl">
+</script>
