@@ -6,26 +6,46 @@ var VOUCHER_NO = '';
 CURRENT_PATH	            = 	'../../';
 var FILE_UPLOAD_PATH		= ''; //file upload mandatory field
 
-$.fn.data_table_features = function(table_id)
+$.fn.data_table_features = function ()
 {
     try
     {
-        if (!$.fn.dataTable.isDataTable('#'+table_id) )
+        if (!$.fn.dataTable.isDataTable('#tbl_list'))
         {
-            table = $('#'+table_id).DataTable
-            ({
-                "searching" : false,
-                "paging"    : false,
-                "info"      : false,
-                "order"     : [[ 0, "asc" ]]
+            table = $('#tbl_list').DataTable({
+                "searching": false,
+                "paging": false,
+                "info": false,
+                "order": []
             });
         }
     }
-    catch(err)
+    catch (err)
     {
-        $.fn.log_error(arguments.callee.caller,err.message);
+        $.fn.log_error(arguments.callee.caller, err.message);
     }
 };
+
+// $.fn.data_table_features = function(table_id)
+// {
+//     try
+//     {
+//         if (!$.fn.dataTable.isDataTable('#'+table_id) )
+//         {
+//             table = $('#'+table_id).DataTable
+//             ({
+//                 "searching" : false,
+//                 "paging"    : false,
+//                 "info"      : false,
+//                 "order"     : [[ 0, "asc" ]]
+//             });
+//         }
+//     }
+//     catch(err)
+//     {
+//         $.fn.log_error(arguments.callee.caller,err.message);
+//     }
+// };
 
 $.fn.data_table_destroy = function(table_id)
 {
@@ -69,18 +89,61 @@ $.fn.get_list = function(is_scroll, pending_data = false)
                 is_admin        : SESSIONS_DATA.is_admin,
                 emp_id          : SESSIONS_DATA.emp_id
             };
-
-            if(is_scroll)
-            {
-                data.start_index =  RECORD_INDEX;
-            }
         }
-        
-        $.fn.fetch_data_for_table_v2
-        (
-            $.fn.generate_parameter('get_payment_voucher_list',data),
-            $.fn.populate_list_form,is_scroll,'tbl_list'
+
+        if(is_scroll)
+        {
+            data.start_index =  RECORD_INDEX;
+        }
+
+        $.fn.fetch_data(
+            $.fn.generate_parameter('get_payment_voucher_list', data),
+            function(return_data) { 
+                console.log(return_data.data);
+                 if (return_data.data.list) {
+                    var len = return_data.data.list.length;
+                    if (return_data.data.rec_index)
+                    {
+                        RECORD_INDEX = return_data.data.rec_index;
+                    }
+                    if (return_data.code == 0 && len != 0)
+                    {
+                        $.fn.data_table_destroy();
+                        $.fn.populate_list_form(return_data.data, is_scroll);
+                        $.fn.data_table_features();
+                        $('#btn_load_more').show();
+                    }
+                    else if (return_data.code == 1 || len == 0)
+                    {
+                        if (!is_scroll)
+                        {
+                            $('#btn_load_more').hide();
+                            $.fn.data_table_destroy();
+                            $('#tbl_list tbody').empty().append
+                                (
+                                    `<tr>
+                                        <td colspan="8">
+                                            <div class="list-placeholder">No records found!</div>
+                                        </td>
+                                    </tr>`
+                                );
+                            $.fn.show_right_error_noty('No records found');
+                        }
+                        else if (is_scroll)
+                        {
+                            $('#btn_load_more').hide();
+                            $.fn.show_right_success_noty('No more records to be loaded');
+                        }
+                    }
+                } 
+            }
         );
+        
+        // $.fn.fetch_data_for_table_v2
+        // (
+        //     $.fn.generate_parameter('get_payment_voucher_list',data),
+        //     $.fn.populate_list_form,is_scroll,'tbl_list'
+        // );
     }
     catch(err)
     {
@@ -448,6 +511,12 @@ $.fn.save_edit_form = function()
 {
     try
     {
+        if ($('#detail_form').parsley().validate() == false)
+        {
+            btn_save.stop();
+            return;
+        }
+
         // if($('#detail_form').parsley( 'validate' ) == false)
         // {
         //     btn_save.stop();
@@ -1015,20 +1084,31 @@ $.fn.populate_currency = function(element_id, dd_data)
 
 $.fn.set_validation_form = function()
 {
-    $('#detail_form').parsley
-    ({
-        successClass	: 'has-success',
-        errorClass		: 'has-error',
-        errors			:
+    $('#detail_form').parsley(
         {
-            classHandler: function(el)
-            {
-                return $(el).closest('.error-container');
+            classHandler: function(parsleyField) {              
+                return parsleyField.$element.closest(".errorContainer");
             },
-            errorsWrapper	: '<ul class=\"help-block list-unstyled\"></ul>',
-            errorElem		: '<li></li>'
+            errorsContainer: function(parsleyField) {              
+                return parsleyField.$element.closest(".errorContainer");
+            },
         }
-    });
+    );
+
+    // $('#detail_form').parsley
+    // ({
+    //     successClass	: 'has-success',
+    //     errorClass		: 'has-error',
+    //     errors			:
+    //     {
+    //         classHandler: function(el)
+    //         {
+    //             return $(el).closest('.error-container');
+    //         },
+    //         errorsWrapper	: '<ul class=\"help-block list-unstyled\"></ul>',
+    //         errorElem		: '<li></li>'
+    //     }
+    // });
 
     $('#payment_form').parsley
     ({
