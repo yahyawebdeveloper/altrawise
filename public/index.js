@@ -103,7 +103,7 @@ $(document).ready(function ()
 		
 
 		// Initial Navigo
-		var root = '/wta/public/';
+		var root = '/altrawise/public/';
 		var useHash = true; // Defaults to: false
 		var hash = '#!'; // Defaults to: '#'
 		var router = new Navigo(root, false);

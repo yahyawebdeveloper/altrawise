@@ -1,7 +1,7 @@
 if (!window.location.origin)
 	window.location.origin = window.location.protocol + '//' + window.location.host;
 
-var directory_path = "/wta/";
+var directory_path = "/altrawise/";
 var controller_URL = '../services/services.php';
 var services_URL = window.location.origin + `${directory_path}services/services.php`;
 var upload_file_path = window.location.origin + `${directory_path}services/upload_fu/endpoint.php`;

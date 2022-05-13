@@ -1,119 +1,119 @@
 [2022-05-12 12:19:46]
-#0 D:\xampp\htdocs\wta\services\shared\dbfunctions.php(668): PDO->__construct('mysql:host=loca...', 'root', 'root')
-#1 D:\xampp\htdocs\wta\services\shared\dbfunctions.php(238): init_read_connection()
-#2 D:\xampp\htdocs\wta\services\modules\login.php(61): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
-#3 D:\xampp\htdocs\wta\services\services.php(31): check_login(Object(stdClass))
+#0 D:\xampp\htdocs\altrawise\services\shared\dbfunctions.php(668): PDO->__construct('mysql:host=loca...', 'root', 'root')
+#1 D:\xampp\htdocs\altrawise\services\shared\dbfunctions.php(238): init_read_connection()
+#2 D:\xampp\htdocs\altrawise\services\modules\login.php(61): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
+#3 D:\xampp\htdocs\altrawise\services\services.php(31): check_login(Object(stdClass))
 #4 {main}SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: YES)
 
 
 [2022-05-12 12:22:26]
-#0 D:\xampp\htdocs\wta\services\shared\dbfunctions.php(668): PDO->__construct('mysql:host=loca...', 'root', 'root')
-#1 D:\xampp\htdocs\wta\services\shared\dbfunctions.php(238): init_read_connection()
-#2 D:\xampp\htdocs\wta\services\modules\login.php(61): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
-#3 D:\xampp\htdocs\wta\services\services.php(31): check_login(Object(stdClass))
+#0 D:\xampp\htdocs\altrawise\services\shared\dbfunctions.php(668): PDO->__construct('mysql:host=loca...', 'root', 'root')
+#1 D:\xampp\htdocs\altrawise\services\shared\dbfunctions.php(238): init_read_connection()
+#2 D:\xampp\htdocs\altrawise\services\modules\login.php(61): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
+#3 D:\xampp\htdocs\altrawise\services\services.php(31): check_login(Object(stdClass))
 #4 {main}SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: YES)
 
 
 [2022-05-12 12:22:31]
-#0 D:\xampp\htdocs\wta\services\shared\dbfunctions.php(668): PDO->__construct('mysql:host=loca...', 'root', 'root')
-#1 D:\xampp\htdocs\wta\services\shared\dbfunctions.php(238): init_read_connection()
-#2 D:\xampp\htdocs\wta\services\modules\login.php(61): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
-#3 D:\xampp\htdocs\wta\services\services.php(31): check_login(Object(stdClass))
+#0 D:\xampp\htdocs\altrawise\services\shared\dbfunctions.php(668): PDO->__construct('mysql:host=loca...', 'root', 'root')
+#1 D:\xampp\htdocs\altrawise\services\shared\dbfunctions.php(238): init_read_connection()
+#2 D:\xampp\htdocs\altrawise\services\modules\login.php(61): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
+#3 D:\xampp\htdocs\altrawise\services\services.php(31): check_login(Object(stdClass))
 #4 {main}SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: YES)
 
 
 [2022-05-12 12:26:20]
-#0 D:\xampp\htdocs\wta\services\shared\dbfunctions.php(668): PDO->__construct('mysql:host=loca...', 'root', 'root')
-#1 D:\xampp\htdocs\wta\services\shared\dbfunctions.php(238): init_read_connection()
-#2 D:\xampp\htdocs\wta\services\modules\login.php(65): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
-#3 D:\xampp\htdocs\wta\services\services.php(31): check_login(Object(stdClass))
+#0 D:\xampp\htdocs\altrawise\services\shared\dbfunctions.php(668): PDO->__construct('mysql:host=loca...', 'root', 'root')
+#1 D:\xampp\htdocs\altrawise\services\shared\dbfunctions.php(238): init_read_connection()
+#2 D:\xampp\htdocs\altrawise\services\modules\login.php(65): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
+#3 D:\xampp\htdocs\altrawise\services\services.php(31): check_login(Object(stdClass))
 #4 {main}SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: YES)
 
 
 [2022-05-12 12:26:25]
-#0 D:\xampp\htdocs\wta\services\shared\dbfunctions.php(668): PDO->__construct('mysql:host=loca...', 'root', 'root')
-#1 D:\xampp\htdocs\wta\services\shared\dbfunctions.php(238): init_read_connection()
-#2 D:\xampp\htdocs\wta\services\modules\login.php(65): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
-#3 D:\xampp\htdocs\wta\services\services.php(31): check_login(Object(stdClass))
+#0 D:\xampp\htdocs\altrawise\services\shared\dbfunctions.php(668): PDO->__construct('mysql:host=loca...', 'root', 'root')
+#1 D:\xampp\htdocs\altrawise\services\shared\dbfunctions.php(238): init_read_connection()
+#2 D:\xampp\htdocs\altrawise\services\modules\login.php(65): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
+#3 D:\xampp\htdocs\altrawise\services\services.php(31): check_login(Object(stdClass))
 #4 {main}SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: YES)
 
 
 [2022-05-12 12:26:35]
-#0 D:\xampp\htdocs\wta\services\shared\dbfunctions.php(668): PDO->__construct('mysql:host=loca...', 'root', 'root')
-#1 D:\xampp\htdocs\wta\services\shared\dbfunctions.php(238): init_read_connection()
-#2 D:\xampp\htdocs\wta\services\modules\login.php(65): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
-#3 D:\xampp\htdocs\wta\services\services.php(31): check_login(Object(stdClass))
+#0 D:\xampp\htdocs\altrawise\services\shared\dbfunctions.php(668): PDO->__construct('mysql:host=loca...', 'root', 'root')
+#1 D:\xampp\htdocs\altrawise\services\shared\dbfunctions.php(238): init_read_connection()
+#2 D:\xampp\htdocs\altrawise\services\modules\login.php(65): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
+#3 D:\xampp\htdocs\altrawise\services\services.php(31): check_login(Object(stdClass))
 #4 {main}SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: YES)
 
 
 [2022-05-12 12:26:58]
-#0 D:\xampp\htdocs\wta\services\shared\dbfunctions.php(668): PDO->__construct('mysql:host=loca...', 'root', 'root')
-#1 D:\xampp\htdocs\wta\services\shared\dbfunctions.php(238): init_read_connection()
-#2 D:\xampp\htdocs\wta\services\modules\login.php(62): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
-#3 D:\xampp\htdocs\wta\services\services.php(31): check_login(Object(stdClass))
+#0 D:\xampp\htdocs\altrawise\services\shared\dbfunctions.php(668): PDO->__construct('mysql:host=loca...', 'root', 'root')
+#1 D:\xampp\htdocs\altrawise\services\shared\dbfunctions.php(238): init_read_connection()
+#2 D:\xampp\htdocs\altrawise\services\modules\login.php(62): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
+#3 D:\xampp\htdocs\altrawise\services\services.php(31): check_login(Object(stdClass))
 #4 {main}SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: YES)
 
 
 [2022-05-12 12:27:21]
-#0 D:\xampp\htdocs\wta\services\shared\dbfunctions.php(668): PDO->__construct('mysql:host=loca...', 'root', 'root')
-#1 D:\xampp\htdocs\wta\services\shared\dbfunctions.php(238): init_read_connection()
-#2 D:\xampp\htdocs\wta\services\modules\login.php(62): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
-#3 D:\xampp\htdocs\wta\services\services.php(31): check_login(Object(stdClass))
+#0 D:\xampp\htdocs\altrawise\services\shared\dbfunctions.php(668): PDO->__construct('mysql:host=loca...', 'root', 'root')
+#1 D:\xampp\htdocs\altrawise\services\shared\dbfunctions.php(238): init_read_connection()
+#2 D:\xampp\htdocs\altrawise\services\modules\login.php(62): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
+#3 D:\xampp\htdocs\altrawise\services\services.php(31): check_login(Object(stdClass))
 #4 {main}SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: YES)
 
 
 [2022-05-12 12:29:21]
-#0 D:\xampp\htdocs\wta\services\shared\dbfunctions.php(241): PDOStatement->execute(Array)
-#1 D:\xampp\htdocs\wta\services\modules\login.php(61): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
-#2 D:\xampp\htdocs\wta\services\services.php(31): check_login(Object(stdClass))
+#0 D:\xampp\htdocs\altrawise\services\shared\dbfunctions.php(241): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\altrawise\services\modules\login.php(61): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
+#2 D:\xampp\htdocs\altrawise\services\services.php(31): check_login(Object(stdClass))
 #3 {main}SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '>'$.employer')) as company_name FROM  cms_employees
 						LEFT join cms_emp_...' at line 14
 
 
 [2022-05-12 12:30:27]
-#0 D:\xampp\htdocs\wta\services\shared\dbfunctions.php(241): PDOStatement->execute(Array)
-#1 D:\xampp\htdocs\wta\services\modules\login.php(61): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
-#2 D:\xampp\htdocs\wta\services\services.php(31): check_login(Object(stdClass))
+#0 D:\xampp\htdocs\altrawise\services\shared\dbfunctions.php(241): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\altrawise\services\modules\login.php(61): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
+#2 D:\xampp\htdocs\altrawise\services\services.php(31): check_login(Object(stdClass))
 #3 {main}SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '>'$.employer')) as company_name FROM  cms_employees
 						LEFT join cms_emp_...' at line 14
 
 
 [2022-05-12 12:46:26]
-#0 D:\xampp\htdocs\wta\services\shared\dbfunctions.php(241): PDOStatement->execute(Array)
-#1 D:\xampp\htdocs\wta\services\modules\login.php(61): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
-#2 D:\xampp\htdocs\wta\services\services.php(31): check_login(Object(stdClass))
+#0 D:\xampp\htdocs\altrawise\services\shared\dbfunctions.php(241): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\altrawise\services\modules\login.php(61): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
+#2 D:\xampp\htdocs\altrawise\services\services.php(31): check_login(Object(stdClass))
 #3 {main}SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '>'$.employer')) as company_name FROM  cms_employees
 						LEFT join cms_emp_...' at line 14
 
 
 [2022-05-12 12:47:22]
-#0 D:\xampp\htdocs\wta\services\shared\dbfunctions.php(241): PDOStatement->execute(Array)
-#1 D:\xampp\htdocs\wta\services\modules\login.php(61): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
-#2 D:\xampp\htdocs\wta\services\services.php(31): check_login(Object(stdClass))
+#0 D:\xampp\htdocs\altrawise\services\shared\dbfunctions.php(241): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\altrawise\services\modules\login.php(61): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
+#2 D:\xampp\htdocs\altrawise\services\services.php(31): check_login(Object(stdClass))
 #3 {main}SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '>'$.employer')) as company_name FROM  cms_employees
 						LEFT join cms_emp_...' at line 14
 
 
 [2022-05-12 12:48:02]
-#0 D:\xampp\htdocs\wta\services\shared\dbfunctions.php(241): PDOStatement->execute(Array)
-#1 D:\xampp\htdocs\wta\services\modules\login.php(61): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
-#2 D:\xampp\htdocs\wta\services\services.php(31): check_login(Object(stdClass))
+#0 D:\xampp\htdocs\altrawise\services\shared\dbfunctions.php(241): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\altrawise\services\modules\login.php(61): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
+#2 D:\xampp\htdocs\altrawise\services\services.php(31): check_login(Object(stdClass))
 #3 {main}SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '>'$.employer')) as company_name FROM  cms_employees
 						LEFT join cms_emp_...' at line 14
 
 
 [2022-05-12 12:52:19]
-#0 D:\xampp\htdocs\wta\services\shared\dbfunctions.php(241): PDOStatement->execute(Array)
-#1 D:\xampp\htdocs\wta\services\modules\login.php(61): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
-#2 D:\xampp\htdocs\wta\services\services.php(31): check_login(Object(stdClass))
+#0 D:\xampp\htdocs\altrawise\services\shared\dbfunctions.php(241): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\altrawise\services\modules\login.php(61): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
+#2 D:\xampp\htdocs\altrawise\services\services.php(31): check_login(Object(stdClass))
 #3 {main}SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '>'$.employer')) as company_name FROM  cms_employees
 						LEFT join cms_emp_...' at line 14
 
 
 [2022-05-12 12:52:51]
-#0 D:\xampp\htdocs\wta\services\shared\dbfunctions.php(241): PDOStatement->execute(Array)
-#1 D:\xampp\htdocs\wta\services\modules\login.php(61): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
-#2 D:\xampp\htdocs\wta\services\services.php(31): check_login(Object(stdClass))
+#0 D:\xampp\htdocs\altrawise\services\shared\dbfunctions.php(241): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\altrawise\services\modules\login.php(61): db_query_new('id as emp_id, n...', 'cms_employees\r\n...', 'cms_employees.u...', Array)
+#2 D:\xampp\htdocs\altrawise\services\services.php(31): check_login(Object(stdClass))
 #3 {main}SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '>'$.employer')) as company_name FROM  cms_employees
 						LEFT join cms_emp_...' at line 14
 

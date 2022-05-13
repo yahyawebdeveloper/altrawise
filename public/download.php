@@ -89,11 +89,11 @@ function download_files($id)
 		}
 		else 
 		{
-			$document_path = $_SERVER["DOCUMENT_ROOT"] . "/wta/services/files/";
+			$document_path = $_SERVER["DOCUMENT_ROOT"] . "/altrawise/services/files/";
 			$path = str_replace('\\', '/', $document_path);
 		}
 		
-		$document_path = $_SERVER["DOCUMENT_ROOT"] . "/wta/services/files/";
+		$document_path = $_SERVER["DOCUMENT_ROOT"] . "/altrawise/services/files/";
 		$path = str_replace('\\', '/', $document_path);
 
 		$rs = db_query_single("concat('" . $path . "',cms_files.module_id, '/', cms_files.primary_id, '/', cms_files.filename) AS filepath",

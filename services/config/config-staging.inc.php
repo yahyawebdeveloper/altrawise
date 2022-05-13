@@ -98,7 +98,7 @@ define('RESTRICT_DUPLICATE_LOGIN', false);
 
 //START PATH CONSTANT
 define('APPLICATION_ROOT_DIR', 	dirname(__FILE__) . '/..');
-define('BASE_DIR',       		"/wta");
+define('BASE_DIR',       		"/altrawise");
 define('ROOT_URL',              "http://msphitect.ddns.net:8484" . constant('BASE_DIR') . "/public");
 define('CONFIG_DIR', 			dirname(__FILE__));
 define('ROOT_DIR', 				constant('CONFIG_DIR')		. '/..');
@@ -122,8 +122,8 @@ define('RESET_PASS_URL_EXTERNAL',    constant('SERVER_IP') . '/bare_modules_ui/p
 define('APP_URL', 			    constant('SERVER_IP') . '/bare_modules_ui/public');
 define('DOWNLOAD_URL', 			constant('SERVER_IP') . '/bare_modules_ui/public/download.php?key=');
 // define('DOC_FOLDER', 			'D:/Work/UwAmp/www/bare_modules_ui/services/files/');
-define('DOC_FOLDER', 			'/var/www/html/wta/services/files/');
-define('UPLOAD_DIR_URL',        constant('SERVER_IP') . '/wta/services/files/');
+define('DOC_FOLDER', 			'/var/www/html/altrawise/services/files/');
+define('UPLOAD_DIR_URL',        constant('SERVER_IP') . '/altrawise/services/files/');
 //END PATH CONSTANT
 
 // define('API_ENV',      'DEV');

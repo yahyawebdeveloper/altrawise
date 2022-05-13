@@ -11,7 +11,7 @@
 if (!window.location.origin)
 	window.location.origin = window.location.protocol + '//' + window.location.host;
 
-var directory_path = "/wta/";
+var directory_path = "/altrawise/";
 var services_URL = window.location.origin + `${directory_path}services/services.php`;
 var upload_file_path = window.location.origin + `${directory_path}services/upload/index.php`;
 var redirect_mainpage = window.location.origin + `${directory_path}public/`;

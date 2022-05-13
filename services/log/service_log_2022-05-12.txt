@@ -14,8 +14,8 @@ Function Details: db_query_new
 SELECT id as emp_id, name, email,office_email, username
 						, is_admin, initial_pswd
 						, cms_emp_login_sessions.token
-						, concat('http://localhost/wta/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
-						, 'http://localhost/wta/services/files/' as filepath
+						, concat('http://localhost/altrawise/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
+						, 'http://localhost/altrawise/services/files/' as filepath
 		                , super_admin
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.faq_id')),'') as faq_id
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.chat_username')),'') as chat_username
@@ -44,8 +44,8 @@ Function Details: db_query_new
 SELECT id as emp_id, name, email,office_email, username
 						, is_admin, initial_pswd
 						, cms_emp_login_sessions.token
-						, concat('http://localhost/wta/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
-						, 'http://localhost/wta/services/files/' as filepath
+						, concat('http://localhost/altrawise/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
+						, 'http://localhost/altrawise/services/files/' as filepath
 		                , super_admin
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.faq_id')),'') as faq_id
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.chat_username')),'') as chat_username
@@ -74,8 +74,8 @@ Function Details: db_query_new
 SELECT id as emp_id, name, email,office_email, username
 						, is_admin, initial_pswd
 						, cms_emp_login_sessions.token
-						, concat('http://localhost/wta/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
-						, 'http://localhost/wta/services/files/' as filepath
+						, concat('http://localhost/altrawise/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
+						, 'http://localhost/altrawise/services/files/' as filepath
 		                , super_admin
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.faq_id')),'') as faq_id
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.chat_username')),'') as chat_username
@@ -104,8 +104,8 @@ Function Details: db_query_new
 SELECT id as emp_id, name, email,office_email, username
 						, is_admin, initial_pswd
 						, cms_emp_login_sessions.token
-						, concat('http://localhost/wta/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
-						, 'http://localhost/wta/services/files/' as filepath
+						, concat('http://localhost/altrawise/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
+						, 'http://localhost/altrawise/services/files/' as filepath
 		                , super_admin
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.faq_id')),'') as faq_id
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.chat_username')),'') as chat_username
@@ -138,8 +138,8 @@ Function Details: db_query_new
 SELECT id as emp_id, name, email,office_email, username
 						, is_admin, initial_pswd
 						, cms_emp_login_sessions.token
-						, concat('http://localhost/wta/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
-						, 'http://localhost/wta/services/files/' as filepath
+						, concat('http://localhost/altrawise/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
+						, 'http://localhost/altrawise/services/files/' as filepath
 		                , super_admin
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.faq_id')),'') as faq_id
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.chat_username')),'') as chat_username
@@ -172,8 +172,8 @@ Function Details: db_query_new
 SELECT id as emp_id, name, email,office_email, username
 						, is_admin, initial_pswd
 						, cms_emp_login_sessions.token
-						, concat('http://localhost/wta/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
-						, 'http://localhost/wta/services/files/' as filepath
+						, concat('http://localhost/altrawise/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
+						, 'http://localhost/altrawise/services/files/' as filepath
 		                , super_admin
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.faq_id')),'') as faq_id
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.chat_username')),'') as chat_username
@@ -206,8 +206,8 @@ Function Details: db_query_new
 SELECT id as emp_id, name, email,office_email, username
 						, is_admin, initial_pswd
 						, cms_emp_login_sessions.token
-						, concat('http://localhost/wta/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
-						, 'http://localhost/wta/services/files/' as filepath
+						, concat('http://localhost/altrawise/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
+						, 'http://localhost/altrawise/services/files/' as filepath
 		                , super_admin
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.faq_id')),'') as faq_id
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.chat_username')),'') as chat_username
@@ -240,8 +240,8 @@ Function Details: db_query_new
 SELECT id as emp_id, name, email,office_email, username
 						, is_admin, initial_pswd
 						, cms_emp_login_sessions.token
-						, concat('http://localhost/wta/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
-						, 'http://localhost/wta/services/files/' as filepath
+						, concat('http://localhost/altrawise/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
+						, 'http://localhost/altrawise/services/files/' as filepath
 		                , super_admin
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.faq_id')),'') as faq_id
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.chat_username')),'') as chat_username
@@ -274,8 +274,8 @@ Function Details: db_query_new
 SELECT id as emp_id, name, email,office_email, username
 						, is_admin, initial_pswd
 						, cms_emp_login_sessions.token
-						, concat('http://localhost/wta/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
-						, 'http://localhost/wta/services/files/' as filepath
+						, concat('http://localhost/altrawise/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
+						, 'http://localhost/altrawise/services/files/' as filepath
 		                , super_admin
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.faq_id')),'') as faq_id
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.chat_username')),'') as chat_username
@@ -308,8 +308,8 @@ Function Details: db_query_new
 SELECT id as emp_id, name, email,office_email, username
 						, is_admin, initial_pswd
 						, cms_emp_login_sessions.token
-						, concat('http://localhost/wta/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
-						, 'http://localhost/wta/services/files/' as filepath
+						, concat('http://localhost/altrawise/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
+						, 'http://localhost/altrawise/services/files/' as filepath
 		                , super_admin
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.faq_id')),'') as faq_id
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.chat_username')),'') as chat_username
@@ -342,8 +342,8 @@ Function Details: db_query_new
 SELECT id as emp_id, name, email,office_email, username
 						, is_admin, initial_pswd
 						, cms_emp_login_sessions.token
-						, concat('http://localhost/wta/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
-						, 'http://localhost/wta/services/files/' as filepath
+						, concat('http://localhost/altrawise/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
+						, 'http://localhost/altrawise/services/files/' as filepath
 		                , super_admin
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.faq_id')),'') as faq_id
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.chat_username')),'') as chat_username
@@ -372,8 +372,8 @@ Function Details: db_query_new
 SELECT id as emp_id, name, email,office_email, username
 						, is_admin, initial_pswd
 						, cms_emp_login_sessions.token
-						, concat('http://localhost/wta/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
-						, 'http://localhost/wta/services/files/' as filepath
+						, concat('http://localhost/altrawise/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
+						, 'http://localhost/altrawise/services/files/' as filepath
 		                , super_admin
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.faq_id')),'') as faq_id
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.chat_username')),'') as chat_username
@@ -402,8 +402,8 @@ Function Details: db_query_new
 SELECT id as emp_id, name, email,office_email, username
 						, is_admin, initial_pswd
 						, cms_emp_login_sessions.token
-						, concat('http://localhost/wta/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
-						, 'http://localhost/wta/services/files/' as filepath
+						, concat('http://localhost/altrawise/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
+						, 'http://localhost/altrawise/services/files/' as filepath
 		                , super_admin
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.faq_id')),'') as faq_id
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.chat_username')),'') as chat_username
@@ -432,8 +432,8 @@ Function Details: db_query_new
 SELECT id as emp_id, name, email,office_email, username
 						, is_admin, initial_pswd
 						, cms_emp_login_sessions.token
-						, concat('http://localhost/wta/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
-						, 'http://localhost/wta/services/files/' as filepath
+						, concat('http://localhost/altrawise/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
+						, 'http://localhost/altrawise/services/files/' as filepath
 		                , super_admin
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.faq_id')),'') as faq_id
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.chat_username')),'') as chat_username
@@ -462,8 +462,8 @@ Function Details: db_query_new
 SELECT id as emp_id, name, email,office_email, username
 						, is_admin, initial_pswd
 						, cms_emp_login_sessions.token
-						, concat('http://localhost/wta/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
-						, 'http://localhost/wta/services/files/' as filepath
+						, concat('http://localhost/altrawise/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
+						, 'http://localhost/altrawise/services/files/' as filepath
 		                , super_admin
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.faq_id')),'') as faq_id
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.chat_username')),'') as chat_username
@@ -492,8 +492,8 @@ Function Details: db_query_new
 SELECT id as emp_id, name, email,office_email, username
 						, is_admin, initial_pswd
 						, cms_emp_login_sessions.token
-						, concat('http://localhost/wta/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
-						, 'http://localhost/wta/services/files/' as filepath
+						, concat('http://localhost/altrawise/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
+						, 'http://localhost/altrawise/services/files/' as filepath
 		                , super_admin
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.faq_id')),'') as faq_id
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.chat_username')),'') as chat_username
@@ -526,8 +526,8 @@ Function Details: db_query_new
 SELECT id as emp_id, name, email,office_email, username
 						, is_admin, initial_pswd
 						, cms_emp_login_sessions.token
-						, concat('http://localhost/wta/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
-						, 'http://localhost/wta/services/files/' as filepath
+						, concat('http://localhost/altrawise/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
+						, 'http://localhost/altrawise/services/files/' as filepath
 		                , super_admin
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.faq_id')),'') as faq_id
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.chat_username')),'') as chat_username
@@ -560,8 +560,8 @@ Function Details: db_query_new
 SELECT id as emp_id, name, email,office_email, username
 						, is_admin, initial_pswd
 						, cms_emp_login_sessions.token
-						, concat('http://localhost/wta/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
-						, 'http://localhost/wta/services/files/' as filepath
+						, concat('http://localhost/altrawise/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
+						, 'http://localhost/altrawise/services/files/' as filepath
 		                , super_admin
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.faq_id')),'') as faq_id
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.chat_username')),'') as chat_username
@@ -590,8 +590,8 @@ Function Details: db_query_new
 SELECT id as emp_id, name, email,office_email, username
 						, is_admin, initial_pswd
 						, cms_emp_login_sessions.token
-						, concat('http://localhost/wta/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
-						, 'http://localhost/wta/services/files/' as filepath
+						, concat('http://localhost/altrawise/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
+						, 'http://localhost/altrawise/services/files/' as filepath
 		                , super_admin
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.faq_id')),'') as faq_id
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.chat_username')),'') as chat_username
@@ -660,8 +660,8 @@ Function Details: db_query_new
 SELECT id as emp_id, name, email,office_email, username
 						, is_admin, initial_pswd
 						, cms_emp_login_sessions.token
-						, concat('http://localhost/wta/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
-						, 'http://localhost/wta/services/files/' as filepath
+						, concat('http://localhost/altrawise/services/files/', 'photos/',id,'/',id,'.jpeg') as profile_pic
+						, 'http://localhost/altrawise/services/files/' as filepath
 		                , super_admin
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.faq_id')),'') as faq_id
 						, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.chat_username')),'') as chat_username

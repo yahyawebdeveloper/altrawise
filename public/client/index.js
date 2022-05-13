@@ -19,7 +19,7 @@ $(document).ready(function() {
         // console.log(TOKEN);
 
         // Initial Navigo
-		var root = '/wta/public/client/';
+		var root = '/altrawise/public/client/';
 		var useHash = true; // Defaults to: false
 		var hash = '#!'; // Defaults to: '#'
 		var router = new Navigo(root, false);
