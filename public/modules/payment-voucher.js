@@ -165,9 +165,6 @@ $.fn.populate_list_form = function(data,is_scroll)
                     <td>${status}</td>`;
 
                 row += '<td width="10%">';
-                // console.log(row);
-
-                
 
                 // row += '<a class="tooltips" data-toggle="tooltip" data-placement="left" title="View Comments" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.view_remark(unescape($(this).attr(\'data-value\')))"><i class="fa fa-external-link"></i></a>';
 
@@ -234,7 +231,9 @@ $.fn.save_edit_payment_form = function()
         let json_field  = {
                             remarks   : $('#txt_remarks').val(),
                             reference : $('#txt_reference').val(),
-                            currency  : $('#btn_currency_text').data('value')
+                            // currency  : $('#btn_currency_text').data('value')
+                            currency  : $('#currencyValue').text()
+                            
                           };
 
         let data =
@@ -360,6 +359,7 @@ $.fn.populate_payment_details = function (obj)
             if(json_field.currency)
             {
                 $('#btn_currency_text')   .html(data.currency_name).data('value', json_field.currency);
+                $('#currencyValue').html(json_field.currency);
             }
         }
 
@@ -1002,7 +1002,7 @@ $.fn.populate_currency = function(element_id, dd_data)
 
         for (let item of dd_data)
         {
-            $('#'+element_id).append(`<li><a class="currency-btn" data-value="${item.id}">${item.descr}</a></li>`);
+            $('#'+element_id).append(`<li><a class="currency-btn" style="cursor:pointer;" data-value="${item.id}">${item.descr}</a></li>`);
             // $('#'+element_id).append(`<li class="currency-btn option" data-value="${item.id}">${item.descr}</li>`);
         }
         
@@ -1641,7 +1641,15 @@ $.fn.bind_command_events = function()
         $(document).on('click', '.currency-btn', function(e) 
         {   
             e.preventDefault();
-            $.fn.change_segment_btn(this,$('#btn_currency_text'));
+            $('.currency_list').hide();
+            currencyVal = $(this).attr('data-value');
+            $('#currencyValue').html(currencyVal);
+            $(this).parents(".dropdown").find('#btn_currency_text').html($(this).text() + ' <span class="caret" id="btn_currency_text"></span>');
+            // $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
+            // $(this).parents(".dropdown").find('#btn_currency_text').val($(this).data('value'));
+            // $('#btn_currency_text').val($(this).data('value'));
+            // alert('1111');
+            // $.fn.change_segment_btn(this,$('#btn_currency_text'));
         });
 
         $(document).on('change', '#dd_paid_to', function(e) 
@@ -1823,6 +1831,27 @@ $.fn.bind_command_events = function()
 			$('#searchPanel').hide();
 			$('#btn_search_action').show();
 		});
+
+        // $('#dropdownMenu1').click(function(){
+		// 	// $(this).addClass('open');
+        //     $('.currency_list').show();
+		// });
+
+        $("#dropdownMenu1,.currency_list").mouseover(function(){
+            $('.currency_list').show();
+        });
+       
+        $("#dropdownMenu1,.currency_list").mouseleave(function(){
+            $('.currency_list').hide();
+        });
+        
+
+        $(".dropdown-menu li a").click(function(){
+            $('.currency_list').hide();
+            $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret" id="btn_currency_text"></span><i class="fa fa-caret-down"></i>');
+            // $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
+            $(this).parents(".dropdown").find('#btn_currency_text').val($(this).data('value'));
+          });
 
         $("#dp_date").flatpickr({
             mode:"range",

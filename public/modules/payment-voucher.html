@@ -1,4 +1,86 @@
+<style>
+    .currencySection {
+        display: block;
+        /* width: 99%; */
+        /* padding: 0.45rem 0.9rem; */
+        font-size: .875rem;
+        font-weight: 400;
+        line-height: -14.5;
+        color: #6c757d;
+        background-color: #fff;
+        background-clip: padding-box;
+        /* border: 1px solid #ced4da; */
+        -webkit-appearance: none;
+        appearance: none;
+        border-radius: 0.2rem;
+        /* transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out; */
+    }
+    #txt_amount {
+        display: block;
+        width: 77%;
+        float: right;padding: 0.45rem 0.9rem;
+        font-size: .875rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #6c757d;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-left: none;
+        -webkit-appearance: none;
+        appearance: none;
+        border-radius: 0.2rem;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
 
+    #currency_div {
+        width: 40%;
+    }
+
+    #currency_div li {
+        display: block;
+        position: relative;
+        float: left;
+    }
+
+    #currency_div li a {
+        display: block;
+        padding: 0;
+        text-decoration: none;
+        width: 145px;
+        line-height: 35px;
+        color: #000000;
+    }
+
+    #currency_div li li a {
+        font-size: 80%;
+    }
+
+    #currency_div li:hover {
+        background: #f1f1f1;
+    }
+
+    /* #currency_div ul {
+        position: absolute;
+        padding: 0;
+        left: 0;
+        display: none;
+    } */
+
+    /* #currency_div li:hover ul ul {
+        display: none;
+    }
+
+    #currency_div li:hover ul {
+        display: block;
+    } */
+
+    /* #currency_div li li:hover ul {
+        display: block;
+        margin-left: 200px;
+        margin-top: -35px;
+    } */
+</style>
 <!-- third party css -->
 <link href="assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
 <link href="assets/libs/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" rel="stylesheet" type="text/css" />
@@ -541,7 +623,21 @@
                                         <div class="row">
                                             <label for="txt_amount" class="col-4 col-form-label">Amount</label>
                                             <div class="col-7 errorContainer">
-                                                <div class="input-group">
+
+                                                  <div class="dropdown currencySection">
+                                                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;width:23%;">
+                                                        <span id="currencyValue" style="display: none;"></span>
+                                                      <span class="caret" id="btn_currency_text"></span><i class="fa fa-caret-down"></i>
+                                                    </button>
+                                                    <input type="text" required  class="form-control" id="txt_amount" maxlength="10" onkeypress="validateNumber(event)"  placeholder="" />
+                                                    <ul class="dropdown-menu currency_list" id="currency_div" aria-labelledby="dropdownMenu1">
+                                                      
+                                                    </ul>
+                                                    
+                                                  </div>
+                                                  
+
+                                                <!-- <div class="input-group">
                                                     <div class="input-group-btn">
                                                         <button type="button" id="btn_currency" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
                                                             <span id="btn_currency_text" class="text-left">$?</span> 
@@ -551,7 +647,7 @@
                                                         </ul>
                                                       </div>
                                                       <input type="text" required  class="form-control" id="txt_amount" maxlength="10" onkeypress="validateNumber(event)"  placeholder="" />
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                     </div>
