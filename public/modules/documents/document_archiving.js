@@ -168,13 +168,22 @@ $.fn.populate_list_form = function (data, is_scroll)
                 for (var i = 0; i < data.length; i++)
                 {
                     data_val = encodeURIComponent(JSON.stringify(data[i])); //.replace(/'/,"");
-                    row += `<tr id="TR_ROW_`+i+`"  data-value='${data_val}'>'
+                    /* row += `<tr id="TR_ROW_`+i+`"  data-value='${data_val}'>'
                     <td>${data[i].doc_no}</td>
                     <td>${data[i].user_doc_no ? data[i].user_doc_no : '-'}</td>
                     <td>${data[i].doc_date}</td>
                     <td>${data[i].client_name}</td>
                     <td>${data[i].doc_type}</td>
                     <td>${data[i].location}</td>
+                    <td>${data[i].created_by}</td>
+                    <td>${data[i].status_name}</td>`; */
+
+                    row += `<tr id="TR_ROW_`+i+`"  data-value='${data_val}'>'
+                    <td>${data[i].doc_no}</td>
+                    <td>${data[i].user_doc_no ? data[i].user_doc_no : '-'}</td>
+                    <td>${data[i].doc_date}</td>
+                    <td>${data[i].client_name}</td>
+                    <td>${data[i].doc_type}</td>
                     <td>${data[i].created_by}</td>
                     <td>${data[i].status_name}</td>`;
 
@@ -259,16 +268,61 @@ $.fn.save_edit_form = function ()
             return;
         }
 
+
+        if ($('#files .file-upload.new').length == 0)
+		{
+			$.fn.show_right_error_noty('Please select file to upload');
+			btn_save.stop();
+			return;
+		}
+        else
+        {   
+            let status = true;
+            let only_pdf = false;
+            var extensions = 'pdf,doc,docx,xls,xlsx,txt';
+            $('#files .file-upload.new').each(function () 
+            {
+                let data 	= $(this).data('data');
+                let file_name = data.files[0].name;
+                
+                let fileExtension = file_name.split('.').pop();
+                let extensions_array = extensions.split(',');
+                if($.inArray( fileExtension, extensions_array ) == -1)
+                {
+                    status = false;
+                }
+                else
+                {
+                    status = true;
+                }
+                /* if(fileExtension != 'pdf' && $('#dd_verification_type').val() == 474) {
+                    only_pdf = true;
+                } */
+            });
+
+            if(status == false)
+            {
+                $.fn.show_right_error_noty('Please select one of these files only - ' + extensions);
+                btn_save.stop();
+                return;
+            }
+
+            if(only_pdf == true) {
+                $.fn.show_right_error_noty('For Digital Verification only pdf files can be selected');
+                btn_save.stop();
+                return;
+            }
+        }
         var attachment = [];
-        $('#files .file-upload.new').each(function (index)
+       /*  $('#files .file-upload.new').each(function (index)
         {
             attachment.push($(this)[0].innerText.trim());
-        });
+        });  */
 
-        let json_field =
+        /* let json_field =
         {
 
-        }
+        }  */
         
         var data =
         {
@@ -287,8 +341,8 @@ $.fn.save_edit_form = function ()
             remark: $('#txt_remark').val(),
             location: $('#txt_location').val(),
             emp_id: SESSIONS_DATA.emp_id,
-            attachment: attachment,
-            json_field: json_field
+            attachment: attachment/* ,
+            json_field: json_field */
         };
        // console.log(data);
         $.fn.write_data
@@ -301,7 +355,7 @@ $.fn.save_edit_form = function ()
                         $.fn.set_edit_form();
 
                         DOC_NO = return_data.data.document_no;
-                        FILE_UPLOAD_PATH = `${MODULE_ACCESS.module_id}/${DOC_NO}/`;
+                        FILE_UPLOAD_PATH = `../files/${MODULE_ACCESS.module_id}/${DOC_NO}/`;
 
                         let attachment_data =
                         {
@@ -313,15 +367,15 @@ $.fn.save_edit_form = function ()
                             json_field: {},
                             emp_id: SESSIONS_DATA.emp_id
                         };
-                    //console.log(attachment_data);
+                     console.log(attachment_data);
                         if ($('#files .file-upload.new').length > 0)
                         {
-                            $.fn.upload_file('files', 'doc_no', DOC_NO,
+                            $.fn.upload_file(`files`, 'outbound_no', DOC_NO,
                                 attachment_data, function (total_files, total_success, filename, attach_return_data)
                             {
                                 if (total_files == total_success)
                                 {
-                                    $.fn.populate_fileupload(attach_return_data, 'files', true);
+                                    $.fn.populate_fileupload(attach_return_data, `files`, true);
                                 }
                             }, false, btn_save);
                         }
@@ -332,6 +386,10 @@ $.fn.save_edit_form = function ()
                                 $.fn.send_email_verifier_approver_archiving(return_data.data);
                             }
                         }
+
+                    
+
+
 
                         $('#h4_primary_no').text('Document Number : ' + return_data.data.document_no);
                         $.fn.show_right_success_noty('Data has been recorded successfully');
@@ -1169,24 +1227,16 @@ $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
 
 $.fn.set_validation_form = function ()
 {
-    $('#detail_form').parsley
-        ({
-            successClass: 'has-success',
-            errorClass: 'has-error',
-            errors:
-            {
-                classHandler: function (el)
-                {
-                    return $(el).parents('.error-container');
-                },
-                container: function (el)
-                {
-                    return $(el).parents('.error-container');
-                },
-                errorsWrapper: '<ul class=\"help-block list-unstyled\"></ul>',
-                errorElem: '<li></li>'
-            }
-        });
+    $('#detail_form').parsley(
+        {
+            classHandler: function(parsleyField) {              
+                return parsleyField.$element.closest(".errorContainer");
+            },
+            errorsContainer: function(parsleyField) {              
+                return parsleyField.$element.closest(".errorContainer");
+            },
+        }
+    );
 
     $('#remark_form').parsley
         ({
