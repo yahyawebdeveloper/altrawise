@@ -35,6 +35,24 @@ $(document).ready(function ()
 			$('#profile-pic').attr('src', $.jStorage.get('session_data').profile_pic_path);
 
 			//navigation access
+			//documents
+			let submission = $('#mn_submit').attr('href');
+			let submission_access = $.fn.get_accessibility($.fn.get_page_name(submission));
+			if(submission_access == 0 || submission_access.view == 0) {
+				$('#document_managment_li').hide();
+			}
+			
+			let claim_approval = $('#mn_claim_approval').attr('href');
+			let claim_approval_access = $.fn.get_accessibility($.fn.get_page_name(claim_approval));
+			if(claim_approval_access == 0 || claim_approval_access.view == 0) {
+				$('#document_managment_li').hide();
+			}
+			
+			let reports = $('#mn_reports').attr('href');
+			let reports_access = $.fn.get_accessibility($.fn.get_page_name(reports));
+			if(reports_access == 0 || reports_access.view == 0) {
+				$('#document_managment_li').hide();
+			}
 			//document managment
 			let outbound_documents = $('#mn_outbound_documents').attr('href');
 			let outbound_documents_access = $.fn.get_accessibility($.fn.get_page_name(outbound_documents));
@@ -73,6 +91,12 @@ $(document).ready(function ()
 			let task_scheduling_access = $.fn.get_accessibility($.fn.get_page_name(task_scheduling));
 			let task_template = $('#mn_task_template').attr('href');
 			let task_template_access = $.fn.get_accessibility($.fn.get_page_name(task_template));
+			let faq_list = $('#mn_faq_list').attr('href');
+		    let faq_list_access = $.fn.get_accessibility($.fn.get_page_name(faq_list));
+			let faq_approval = $('#mn_faq_approval').attr('href');
+		    let faq_approval_access = $.fn.get_accessibility($.fn.get_page_name(faq_approval));
+			let faq_report = $('#mn_faq_report').attr('href');
+		    let faq_report_access = $.fn.get_accessibility($.fn.get_page_name(faq_report));
 			if(my_task_access == 0 || my_task_access.view == 0) {
 				$('#mn_mytask').hide();
 			} 
@@ -82,7 +106,8 @@ $(document).ready(function ()
 			if(task_template_access == 0 || task_template_access.view == 0) {
 				$('#mn_task_template').hide();
 			}
-			if((my_task_access == 0 || my_task_access.view == 0) && (task_scheduling_access == 0 || task_scheduling_access.view == 0) && (task_template_access == 0 || task_template_access.view == 0)) {
+			if((my_task_access == 0 || my_task_access.view == 0) && (task_scheduling_access == 0 || task_scheduling_access.view == 0) && (task_template_access == 0 || task_template_access.view == 0) 
+			&& (faq_list_access == 0 || faq_list_access.view == 0) && (faq_approval_access == 0 || faq_approval_access.view == 0)  && (faq_report_access == 0 || faq_report_access.view == 0)) {
 				$('#operation_li').hide();
 			}
 
@@ -201,8 +226,26 @@ $(document).ready(function ()
 			.on("/documents/document-archiving", () => { //document archiving route
 				$.fn.load_form('./modules/documents/document_archiving.html');
 			}, { before: middleware })
+			.on("/claims/submissions", () => { //submissions route
+				$.fn.load_form('./modules/claims/submissions.html');
+			}, { before: middleware })
+			.on("/claims/documents-approval", () => { //documents approval route
+				$.fn.load_form('./modules/claims/documents_approval.html');
+			}, { before: middleware })
+			.on("/claims/document-reports", () => { //document reports route
+				$.fn.load_form('./modules/claims/document_reports.html');
+			}, { before: middleware })
 			.on("/payment-voucher", () => { //payment voucher route
 				$.fn.load_form('./modules/payment-voucher.html')
+			}, { before: middleware })
+			.on("faqs", () => { //faq route
+				$.fn.load_form('./modules/faq/faq_list.html')
+			}, { before: middleware })
+			.on("/faqs/approval", () => { //faq route
+				$.fn.load_form('./modules/faq/faq_approval.html')
+			}, { before: middleware })
+			.on("/faqs/report", () => { //faq route
+				$.fn.load_form('./modules/faq/faq_report.html')
 			}, { before: middleware })
 			.on({
 				"/documents/outbound-documents/:action/:id" : {
