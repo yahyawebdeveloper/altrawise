@@ -1,0 +1,103 @@
+<!-- third party css -->
+<link href="assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/datatables.net-select-bs5/css//select.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/dropify/css/dropify.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/mohithg-switchery/switchery.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
+<!-- <link href="assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" /> -->
+<link href="assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+<link href="./assets/libs/jquery-fileupload/css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
+<!-- third party css end -->
+<!-- List Block -->
+<div class="row" id="list_div">
+   <!-- start page title -->
+   <div class="row mt-3 mb-1">
+       <div class="col-12">
+           <div class="page-title-box">
+              
+               <h4 class="page-title">
+                  <i class="fas fa-globe-asia"></i> FAQ Pending Approvals
+               </h4>
+           </div>
+           
+       </div>
+   </div>     
+   <!-- end page title --> 
+
+
+   <div id="tblList" class="row">
+       <div class="col-12">
+           <div class="card">
+               <div class="card-body">
+                   <div class="dropdown float-end">
+                       <a href="#" class="dropdown-toggle card-drop arrow-none" data-bs-toggle="dropdown" aria-expanded="false">
+                           <i class="mdi mdi-dots-horizontal m-0 text-muted h3"></i>
+                       </a>
+                       <div class="dropdown-menu dropdown-menu-end">
+                           <p class="dropdown-item"  onclick="exportTable2CSV('Approval List','tbl_approver_list')" style="cursor: pointer;">Export as Excel</p>
+                           <p class="dropdown-item"  onclick="exportTable2PDF('Approval List','tbl_approver_list','p')" style="cursor: pointer;">Export as PDF</p>
+                       </div>
+                   </div>
+                   <div class="col-sm-12" id="approval_div">
+                   <div class="table-responsive mt-3">
+                       <table class="table table-centered table-striped w-100"  id="tbl_approver_list">
+                           <thead>
+                                 <tr>
+                                    <th>Question Category</th>
+                                    <th>Employee Category</th>
+                                    <th>Question/Answer</th>
+                                    <th>Action</th>
+                                 </tr>
+                           </thead>
+                           <tbody>
+                               
+                           </tbody>
+                       </table>
+                       <div id="div_load_more" class="d-flex justify-content-center load-more" style="display: none;">
+                           <button id="btn_load_more" type="button" class="btn btn-sm btn-info waves-effect waves-light rounded-pill ">
+                               <i class="fa fa-arrow-down"></i>&nbsp;&nbsp;Load More&nbsp;&nbsp;<i class="fa fa-arrow-up"></i>
+                           </button>
+                       </div>
+                   </div>
+                   </div>
+               </div>
+           </div> <!-- end card-->
+       </div> <!-- end col -->
+   </div>
+   <!-- end row -->
+</div>
+
+<!-- third party js -->
+<script src="./assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="./assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+<script src="./assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="./assets/libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="./assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+<script src="./assets/libs/datatables.net-select/js/dataTables.select.min.js"></script>
+<script src="./assets/libs/pdfmake/build/pdfmake.min.js"></script>
+<script src="./assets/libs/pdfmake/build/vfs_fonts.js"></script>
+<script src="./assets/libs/dropzone/min/dropzone.min.js"></script>
+<script src="./assets/libs/dropify/js/dropify.min.js"></script>
+<!-- <script src="assets/libs/select2/js/select2.min.js"></script> -->
+<script src="./assets/libs/mohithg-switchery/switchery.min.js"></script>
+<script src="./assets/libs/flatpickr/flatpickr.min.js"></script>
+<script src="./assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="./assets/libs/parsleyjs/parsley.min.js"></script>
+<!-- Tippy js-->
+<script src="./assets/libs/tippy.js/tippy.all.min.js"></script>
+<script src="./assets/js/moment.js/2.18.1/moment.min.js"></script>
+<script src="./assets/libs/ckeditor/ckeditor.js"></script>
+
+<script src="./assets/js/jspdf/plugins/jspdf.debug.js"></script>
+<script src="./assets/js/jspdf/plugins/jspdf.min.js"></script>
+<script src="./assets/js/jspdf/plugins/jspdf.plugin.autotable.js"></script>
+<script src="./assets/js/jspdf/exportpdf.js"></script>
+<!-- third party js ends -->
