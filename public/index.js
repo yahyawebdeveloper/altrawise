@@ -35,24 +35,6 @@ $(document).ready(function ()
 			$('#profile-pic').attr('src', $.jStorage.get('session_data').profile_pic_path);
 
 			//navigation access
-			//documents
-			let submission = $('#mn_submit').attr('href');
-			let submission_access = $.fn.get_accessibility($.fn.get_page_name(submission));
-			if(submission_access == 0 || submission_access.view == 0) {
-				$('#document_managment_li').hide();
-			}
-			
-			let claim_approval = $('#mn_claim_approval').attr('href');
-			let claim_approval_access = $.fn.get_accessibility($.fn.get_page_name(claim_approval));
-			if(claim_approval_access == 0 || claim_approval_access.view == 0) {
-				$('#document_managment_li').hide();
-			}
-			
-			let reports = $('#mn_reports').attr('href');
-			let reports_access = $.fn.get_accessibility($.fn.get_page_name(reports));
-			if(reports_access == 0 || reports_access.view == 0) {
-				$('#document_managment_li').hide();
-			}
 			//document managment
 			let outbound_documents = $('#mn_outbound_documents').attr('href');
 			let outbound_documents_access = $.fn.get_accessibility($.fn.get_page_name(outbound_documents));
@@ -68,13 +50,24 @@ $(document).ready(function ()
 			}
 			
 
+			
 			//HR
 			let users = $('#mn_users').attr('href');
 			let users_access = $.fn.get_accessibility($.fn.get_page_name(users));
+			let leaves_list = $('#mn_leave_list').attr('href');
+		    let leaves_list_access = $.fn.get_accessibility($.fn.get_page_name(leaves_list));
+			let leaves_approval = $('#mn_leave_approval').attr('href');
+		    let leaves_approval_access = $.fn.get_accessibility($.fn.get_page_name(leaves_approval));
+			let leaves_report = $('#mn_leave_report').attr('href');
+		    let leaves_report_access = $.fn.get_accessibility($.fn.get_page_name(leaves_report));
 			if(users_access == 0 || users_access.view == 0) {
 				// $('#hr_li').hide();
 				$('#mn_users').hide();
 			}
+			if(leaves_list_access == 0 || leaves_list_access.view == 0 || leaves_approval_access == 0 || leaves_approval_access.view == 0 ||leaves_report_access == 0 || leaves_report_access.view == 0 ) {
+				$('#hr_li').hide();
+			}
+
 
 			//CRM
 			let stake_holders = $('#mn_stake_holders').attr('href');
@@ -226,15 +219,6 @@ $(document).ready(function ()
 			.on("/documents/document-archiving", () => { //document archiving route
 				$.fn.load_form('./modules/documents/document_archiving.html');
 			}, { before: middleware })
-			.on("/claims/submissions", () => { //submissions route
-				$.fn.load_form('./modules/claims/submissions.html');
-			}, { before: middleware })
-			.on("/claims/documents-approval", () => { //documents approval route
-				$.fn.load_form('./modules/claims/documents_approval.html');
-			}, { before: middleware })
-			.on("/claims/document-reports", () => { //document reports route
-				$.fn.load_form('./modules/claims/document_reports.html');
-			}, { before: middleware })
 			.on("/payment-voucher", () => { //payment voucher route
 				$.fn.load_form('./modules/payment-voucher.html')
 			}, { before: middleware })
@@ -246,6 +230,15 @@ $(document).ready(function ()
 			}, { before: middleware })
 			.on("/faqs/report", () => { //faq route
 				$.fn.load_form('./modules/faq/faq_report.html')
+			}, { before: middleware })
+			.on("leaves", () => { //faq route
+				$.fn.load_form('./modules/leave/leave.html')
+			}, { before: middleware })
+			.on("/leaves/approval", () => { //faq route
+				$.fn.load_form('./modules/leave/leave_info.html')
+			}, { before: middleware })
+			.on("/leave/report", () => { //faq route
+				$.fn.load_form('./modules/leave/leave_report.html')
 			}, { before: middleware })
 			.on({
 				"/documents/outbound-documents/:action/:id" : {

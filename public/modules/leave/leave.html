@@ -1,0 +1,400 @@
+<!-- third party css -->
+<link href="assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/datatables.net-select-bs5/css//select.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/dropify/css/dropify.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/mohithg-switchery/switchery.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
+<!-- <link href="assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" /> -->
+<link href="assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+<link href="./assets/libs/jquery-fileupload/css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
+
+<div class="row"  id="page-content"> <!-- start page title -->
+    
+    <div class="row mt-3 mb-1">
+        <div class="col-12">
+                <h4 class="page-title">
+                    <i class="fa fa-plane fa-fw"></i> Leave Application
+                </h4>
+            </div>
+        </div>
+    </div>     
+    <!-- end page title --> 
+ 
+    <div id='wrap'>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
+
+                            <div id="div_leave_summary">
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+			<div class="row">
+
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <form class="form-horizontal" data-validate="parsley" id="leave_form">
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Title -->
+                                        <div class="row">
+                                            <label for="dd_leave_type" class="col-4 col-form-label">Leave Type </label>
+                                            <div class="col-7 errorContainer">
+                                                <select id="dd_leave_type" style="width:100%" class="populate" required="required" onchange="$.fn.view_file_status(this.value)">
+                                                    <option value="">Please Select</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Doc Date -->
+                                        <div class="row">
+                                            <label for="txt_reason" class="col-4 col-form-label">Reason</label>
+                                            <div class="col-8 pe-4 errorContainer">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control flatpickr-input" id="txt_reason" placeholder="Required Field" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Title -->
+                                        <div class="row">
+                                            <label for="start_date" class="col-4 col-form-label">Start Date </label>
+                                            <div class="col-7 errorContainer">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control flatpickr-input" id="start_date" placeholder="e.g dd-mm-yyyy" required>
+                                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Doc Date -->
+                                        <div class="row">
+                                            <label for="end_date" class="col-4 col-form-label">End Date</label>
+                                            <div class="col-7 errorContainer">
+                                                <div class="input-group">
+
+                                                    <input type="text" class="form-control flatpickr-input" id="end_date" placeholder="e.g dd-mm-yyyy" required ="requried">
+                                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    
+
+                                    </div>
+                                </div>
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Title -->
+                                        <div class="row">
+                                            <label for="chk_weekend" class="col-sm-4 control-label">Allow Days :</label>
+                                            <div class="col-8 errorContainer">
+                                               <!--- <div class="col-sm-1">
+                                                    <input type="checkbox" id="chk_allow_weekend" name="chk_allow_weekend">
+                                                </div>-->
+                                                <div class="col-sm-5">
+                                                    <input type="checkbox" id="chk_allow_weekend" name="chk_allow_weekend">
+                                                    <b>Weekend Days.</b>
+                                                </div>
+                                                <!--<div class="col-sm-1">
+                                                    <input type="checkbox" id="chk_allow_holiday" name="chk_allow_holiday">
+                                                </div>-->
+                                                <div class="col-sm-5">
+                                                    <input type="checkbox" id="chk_allow_holiday" name="chk_allow_holiday">
+                                                    <b>Public Holidays.</b>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Doc Date -->
+                                       
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Title -->
+                                        <div class="row">
+                                            <label for="dd_leave_type" class="col-4 col-form-label">Nature of Expenses </label>
+                                            <div class="col-7 errorContainer">
+                                                <select id="dd_expenses" style="width:100%" class="populate" required="required" onchange="$.fn.check_nature_of_expense(this.value)">
+                                                    <option value="">Please Select</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Doc Date -->
+                                        <div class="row">
+                                            <label for="txt_reason" class="col-4 col-form-label">Cost</label>
+                                            <div class="col-8 pe-4 errorContainer">
+                                                <div class="input-group">
+		                                            <div class="input-group-addon">RM</div>
+		                                            <input type="number" min="0.00" step="0.01" value="0.00" class="form-control marginBottom10px" id="txt_cost" required>
+	                                        	</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="display:none">
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Title -->
+                                        <div class="row">
+                                            <label for="dd_leave_type" class="col-4 col-form-label">SST / GST Amount </label>
+                                            <div class="col-7 errorContainer">
+                                                <div class="input-group">
+		                                            <div class="input-group-addon">RM</div>
+		                                            <input type="number" min="0.00" step="0.01" value="0.00" class="form-control marginBottom10px" id="txt_gst" required>
+	                                        	</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Doc Date -->
+                                        <div class="row">
+                                            <label for="txt_reason" class="col-4 col-form-label">Round Up</label>
+                                            <div class="col-8 pe-4 errorContainer">
+                                                <div class="input-group">
+		                                            <div class="input-group-addon">RM</div>
+		                                            <input type="number" step="0.01" value="0.00" class="form-control marginBottom10px" id="txt_roundup" required>
+	                                        	</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Title -->
+                                        <div class="row">
+                                            <label for="dd_leave_type" class="col-4 col-form-label">Total</label>
+                                            <div class="col-7 errorContainer">
+                                                <div class="input-group">
+		                                            <div class="input-group-addon">RM</div>
+		                                            <input type="number" step="0.01" value="0.00" class="form-control marginBottom10px" id="txt_total" required readonly="readonly">
+	                                        	</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Doc Date -->
+                                        <div class="row">
+                                            <label for="txt_reason" class="col-4 col-form-label">File</label>
+                                            <div class="col-8 pe-4 errorContainer">
+                                                <span class="btn btn-success fileinput-button" id="btn_upload" style="width: 100%">
+                                                    <span>Medical Bill</span>
+                                                    <input id="fileupload" type="file" name="files[]" data-extension="<?php echo(constant('FILEUPLOAD_ALLOWED_TYPE'));?>">
+                                                </span>
+                                                <br/>
+                                            </div>
+                                            <div id="files" class="col-sm-5 col-sm-offset-7"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+			                                
+                                    <div class="form-group">
+
+                                        <div class="pull-right">
+                                            <div class="col-sm-12" style="text-align:right">
+                                                <button type="button" class="btn btn-primary-alt ladda-button" data-style="expand-left" data-spinner-color="#000000" id="btn_view_days">View Leave Days</button>
+                                                <button type="button" class="btn btn-primary-alt ladda-button" data-style="expand-left" data-spinner-color="#000000" id="btn_save_time_off"><i class="fa fa-save"></i> Save</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    
+                                    
+                                </div>
+
+
+                                <div id="leave_days_info" class="col-sm-12">
+                                	<table width="100%" class="table">
+                                     	<tbody>
+                                        <tr>
+                                            <td width="50%"><h2><span class="col-sm-12 label label-default">Available Leave : <span id="div_available_leave">n/a</span></span></h2></td>
+                                            <td width="50%"><h2><span class="col-sm-12 label label-default">Balance Leave : <span id="div_balance_leave">n/a</span></span></h2></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+									<div class="col-sm-9">
+                                        <table id="tbl_days" width="100%" class="table table-hover table-condensed">
+                                            <thead>
+                                                <th><input type="checkbox" id="chk_all" name="chk_all" onchange="$.fn.change_balance_leave('all')"></th>
+                                                <th>DATE</th>
+                                                <th>DAY</th>
+                                                <th>DURATION</th>
+                                                <th>&nbsp;</th>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-sm-3">
+                                    	<div class="alert alert-info">
+                                    		<h3>Public Holidays</h3>
+                                            <p id="div_holidays">
+
+                                            </p>
+                                            <a href="https://www.onestopmalaysia.com/holidays-<?php echo(date('Y')); ?>.html" target="_blank">Click here</a> to view all the public holidays.
+                                       </div>
+                                    </div>
+
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <div class="pull-right">
+                                                <div class="btn-toolbar" style="text-align:right">
+                                                    <button type="button" class="btn btn-primary-alt ladda-button" data-style="expand-left" data-spinner-color="#000000" id="btn_add_leave"><i class="fa fa-save"></i> Save</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                           	</form>
+
+                        </div>
+					</div>
+                </div>
+
+
+    <div id="tblList" class="row">
+       <div class="col-12">
+           <div class="card">
+               <div class="card-body">
+                   <div class="dropdown float-end">
+                       <a href="#" class="dropdown-toggle card-drop arrow-none" data-bs-toggle="dropdown" aria-expanded="false">
+                           <i class="mdi mdi-dots-horizontal m-0 text-muted h3"></i>
+                       </a>
+                       <div class="dropdown-menu dropdown-menu-end">
+                           <p class="dropdown-item"  onclick="exportTable2CSV('Leave','tbl_list')" style="cursor: pointer;">Export as Excel</p>
+                           <p class="dropdown-item"  onclick="exportTable2PDF('Leave','tbl_list','p')" style="cursor: pointer;">Export as PDF</p>
+                       </div>
+                   </div>
+                   <div class="table-responsive mt-3">
+                       <table class="table table-centered table-striped w-100"  id="tbl_list">
+                           <thead>
+                            <tr>
+                                <th></th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Applied Date</th>
+                                <th>Type</th>
+                                <th>Days/Hours</th>
+                                <th>Reason</th>
+                                <th>Verification</th>
+                                <th>Medical Cert</th>
+                                <th>Leave Record</th>
+                            </tr>
+                           </thead>
+                           <tbody>
+                               
+                           </tbody>
+                       </table>
+                       <div id="div_load_more" class="d-flex justify-content-center load-more" style="display: none;">
+                           <button id="btn_load_more" type="button" class="btn btn-sm btn-info waves-effect waves-light rounded-pill ">
+                               <i class="fa fa-arrow-down"></i>&nbsp;&nbsp;Load More&nbsp;&nbsp;<i class="fa fa-arrow-up"></i>
+                           </button>
+                       </div>
+                   </div>
+               </div>
+           </div> <!-- end card-->
+       </div> <!-- end col -->
+   </div>
+   <!-- end row -->
+    
+
+            </div>
+
+        </div> <!-- container -->
+
+    </div> <!--wrap -->
+</div> <!-- page-content -->
+
+
+    <!-- Modal Leave Record -->
+    <div class="modal fade" id="leaveRecordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Leave Record</h4>
+                </div>
+                <div class="modal-body">
+                	<table class="table" id="tbl_leave_record">
+                        <thead>
+                            <tr>
+                            	<th>Date</th>
+                                <th>Days/Hours</th>
+                                <th>Action</th>
+                                <th>Payment</th>
+							</tr>
+						</thead>
+						<tbody>
+
+						</tbody>
+					</table>
+                    <br>
+                    <h5>Remarks :</h5>
+                    <table class="table" id="tbl_remark_list">
+						<tbody>
+
+						</tbody>
+					</table>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- third party js -->
+<script src="./assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="./assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+<script src="./assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="./assets/libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="./assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+<script src="./assets/libs/datatables.net-select/js/dataTables.select.min.js"></script>
+<script src="./assets/libs/pdfmake/build/pdfmake.min.js"></script>
+<script src="./assets/libs/pdfmake/build/vfs_fonts.js"></script>
+<script src="./assets/libs/dropzone/min/dropzone.min.js"></script>
+<script src="./assets/libs/dropify/js/dropify.min.js"></script>
+<!-- <script src="assets/libs/select2/js/select2.min.js"></script> -->
+<script src="./assets/libs/mohithg-switchery/switchery.min.js"></script>
+<script src="./assets/libs/flatpickr/flatpickr.min.js"></script>
+<script src="./assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="./assets/libs/parsleyjs/parsley.min.js"></script>
+<!-- Tippy js-->
+<script src="./assets/libs/tippy.js/tippy.all.min.js"></script>
+<script src="./assets/js/moment.js/2.18.1/moment.min.js"></script>
+<script src="./assets/libs/ckeditor/ckeditor.js"></script>
+
+<script src="./assets/js/jspdf/plugins/jspdf.debug.js"></script>
+<script src="./assets/js/jspdf/plugins/jspdf.min.js"></script>
+<script src="./assets/js/jspdf/plugins/jspdf.plugin.autotable.js"></script>
+<script src="./assets/js/jspdf/exportpdf.js"></script>
+<!-- third party js ends -->
