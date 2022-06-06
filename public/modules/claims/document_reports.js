@@ -118,10 +118,8 @@ $.fn.reset_form = function (form)
 {
 	try
 	{
-		$('#dd_employee').val('').change();
-		$('#dd_category').val('').change();
-
-		window
+		$('#search_field').val('').change();
+		$('#search_condition').val('').change();
 	}
 	catch (err)
 	{
@@ -201,7 +199,7 @@ $.fn.populate_list_form = function (data, is_scroll)
 					}
 					if (allow_approve == 1 && (data[i].category_id == 5 || data[i].category_id == 6 || data[i].category_id == 7))
 					{
-						row += '<button class="btn btn-outline-success btn-xs waves-effect waves-light btn_view_details" data-value=\'' + data_val + '\' onclick="$.fn.do_approve( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_approve">Approve</button>';
+						row += '<br><button class="btn btn-outline-success btn-xs waves-effect waves-light btn_view_details mt-1" data-value=\'' + data_val + '\' onclick="$.fn.do_approve( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_approve">Approve</button>';
 
 						//row += '<input type="checkbox" id="chk_is_approve" name="chk_is_approve" data-value=\'' + data_val + '\' onchange="$.fn.do_approve(unescape($(this).attr(\'data-value\')),$(this).is(\':checked\'))"> Approve';
 					}
@@ -217,7 +215,7 @@ $.fn.populate_list_form = function (data, is_scroll)
 					row += '<td>';
 					if (allow_approve == 1 && (data[i].category_id == 5 || data[i].category_id == 6 || data[i].category_id == 7))
 					{
-						row += '<button class="btn-danger btn" data-value=\'' + data_val + '\' onclick="$.fn.cancel_approve( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_cancel">Cancel&nbsp;&nbsp;&nbsp;</button>';
+						row += '<button class="btn btn-outline-danger btn-xs waves-effect waves-light btn_view_details" data-value=\'' + data_val + '\' onclick="$.fn.cancel_approve( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_cancel">Cancel</button>';
 						//row += '<a  class="tooltips" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.cancel_approve(unescape($(this).attr(\'data-value\')),false)">Cancel</a>';
 					}
 					else
@@ -437,7 +435,7 @@ $.fn.get_list = function (is_scroll)
         );
     }
     catch (err)
-    { //console.log(err.message);
+    {// console.log(err.message);
     	 $.fn.log_error(arguments.callee.caller, err.message);
     }
 };
@@ -499,10 +497,13 @@ $.fn.get_drop_down_values = function ()
 	{
 		$.fn.fetch_data
 			(
-				$.fn.generate_parameter('get_document_report_drop_down_values'),
+				$.fn.generate_parameter('get_document_search_query_data_check'),
 				function (return_data)
 				{
-					drop_down_values = return_data;
+					$.fn.populate_dd_values('category', return_data.data.category);
+					$.fn.populate_dd_values('emp', return_data.data.emp);
+					$.fn.populate_dd_values('search_field', return_data.data.columns);
+					$.fn.populate_dd_values('search_condition', return_data.data.conditions);
 				}
 			);
 
@@ -511,6 +512,33 @@ $.fn.get_drop_down_values = function ()
 	{ //console.log(err.message);
 		$.fn.log_error(arguments.callee.caller, err.message);
 	}
+};
+
+
+$.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
+{
+    try
+    {
+		$('#'+element_id).empty();
+		if(is_search)
+		{
+			$('#'+element_id).append(`<option value="">All</option>`);
+		}
+		else if(element_id != 'dd_notify_email')
+		{
+			$('#'+element_id).append(`<option value="">Please Select</option>`);
+		}
+
+		for (let item of dd_data)
+		{
+			$('#'+element_id).append(`<option value="${item.id}">${item.descr}</option>`);
+		}
+        
+    }
+    catch(err)
+    {
+        $.fn.log_error(arguments.callee.caller,err.message);
+    }
 };
 
 /*$.fn.prepare_form = function ()
@@ -565,7 +593,7 @@ $.fn.prepare_form = function ()
         {
             new Switchery($(this)[0], $(this).data());
         }); */
-
+		$.fn.get_drop_down_values();
         ROUTE_DATA = CURRENT_ROUTE.data;
         if(ROUTE_DATA != null) {
             ROUTE_DATA_ACTION = ROUTE_DATA.action;
@@ -697,7 +725,7 @@ $.fn.cancel_verify = function (data, table_row_id)
 {
 	try
 	{
-		bootbox.prompt("Please enter cancelling remarks", function (result)
+		bootbox.prompt("Please enter cancelling remark", function (result)
 		{
 			if (result !== null && result !== '')
 			{
@@ -713,7 +741,7 @@ $.fn.cancel_verify = function (data, table_row_id)
 			}
 			else
 			{
-				$.fn.show_right_error_noty('Cancel remarks is mandatory');
+				$.fn.show_right_error_noty('Cancel remark is mandatory');
 			}
 		});
 
@@ -780,8 +808,7 @@ $.fn.edit_status = function (action)
 			action: action
 		};
 
-		$.fn.write_data
-			(
+			$.fn.write_data(
 				$.fn.generate_parameter('edit_verify_approve', data),
 				function (return_data)
 				{
@@ -793,13 +820,16 @@ $.fn.edit_status = function (action)
 						$('#table_row').val('');
 						$('#doc_no').val('');
 						$('#chk_val').val('');
-					}
+						$.fn.show_right_success_noty('Data has been recorded successfully');
+						location.reload();
 
+					}
 				}, false, btn_verify_approve
-			);
+			);	
+			
 	}
 	catch (err)
-	{  //console.log(err.message);
+	{  //console.log(err);
 		$.fn.log_error(arguments.callee.caller, err.message);
 	}
 };
@@ -931,7 +961,7 @@ $.fn.bind_command_events = function ()
 			e.preventDefault();
 			$.fn.reset_form();
 			$.fn.reset_search();
-			$.fn.get_list();
+			//$.fn.get_list('false');
 		});
 
 		$('#btn_back, #btn_cancel').click(function (e)
@@ -969,10 +999,15 @@ $.fn.bind_command_events = function ()
 		$('#btn_verify').click(function (e)
 		{
 			e.preventDefault();
-
-			btn_verify_approve = Ladda.create(this);
-			btn_verify_approve.start();
-			$.fn.edit_status("verify");
+			if($('#doc_remark').val() != ''){
+				btn_verify_approve = Ladda.create(this);
+				btn_verify_approve.start();
+				$.fn.edit_status("verify");
+			}
+			else{
+				$.fn.show_right_error_noty('Confirmation remark is mandatory');
+				return;
+			}
 		});
 
 		$('#btn_approve').click(function (e)
