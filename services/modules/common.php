@@ -7,11 +7,6 @@ use setasign\Fpdi\Tfpdf\FpdfTpl as TfpdfFpdfTpl;
 use setasign\Fpdi\Tfpdf\Fpdi;
 
 
-function get_service_request_search_dropdown($params) {
-
-}
-
-
 function get_document_search_dropdown_data_check() {
     try
     {   
@@ -112,5 +107,41 @@ function get_leave_approval_dropdown_data($params) {
         handle_exception($e);
     }
 }
+
+function get_service_request_search_dropdown($params) {
+
+    try {
+
+        log_it(__FUNCTION__, $params);
+        $emp_id = if_property_exist($params, 'emp_id', '');
+        if (!isset($emp_id) || $emp_id == '') {
+            return handle_fail_response('Missing employee ID.');
+        }
+
+        $emp = array();
+        
+            $emp        	= db_query('id,name,office_email','cms_employees',"id =" . $emp_id . " AND is_active = 1");
+            $where  =   "cms_clients.is_active = 1 AND FIND_IN_SET(" . $emp_id . ", cms_clients.assign_emp_id)";
+
+        $client =  db_query('cms_clients.id,cms_clients.name',
+                                    'cms_clients
+                                        LEFT JOIN cms_master_list as tbl_type ON FIND_IN_SET(tbl_type.id, cms_clients.type_id) > 0
+                                        LEFT JOIN cms_master_category ON tbl_type.category_id = cms_master_category.id',
+                                    $where." AND tbl_type.descr = 'Client' AND cms_master_category.id = 59");
+
+        $category     		= db_query('id,descr','cms_master_list',"category_id = 39 AND is_active = 1");
+        $employer    	    = db_query('id,employer_name','cms_master_employer',"is_active = 1");
+        $status             = db_query('id,descr','cms_master_list',"category_id = 40 AND is_active = 1");
+        $payment_term       = db_query('id,descr','cms_master_list',"category_id = 5 AND is_active = 1");
+        $asset_type        = db_query('id,descr','cms_master_list',"category_id = 20 AND is_active = 1");
+
+        $return_data = array('category' => $category,'employer' => $employer,'created_by' => $emp ,'status' => $status,'payment_term' => $payment_term,'asset_type' => $asset_type );
+		echo json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );exit;
+
+    } catch(Exception $e) {
+        handle_exception($e);
+    }
+    
+} 
 
 ?>
