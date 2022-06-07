@@ -1,6 +1,6 @@
 var FORM_STATE = 0;
 var RECORD_INDEX = 0;
-var SESSIONS_DATA = '';
+//var SESSIONS_DATA = '';
 var btn_save, btn_save_remarks, btn_verify_approve;
 var total_selected_files = 0
 DOC_NO = '';
@@ -53,7 +53,7 @@ $.fn.data_table_destroy = function ()
 $.fn.get_list = function (is_scroll, pending_data = false)
 {
     try
-    {   
+    {  // console.log("hii",SESSIONS_DATA); 
         if (pending_data)
         {
             var data = pending_data;
@@ -188,7 +188,7 @@ $.fn.populate_list_form = function (data, is_scroll)
                     <td>${data[i].status_name}</td>`;
 
                     row += '<td width="15%">';
-                    row += '<a class="btn btn-outline-primary btn-xs waves-effect waves-light"" data-toggle="tooltip" data-placement="left" title="View Comments" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.view_remark(unescape($(this).attr(\'data-value\')))"><i class="fas fa-external-link-alt"></i></a>';
+                    row += '<a class="btn btn-outline-primary btn-xs waves-effect waves-light" data-toggle="tooltip" data-placement="left" title="View Comments" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.view_remark(unescape($(this).attr(\'data-value\')))"><i class="fas fa-external-link-alt"></i></a>';
                     if (MODULE_ACCESS.edit == 1)
                     {
                         row += '&nbsp;&nbsp;<a class="btn btn-outline-success btn-xs waves-effect waves-light" data-toggle="tooltip" data-placement="left" title="View Details" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.populate_detail_form(unescape($(this).attr(\'data-value\')))"><i class="fas fa-sign-in-alt"></i></a>';
@@ -1109,7 +1109,7 @@ $.fn.get_documents_drop_down_values = function()
 {
     try
     {   
-        let lead_access = $.fn.get_accessibility(152); //stake holders
+        let lead_access = $.fn.get_accessibility(115); //stake holders
         let data    =
         {   
             emp_id   : SESSIONS_DATA.emp_id,
@@ -1126,8 +1126,8 @@ $.fn.get_documents_drop_down_values = function()
                 if (return_data.code == 0)
                 {  //console.log(return_data.data);
                    // $.fn.populate_dd_values('dd_category', return_data.data.category);
-                   $.fn.populate_dd_values('dd_company', return_data.data.company);
-                    $.fn.populate_dd_values('dd_type', return_data.data.outbound_type);
+                    $.fn.populate_dd_values('dd_company', return_data.data.company);
+                    //$.fn.populate_dd_values('dd_type', return_data.data.outbound_type);
                     $.fn.populate_dd_values('dd_client', return_data.data.client);
                     $.fn.populate_dd_values('dd_doc_type', return_data.data.category);
                     $.fn.populate_dd_values('dd_status', return_data.data.status);

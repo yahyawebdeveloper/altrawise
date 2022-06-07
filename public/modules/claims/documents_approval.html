@@ -1,0 +1,366 @@
+<!-- third party css -->
+<link href="assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/datatables.net-select-bs5/css//select.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/dropify/css/dropify.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/mohithg-switchery/switchery.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
+<!-- <link href="assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" /> -->
+<link href="assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+<link href="./assets/libs/jquery-fileupload/css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
+<!-- third party css end -->
+
+<!-- List Block -->
+<div class="row" id="view-list">
+    <!-- start page title -->
+    <div class="row mt-3 mb-1">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <a href="javascript:void(0);" id="btn_search" class="btn btn-success mb-2 panel-collapse"><i class="fe-search me-1"></i>Search</a>
+                    <a href="javascript:void(0);" id="btn_summary" class="btn btn-danger mb-2"><i class="fas fa-print me-1"></i>Claim Summary</a>
+                </div>
+                <h4 class="page-title">
+                    <i class=" far fa-check-circle"></i> Claims Details</h4>
+                </h4>
+            </div>
+        </div>
+    </div>     
+    <!-- end page title --> 
+
+    <div id="search-list" class="row panel-body" style="display: none;">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    
+                    <div class="float-end">
+                        <a id="btn_close_search" href="javascript:void(0)">
+                            <i class="mdi mdi-close-box m-0 text-muted h3"></i>
+                        </a>
+                    </div>
+                    <div class="clearfix"></div>
+                    <form class="form-horizontal">
+
+                        <div class="row mt-2">
+                            <div class="col-lg-6">
+                                <!-- Month -->
+                                <div class="row">
+                                    <label for="dp_month" class="col-4 col-form-label">Month</label>
+                                    <div class="col-7 errorContainer">
+                                        <input type="text" id="dp_month" dateFormat="m.y" class="form-control flatpickr-input" placeholder="2018-10-03 to 2018-10-10" readonly="readonly">
+                                    </div>
+                                    <input type="hidden" id="from_search_date">
+                                    <input type="hidden" id="to_search_date">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <!-- Employee -->
+                                <div class="row">
+                                    <label for="dd_employee" class="col-4 col-form-label">Employee</label>
+                                    <div class="col-7 errorContainer">
+                                        <select id="dd_employee" class="form-control populate" data-width="100%">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div><br></div>
+                        <div class="form-group align-right">
+                            <button id="btn_reset" type="button" class="btn btn-light waves-effect waves-light m-1"><i class="fe-refresh-cw me-1"></i> Reset</button>
+                            <button id="btn_search_action" type="button" class="btn btn-success waves-effect waves-light mt-1 mb-1"><i class="fe-search me-1"></i> Search</button>
+                        </div>
+                    </form>                
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="tblList" class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="panel-title">Pending Claims for <span id="title_month_year"></span></h5><hr />
+                    <div class="table-responsive">
+                        <table class="table table-centered table-striped w-100"  id="tbl_list">
+                            <thead>
+                                <tr>
+                                    <th width="10%">#</th>
+                                    <th>Claimer</th>
+                                    <th width="15%">Total Claims</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table_claim_list">
+                                
+                            </tbody>
+                        </table>
+                        <!--<div id="div_load_more" class="d-flex justify-content-center load-more" style="display: none;">
+                            <button id="btn_load_more" type="button" class="btn btn-sm btn-info waves-effect waves-light rounded-pill ">
+                                <i class="fa fa-arrow-down"></i>&nbsp;&nbsp;Load More&nbsp;&nbsp;<i class="fa fa-arrow-up"></i>
+                            </button>
+                        </div>-->
+                    </div>
+                </div>
+            </div> <!-- end card-->
+        </div> <!-- end col -->
+    </div>
+    <!-- end row -->
+</div>
+
+<!-- Claims Details -->
+<div class="row view-details" id="view-details" style="display: none">
+    <!-- start page title -->
+    <div class="row mt-3 mb-1">
+        <div class="col-12">
+            <div class="page-title-box">
+                <h4 class="page-title"><i class="far fa-check-circle"></i> Claims Details</h4>
+                <div class="page-title-right">
+                    <a href="javascript:void(0);" id="btn_back_1" class="btn btn-secondary mb-2"><i class="fe-arrow-left me-1"></i>Back</a>
+                </div>
+            </div>
+        </div>
+    </div>     
+    <!-- end page title --> 
+
+    <div class="row">
+
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body">
+					<div class="table-responsive" style="margin-bottom: 0;">
+						<table class="table table-bordered table-condensed panel-table">
+							<thead>
+								<tr>
+									<th class=""><i class="fa fa-paperclip" aria-hidden="true"></i></th>
+									<th class="">Date</th>
+									<th>Details of Expense</th>
+									<th>Nature of Expenses</th>
+									<th class="">Cost</th>
+									<th class="">SST/GST</th>
+									<th class="">Round Up</th>
+									<th class="">Total</th>
+									<th class="">Approve</th>
+									<th class="">Reject</th>
+								</tr>
+							</thead>
+							<tbody id="table_claim_details">
+								<tr>
+									<td><a href=""><i class="fa fa-file-image-o" aria-hidden="true"></i></a></td>
+									<td class="cell-shrink">4-Nov-2017</td>
+									<td>Chicken Wings X 4</td>
+									<td class="cell-shrink">5.60</td>
+									<td class="cell-shrink">5.00</td>
+									<td class="cell-shrink"></td>
+									<td class="cell-shrink">22.40</td>
+								</tr>
+								<tr>
+									<td><a href=""><i class="fa fa-file-image-o" aria-hidden="true"></i></a></td>
+									<td class="cell-shrink">7-Nov-2017</td>
+									<td>Coconut Shake X 1</td>
+									<td class="cell-shrink">2.30</td>
+									<td class="cell-shrink">1.80</td>
+									<td class="cell-shrink"></td>
+									<td class="cell-shrink">1.80</td>
+								</tr>
+								<tr style="background-color: #f7f8fa;">
+									<td colspan="6" class="text-right">Total Expenses</td>
+									<td style="border-top: double #e6e7e8;"></td>
+									<td style="border-top: double #e6e7e8;"></td>
+									<td style="border-top: double #e6e7e8;"></td>
+									<td style="border-top: double #e6e7e8;"></td>
+								</tr>
+								<tr style="background-color: #f7f8fa;">
+									<td colspan="6" class="text-right">Less: Advance (if any)</td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr style="background-color: #f7f8fa;">
+									<td colspan="6" class="text-right">Less: Refund to Company</td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr style="background-color: #f7f8fa;">
+									<td colspan="6" class="text-right">Balance Due</td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="panel-footer" style="background-color: #fff;">
+						<div class="pull-right ">
+							<table class="float-end">
+								<tbody>
+									<tr>
+										<td style="min-width: 50px;">SST/GST 6%</td>
+										<td style="padding-right: 5px"></td>
+										<td class="text-right" id="total_s">0.00</td>
+									</tr>
+									<tr>
+										<td>Z 0%</td>
+										<td style="padding-right: 5px"></td>
+										<td class="text-right float-end" id="total_z">0.00</td>
+									</tr>
+									<tr>
+										<td></td>
+										<td style="border-top: 1px solid; border-bottom: double;padding-right: 5px;">MYR</td>
+										<td style="border-top: 1px solid; border-bottom: double;" id="total_total">0.00</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+					
+					<div class="panel-footer text-right" id="footer_task" >
+						<button type="button" class="btn btn-success" data-style="expand-left" data-spinner-color="#000000" id="btn_approve_claim">Process</button>
+					</div>
+					
+				</div>
+            </div> <!-- end card-->
+        </div> <!-- end col -->
+        
+    </div>
+    <!-- end row -->
+</div>
+
+
+
+<div class="row" id="div_claim_print" style="display: none">
+    <!-- start page title -->
+    <div class="row mt-3 mb-1">
+        <div class="col-12">
+            <div class="page-title-box">
+                <h4 class="page-title"><i class=" far fa-check-circle"></i> Claim's Summary</h4>
+                <div class="page-title-right">
+                    <a href="javascript:void(0);" id="btn_back_2" class="btn btn-secondary mb-2"><i class="fe-arrow-left me-1"></i>Back</a>
+                </div>
+            </div>
+        </div>
+    </div>     
+    <!-- end page title --> 
+
+    <div class="row">
+
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body">
+					<div class="table-responsive" style="margin-bottom: 0;">
+                            <table class="table table-bordered table-condensed panel-table">
+                                <thead>
+                                    <tr>
+                                        <th class="cell-shrink"><i class="fa fa-paperclip" aria-hidden="true"></i></th>
+                                        <th class="cell-shrink">Date</th>
+                                        <th>Name</th>
+                                        <th>Details of Expense</th>
+                                        <th>Nature of Expenses</th>
+                                        <th class="cell-shrink">Cost</th>
+                                        <th class="cell-shrink">SST/GST</th>
+                                        <th class="cell-shrink">Round Up</th>
+                                        <th class="cell-shrink">Total</th>
+                                        <th class="cell-shrink">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table_claim_details_report">
+                                    
+                                    <tr style="background-color: #f7f8fa;">
+                                        <td colspan="7" class="text-right">Total Expenses</td>
+                                        <td style="border-top: double #e6e7e8;"></td>
+                                        <td style="border-top: double #e6e7e8;"></td>
+                                        <td style="border-top: double #e6e7e8;"></td>
+                                    </tr>
+                                    <tr style="background-color: #f7f8fa;">
+                                        <td colspan="7" class="text-right">Less: Advance (if any)</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr style="background-color: #f7f8fa;">
+                                        <td colspan="7" class="text-right">Less: Refund to Company</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr style="background-color: #f7f8fa;">
+                                        <td colspan="7" class="text-right">Balance Due</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="panel-footer" style="background-color: #fff;">
+                            <div class="pull-right">
+                                <table class="float-end">
+                                    <tbody>
+                                        <tr>
+                                            <td style="min-width: 50px;">S 6%</td>
+                                            <td style="padding-right: 5px">MYR</td>
+                                            <td class="text-right" id="total_s_summary">0.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Z 0%</td>
+                                            <td style="padding-right: 5px">MYR</td>
+                                            <td class="text-right float-end" id="total_z_summary">0.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td style="border-top: 1px solid; border-bottom: double;padding-right: 5px;">MYR</td>
+                                            <td style="border-top: 1px solid; border-bottom: double;" id="total_total_summary">0.00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+				</div>
+            </div> <!-- end card-->
+        </div> <!-- end col -->
+        
+    </div>
+    <!-- end row -->
+</div>
+
+<!-- third party js -->
+<script src="./assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="./assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+<script src="./assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="./assets/libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="./assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+<script src="./assets/libs/datatables.net-select/js/dataTables.select.min.js"></script>
+<script src="./assets/libs/pdfmake/build/pdfmake.min.js"></script>
+<script src="./assets/libs/pdfmake/build/vfs_fonts.js"></script>
+<script src="./assets/libs/dropzone/min/dropzone.min.js"></script>
+<script src="./assets/libs/dropify/js/dropify.min.js"></script>
+<!-- <script src="assets/libs/select2/js/select2.min.js"></script> -->
+<script src="./assets/libs/mohithg-switchery/switchery.min.js"></script>
+<script src="./assets/libs/flatpickr/flatpickr.min.js"></script>
+<script src="./assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="./assets/libs/parsleyjs/parsley.min.js"></script>
+<!-- Tippy js-->
+<script src="./assets/libs/tippy.js/tippy.all.min.js"></script>
+<script src="./assets/js/moment.js/2.18.1/moment.min.js"></script>
+<script src="./assets/libs/ckeditor/ckeditor.js"></script>
+
+<script src="./assets/js/jspdf/plugins/jspdf.debug.js"></script>
+<script src="./assets/js/jspdf/plugins/jspdf.min.js"></script>
+<script src="./assets/js/jspdf/plugins/jspdf.plugin.autotable.js"></script>
+<script src="./assets/js/jspdf/exportpdf.js"></script>
+<!-- third party js ends -->

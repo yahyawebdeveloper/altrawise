@@ -608,7 +608,35 @@ if(isset($_SERVER['REQUEST_METHOD']))
  			require_once constant('MODULES_DIR') . '/master_settings.php';
  			echo remove_company_logo($param->data);
  		}
-		
+
+		//--------Added by Sita----------- 
+		else if($param->method === 'get_document_search_dropdown_data_check')
+		{
+			require_once constant('MODULES_DIR')    . '/common.php';
+			echo get_document_search_dropdown_data_check();
+			return;
+		}
+		else if($param->method === 'get_document_search_query_data_check')
+		{
+			require_once constant('MODULES_DIR')    . '/common.php';
+			echo get_document_search_query_data_check();
+			return;
+		}
+		//--------Added by Sita-----------
+		//--------Added by Surekha----------- 
+		else if ($param->method === 'get_leave_dropdown_data') 
+		{
+			require_once constant('MODULES_DIR') . '/common.php';
+			echo get_leave_dropdown_data($param->data);
+			return;
+		}
+		else if ($param->method === 'get_leave_approval_dropdown_data') 
+		{
+			require_once constant('MODULES_DIR') . '/common.php';
+			echo get_leave_approval_dropdown_data($param->data);
+			return;
+		}
+		//--------Added by Surekha-----------
 		
 // 		else if($param->method === 'get_document_list')
 // 		{
@@ -2138,12 +2166,12 @@ if(isset($_SERVER['REQUEST_METHOD']))
 			echo get_documents_list($param->data);
 			return;
 		} 
-		else if ($param->method === 'get_documents_drop_down_values') 
+		/* else if ($param->method === 'get_documents_drop_down_values') 
 		{
 			require_once constant('MODULES_DIR') . '/user_documents.php';
 			echo get_documents_drop_down_values($param->data);
 			return;
-		} 
+		}  */
 		else if ($param->method === 'get_doc_details') 
 		{
 			require_once constant('MODULES_DIR') . '/user_documents.php';

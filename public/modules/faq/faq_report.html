@@ -1,0 +1,340 @@
+<!-- third party css -->
+<link href="assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/datatables.net-select-bs5/css//select.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/dropify/css/dropify.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/mohithg-switchery/switchery.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
+<!-- <link href="assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" /> -->
+<link href="assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+<link href="./assets/libs/jquery-fileupload/css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
+<!-- third party css end -->
+
+<div class="row" id="list_div">
+   <!-- start page title -->
+   <div class="row mt-3 mb-1">
+       <div class="col-12">
+           <div class="page-title-box">
+                  <div class="page-title-right">
+                     <a href="javascript:void(0);" id="btn_search" class="btn btn-success mb-2 panel-collapse"><i class="fe-search me-1"></i>Search</a>
+                    
+                     <a href="javascript:void(0);" id="btn_new" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-1"></i>New FAQ</a>
+               </div>
+               <h4 class="page-title">
+                   <i class="fas fa-globe-asia"></i> FAQ Report
+               </h4>
+           </div>
+       </div>
+   </div>     
+   <!-- end page title --> 
+
+   <div id="searchPanel" class="row panel-body" style="display: none;">
+       <div class="col-12">
+           <div class="card">
+               <div class="card-body">
+                   
+                   <div class="float-end">
+                       <a id="btn_close_search" href="javascript:void(0)">
+                           <i class="mdi mdi-close-box m-0 text-muted h3"></i>
+                       </a>
+                   </div>
+                   <div class="clearfix"></div>
+                   <form class="form-horizontal">
+
+                       <div class="row mt-2">
+                           <div class="col-lg-6">
+                               <!-- Title -->
+                               <div class="row">
+                                   <label for="search_question_category" class="col-4 col-form-label">Question Category</label>
+                                   <div class="col-7 errorContainer">
+                                           <select class="form-control populate" data-toggle="select2" data-width="100%" id="search_question_category" required>
+                                           </select>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="col-lg-6">
+                               <!-- Created By -->
+                               <div class="row">
+                                   <label for="search_category" class="col-4 col-form-label">Employee Category</label>
+                                   <div class="col-7 errorContainer">
+                                       <select id="search_category" class="form-control populate" data-width="100%">
+                                       </select>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+
+                       <div class="row mt-2">
+                           <div class="col-lg-6">
+                               <!-- Type -->
+                               <div class="row">
+                                   <label for="search_approver" class="col-4 col-form-label">Approver</label>
+                                   <div class="col-7 errorContainer">
+                                       <select id="search_approver" class="form-control populate" data-width="100%">
+                                       </select>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="col-lg-6">
+                               <!-- Status -->
+                               <div class="row">
+                                   <label for="dd_status_search" class="col-4 col-form-label">Status</label>
+                                   <div class="col-7 errorContainer">
+                                       <select id="search_status" class="form-control populate" data-width="100%">
+                                          <option value="">All</option>
+                                          <option value="1">Approved</option>
+                                          <option value="0">Pending</option>
+                                       </select>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                       <div class="row mt-2">
+                           <div class="col-lg-6">
+                               <!-- Document Date -->
+                               <div class="row">
+                                   <label for="dp_search_date" class="col-4 col-form-label"> Date</label>
+                                   <div class="col-7 errorContainer">
+                                       <input type="text" id="dp_search_date" class="form-control flatpickr-input" placeholder="2018-10-03 to 2018-10-10" readonly="readonly">
+                                   </div>
+                                   <input type="hidden" id="from_search_date">
+                                   <input type="hidden" id="to_search_date">
+                               </div>
+                           </div>
+                           <div class="col-lg-6">
+                               <!-- Outbound Doc No -->
+                                   <div class="row">
+                                       <label for="search_created_by" class="col-4 col-form-label">Created By</label>
+                                       <div class="col-7 errorContainer">
+                                           <input type="text" class="form-control" id="search_created_by">
+                                       </div>
+                                   </div>
+                           </div>
+                       </div>
+                       <div class="row mt-2">
+                           <div class="col-lg-6">
+                              <!-- Type -->
+                              <div class="row">
+                                 <label for="search_approver" class="col-4 col-form-label">Question</label>
+                                 <div class="col-7 errorContainer">
+                                    <select id="search_question" class="form-control populate" data-width="100%">
+                                    </select>
+                                 </div>
+                              </div>
+                        </div>
+                       </div>
+
+                       <div><br></div>
+                       <div class="form-group align-right">
+                           <button id="btn_reset" type="button" class="btn btn-light waves-effect waves-light m-1"><i class="fe-refresh-cw me-1"></i> Reset</button>
+                           <button id="btn_search_action" type="button" class="btn btn-success waves-effect waves-light mt-1 mb-1"><i class="fe-search me-1"></i> Search</button>
+                       </div>
+                   </form>                
+               </div>
+           </div>
+       </div>
+   </div>
+
+   <div id="tblList" class="row">
+       <div class="col-12">
+           <div class="card">
+               <div class="card-body">
+                   <div class="dropdown float-end">
+                       <a href="#" class="dropdown-toggle card-drop arrow-none" data-bs-toggle="dropdown" aria-expanded="false">
+                           <i class="mdi mdi-dots-horizontal m-0 text-muted h3"></i>
+                       </a>
+                       <div class="dropdown-menu dropdown-menu-end">
+                           <p class="dropdown-item"  onclick="exportTable2CSV('FAQ Report','tbl_faq_report')" style="cursor: pointer;">Export as Excel</p>
+                           <p class="dropdown-item"  onclick="exportTable2PDF('FAQ Report','tbl_faq_report','p')" style="cursor: pointer;">Export as PDF</p>
+                       </div>
+                   </div>
+                   <div class="table-responsive mt-3">
+                       <table class="table table-centered table-striped w-100"  id="tbl_faq_report">
+                           <thead>
+                               <tr>
+                                    <th>#</th>
+                                    <th>Question Category</th>
+                                    <th>Employee Category</th>
+                                    <th>Question</th>
+                                    <th>Created By</th>
+                                    <th>Approver</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                               </tr>
+                           </thead>
+                           <tbody>
+                               
+                           </tbody>
+                       </table>
+                       <div id="div_load_more" class="d-flex justify-content-center load-more" style="display: none;">
+                           <button id="btn_load_more" type="button" class="btn btn-sm btn-info waves-effect waves-light rounded-pill ">
+                               <i class="fa fa-arrow-down"></i>&nbsp;&nbsp;Load More&nbsp;&nbsp;<i class="fa fa-arrow-up"></i>
+                           </button>
+                       </div>
+                   </div>
+               </div>
+           </div> <!-- end card-->
+       </div> <!-- end col -->
+   </div>
+   <!-- end row -->
+</div>
+<!-- Add,Edit FAQ -->
+<div class="row" id="new_div" style="display: none">
+   <!-- start page title -->
+   <div class="row mt-3 mb-1">
+       <div class="col-12">
+           <div class="page-title-box">
+               <h4 class="page-title"><i class="fas fa-globe-asia"></i> FAQ</h4>
+               <div class="page-title-right">
+                   <a href="javascript:void(0);" id="btn_back" class="btn btn-secondary mb-2"><i class="fe-arrow-left me-1"></i>Back</a>
+               </div>
+           </div>
+       </div>
+   </div>     
+   <!-- end page title --> 
+
+   <div class="row">
+
+       <div class="col-xl-12">
+           <div class="card">
+               <div class="card-body">
+                   
+                   <form class="form-horizontal" data-validate="parsley" id="detail_form">
+                       <div class="tab-content">
+                           
+                               <div class="tab-pane active" id="tab-one">
+                                   <div class="row mt-2">
+                                       <div class="col-lg-12">
+                                           <!-- Question Category -->
+                                           <div class="row">
+                                               <label for="dd_question_category" class="col-4 col-form-label"> Question Category</label>
+                                               <div class="col-8 pe-4 errorContainer">
+                                                   <div class="input-group">
+                                                    <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_question_category">
+                                                    </select>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div class="row mt-2">
+                                       <div class="col-lg-12">
+                                           <!-- Employee Category -->
+                                           <div class="row">
+                                               <label for="dd_faq" class="col-4 col-form-label">Employee Category</label>
+                                               <div class="col-8 pe-4 errorContainer">
+                                                   <select class="form-control populate" data-toggle="select2" multiple placeholder="Select" data-width="100%" id="dd_faq">
+                                                    
+                                                   </select>
+                                               </div>
+                                           </div>
+                                       </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                       <div class="col-lg-12">
+                                           <!-- Approver -->
+                                           <div class="row">
+                                               <label for="dd_approver" class="col-4 col-form-label">Approver</label>
+                                               <div class="col-8 pe-4 errorContainer">
+                                                   <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_approver" required>
+                                                   </select>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div class="row mt-2">
+                                       <div class="col-lg-12">
+                                            <!-- Question -->
+                                           <div class="row">
+                                               <label for="txt_question" class="col-4 col-form-label">Question</label>
+                                               <div class="col-8 pe-4 errorContainer">
+                                                   <div class="input-group">
+                                                    <textarea type="text" id="txt_question" class="form-control flatpickr-input" placeholder="Question" ></textarea>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                     </div>
+                                     <div class="row mt-2">  
+                                       <div class="col-lg-12">
+                                            <!-- Answer -->
+                                           <div class="row">
+                                               <label for="txt_answer" class="col-4 col-form-label">Answer</label>
+                                               <div class="col-8 pe-4 errorContainer">
+                                                   <div class="input-group">
+                                                    <textarea type="text" id="text_editor" class="form-control flatpickr-input" placeholder="Answer" ></textarea>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div class="row mt-2">
+                                       <div class="col-lg-12">
+                                            <!-- Attachments -->
+                                           <div class="row">
+                                               <label for="doc_upload" class="col-4 col-form-label">Attachments</label>
+                                               <div class="col-7 errorContainer">
+                                                    <span class="btn btn-success waves-effect waves-light fileinput-button" id="btn_add_image">
+                                                        <span>Browse File</span>
+                                                        <input id="doc_upload" type="file" name="qqfile">
+                                                    </span>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div id="files_div">
+                                       <div class="row mt-2">
+                                        <div id="attachment_files" style="margin-top: 8px;margin-bottom: 10px;"></div>
+                                           <div id="files" class="col-lg-10 offset-lg-2"></div>
+                                       </div>
+                                   </div>
+                               </div>
+                       </div>
+                   
+                   <div class="form-group align-right" id="actions_div"><br />
+                       <button id="btn_cancel" type="button" class="btn btn-light waves-effect waves-light m-1"><i class="fa fa-times me-1"></i> Cancel</button>
+                       <button id="btn_save" type="submit" class="btn btn-success waves-effect waves-light mt-1 mb-1 ladda-button" data-color="green" data-style="expand-left"><i class="fa fa-check me-1"></i> Save</button>
+                   </div>
+               </form> 
+               </div>
+           </div> <!-- end card-->
+       </div> <!-- end col -->
+       
+   </div>
+   <!-- end row -->
+</div>
+
+
+<!-- third party js -->
+<script src="./assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="./assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+<script src="./assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="./assets/libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="./assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+<script src="./assets/libs/datatables.net-select/js/dataTables.select.min.js"></script>
+<script src="./assets/libs/pdfmake/build/pdfmake.min.js"></script>
+<script src="./assets/libs/pdfmake/build/vfs_fonts.js"></script>
+<script src="./assets/libs/dropzone/min/dropzone.min.js"></script>
+<script src="./assets/libs/dropify/js/dropify.min.js"></script>
+<!-- <script src="assets/libs/select2/js/select2.min.js"></script> -->
+<script src="./assets/libs/mohithg-switchery/switchery.min.js"></script>
+<script src="./assets/libs/flatpickr/flatpickr.min.js"></script>
+<script src="./assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="./assets/libs/parsleyjs/parsley.min.js"></script>
+<!-- Tippy js-->
+<script src="./assets/libs/tippy.js/tippy.all.min.js"></script>
+<script src="./assets/js/moment.js/2.18.1/moment.min.js"></script>
+<script src="./assets/libs/ckeditor/ckeditor.js"></script>
+
+<script src="./assets/js/jspdf/plugins/jspdf.debug.js"></script>
+<script src="./assets/js/jspdf/plugins/jspdf.min.js"></script>
+<script src="./assets/js/jspdf/plugins/jspdf.plugin.autotable.js"></script>
+<script src="./assets/js/jspdf/exportpdf.js"></script>
+<!-- third party js ends -->

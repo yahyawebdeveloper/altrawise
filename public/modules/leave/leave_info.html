@@ -1,0 +1,297 @@
+<!-- third party css -->
+<link href="assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/datatables.net-select-bs5/css//select.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/dropify/css/dropify.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/mohithg-switchery/switchery.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
+<!-- <link href="assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" /> -->
+<link href="assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+<link href="./assets/libs/jquery-fileupload/css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
+<!-- third party css end -->
+
+<div class="row" id="list_div">
+    <!-- start page title -->
+    <div class="row mt-3 mb-1">
+        <div class="col-12">
+            <div class="page-title-box">
+                   <div class="page-title-right">
+                      <a href="javascript:void(0);" id="btn_search" class="btn btn-success mb-2 panel-collapse"><i class="fe-search me-1"></i>Search</a>
+                     
+                </div>
+                <h4 class="page-title">
+                    <i class="fa fa-check-circle-o"></i> Leave  Approval
+                </h4>
+            </div>
+        </div>
+    </div>     
+    <!-- end page title --> 
+ 
+    <div id="searchPanel" class="row panel-body" style="display: block;">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    
+                    <div class="float-end">
+                        <a id="btn_close_search" href="javascript:void(0)">
+                            <i class="mdi mdi-close-box m-0 text-muted h3"></i>
+                        </a>
+                    </div>
+                    <div class="clearfix"></div>
+                    <form class="form-horizontal">
+ 
+                        <div class="row mt-2">
+                            <div class="col-lg-6">
+                                <!-- Title -->
+                                <div class="row">
+                                    <label for="doc_date" class="col-4 col-form-label">Employee</label>
+                                    <div class="col-7 errorContainer">
+                                            <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_employee" required>
+                                                <option value="">Please Select</option>
+                                            </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="row">
+                                    <label for="doc_date" class="col-4 col-form-label">Date &nbsp;&nbsp; <input type="checkbox" id="chk_is_date" name="chk_is_date" checked></label>
+                                    <div class="col-7 errorContainer">
+                                        <input type="text" id="doc_date" class="form-control flatpickr-input" placeholder="2018-10-03 to 2018-10-10" readonly="readonly">
+                                    </div>
+                                    <input type="hidden" id="from_date">
+                                    <input type="hidden" id="to_date">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-lg-6">
+                                <!-- Title -->
+                                <div class="row">
+                                    <label for="log_date" class="col-4 col-form-label">Leave Type</label>
+                                    <div class="col-7 errorContainer">
+                                        <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_leave_type" required>
+                                            <option value="">Please Select</option>
+                                        </select>
+                                      
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="row">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" id="chk_is_verified" name="chk_is_verified">Verified Leave
+                                    </label>
+                                </div>
+                                <div class="row">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" id="chk_is_approved" name="chk_is_approved">Approved Leave
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+ 
+                        <div><br></div>
+                        <div class="form-group align-right">
+                            <button id="btn_reset" type="button" class="btn btn-light waves-effect waves-light m-1"><i class="fe-refresh-cw me-1"></i> Reset</button>
+                            <button id="btn_search_action" type="button" class="btn btn-success waves-effect waves-light mt-1 mb-1"><i class="fe-search me-1"></i> Search</button>
+                        </div>
+                    </form>                
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <div id="tblList" class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="dropdown float-end">
+                        <a href="#" class="dropdown-toggle card-drop arrow-none" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="mdi mdi-dots-horizontal m-0 text-muted h3"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <p class="dropdown-item"  onclick="exportTable2CSV('Leave','tbl_list')" style="cursor: pointer;">Export as Excel</p>
+                            <p class="dropdown-item"  onclick="exportTable2PDF('Leave','tbl_list','p')" style="cursor: pointer;">Export as PDF</p>
+                        </div>
+                    </div>
+                    <div class="table-responsive mt-3">
+                        <table class="table table-centered table-striped w-100"  id="tbl_list">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Type</th>
+                                    <th>Days/Hours</th>
+                                    <th>Reason</th>
+                                    <th>Status</th>
+                                    <th>Medical Cert</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                        <div id="div_load_more" class="d-flex justify-content-center load-more" style="display: none;">
+                            <button id="btn_load_more" type="button" class="btn btn-sm btn-info waves-effect waves-light rounded-pill ">
+                                <i class="fa fa-arrow-down"></i>&nbsp;&nbsp;Load More&nbsp;&nbsp;<i class="fa fa-arrow-up"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end card-->
+        </div> <!-- end col -->
+    </div>
+    <!-- end row -->
+ </div>
+ 
+ 
+  
+ </div>
+
+
+
+
+    <!-- Modal Remark-->
+    <div class="modal fade" id="remarkModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Confirmation</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            Please confirm the selection and add the remark below.
+                        </div>
+                        <div class="col-sm-12"><br><br></div>
+                        <div class="col-sm-4">
+                            Remark:
+                        </div>
+                        <div class="col-sm-8">
+                            <textarea name="leave_remark" id="leave_remark" cols="40" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="btn_verify">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal Remark List -->
+    <div class="modal fade" id="remarkListModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Remark List</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div id="remarkList" class="col-sm-12">
+                            <table class="table" id="tbl_remark_list">
+								<thead>
+									<tr>
+										<th></th>
+										<th>Remark</th>
+										<th>Created By</th>
+                                        <th>Created Date</th>
+                                        <th>Remark Action</th>
+									</tr>
+								</thead>
+								<tbody>
+
+								</tbody>
+							</table>
+                        </div>
+                        <div class="col-sm-12"><br></div>
+                        <div class="col-sm-4">
+                            Remark:
+                        </div>
+                        <div class="col-sm-8">
+                            <textarea name="le_remark" id="le_remark" cols="40" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                	<button type="button" class="btn btn-primary-alt ladda-button" data-style="expand-left" data-spinner-color="#000000" id="btn_add_remark">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Leave Record -->
+    <div class="modal fade" id="approvalModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Approval Option</h4>
+                </div>
+                <div class="modal-body">
+                	<div class="row">
+                        <div class="col-sm-12">
+                            <div class="col-sm-4 text-center">
+                                <label class="radio-inline">
+                                    <input type="radio" id="option_paid" name="option_approve" value="PAID"> PAID
+                                </label>
+                            </div>
+                            <div class="col-sm-4 text-center">
+                                <label class="radio-inline">
+                                    <input type="radio" id="option_unpaid" name="option_approve" value="UNPAID"> UNPAID
+                                </label>
+                            </div>
+                            <div class="col-sm-4 text-center">
+                                <label class="radio-inline">
+                                    <input type="radio" id="option_reject" name="option_approve" value="REJECT"> REJECT
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                	<button class="btn-primary-alt btn" id="btn_approve" name="btn_approve"><i class="fa fa-save"></i> Save </button>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- third party js -->
+<script src="./assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="./assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+<script src="./assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="./assets/libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="./assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+<script src="./assets/libs/datatables.net-select/js/dataTables.select.min.js"></script>
+<script src="./assets/libs/pdfmake/build/pdfmake.min.js"></script>
+<script src="./assets/libs/pdfmake/build/vfs_fonts.js"></script>
+<script src="./assets/libs/dropzone/min/dropzone.min.js"></script>
+<script src="./assets/libs/dropify/js/dropify.min.js"></script>
+<!-- <script src="assets/libs/select2/js/select2.min.js"></script> -->
+<script src="./assets/libs/mohithg-switchery/switchery.min.js"></script>
+<script src="./assets/libs/flatpickr/flatpickr.min.js"></script>
+<script src="./assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="./assets/libs/parsleyjs/parsley.min.js"></script>
+<!-- Tippy js-->
+<script src="./assets/libs/tippy.js/tippy.all.min.js"></script>
+<script src="./assets/js/moment.js/2.18.1/moment.min.js"></script>
+<script src="./assets/libs/ckeditor/ckeditor.js"></script>
+
+<script src="./assets/js/jspdf/plugins/jspdf.debug.js"></script>
+<script src="./assets/js/jspdf/plugins/jspdf.min.js"></script>
+<script src="./assets/js/jspdf/plugins/jspdf.plugin.autotable.js"></script>
+<script src="./assets/js/jspdf/exportpdf.js"></script>
+<!-- third party js ends -->
