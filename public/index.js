@@ -99,6 +99,14 @@ $(document).ready(function ()
 			if(payment_voucher_access == 0 || payment_voucher_access.view == 0) {
 				$('#payment_voucher_li').hide();
 			}
+
+			//service request
+			let serviceRequest = $('#mn_service_request').attr('href');
+			let service_request_access = $.fn.get_accessibility($.fn.get_page_name(serviceRequest));
+			if(service_request_access == 0 || service_request_access.view == 0) {
+				$('#operation_li').hide();
+			}
+
 		}
 		
 
@@ -203,6 +211,9 @@ $(document).ready(function ()
 			}, { before: middleware })
 			.on("/payment-voucher", () => { //payment voucher route
 				$.fn.load_form('./modules/payment-voucher.html')
+			}, { before: middleware })
+			.on("/service-request", () => { //service request route
+				$.fn.load_form('./modules/service-request.html')
 			}, { before: middleware })
 			.on({
 				"/documents/outbound-documents/:action/:id" : {
