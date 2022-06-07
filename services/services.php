@@ -2229,6 +2229,14 @@ if(isset($_SERVER['REQUEST_METHOD']))
 		}
 
 
+		else if ($param->method === 'get_service_request_search_dropdown') 
+		{
+			require_once constant('MODULES_DIR') . '/common.php';
+			echo get_service_request_search_dropdown($param->data);
+			return;
+		}
+
+
 require_once  'transporter.php';
 		
 	}
