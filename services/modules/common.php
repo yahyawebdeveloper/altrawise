@@ -135,7 +135,7 @@ function get_service_request_search_dropdown($params) {
         $payment_term       = db_query('id,descr','cms_master_list',"category_id = 5 AND is_active = 1");
         $asset_type        = db_query('id,descr','cms_master_list',"category_id = 20 AND is_active = 1");
 
-        $return_data = array('category' => $category,'employer' => $employer,'created_by' => $emp ,'status' => $status,'payment_term' => $payment_term,'asset_type' => $asset_type );
+        $return_data = array('category' => $category,'employer' => $employer,'created_by' => $emp ,'status' => $status, 'client' => $client , 'payment_term' => $payment_term,'asset_type' => $asset_type );
 		echo json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );exit;
 
     } catch(Exception $e) {
