@@ -1352,13 +1352,13 @@ $.fn.prepare_form = function ()
         $('#due_date').flatpickr({ 
             altInput: true,
             altFormat: "d-M-Y",
-            dateFormat: "Y-m-d",
+            dateFormat: "d-m-Y",
         });
 
         $('#doc_date').flatpickr({ 
             altInput: true,
             altFormat: "d-M-Y",
-            dateFormat: "Y-m-d",
+            dateFormat: "d-m-Y",
             defaultDate: "today"
         });
 
@@ -1375,10 +1375,10 @@ $.fn.prepare_form = function ()
         $("#dp_search_date").flatpickr({
             mode:"range",
             altFormat: "d-M-Y",
-            dateFormat: "Y-m-d",
+            dateFormat: "d-m-Y",
             onChange:function(selectedDates){
                 var _this=this;
-                var dateArr=selectedDates.map(function(date){return _this.formatDate(date,'Y-m-d');});
+                var dateArr=selectedDates.map(function(date){return _this.formatDate(date,'d-m-Y');});
                 $('#from_search_date').val(dateArr[0]);
                 $('#to_search_date').val(dateArr[1]);
             },

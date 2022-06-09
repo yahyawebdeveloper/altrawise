@@ -823,7 +823,7 @@ $.fn.prepare_form = function ()
 		$('#doc_date,#timesheet_from_date,#timesheet_to_date,#leave_from_date,#leave_to_date').flatpickr({ 
             altInput: true,
             altFormat: "d-M-Y",
-            dateFormat: "Y-m-d",
+            dateFormat: "d-m-Y",
         });
 
 		$('.populate').select2({tags: true, tokenSeparators: [",", " "] });
@@ -848,7 +848,7 @@ $.fn.prepare_form = function ()
 			$("#doc_search_date").flatpickr({
                 mode:"range",
                 altFormat: "d-M-Y",
-                dateFormat: "Y-m-d",
+                dateFormat: "d-m-Y",
                 onChange:function(selectedDates){
                     var _this=this;
                     var dateArr=selectedDates.map(function(date){return _this.formatDate(date,'Y-m-d');});

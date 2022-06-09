@@ -13,7 +13,7 @@
 <!-- third party css end -->
 
 <!-- List Block -->
-<div class="row" id="list_div">
+<div class="" id="list_div">
     <!-- start page title -->
     <div class="row mt-3 mb-1">
         <div class="col-12">
@@ -31,105 +31,97 @@
                     <a href="javascript:void(0);" id="btn_new" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-1"></i>New Document</a>
                 </div>
                 <h4 class="page-title">
-                    <i class="fas fa-exchange-alt"></i> Document Archiving
+                    <i class="fas fa-exchange-alt"></i> DOCUMENT ARCHIVING&nbsp;&nbsp;<span id="total_records" class="badge rounded-pill bg-warning small-pill">0</span>
                 </h4>
             </div>
         </div>
     </div>     
     <!-- end page title --> 
-
-    <div id="searchPanel" class="row panel-body" style="display: none;">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    
-                    <div class="float-end">
-                        <a id="btn_close_search" href="javascript:void(0)">
-                            <i class="mdi mdi-close-box m-0 text-muted h3"></i>
-                        </a>
+    <div class="col-xl-12 mb-4" id="searchPanel" style="display:none;">
+        <div class="card mb-0">
+            <div class="col-xl-12" style="text-align:right">
+                <div class="modal-header bg-light">
+                    <h4 class="modal-title" ><i class="mdi mdi-magnify" aria-hidden="true"></i> Search</h4>
+                    <button type="button" id="btn_close_search" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                </div>
+            </div>
+            <div class="card-body">
+                    <div class="col-xl-12">
+                        <div class="col-xl-6 searchCol">
+                             <div class="row">
+                                <div class="col-md-12">
+                                    <label for="dd_client_search" class="form-label">Stake Holder</label>
+                                    <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_client_search" required>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 searchCol">
+                             <div class="row">
+                                <div class="col-md-12">
+                                    <label for="dd_created_by_search" class="form-label">Created By</label>
+                                    <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_created_by_search" required>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="clearfix"></div>
-                    <form class="form-horizontal">
-
-                        <div class="row mt-2">
-                            <div class="col-lg-6">
-                                <!-- Title -->
-                                <div class="row">
-                                    <label for="dd_client_search" class="col-4 col-form-label">Stake Holder</label>
-                                    <div class="col-7 errorContainer">
-                                            <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_client_search" required>
-                                            </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <!-- Created By -->
-                                <div class="row">
-                                    <label for="dd_created_by_search" class="col-4 col-form-label">Created By</label>
-                                    <div class="col-7 errorContainer">
-                                        <select id="dd_created_by_search" class="form-control populate" data-width="100%">
-                                        </select>
-                                    </div>
+                    <div class="col-xl-12">
+                        <div class="col-xl-6 searchCol">
+                             <div class="row">
+                                <div class="col-md-12">
+                                    <label for="dd_category_search" class="form-label">Type</label>
+                                    <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_category_search" required>
+                                    </select>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row mt-2">
-                            <div class="col-lg-6">
-                                <!-- Type -->
-                                <div class="row">
-                                    <label for="dd_category_search" class="col-4 col-form-label">Type</label>
-                                    <div class="col-7 errorContainer">
-                                        <select id="dd_category_search" class="form-control populate" data-width="100%">
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <!-- Status -->
-                                <div class="row">
-                                    <label for="dd_status_search" class="col-4 col-form-label">Status</label>
-                                    <div class="col-7 errorContainer">
-                                        <select id="dd_status_search" class="form-control populate" data-width="100%">
-                                        </select>
-                                    </div>
+                        <div class="col-xl-6 searchCol">
+                             <div class="row">
+                                <div class="col-md-12">
+                                    <label for="dd_status_search" class="form-label">Status</label>
+                                    <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_status_search" required>
+                                    </select>
+                                    
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-2">
-                            <div class="col-lg-6">
-                                <!-- Document Date -->
-                                <div class="row">
-                                    <label for="dp_search_date" class="col-4 col-form-label">Document Date</label>
-                                    <div class="col-7 errorContainer">
-                                        <input type="text" id="dp_search_date" class="form-control flatpickr-input" placeholder="2018-10-03 to 2018-10-10" readonly="readonly">
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="col-xl-6 searchCol">
+                             <div class="row">
+                                <div class="col-md-12">
+                                    <label for="dp_search_date" class="form-label">Document Date</label>
+                                    <div class="">
+                                        <input type="text" id="dp_search_date" class="form-control flatpickr-input" placeholder="03-10-2021 to 17-10-2021" readonly="readonly">
                                     </div>
                                     <input type="hidden" id="from_search_date">
                                     <input type="hidden" id="to_search_date">
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <!-- Outbound Doc No -->
-                                    <div class="row">
-                                        <label for="txt_user_doc_search" class="col-4 col-form-label">Outbound Document</label>
-                                        <div class="col-7 errorContainer">
-                                            <input type="text" class="form-control" id="txt_user_doc_search">
-                                        </div>
+                        </div>
+                        <div class="col-xl-6 searchCol">
+                             <div class="row">
+                                <div class="col-md-12">
+                                    <label for="txt_user_doc_search" class="form-label">Outbound Document</label>
+                                    <div class="">
+                                        <input type="text" class="form-control" id="txt_user_doc_search">
                                     </div>
+                                </div>
                             </div>
-                            
-                            
                         </div>
-                        <div><br></div>
-                        <div class="form-group align-right">
-                            <button id="btn_reset" type="button" class="btn btn-light waves-effect waves-light m-1"><i class="fe-refresh-cw me-1"></i> Reset</button>
-                            <button id="btn_search_action" type="button" class="btn btn-success waves-effect waves-light mt-1 mb-1"><i class="fe-search me-1"></i> Search</button>
+                    </div>
+                    <div class="col-xl-12" style="text-align:right;overflow:auto;">
+                        <div class="mt-3" style=" margin-right: 12px;">
+                            <button type="button" id="btn_reset" class="btn btn-light waves-effect waves-light" ><i class="mdi mdi-refresh"></i> Reset</button>
+                            <button type="submit" id="btn_search_action" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-magnify"></i> Search</button>
                         </div>
-                    </form>                
-                </div>
+                    </div>
             </div>
         </div>
     </div>
+    
+   
 
     <div id="tblList" class="row">
         <div class="col-12">
@@ -176,229 +168,246 @@
 </div>
 
 <!-- Add,Edit Document Archiving -->
-<div class="row" id="new_div" style="display: none">
+<div class="" id="new_div" style="display: none">
     <!-- start page title -->
     <div class="row mt-3 mb-1">
         <div class="col-12">
             <div class="page-title-box">
-                <h4 class="page-title"><i class="fas fa-exchange-alt"></i> Document Archiving</h4>
-                <div class="page-title-right">
+                <h4 class="page-title"><i class="fas fa-exchange-alt"></i> DOCUMENT ARCHIVING</h4>
+                <!-- <div class="page-title-right">
                     <a href="javascript:void(0);" id="btn_back" class="btn btn-secondary mb-2"><i class="fe-arrow-left me-1"></i>Back</a>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>     
     <!-- end page title --> 
 
-    <div class="row">
-
-        <div class="col-xl-12">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="header-title mb-4" id="h4_primary_no">Document Number : -</h4>
-
-                    <ul class="nav nav-tabs nav-bordered nav-justified">
-                        <li class="nav-item" id="detail-tab">
-                            <a href="#tab-one" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
-                                Details
-                            </a>
-                        </li>
-                    </ul>
-                    <form class="form-horizontal" data-validate="parsley" id="detail_form">
-                        <div class="tab-content">
-                            
-                                <div class="tab-pane active" id="tab-one">
-                                    <div class="row mt-2">
-                                        <div class="col-lg-6">
-                                            <!-- Date -->
-                                            <div class="row">
-                                                <label for="document_date" class="col-4 col-form-label"> Date</label>
-                                                <div class="col-7 errorContainer">
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control flatpickr-input" id="document_date" placeholder="e.g dd-mm-yyyy" required="requried">
-                                                        <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+    <div class="">
+        <div class="card mb-0">
+            <div class="col-xl-12" style="text-align:right">
+                <div class="modal-header bg-light">
+                    <h4 class="modal-title" ><i class="mdi mdi-magnify" aria-hidden="true"></i> Details</h4>
+                    <button type="button" id="btn_back" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                </div>
+            </div>
+            <div class="card-body">
+                <form class="form-horizontal" data-validate="parsley" id="detail_form">
+                        
+                <div class="col-xl-12">
+                        <div class="col-xl-6 searchCol">
+                             <div class="row">
+                                <div class="col-md-12">
+                                    <label for="dd_type" class="col-4 col-form-label">Stack Holder Type</label>
+                                    <div class="errorContainer">
+                                        <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_type" required>
+                                        </select>
                                     </div>
-                                    <div class="row mt-2">
-                                        <div class="col-lg-6">
-                                            <!-- Stack Holder Type -->
-                                            <div class="row">
-                                                <label for="dd_type" class="col-4 col-form-label">Stack Holder Type</label>
-                                                <div class="col-7 errorContainer">
-                                                    <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_type">
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <!-- Name -->
-                                            <div class="row">
-                                                <label for="dd_client" class="col-4 col-form-label">Name</label>
-                                                <div class="col-8 pe-4 errorContainer">
-                                                    <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_client" required>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row mt-2">
-                                        <div class="col-lg-6">
-                                             <!-- From Date -->
-                                            <div class="row">
-                                                <label for="from_date" class="col-4 col-form-label">From Date</label>
-                                                <div class="col-7  errorContainer">
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control flatpickr-input" id="from_date" placeholder="e.g dd-mm-yyyy" required>
-                                                        <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                             <!-- To Date -->
-                                            <div class="row">
-                                                <label for="to_date" class="col-4 col-form-label">To Date</label>
-                                                <div class="col-8 pe-4 errorContainer">
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control flatpickr-input" id="to_date" placeholder="e.g dd-mm-yyyy" required>
-                                                        <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row mt-2">
-                                        <div class="col-lg-6">
-                                             <!-- Type -->
-                                            <div class="row">
-                                                <label for="dd_doc_type" class="col-4 col-form-label">Type</label>
-                                                <div class="col-7 errorContainer">
-                                                    <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_doc_type" required>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                             <!-- Notification -->
-                                            <div class="row">
-                                                <label for="dd_notify" class="col-4 col-form-label">Notification</label>
-                                                <div class="col-8 pe-4 errorContainer">
-                                                    <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_notify" required>
-                                                        <option value="">Please Select</option>
-                                                        <option value="1">Yes</option>
-                                                        <option value="0">No</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row mt-2">
-                                        <div class="col-lg-6">
-                                             <!-- Notify Date -->
-                                            <div class="row">
-                                                <label for="notify_date" class="col-4 col-form-label">Notify Date</label>
-                                                <div class="col-7 errorContainer">
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control flatpickr-input" id="notify_date" placeholder="e.g dd-mm-yyyy" required>
-                                                        <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                             <!-- Status -->
-                                            <div class="row">
-                                                <label for="dd_status" class="col-4 col-form-label">Status</label>
-                                                <div class="col-8 pe-4 errorContainer">
-                                                    <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_status" required>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row mt-2">
-                                        <div class="col-lg-6">
-                                            <!-- Company -->
-                                            <div class="row">
-                                                <label for="dd_company" class="col-4 col-form-label">Company</label>
-                                                <div class="col-7 errorContainer">
-                                                    <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_company" required>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <!-- Reference -->
-                                            <div class="row">
-                                                <label for="txt_remark" class="col-4 col-form-label">Reference</label>
-                                                <div class="col-8 pe-4 errorContainer">
-                                                    <textarea type="text" id="txt_remark" class="form-control flatpickr-input" placeholder="Reference Remark" ></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row mt-2">
-                                        <div class="col-lg-6">
-                                            <!-- Notify Email -->
-                                            <div class="row mt-2">
-                                                <!-- Email(Verifiers) -->
-                                                <label for="dd_notify_email" class="col-4 col-form-label">Notify Email</label>
-                                                <div class="col-7 errorContainer">
-                                                    <select class="form-control populate" data-width="100%" id="dd_notify_email" multiple="multiple">
-                                                        <optgroup label="Individual" id="dd_approval_individual">
-                                                        </optgroup>
-                                                        <optgroup label="Company" id="dd_approval_company">
-                                                        </optgroup>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <!-- Location -->
-                                            <div class="row">
-                                                <label for="txt_location" class="col-4 col-form-label">Location</label>
-                                                <div class="col-8 pe-4 errorContainer">
-                                                    <input type="text" class="form-control" id="txt_location">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>  
-                                    <div class="row mt-2">
-                                        <div class="col-lg-6">
-                                            <div class="row">
-                                                <label for="doc_upload" class="col-4 col-form-label">Attachments</label>
-                                                <div class="col-7 errorContainer">
-                                                    <span class="btn btn-success waves-effect waves-light fileinput-button" id="btn_add_image">
-                                                        <span>Browse File</span>
-                                                        <input id="doc_upload" type="file" name="qqfile">
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="files_div">
-                                        <div class="row mt-2">
-                                            <div id="files" class="col-lg-10 offset-lg-2"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 searchCol">
+                             <div class="row">
+                                <div class="col-md-12">
+                                    <label for="document_date" class="col-4 col-form-label"> Date</label>
+                                    <div class="errorContainer">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control flatpickr-input" id="document_date" placeholder="e.g dd-mm-yyyy" required="requried">
+                                            <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
                         </div>
-                    
-                    <div class="form-group align-right" id="actions_div"><br />
-                        <button id="btn_cancel" type="button" class="btn btn-light waves-effect waves-light m-1"><i class="fa fa-times me-1"></i> Cancel</button>
-                        <button id="btn_save" type="submit" class="btn btn-success waves-effect waves-light mt-1 mb-1 ladda-button" data-color="green" data-style="expand-left"><i class="fa fa-check me-1"></i> Save</button>
                     </div>
-                </form> 
-                </div>
-            </div> <!-- end card-->
-        </div> <!-- end col -->
-        
+                    <div class="col-xl-12">
+                        <div class="col-xl-6 searchCol">
+                             <div class="row">
+                                <div class="col-md-12">
+                                    <label for="from_date" class="col-4 col-form-label">From Date</label>
+                                    <div class="errorContainer">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control flatpickr-input" id="from_date" placeholder="e.g dd-mm-yyyy" required>
+                                            <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 searchCol">
+                             <div class="row">
+                                <div class="col-md-12">
+                                    <label for="to_date" class="col-4 col-form-label">To Date</label>
+                                    <div class="errorContainer">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control flatpickr-input" id="to_date" placeholder="e.g dd-mm-yyyy" required>
+                                            <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="col-xl-6 searchCol">
+                             <div class="row">
+                                <div class="col-md-12">
+                                    <label for="dd_client" class="col-4 col-form-label">Name</label>
+                                    <div class="errorContainer">
+                                        <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_client" required>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 searchCol">
+                             <div class="row">
+                                <div class="col-md-12">
+                                    <label for="dd_doc_type" class="col-4 col-form-label">Type</label>
+                                    <div class="errorContainer">
+                                        <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_doc_type" required>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="col-xl-6 searchCol">
+                             <div class="row">
+                                <div class="col-md-12">
+                                    <label for="dd_notify" class="col-4 col-form-label">Notification</label>
+                                    <div class="errorContainer">
+                                        <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_notify" required>
+                                            <option value="">Please Select</option>
+                                            <option value="1">Yes</option>
+                                            <option value="0">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 searchCol">
+                             <div class="row">
+                                <div class="col-md-12">
+                                    <label for="notify_date" class="col-4 col-form-label">Notify Date</label>
+                                    <div class="errorContainer">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control flatpickr-input" id="notify_date" placeholder="e.g dd-mm-yyyy" required>
+                                            <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="col-xl-6 searchCol">
+                             <div class="row">
+                                <div class="col-md-12">
+                                    <label for="dd_status" class="col-4 col-form-label">Status</label>
+                                    <div class="errorContainer">
+                                        <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_status" required>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 searchCol">
+                             <div class="row">
+                                <div class="col-md-12">
+                                    <label for="dd_company" class="col-4 col-form-label">Company</label>
+                                    <div class="errorContainer">
+                                        <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_company" required>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="col-xl-6 searchCol">
+                             <div class="row">
+                                <div class="col-md-12">
+                                    <label for="txt_location" class="col-4 col-form-label">Location</label>
+                                    <div class="errorContainer">
+                                        <input type="text" class="form-control" id="txt_location">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 searchCol">
+                             <div class="row">
+                                <div class="col-md-12">
+                                    <label for="dd_notify_email" class="col-4 col-form-label">Notify Email</label>
+                                    <div class="errorContainer">
+                                        <select class="form-control populate" data-width="100%" id="dd_notify_email" multiple="multiple">
+                                            <optgroup label="Individual" id="dd_approval_individual">
+                                            </optgroup>
+                                            <optgroup label="Company" id="dd_approval_company">
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="col-xl-6 searchCol">
+                             <div class="row">
+                                <div class="col-md-12">
+                                    <label for="doc_upload" class="col-4 col-form-label">Attachments</label>
+                                <div class="col-7 errorContainer">
+                                    <span class="btn btn-success waves-effect waves-light fileinput-button" id="btn_add_image">
+                                        <span>Browse File</span>
+                                        <input id="doc_upload" type="file" name="qqfile">
+                                    </span>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 searchCol">
+                             <div class="row">
+                                <div class="col-md-12">
+                                    <label for="txt_remark" class="col-4 col-form-label">Reference</label>
+                                    <div class="errorContainer">
+                                        <textarea type="text" id="txt_remark" class="form-control flatpickr-input" placeholder="Reference Remark" ></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div id="files_div" class="col-xl-12">
+                        <div class="row mt-2">
+                            <div id="files" class="col-lg-6"></div>
+                        </div>
+                    </div>
+                    
+    
+                    <div class="col-xl-12" style="text-align:right;overflow:auto;">
+                        <div class="mt-3" style=" margin-right: 12px;">
+                            <button type="button" id="btn_cancel" class="btn btn-light waves-effect waves-light" ><i class="fas fa-times"></i> Cancel</button>
+                            <button type="submit" id="btn_save" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-magnify"></i> Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+       
     </div>
     <!-- end row -->
 </div>
+
+
+
+<!-- //////////////////////////////////////////////////////////////////////////////// -->
+
+   
+
+<!-- //////////////////////////////////////////////////////////////////////////////// -->
+
+
+
     <!-- Modal Remark List Start-->
 
 <div class="modal fade" id="remarkListModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

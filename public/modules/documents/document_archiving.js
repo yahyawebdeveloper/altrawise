@@ -149,7 +149,7 @@ $.fn.populate_list_form = function (data, is_scroll)
             }
 
             //update counts
-            // $('#total_records').html(data.total_records);
+             $('#total_records').html(data.total_records);
              $('#badge_pending_ver').html(data.pending_verification);
              $('#badge_pending_app').html(data.pending_approval);
 
@@ -208,7 +208,7 @@ $.fn.populate_list_form = function (data, is_scroll)
                     { 
                         if (json_approval.verify.verified == 1)
                         {
-                            status = '<div class="pt-1"><i class="fas fa-pen-square" aria-hidden="true">&nbsp;Verified</i><br/></div>';
+                            status = '<div class="mt-1 badge bg-soft-info text-info"><i class="fas fa-pen-square" aria-hidden="true">&nbsp;Verified</i><br/></div>';
                         }
                         else
                         {
@@ -219,7 +219,7 @@ $.fn.populate_list_form = function (data, is_scroll)
                         }
                         if (json_approval.approve.approved == 1)
                         {
-                            status += '<i class="fas fa-check-square" aria-hidden="true">&nbsp;Approved</i>';
+                            status += '<br><div class="badge bg-soft-success text-success"><i class="fas fa-check-square" aria-hidden="true">&nbsp;Approved</i></div>';
                         }
                         else
                         {
@@ -966,7 +966,7 @@ $.fn.prepare_form = function ()
         $('#document_date,#notify_date,#from_date,#to_date').flatpickr({ 
             altInput: true,
             altFormat: "d-M-Y",
-            dateFormat: "Y-m-d",
+            dateFormat: "d-m-Y",
         });
         $('.populate').select2({ tags: true, tokenSeparators: [",", " "] });
         $('.tooltips').tooltip();
@@ -1002,7 +1002,7 @@ $.fn.prepare_form = function ()
             $("#dp_search_date").flatpickr({
                 mode:"range",
                 altFormat: "d-M-Y",
-                dateFormat: "Y-m-d",
+                dateFormat: "d-m-Y",
                 onChange:function(selectedDates){
                     var _this=this;
                     var dateArr=selectedDates.map(function(date){return _this.formatDate(date,'Y-m-d');});
@@ -1034,6 +1034,7 @@ $.fn.prepare_form = function ()
 
         CLIENTS_MODULE_ACCESS = $.fn.get_accessibility(12);
         $.fn.get_documents_drop_down_values();
+        $.fn.get_documents_drop_down_values_other();
 
         let elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
         $('.js-switch').each(function() 
@@ -1130,7 +1131,7 @@ $.fn.get_documents_drop_down_values = function()
                     //$.fn.populate_dd_values('dd_type', return_data.data.outbound_type);
                     $.fn.populate_dd_values('dd_client', return_data.data.client);
                     $.fn.populate_dd_values('dd_doc_type', return_data.data.category);
-                    $.fn.populate_dd_values('dd_status', return_data.data.status);
+                   // $.fn.populate_dd_values('dd_status', return_data.data.status);
                     $.fn.populate_dd_values('dd_notify_email', return_data.data.approval);
                     //$.fn.populate_dd_values('dd_verification_type', return_data.data.verification_type);
                    // $('#txt_template').val(return_data.data.template);
@@ -1142,6 +1143,35 @@ $.fn.get_documents_drop_down_values = function()
                     $.fn.populate_dd_values('dd_created_by_search', return_data.data.created_by, true);
                     $.fn.populate_dd_values('dd_category_search', return_data.data.category, true);
                     //$.fn.populate_dd_values('dd_company_search', return_data.data.company, true); 
+                }
+            },true
+        );
+    }
+    catch(err)
+    {
+        $.fn.log_error(arguments.callee.caller,err.message);
+    }
+};
+
+$.fn.get_documents_drop_down_values_other = function()
+{
+    try
+    {   
+        let data    =
+        {   
+        
+        };
+       
+        $.fn.fetch_data
+        ( 
+            $.fn.generate_parameter('get_documents_drop_down_values_other', data),
+            function(return_data)
+            { 
+                if (return_data.code == 0)
+                {  //console.log(return_data.data);
+                    $.fn.populate_dd_values('dd_type', return_data.data.sh_type);
+                    $.fn.populate_dd_values('dd_status', return_data.data.document_status);
+                    $.fn.populate_dd_values('dd_status_search', return_data.data.document_status);
                 }
             },true
         );

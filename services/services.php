@@ -622,6 +622,12 @@ if(isset($_SERVER['REQUEST_METHOD']))
 			echo get_document_search_query_data_check();
 			return;
 		}
+		 else if ($param->method === 'get_documents_drop_down_values_other') 
+		{
+			require_once constant('MODULES_DIR') . '/common.php';
+			echo get_documents_drop_down_values_other($param->data);
+			return;
+		}
 		//--------Added by Sita-----------
 		//--------Added by Surekha----------- 
 		else if ($param->method === 'get_leave_dropdown_data') 

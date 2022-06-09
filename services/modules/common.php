@@ -7,6 +7,26 @@ use setasign\Fpdi\Tfpdf\FpdfTpl as TfpdfFpdfTpl;
 use setasign\Fpdi\Tfpdf\Fpdi;
 
 
+function get_service_request_search_dropdown($params) {
+
+}
+
+function get_documents_drop_down_values_other() {
+    try
+    {   
+        $drop_down_groups['document_type']  =   db_query('id,descr','cms_master_list',"category_id = 35 AND is_active = 1");
+        $drop_down_groups['document_status'] = db_query('id,descr','cms_master_list',"category_id = 36 AND is_active = 1");
+
+        $drop_down_groups['sh_type'] = db_query('id,descr','cms_master_list',"category_id = 59 AND is_active = 1");
+       
+        return handle_success_response('Success', $drop_down_groups);
+    }
+    catch (Exception $e)
+    {
+        handle_exception($e);
+    }
+}
+
 function get_document_search_dropdown_data_check() {
     try
     {   
