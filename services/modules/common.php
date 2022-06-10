@@ -7,10 +7,6 @@ use setasign\Fpdi\Tfpdf\FpdfTpl as TfpdfFpdfTpl;
 use setasign\Fpdi\Tfpdf\Fpdi;
 
 
-function get_service_request_search_dropdown($params) {
-
-}
-
 function get_documents_drop_down_values_other() {
     try
     {   
