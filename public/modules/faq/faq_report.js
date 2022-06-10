@@ -95,8 +95,8 @@ $.fn.show_hide_form = function(form_status)
 		$('#h4_primary_no')				.text('New FAQ');
 		$('#search_div')				.hide(400);
 		$('#approval_div')				.hide(400);
-		//$.fn.init_upload_file();
-		$.fn.intialize_fileupload('doc_upload', 'doc_upload_files');
+		$.fn.init_upload_file();
+		//$.fn.intialize_fileupload('doc_upload', 'doc_upload_files');
 	}
 	else if(form_status == 'EDIT')
 	{
@@ -107,8 +107,8 @@ $.fn.show_hide_form = function(form_status)
 		$('#col-sm12_div')				.hide(400);		// newly added
 		$('#search_div')				.hide(400);
 		$('#approval_div')				.hide(400);
-		//$.fn.init_upload_file();
-		$.fn.intialize_fileupload('doc_upload', 'doc_upload_files');
+		$.fn.init_upload_file();
+		//$.fn.intialize_fileupload('doc_upload', 'doc_upload_files');
 	}
 	else if(form_status == 'HIDE')
 	{
@@ -143,7 +143,7 @@ $.fn.populate_faq_list_report = function(data)
 							<td>${data[i].question}</td>
 							<td>${data[i].created_by}</td>
 							<td>${data[i].approver != null ? data[i].approver : '-'}</td>
-							<td>${data[i].approved == 1 ? '<i class="text-success"> Approved</i>' : '<i class="text-warning"> Pending</i>'}</td>
+							<td>${data[i].approved == 1 ? '<i class="badge bg-soft-success text-success"> Approved</i>' : '<i class="badge bg-soft-warning text-warning"> Pending</i>'}</td>
 						`;
 						row += '<td width="12%"><div class="button-group">';
 						if(SESSIONS_DATA.is_admin = 1)
@@ -316,8 +316,8 @@ $.fn.get_faq_report = function()
 		{
 			//date_from   		: $('#from_date').val(),
            // date_to     		: $('#to_date').val(),
-		    date_from		    : "2022-04-20",
-		    date_to             : "2022-05-20",
+		    date_from		    : "2022-01-20",
+		    date_to             : "2022-12-20",
             question_category   : $('#search_question_category').val(),
             category   			: $('#search_category').val(),
             question 			: $('#search_question').val(),
@@ -416,11 +416,12 @@ $.fn.save_edit_form = function()
 {
 	try
 	{			
-		if($('#detail_form').parsley( 'validate' ) == false)
-		{
-			btn_save.stop();
-			return;
-		}
+		if ($('#detail_form').parsley().validate() == false)
+        {
+            btn_save.stop();
+            return;
+        }
+
 		var attachment = [];
        
 		var question = $('#txt_question').val().replace(/\r\n|\r|\n/g,"<br>");
@@ -448,7 +449,7 @@ $.fn.save_edit_form = function()
 				{	
 					faq_id 				= return_data.data;
                   // FILE_UPLOAD_PATH 	= `faq/${faq_id}/`;
-				   FILE_UPLOAD_PATH = `../files/${MODULE_ACCESS.module_id}/${faq_id}/`;
+				  FILE_UPLOAD_PATH = `../files/${MODULE_ACCESS.module_id}/${faq_id}/`;
                     let attachment_data =   
                     {
                         id          	: '',
@@ -460,7 +461,7 @@ $.fn.save_edit_form = function()
                         json_field  	: {},
                         emp_id      	: SESSIONS_DATA.emp_id
                     };	
-
+ 
                     if($('#files .file-upload.new').length > 0)
                 	{
                     	$.fn.upload_file('files','id',faq_id,
@@ -568,13 +569,7 @@ $.fn.prepare_form = function()
 {	
 	try
 	{	
-	/*	$('#dd_faq').multiselect
-        ({
-            columns     : 1,
-            placeholder : 'Please Select',
-            search      : true,
-            selectAll   : true
-		});*/
+	
 		
 		$('#detail_form').parsley
 		({
@@ -607,35 +602,7 @@ $.fn.prepare_form = function()
 		$('.populate').select2();
         $.fn.load_editor('text_editor');
 
-      /*  $('#dp_date').daterangepicker
-	    ({
-            ranges:
-            {
-                'Today'		    : [moment(), moment()],
-                'Yesterday'	    : [moment().subtract('days', 1), moment().subtract('days', 1)],
-                'Last 7 Days'	: [moment().subtract('days', 6), moment()],
-                'Last 30 Days'	: [moment().subtract('days', 29), moment()],
-                'This Month'	: [moment().startOf('month'), moment().endOf('month')],
-                'Last Month'	: [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
-            },
-            locale:
-            {
-                cancelLabel : "Reset"
-            },
-            startDate            : moment().subtract('days', 29),
-            endDate              : moment(),
-            showCustomRangeLabel : false,
-            autoUpdateInput      : false,
-            opens		         : 'left'
-	    },
-        function(start, end)
-        {
-            $('#dp_date span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-            $('#from_date').val(start.format('YYYY-MM-DD'));
-			$('#to_date').val(end.format('YYYY-MM-DD'));
-	    });
-        $('#dp_date span').html(moment().subtract('days', 29).format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
-		*/
+     
         if(SESSIONS_DATA.is_admin == 1)
 		{
 	        $.fn.get_faq_drop_down_values();
@@ -645,6 +612,9 @@ $.fn.prepare_form = function()
 		{
 			$.fn.get_faq_list();
 		}
+		$('#dp_search_date span').html(moment().startOf('year').format('MMMM D, YYYY') + ' - ' + moment().endOf('year').format('MMMM D, YYYY'));
+		$('#from_date').val(moment().startOf('year').format('YYYY-MM-DD'));
+		$('#to_date').val(moment().endOf('year').format('YYYY-MM-DD'));
 	}
 	catch(err)
 	{
@@ -757,6 +727,20 @@ $.fn.bind_command_events = function()
 			$.fn.save_edit_form();
 		});
 		
+		$("#dp_search_date").flatpickr({
+            mode:"range",
+            altFormat: "d-M-Y",
+            dateFormat: "Y-m-d",
+            onChange:function(selectedDates){
+                var _this=this;
+                var dateArr=selectedDates.map(function(date){return _this.formatDate(date,'Y-m-d');});
+                $('#from_date').val(dateArr[0]);
+                $('#to_date').val(dateArr[1]);
+            },
+        });
+
+		$.fn.init_upload_file();
+
 	}
 	catch(err)
 	{

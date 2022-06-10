@@ -2,7 +2,7 @@ var FORM_STATE = 0;
 var RECORD_INDEX = 0;
 var TABLE_ROW_ID = 0;
 var ROW_DATA = '';
-var SESSIONS_DATA = '';
+//var SESSIONS_DATA = '';
 var last_scroll_top = 0;
 var LEAVE_ID = '';
 var APPROVE_TYPE = '';
@@ -77,8 +77,8 @@ $.fn.reset_form = function (form)
 		{
 			$('#dd_employee').val('').change();
 			$('#dd_leave_type').val('').change();
-			$('#chk_is_verified').removeAttr('checked');
-			$('#chk_is_approved').removeAttr('checked');
+			$('#chk_is_verified').prop('checked', false);
+			$('#chk_is_approved').prop('checked', false);
 		}
 		if (form == 'remark_form')
 		{
@@ -94,9 +94,9 @@ $.fn.reset_form = function (form)
 		}
 		if (form == 'approve_option')
 		{
-			$('#option_paid').removeAttr('checked');
-			$('#option_unpaid').removeAttr('checked');
-			$('#option_reject').removeAttr('checked');
+			$('#option_paid').prop('checked', false);
+			$('#option_unpaid').prop('checked', false);
+			$('#option_reject').prop('checked', false);
 		}
 		if (form == 'approve_leave')
 		{
@@ -162,7 +162,8 @@ $.fn.populate_list_form = function (data, is_scroll)
 				if (data[i].verified == 0)
 				{
 					row += '<td>';
-					row += '<button class="btn-warning btn" data-value=\'' + data_val + '\' onclick="$.fn.do_verify( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_verify">Verify</button>';
+					row += '<button class="btn btn-xs btn-outline-info waves-effect waves-light" data-value=\'' + data_val + '\' onclick="$.fn.do_verify( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_verify">Verify</button>';
+					//row += '<div class="button-list pt-1"><button type="button" class="btn btn-xs btn-outline-info waves-effect waves-light"  title="Verify" onclick="$.fn.do_verify( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )"><span class="hidden-xs">Verify</span></button></div>';
 					row += '</td>';
 				}
 				if (data[i].verified == 1)
@@ -170,8 +171,8 @@ $.fn.populate_list_form = function (data, is_scroll)
 					row += '<td>';
 					if (data[i].all_approved == 0)
 					{
-						row += '<i class="fa fa-edit text-warning"> Verified</i>';
-						row += '&nbsp;<button class="btn-success btn" data-value=\'' + data_val + '\' onclick="$.fn.do_approve( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_approve">Approve</button>';
+						row += '<div class="badge bg-soft-info text-info"><i class="fa fa-check-circle" aria-hidden="true">&nbsp;Verified</i><br/></div>';
+						row += '&nbsp;<button class="btn btn-xs btn-outline-warning waves-effect waves-light" data-value=\'' + data_val + '\' onclick="$.fn.do_approve( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_approve">Approve</button>';
 					}
 					if (data[i].all_approved == 1)
 					{
@@ -179,22 +180,22 @@ $.fn.populate_list_form = function (data, is_scroll)
 						{
 							if (parseFloat(data[i].rejected) == parseFloat(data[i].no_of_days))
 							{
-								row += '<i class="fa fa-times-circle text-danger"> Rejected</i><br/>';
+								row += '<i class="fa fa-times-circle badge bg-soft-danger text-danger"> Rejected</i><br/>';
 							}
 							else
 							{
-								row += '<i class="fa fa-times-circle text-danger"> Partial Rejected</i><br/>';
+								row += '<i class="fa fa-times-circle badge bg-soft-danger text-danger"> Partial Rejected</i><br/>';
 							}
 
 							if (parseFloat(data[i].rejected) != parseFloat(data[i].no_of_days))
 							{
-								row += '<i class="fa fa-check-circle text-success"> Approved</i>';
+								row += '<i class="fa fa-check-circle badge bg-soft-success text-success" aria-hidden="true">&nbsp;Approved</i>';
 							}
 
 						}
 						else
 						{
-							row += '<i class="fa fa-check-circle text-success"> Approved</i>';
+							row += '<i class="fa fa-check-circle badge bg-soft-success text-success" aria-hidden="true">&nbsp;Approved</i>';
 						}
 					}
 					else
@@ -203,32 +204,38 @@ $.fn.populate_list_form = function (data, is_scroll)
 						{
 							if (parseFloat(data[i].rejected) == parseFloat(data[i].no_of_days))
 							{
-								row += '<i class="fa fa-times-circle text-danger"> Rejected</i><br/>';
+								row += '<i class="fa fa-times-circle badge bg-soft-danger text-danger"> Rejected</i><br/>';
 							}
 							else
 							{
-								row += '<i class="fa fa-times-circle text-danger"> Partial Rejected</i><br/>';
+								row += '<i class="fa fa-times-circle badge bg-soft-danger text-danger"> Partial Rejected</i><br/>';
 							}
 						}
 					}
 					row += '</td>';
 				}
-				row += `<td><div id="leave_file_${data[i].id}"></div></td>`;
-				row += '<td width="10%">';
+				row += `<td><div id="leave_file_${data[i].id}" style="width: max-content;border:none;background-color:none;"></div></td>`;
+				row += '<td width="15%"><div class="button-group">';
+				
 				if (data[i].verified == 0)
 				{
-					row += '<a class="tooltips" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.delete_form(unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\'))" data-trigger="hover" data-original-title="Delete data "><i class="fa fa-trash-o"/></a>';
+					
+					row += `<button type="button" class="btn btn-outline-danger btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-value="${data_val}" onclick="$.fn.delete_form(decodeURIComponent('${data_val}'))">
+								<i class="far fa-trash-alt"></i>
+							</button>`;
 				}
 				if (data[i].type_id == MC_LEAVE_ID && data[i].filename != '' && data[i].filename != null)
 				{
 					row += '&nbsp;<a target="_blank" href="' + data[i].filepath + '"><i class="fa fa-picture-o"/></a>';
 				}
-				row += '&nbsp;&nbsp;<a class="tooltips" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.view_remark(unescape($(this).attr(\'data-value\')))" data-trigger="hover" data-original-title="View Remarks"><i class="fa fa-external-link"></i></a>';
-				row += '&nbsp;&nbsp;<a class="tooltips" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.view_leave_record(unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" data-trigger="hover" data-original-title="View Details"><i class="fa fa-sign-in"></i></a>';
-				row += '</td>';
+				
+				row += '&nbsp;<a class="btn btn-outline-primary btn-xs waves-effect waves-light" data-toggle="tooltip" data-placement="left" title="View Remarks" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.view_remark(unescape($(this).attr(\'data-value\')))"><i class="fas fa-external-link-alt"></i></a>';
+				row += '&nbsp;<a class="btn btn-outline-success btn-xs waves-effect waves-light" data-toggle="tooltip" data-placement="left" title="View Details" href="javascript:void(0)" data-value=\'' + data_val + '\'  onclick="$.fn.view_leave_record(unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" ><i class="fas fa-sign-in-alt"></i></a>';
+				row += '</div></td>';
 
 				row += '</tr>';
 				tr_row++;
+				
 				$('#tbl_list tbody').append(row);
 
 				$.fn.populate_fileupload(data[i], `leave_file_${data[i].id}`);
@@ -250,7 +257,8 @@ $.fn.do_verify = function (data, table_row_id)
 	{
 		ROW_DATA = JSON.parse(data);
 		TABLE_ROW_ID = table_row_id;
-		$('#remarkModal').modal();
+	//	$('#remarkModal').modal();
+		$('#remarkModal').modal('show');
 	}
 	catch (err)
 	{
@@ -282,7 +290,7 @@ $.fn.do_approve = function (data, table_row_id)
 							leave_day.id = data[i].id;
 							leave_id_data.push(leave_day);
 						}
-						$('#approvalModal').modal();
+						$('#approvalModal').modal('show');
 					}
 				}, true
 			);
@@ -322,7 +330,7 @@ $.fn.edit_verify_status = function ()
 					if (return_data.data)
 					{
 						$.fn.remove_table_row(TABLE_ROW_ID);
-						$.fn.reset_form('remark_form');
+						//$.fn.reset_form('remark_form');
 						$.fn.show_right_success_noty('Data has been recorded successfully');
 						TABLE_ROW_ID = 0;
 						ROW_DATA = '';
@@ -421,7 +429,8 @@ $.fn.view_remark = function (data)
 			);
 
 		LEAVE_ID = data.id;
-		$('#remarkListModal').modal();
+		//$('#remarkListModal').modal();
+		$('#remarkListModal').modal('show');
 	}
 	catch (err)
 	{
@@ -442,9 +451,9 @@ $.fn.populate_remark_list_form = function (data)
 			for (var i = 0; i < data.length; i++)
 			{
 				data_val = escape(JSON.stringify(data[i]));
-
-				row += '<tr>' +
-					'<td><a class="tooltips" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.delete_remark_form(unescape($(this).attr(\'data-value\')))" data-trigger="hover" data-original-title="Delete data "><i class="fa fa-trash-o"/></a></td>' +
+//<a class="tooltips" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.delete_remark_form(unescape($(this).attr(\'data-value\')))" data-trigger="hover" data-original-title="Delete data "><i class="fa fa-trash-o"/></a></td>
+				row += '<tr><td><a class="tooltips" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.delete_remark_form(unescape($(this).attr(\'data-value\')))" data-trigger="hover" data-original-title="Delete data "><i class="fas fa-trash-alt"/></a></td>' +
+					'<td>' +
 					'<td>' + data[i].leave_remarks + '</td>' +
 					'<td>' + data[i].created_by + '</td>' +
 					'<td>' + data[i].created_date + '</td>' +
@@ -848,7 +857,7 @@ $.fn.prepare_approval = function ()
 	{
 		$.fn.reset_form('approve_option');
 		APPROVE_TYPE = 'DAY';
-		$('#approvalModal').modal();
+		$('#approvalModal').modal('show');
 	}
 	catch (err)
 	{
@@ -1028,65 +1037,49 @@ $.fn.get_list = function (is_scroll, limit = LIST_PAGE_LIMIT)
 		{
 			data.start_index = RECORD_INDEX;
 		}
+		$.fn.fetch_data(
+			$.fn.generate_parameter('get_leave_info_list', data),
+			function(return_data) {
+				 if (return_data.data.list) {
+					var len = return_data.data.list.length;
+					if (return_data.data.rec_index)
+					{
+						RECORD_INDEX = return_data.data.rec_index;
+					}
+					if (return_data.code == 0 && len != 0)
+					{
+						$.fn.data_table_destroy();
+						$.fn.populate_list_form(return_data.data, is_scroll);
+						$.fn.data_table_features();
+						$('#btn_load_more').show();
+					}
+					else if (return_data.code == 1 || len == 0)
+					{
+						if (!is_scroll)
+						{
+							$('#btn_load_more').hide();
+							$.fn.data_table_destroy();
+							$('#tbl_list tbody').empty().append
+								(
+									`<tr>
+										<td colspan="8">
+											<div class="list-placeholder">No records found!</div>
+										</td>
+									</tr>`
+								);
+							$.fn.show_right_error_noty('No records found');
+						}
+						else if (is_scroll)
+						{
+							$('#btn_load_more').hide();
+							$.fn.show_right_success_noty('No more records to be loaded');
+						}
+					}
+				} 
+			}
+		);
 
 
-		$.fn.fetch_data_for_table
-			(
-				$.fn.generate_parameter('get_leave_info_list', data),
-				$.fn.populate_list_form, is_scroll, 'tbl_list'
-			);
-
-		//	 	$.fn.fetch_data
-		//		(
-		//			$.fn.generate_parameter('get_leave_info_list',data),
-		//			function(return_data)
-		//			{
-		//				if(return_data.data.list)
-		//				{
-		//                    var len = return_data.data.list.length;
-		//					if(return_data.data.rec_index)
-		//					{
-		//						RECORD_INDEX = return_data.data.rec_index;
-		//					}
-		//
-		//                    if (return_data.code == 0 && len !== 0)
-		//                    {
-		//                        //$.fn.data_table_destroy();
-		//    					$.fn.populate_list_form(return_data.data.list, is_scroll);
-		//    					$.fn.data_table_features();
-		//                        $('.load-more').show();
-		//                    }
-		//					else if (return_data.code == 1 || len == 0)
-		//                    {
-		//                        if (!is_scroll)
-		//                        {
-		//                            $('.load-more').hide();
-		//                            //$.fn.data_table_destroy();
-		//                            $('#tbl_list tbody').empty().append
-		//                            (
-		//                                '<tr><td colspan="10"><div class="list-placeholder">No records found!</div></td></tr>'
-		//                            );
-		//                            $.pnotify
-		//                            ({
-		//                                title   : 'Error',
-		//                                type    : 'error',
-		//                                text    : 'No records found'
-		//                            });
-		//                        }
-		//                        else if (is_scroll)
-		//                        {
-		//                            $('.load-more').hide();
-		//                            $.pnotify
-		//                            ({
-		//                                title   : 'End of records',
-		//                                type    : 'error',
-		//                                text    : 'No more records to be loaded'
-		//                            });
-		//                        }
-		//                    }
-		//				}
-		//			},false
-		//		);
 	}
 	catch (err)
 	{
@@ -1151,7 +1144,8 @@ $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
 {
     try
     {
-		
+		$('#dd_employee').empty();
+		$('#dd_employee').append(`<option value="">All</option>`);
 		 for (let item of dd_data.emp)
         {
             $('#dd_employee').append(`<option 
@@ -1160,7 +1154,8 @@ $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
                                                  </option>`
                                                );
         }
-     
+        $('#dd_leave_type').empty();
+		$('#dd_leave_type').append(`<option value="">All</option>`);
         for (let item of dd_data.leave_type)
         {
             $('#dd_leave_type').append(`<option 
@@ -1199,7 +1194,7 @@ $.fn.prepare_form = function ()
 				}
 			});
 			$.fn.get_leave_approval_dropdown_data();
-		//$.fn.get_list(false);
+			$.fn.get_list(false);
 	}
 	catch (err)
 	{
@@ -1247,12 +1242,30 @@ $.fn.bind_command_events = function ()
 			$.fn.get_list(false);
 		});
 
-		$('#btn_search').click(function (e)
+		$('#btn_search_reset').click( function(e)
 		{
 			e.preventDefault();
-			RECORD_INDEX = 0;
-			$.fn.get_list(false, SEARCH_PAGE_LIMIT);
+			$.fn.reset_form('list');
 		});
+
+		$('#btn_search').click( function(e)
+		{
+			
+			$('#searchPanel').show();
+			$('#btn_search').hide();
+		});
+
+		$('#btn_close_search').click(function()
+		{
+			$('#searchPanel').hide();
+			$('#btn_search').show();
+		});
+		$('#btn_search_action').click(function (e)
+        {
+            e.preventDefault();
+            RECORD_INDEX = 0;
+            $.fn.get_list(false);
+        });
 
 		$('#btn_reset').click(function (e)
 		{

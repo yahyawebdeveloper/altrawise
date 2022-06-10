@@ -23,7 +23,7 @@
                      <a href="javascript:void(0);" id="btn_new" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-1"></i>New FAQ</a>
                </div>
                <h4 class="page-title">
-                   <i class="fas fa-globe-asia"></i> FAQ Report
+                   <i class="fas fa-globe-asia"></i> FAQ | FAQ Report &nbsp;<span id="total_faq_report" class="badge rounded-pill bg-warning small-pill">0</span>
                </h4>
            </div>
        </div>
@@ -32,99 +32,99 @@
 
    <div id="searchPanel" class="row panel-body" style="display: none;">
        <div class="col-12">
-           <div class="card">
+        <div class="card mb-0">
+                <div class="col-xl-12" style="text-align:right">
+                    <div class="modal-header bg-light">
+                        <h4 class="modal-title" > <i class="mdi mdi-magnify" aria-hidden="true"></i> Search</h4>
+                        <button type="button" id="btn_close_search" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                    </div>
+                </div>
                <div class="card-body">
                    
-                   <div class="float-end">
+                   <!--<div class="float-end">
                        <a id="btn_close_search" href="javascript:void(0)">
                            <i class="mdi mdi-close-box m-0 text-muted h3"></i>
                        </a>
-                   </div>
+                   </div>-->
                    <div class="clearfix"></div>
                    <form class="form-horizontal">
 
-                       <div class="row mt-2">
-                           <div class="col-lg-6">
-                               <!-- Title -->
-                               <div class="row">
-                                   <label for="search_question_category" class="col-4 col-form-label">Question Category</label>
-                                   <div class="col-7 errorContainer">
-                                           <select class="form-control populate" data-toggle="select2" data-width="100%" id="search_question_category" required>
-                                           </select>
-                                   </div>
-                               </div>
-                           </div>
-                           <div class="col-lg-6">
-                               <!-- Created By -->
-                               <div class="row">
-                                   <label for="search_category" class="col-4 col-form-label">Employee Category</label>
-                                   <div class="col-7 errorContainer">
-                                       <select id="search_category" class="form-control populate" data-width="100%">
-                                       </select>
-                                   </div>
-                               </div>
-                           </div>
-                       </div>
-
-                       <div class="row mt-2">
-                           <div class="col-lg-6">
-                               <!-- Type -->
-                               <div class="row">
-                                   <label for="search_approver" class="col-4 col-form-label">Approver</label>
-                                   <div class="col-7 errorContainer">
-                                       <select id="search_approver" class="form-control populate" data-width="100%">
-                                       </select>
-                                   </div>
-                               </div>
-                           </div>
-                           <div class="col-lg-6">
-                               <!-- Status -->
-                               <div class="row">
-                                   <label for="dd_status_search" class="col-4 col-form-label">Status</label>
-                                   <div class="col-7 errorContainer">
-                                       <select id="search_status" class="form-control populate" data-width="100%">
-                                          <option value="">All</option>
-                                          <option value="1">Approved</option>
-                                          <option value="0">Pending</option>
-                                       </select>
-                                   </div>
-                               </div>
-                           </div>
-                       </div>
-                       <div class="row mt-2">
-                           <div class="col-lg-6">
-                               <!-- Document Date -->
-                               <div class="row">
-                                   <label for="dp_search_date" class="col-4 col-form-label"> Date</label>
-                                   <div class="col-7 errorContainer">
-                                       <input type="text" id="dp_search_date" class="form-control flatpickr-input" placeholder="2018-10-03 to 2018-10-10" readonly="readonly">
-                                   </div>
-                                   <input type="hidden" id="from_search_date">
-                                   <input type="hidden" id="to_search_date">
-                               </div>
-                           </div>
-                           <div class="col-lg-6">
-                               <!-- Outbound Doc No -->
-                                   <div class="row">
-                                       <label for="search_created_by" class="col-4 col-form-label">Created By</label>
-                                       <div class="col-7 errorContainer">
-                                           <input type="text" class="form-control" id="search_created_by">
-                                       </div>
-                                   </div>
-                           </div>
-                       </div>
-                       <div class="row mt-2">
-                           <div class="col-lg-6">
-                              <!-- Type -->
-                              <div class="row">
-                                 <label for="search_approver" class="col-4 col-form-label">Question</label>
-                                 <div class="col-7 errorContainer">
-                                    <select id="search_question" class="form-control populate" data-width="100%">
+                       <div class="col-xl-12">
+                            <div class="col-xl-6 searchCol">
+                                <div class="row">
+                                <div class="col-md-12">
+                                    <label for="search_question_category" class="col-4 col-form-label">Question Category</label>
+                                    <select class="form-select populate form-control" data-toggle="select2" data-width="100%" id="search_question_category" required>
                                     </select>
-                                 </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="col-xl-6 searchCol">
+                                <div class="row">
+                                <div class="col-md-12">
+                                    <label for="search_category" class="col-4 col-form-label">Employee Category</label>
+                                    <select id="search_category" class="form-select populate" data-width="100%">
+                                    </select>
+                                </div>
+                            </div>
+                           </div>
+                       </div>
+                       <div class="col-xl-12">
+                            <div class="col-xl-6 searchCol">
+                                <div class="row">
+                                <div class="col-md-12">
+                                    <label for="search_approver" class="col-4 col-form-label">Approver</label>
+                                    <select id="search_approver" class="form-select" data-width="100%">
+                                    </select>
+                                </div>
                               </div>
+                            </div>
+                            <div class="col-xl-6 searchCol">
+                                <div class="row">
+                                <div class="col-md-12">
+                                    <label for="dd_status_search" class="col-4 col-form-label">Status</label>
+                                    <select id="search_status" class="form-select" data-width="100%">
+                                        <option value="">All</option>
+                                        <option value="1">Approved</option>
+                                        <option value="0">Pending</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                        </div>
+                       <div class="col-xl-12">
+                        <div class="col-xl-6 searchCol">
+                            <div class="row">
+                            <div class="col-md-12">
+                                <label for="dp_search_date" class="col-4 col-form-label"> Date</label>
+                                <input type="text" id="dp_search_date" class="form-control flatpickr-input" placeholder="2018-10-03 to 2022-10-10" readonly="readonly">
+                                <input type="hidden" id="from_date">
+                                <input type="hidden" id="to_date">
+                            </div>
+                        </div>
+                        </div>
+                        <div class="col-xl-6 searchCol">
+                            <div class="row">
+                            <div class="col-md-12">
+                                <label for="search_created_by" class="col-4 col-form-label">Created By</label>
+                                <select id="search_created_by" style="width:100%" class="form-select" required>
+                                    <option value=""></option>
+                                 </select>
+                            </div>
+                        </div>
+                       </div>
+                   </div>
+                       <div class="col-xl-12">
+
+                        <div class="col-xl-6 searchCol">
+                            <div class="row">
+                            <div class="col-md-12">
+                                <label for="search_approver" class="col-4 col-form-label">Question</label>
+                                <input class="form-control filter-change" id="search_question" >
+                            </div>
+                        </div>
+                       </div>
+                   </div>
 
                        <div><br></div>
                        <div class="form-group align-right">
@@ -140,6 +140,12 @@
    <div id="tblList" class="row">
        <div class="col-12">
            <div class="card">
+                <!--<div class="col-xl-12">
+                    <div class="modal-header bg-light">
+                        <h4 class="modal-title" ></h4>
+                    </div>
+                </div>-->
+           
                <div class="card-body">
                    <div class="dropdown float-end">
                        <a href="#" class="dropdown-toggle card-drop arrow-none" data-bs-toggle="dropdown" aria-expanded="false">
@@ -150,8 +156,8 @@
                            <p class="dropdown-item"  onclick="exportTable2PDF('FAQ Report','tbl_faq_report','p')" style="cursor: pointer;">Export as PDF</p>
                        </div>
                    </div>
-                   <div class="table-responsive mt-3">
-                       <table class="table table-centered table-striped w-100"  id="tbl_faq_report">
+                   <div class="table-responsive">
+                       <table class="table table-striped mb-0"  id="tbl_faq_report">
                            <thead>
                                <tr>
                                     <th>#</th>
@@ -205,92 +211,82 @@
                        <div class="tab-content">
                            
                                <div class="tab-pane active" id="tab-one">
-                                   <div class="row mt-2">
-                                       <div class="col-lg-12">
-                                           <!-- Question Category -->
-                                           <div class="row">
-                                               <label for="dd_question_category" class="col-4 col-form-label"> Question Category</label>
-                                               <div class="col-8 pe-4 errorContainer">
-                                                   <div class="input-group">
-                                                    <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_question_category">
-                                                    </select>
-                                                   </div>
-                                               </div>
-                                           </div>
-                                       </div>
-                                   </div>
-                                   <div class="row mt-2">
-                                       <div class="col-lg-12">
-                                           <!-- Employee Category -->
-                                           <div class="row">
-                                               <label for="dd_faq" class="col-4 col-form-label">Employee Category</label>
-                                               <div class="col-8 pe-4 errorContainer">
-                                                   <select class="form-control populate" data-toggle="select2" multiple placeholder="Select" data-width="100%" id="dd_faq">
-                                                    
-                                                   </select>
-                                               </div>
-                                           </div>
-                                       </div>
+                                <div class="col-xl-12">
+                                    <div class="col-xl-6 searchCol">
+                                        <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="dd_question_category" class="col-4 col-form-label"> Question Category</label>
+                                            <select class="form-control form-select " data-toggle="select2" data-width="100%" id="dd_question_category" required>
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div class="row mt-2">
-                                       <div class="col-lg-12">
-                                           <!-- Approver -->
-                                           <div class="row">
-                                               <label for="dd_approver" class="col-4 col-form-label">Approver</label>
-                                               <div class="col-8 pe-4 errorContainer">
-                                                   <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_approver" required>
-                                                   </select>
-                                               </div>
-                                           </div>
-                                       </div>
+                                    </div>
+                                    <div class="col-xl-6 searchCol">
+                                        <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="dd_faq" class="col-4 col-form-label">Employee Category</label>
+                                            <select class="form-control form-select " data-toggle="select2" multiple placeholder="Select" data-width="100%" id="dd_faq" required>
+                                            </select>
+                                        </div>
+                                    </div>
                                    </div>
-                                   <div class="row mt-2">
-                                       <div class="col-lg-12">
-                                            <!-- Question -->
-                                           <div class="row">
-                                               <label for="txt_question" class="col-4 col-form-label">Question</label>
-                                               <div class="col-8 pe-4 errorContainer">
-                                                   <div class="input-group">
-                                                    <textarea type="text" id="txt_question" class="form-control flatpickr-input" placeholder="Question" ></textarea>
-                                                   </div>
-                                               </div>
-                                           </div>
-                                       </div>
-                                     </div>
-                                     <div class="row mt-2">  
-                                       <div class="col-lg-12">
-                                            <!-- Answer -->
-                                           <div class="row">
-                                               <label for="txt_answer" class="col-4 col-form-label">Answer</label>
-                                               <div class="col-8 pe-4 errorContainer">
-                                                   <div class="input-group">
-                                                    <textarea type="text" id="text_editor" class="form-control flatpickr-input" placeholder="Answer" ></textarea>
-                                                   </div>
-                                               </div>
-                                           </div>
-                                       </div>
-                                   </div>
-                                   <div class="row mt-2">
-                                       <div class="col-lg-12">
-                                            <!-- Attachments -->
-                                           <div class="row">
-                                               <label for="doc_upload" class="col-4 col-form-label">Attachments</label>
-                                               <div class="col-7 errorContainer">
-                                                    <span class="btn btn-success waves-effect waves-light fileinput-button" id="btn_add_image">
-                                                        <span>Browse File</span>
-                                                        <input id="doc_upload" type="file" name="qqfile">
-                                                    </span>
-                                               </div>
-                                           </div>
-                                       </div>
-                                   </div>
-                                   <div id="files_div">
-                                       <div class="row mt-2">
-                                        <div id="attachment_files" style="margin-top: 8px;margin-bottom: 10px;"></div>
-                                           <div id="files" class="col-lg-10 offset-lg-2"></div>
-                                       </div>
-                                   </div>
-                               </div>
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="col-xl-6 searchCol">
+                                        <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="dd_approver" class="col-4 col-form-label">Approver</label>
+                                            <select class="form-control form-select " data-toggle="select2" data-width="100%" id="dd_approver" required>
+                                            </select>
+                                        </div>
+                                        
+                                    </div>
+                                    </div>
+                                    <div class="col-xl-6 searchCol">
+                                        <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="txt_question" class="col-4 col-form-label">Question</label>
+                                            <textarea type="text" id="txt_question" class="form-control flatpickr-input" placeholder="Question" required></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="col-xl-12 searchCol">
+                                    <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="txt_answer" class="col-4 col-form-label">Answer</label>
+                                        <textarea type="text" id="text_editor" class="form-control flatpickr-input" placeholder="Answer" required></textarea>
+                                    </div>
+                                </div>
+                                </div>
+                            
+                        </div>
+                            <div class="col-xl-12">
+
+                                <div class="col-xl-6 searchCol">
+                                    <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="doc_upload" class="col-4 col-form-label">Attachments</label>
+                                        <span class="btn btn-success waves-effect waves-light fileinput-button" id="btn_add_image">
+                                            <span>Browse File</span>
+                                            <input id="doc_upload" type="file" name="qqfile">
+                                        </span>
+                                    </div>
+                                    <!--<div class="form-group">
+                                        <div id="files" class="col-sm-10 col-sm-offset-2"></div>
+                                     </div>-->
+                                </div>
+                            </div>
+                           
+                        </div>
+                        <div class="col-xl-12" id="files_div">
+                            <div class="row mt-4">
+                                <div id="attachment_files" style="margin-top: 8px;margin-bottom: 10px;"></div>
+                                   <div id="files" class="col-lg-10 offset-lg-2"></div>
+                                </div>
+                       </div>
+                        </div>
                        </div>
                    
                    <div class="form-group align-right" id="actions_div"><br />

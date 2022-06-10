@@ -52,9 +52,10 @@ $.fn.get_list = function()
 			to_date			: $('#to_date').val(),
 			paid			: $('#chk_is_paid').is(':checked') 	? 1 : 0,
 			unpaid			: $('#chk_is_unpaid').is(':checked') 	? 1 : 0,
-			emp_id			: SESSIONS_DATA.emp_id
+			emp_id			: SESSIONS_DATA.emp_id,
+			module_id: "133"
 	 	};
-
+        console.log(data);
 	 	$.fn.fetch_data
 		(
 			$.fn.generate_parameter('get_leave_report',data),
@@ -75,6 +76,7 @@ $.fn.get_list = function()
 				}
 			},true, btn_search
 		);
+		
 	}
 	catch(err)
 	{
@@ -132,14 +134,14 @@ $.fn.pouplate_list = function(data)
 				{
 					if(data[i].type_id != 48)
 					{
-						row += '<td class="text-center">' + date.format(UI_DATE_FORMAT) + '' + day_info	+ '<br/>PAID</td>';
+						row += '<td class="text-center">' +  + '' + day_info	+ '<br/>PAID</td>';// date.format(UI_DATE_FORMAT)
 						row += '<td>&nbsp;</td>';
 						row += '<td>&nbsp;</td>';
 					}
 					else
 					{
 						row += '<td>&nbsp;</td>';
-						row += '<td class="text-center">' + date.format(UI_DATE_FORMAT) + '' + day_info	+ '</td>';
+						row += '<td class="text-center">' + + '' + day_info	+ '</td>';// date.format(UI_DATE_FORMAT)
 						row += '<td>&nbsp;</td>';
 					}
 				}
@@ -147,7 +149,7 @@ $.fn.pouplate_list = function(data)
 				{
 					row += '<td>&nbsp;</td>';
 					row += '<td>&nbsp;</td>';
-					row += '<td class="text-center">' + date.format(UI_DATE_FORMAT) + '' + day_info	+ '<br/>UNPAID</td>';
+					row += '<td class="text-center">' + + '' + day_info	+ '<br/>UNPAID</td>';// date.format(UI_DATE_FORMAT)
 				}
 				row += '<td>&nbsp;</td>';
 				row += '<td>&nbsp;</td>';
@@ -341,17 +343,58 @@ $.fn.form_load = function()
 	}
 };
 
+$.fn.reset_form = function (form)
+{
+	try
+	{
+		if (form == 'form')
+		{
+			$('#dd_employee').val('All').change();
+			$('#dd_leave_type').val('All').change();
+		
+		}
+		
+	}
+	catch (err)
+	{
+		$.fn.log_error(arguments.callee.caller, err.message);
+	}
+};
+
 $.fn.bind_command_events = function()
 {
     try
     {
+		$('#btn_search_reset').click( function(e)
+		{
+			e.preventDefault();
+			$.fn.reset_form('list');
+		});
+
 		$('#btn_search').click( function(e)
+		{
+			
+			$('#searchPanel').show();
+			$('#btn_search').hide();
+		});
+		$('#btn_reset').click(function (e)
+		{
+			e.preventDefault();
+			RECORD_INDEX = 0;
+			$.fn.reset_form('form');
+			$.fn.get_list(false);
+		});
+
+		$('#btn_close_search').click(function()
+		{
+			$('#searchPanel').hide();
+			$('#btn_search').show();
+		});
+		$('#btn_search_action').click(function (e)
         {
             e.preventDefault();
-			RECORD_INDEX = 0;
-			btn_search = Ladda.create(this);
-	 		btn_search.start();
-            $.fn.get_list();
+            RECORD_INDEX = 0;
+            $.fn.get_list(false);
         });
 
 		$("#doc_date").flatpickr({

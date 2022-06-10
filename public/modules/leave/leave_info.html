@@ -11,7 +11,9 @@
 <link href="assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
 <link href="./assets/libs/jquery-fileupload/css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
 <!-- third party css end -->
-
+<style>
+    .file-upload.alert-light  { background:none !important;border:0cm !important;}
+</style>
 <div class="row" id="list_div">
     <!-- start page title -->
     <div class="row mt-3 mb-1">
@@ -22,7 +24,7 @@
                      
                 </div>
                 <h4 class="page-title">
-                    <i class="fa fa-check-circle-o"></i> Leave  Approval
+                    <i class="fa fa-check-circle-o"></i> Leave  Approval |  Leave List
                 </h4>
             </div>
         </div>
@@ -31,66 +33,77 @@
  
     <div id="searchPanel" class="row panel-body" style="display: block;">
         <div class="col-12">
-            <div class="card">
+            <div class="card mb-0">
+                <div class="col-xl-12" style="text-align:right">
+                    <div class="modal-header bg-light">
+                        <h4 class="modal-title" > <i class="mdi mdi-magnify" aria-hidden="true"></i> Search</h4>
+                        <button type="button" id="btn_close_search" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                    </div>
+                </div>
                 <div class="card-body">
-                    
-                    <div class="float-end">
+                    <!--<div class="float-end">
                         <a id="btn_close_search" href="javascript:void(0)">
                             <i class="mdi mdi-close-box m-0 text-muted h3"></i>
                         </a>
-                    </div>
+                    </div>-->
                     <div class="clearfix"></div>
                     <form class="form-horizontal">
- 
-                        <div class="row mt-2">
-                            <div class="col-lg-6">
-                                <!-- Title -->
+                        <div class="col-xl-12">
+                            <div class="col-xl-6 searchCol">
                                 <div class="row">
+                                <div class="col-md-12">
                                     <label for="doc_date" class="col-4 col-form-label">Employee</label>
-                                    <div class="col-7 errorContainer">
-                                            <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_employee" required>
-                                                <option value="">Please Select</option>
-                                            </select>
-                                    </div>
+                                    <select class="form-control form-select populate" data-toggle="select2" data-width="100%" id="dd_employee" required>
+                                        <option value="">Please Select</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            </div>
+                            <div class="col-xl-6 searchCol">
                                 <div class="row">
-                                    <label for="doc_date" class="col-4 col-form-label">Date &nbsp;&nbsp; <input type="checkbox" id="chk_is_date" name="chk_is_date" checked></label>
-                                    <div class="col-7 errorContainer">
-                                        <input type="text" id="doc_date" class="form-control flatpickr-input" placeholder="2018-10-03 to 2018-10-10" readonly="readonly">
+                                <div class="col-md-12">
+                                    <label for="dd_leave_type" class="col-4 col-form-label">Leave Type </label>
+                                    <select class="form-control form-select populate" data-toggle="select2" data-width="100%" id="dd_leave_type" required>
+                                        <option value="">Please Select</option>
+                                    </select>
+                                </div>
+                            </div>
+                            </div>
+                           
+                        </div>
+                        <div class="col-xl-12">
+                           
+                           
+                            <div class="col-xl-6 searchCol">
+                                <div class="row">
+                                <div class="col-md-12">
+                                    <label for="doc_date" class="col-4 col-form-label">Date  <input type="checkbox" class="form-check-input"  id="chk_is_date" name="chk_is_date" checked>&nbsp;&nbsp; </label>
+                                    <div class="input-group" id="date_container">
+                                        <input type="text" id="doc_date" class="form-control flatpickr-input" placeholder="2018-10-03 to 2018-10-10" readonly="readonly">   
+                                        <input type="hidden" id="from_date">
+                                        <input type="hidden" id="to_date">
                                     </div>
-                                    <input type="hidden" id="from_date">
-                                    <input type="hidden" id="to_date">
+                                </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 searchCol">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="end_date" class="col-4 col-form-label">&nbsp;</label>
+                                        <div class="col-sm-12">
+                                            <input type="checkbox" class="form-check-input"  id="chk_is_verified" name="chk_is_verified">
+                                            Verified Leave
+                                            <input type="checkbox" class="form-check-input"  id="chk_is_approved" name="chk_is_approved">
+                                            Approved Leave
+                                        </div>
+                                    
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-2">
-                            <div class="col-lg-6">
-                                <!-- Title -->
-                                <div class="row">
-                                    <label for="log_date" class="col-4 col-form-label">Leave Type</label>
-                                    <div class="col-7 errorContainer">
-                                        <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_leave_type" required>
-                                            <option value="">Please Select</option>
-                                        </select>
-                                      
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="row">
-                                    <label class="checkbox-inline">
-                                        <input type="checkbox" id="chk_is_verified" name="chk_is_verified">Verified Leave
-                                    </label>
-                                </div>
-                                <div class="row">
-                                    <label class="checkbox-inline">
-                                        <input type="checkbox" id="chk_is_approved" name="chk_is_approved">Approved Leave
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+ 
+                        
+                      
  
                         <div><br></div>
                         <div class="form-group align-right">
@@ -105,7 +118,12 @@
  
     <div id="tblList" class="row">
         <div class="col-12">
-            <div class="card">
+            <div class="card mb-0">
+                <!--<div class="col-xl-12">
+                    <div class="modal-header bg-light">
+                        <h4 class="modal-title" > Leave List </h4>
+                    </div>
+                </div>-->
                 <div class="card-body">
                     <div class="dropdown float-end">
                         <a href="#" class="dropdown-toggle card-drop arrow-none" data-bs-toggle="dropdown" aria-expanded="false">
@@ -116,8 +134,8 @@
                             <p class="dropdown-item"  onclick="exportTable2PDF('Leave','tbl_list','p')" style="cursor: pointer;">Export as PDF</p>
                         </div>
                     </div>
-                    <div class="table-responsive mt-3">
-                        <table class="table table-centered table-striped w-100"  id="tbl_list">
+                    <div class="table-responsive">
+                        <table class="table table-striped mb-0"  id="tbl_list">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -147,21 +165,103 @@
     </div>
     <!-- end row -->
  </div>
- 
- 
-  
  </div>
+
+ 
+<!--Leave Record Start-->
+<div class="row" id="info_div" style="display: none">
+                 <!-- start page title -->
+                <div class="row mt-3 mb-1">
+                    <div class="col-12">
+                        <div class="page-title-box">
+                            <h4 class="page-title"><i class="fas fa-exchange-alt"></i> Leave </h4>
+                            <div class="page-title-right">
+                                <a href="javascript:void(0);" id="btn_info_back" class="btn btn-secondary mb-2"><i class="fe-arrow-left me-1"></i>Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>     
+                <!-- end page title --> 
+
+                <div class="row">
+                     <div class="col-xl-12">
+                         <div class="card">
+                             <div class="card-body">
+                                    <h4 class="col-sm-6" id="employee_name"></h4>
+                                    <h4 class="col-sm-5 text-right" id="leave_type"></h4>
+                                        <ul class="nav nav-tabs nav-bordered nav-justified">
+                                            <li class="nav-item" id="detail-tab">
+                                            </li>
+                                        </ul>
+                         <div class="panel-body">
+
+                             <div class="col-sm-12">
+                                 <div class="panel panel-grape">
+                                     <div class="panel-body">
+                                         <div id="div_leave_summary">
+
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+
+                             <br />
+
+                             <div class="col-sm-12">
+                                 <div class="panel panel-grape">
+                                     <div class="panel-body">
+                                      <form class="form-horizontal" id="leave_form">
+                                         <h3 class="text-center">Leave Application Details</h3>
+                                         <div class="col-sm-12">
+                                         <table  class="table table-bordered table-hover"  id="tbl_leave_record">
+                                             <thead>
+                                             <tr>
+                                                 <th class="table-checkbox">
+                                                     <input type="checkbox" class="group-checkable" id="group_checkbox" />
+                                                 </th>
+                                                 <th>Date</th>
+                                                 <th>No. of Days/Hours</th>
+                                                 <th>Action</th>
+                                                 <th>Payment</th>
+                                             </tr>
+                                             </thead>
+                                             <tbody>
+
+                                             </tbody>
+                                         </table>
+                                         <p class="pull-left">
+                                             <div class="btn-toolbar">
+                                                 <button class="btn-primary-alt btn" id="btn_apply" name="btn_apply"><i class="fa fa-save"></i> Apply</button>
+                                             </div>
+                                         </p>
+                                     </div>
+                                     </form>
+
+                                 </div>
+                                 </div>
+                             </div>
+
+                     </div>
+                        </div>
+
+                 </div>
+
+
+            </div>
+        </div>
+</div>
+<!--Leave Record End-->
 
 
 
 
     <!-- Modal Remark-->
     <div class="modal fade" id="remarkModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Confirmation</h4>
+                <div class="modal-header" >
+                    <h4 class="modal-title" style="float:left" id="myModalLabel">Confirmation</h4>
+					<button type="button" style="float:right" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -178,7 +278,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
                     <button type="button" class="btn btn-primary" id="btn_verify">Confirm</button>
                 </div>
             </div>
@@ -187,13 +287,17 @@
 
 
     <!-- Modal Remark List -->
-    <div class="modal fade" id="remarkListModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Remark List</h4>
+
+
+<div class="modal fade" id="remarkListModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+        <div class="modal-content">        
+             <div class="modal-header" >
+                                    
+                <h4 class="modal-title" style="float:left" id="myModalLabel">Remark List</h4>
+                    <button type="button" style="float:right" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
+   
                 <div class="modal-body">
                     <div class="row">
                         <div id="remarkList" class="col-sm-12">
@@ -223,7 +327,7 @@
                 </div>
                 <div class="modal-footer">
                 	<button type="button" class="btn btn-primary-alt ladda-button" data-style="expand-left" data-spinner-color="#000000" id="btn_add_remark">Save</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
                 </div>
             </div>
         </div>
@@ -231,35 +335,30 @@
 
     <!-- Modal Leave Record -->
     <div class="modal fade" id="approvalModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Approval Option</h4>
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">        
+                 <div class="modal-header" >
+                    <h4 class="modal-title" style="float:left" id="myModalLabel">Approval Option</h4>
+                    <button type="button"  style="float:right" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                   
                 </div>
                 <div class="modal-body">
                 	<div class="row">
                         <div class="col-sm-12">
-                            <div class="col-sm-4 text-center">
-                                <label class="radio-inline">
-                                    <input type="radio" id="option_paid" name="option_approve" value="PAID"> PAID
-                                </label>
-                            </div>
-                            <div class="col-sm-4 text-center">
-                                <label class="radio-inline">
-                                    <input type="radio" id="option_unpaid" name="option_approve" value="UNPAID"> UNPAID
-                                </label>
-                            </div>
-                            <div class="col-sm-4 text-center">
-                                <label class="radio-inline">
+                            <div class="col-sm-10 text-center">
+                               
+                                    <input type="radio" id="option_paid" name="option_approve" value="PAID"> PAID &nbsp;&nbsp;
+                                    <input type="radio" id="option_unpaid" name="option_approve" value="UNPAID"> UNPAID&nbsp;&nbsp;
                                     <input type="radio" id="option_reject" name="option_approve" value="REJECT"> REJECT
-                                </label>
+                               
                             </div>
+                           
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                 	<button class="btn-primary-alt btn" id="btn_approve" name="btn_approve"><i class="fa fa-save"></i> Save </button>
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
                 </div>
             </div>
         </div>

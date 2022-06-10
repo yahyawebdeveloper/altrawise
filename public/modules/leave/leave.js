@@ -229,7 +229,7 @@ $.fn.populate_leave_details = function (data)
 $.fn.get_holidays = function ()
 {
     try
-    {
+    {   
         let year = moment($('#start_date').val()).year();
 
         if ($('#end_date').val() != '')
@@ -356,18 +356,19 @@ $.fn.save_edit_form = function ()
 };
 
 $.fn.upload_medical_certificate = function (files_total)
-{
+{alert('fff')
     try
     {
         if ($('#files_cert .file-upload.new').length > 0)
-        {
-            FILE_UPLOAD_PATH = `${MODULE_ACCESS.module_id}/${LEAVE_ID}/`;
+        {alert('fff')
+            //FILE_UPLOAD_PATH = `${MODULE_ACCESS.module_id}/${LEAVE_ID}/`;
+            FILE_UPLOAD_PATH = `../files/111/${LEAVE_ID}/`;
 
             let attachment_data =
             {
                 id: '',
                 primary_id: LEAVE_ID,
-                module_id: MODULE_ACCESS.module_id,
+                module_id: 111,
                 filename: '',
                 filesize: "0",
                 json_field: {},
@@ -397,7 +398,7 @@ $.fn.upload_medical_bill = function (files_total)
     {   
         if ($('#files .file-upload.new').length > 0)
         {
-            FILE_UPLOAD_PATH = `111/${DOC_NO}/`;
+            FILE_UPLOAD_PATH = `../files/111/${DOC_NO}/`;
 
             let attachment_data =
             {
@@ -491,28 +492,28 @@ $.fn.populate_list_form = function (data, is_scroll)
 
                 if (data[i].verified == 0)
                 {
-                    row += `<td><span class="text-info"><b>Pending Verification</b></span></td>`;
+                    row += `<td><span class="badge bg-soft-warning text-warning">Pending Verification</span></td>`;
                 }
                 else
                 {
-                    row += `<td><span class="text-success"><b>Verified</b></span>`;
+                    row += `<td><span class="badge bg-soft-info text-info">Verified</span>`;
                     if (data[i].sum_approved > 0)
                     {
-                        row += `<br /><i class="fa fa-check-circle text-success">${data[i].sum_approved} Approved</i>`;
+                        row += `<br /><i class="fa fa-check-circle badge bg-soft-success text-success">${data[i].sum_approved} Approved</i>`;
                     }
                     else if (data[i].sum_rejected > 0)
                     {
-                        row += `<br /><i class="fa fa-minus-circle text-danger">${data[i].sum_rejected} Rejected</i>`;
+                        row += `<br /><i class="fa fa-minus-circle badge bg-soft-danger text-danger">${data[i].sum_rejected} Rejected</i>`;
                     }
                     else
                     {
-                        row += `<br /><span class="text-info"><b>Pending Approval</b></span>`;
+                        row += `<br/><span class="badge bg-soft-warning text-warning">Pending Approval</span>`;
                     }
                     row += `</td>`;
                 }
 
-                row += `<td><div id="leave_file_${data[i].id}"></div></td>
-                        <td><button type="button" class="btn btn-default" id="btn_leave_record" data-value=\'' + data_val + '\' onclick="$.fn.view_leave_by_day(unescape($(this).attr(\'data-value\')))">View</button></td>
+                row += `<td><div id="leave_file_${data[i].id}" style="width: max-content;"></div></td>
+                        <td><button type="button" class="btn btn-info waves-effect waves-light" id="btn_leave_record" data-value=\'' + data_val + '\' onclick="$.fn.view_leave_by_day(unescape($(this).attr(\'data-value\')))">View</button></td>
                         </tr>`;
                 $('#tbl_list tbody').append(row);
 
@@ -836,14 +837,31 @@ $.fn.change_balance_leave = function (action)
     $('#div_balance_leave').html(balance_leave.toFixed(1));
 };
 
+$.fn.set_validation_form = function ()
+{
+    $('#dleave_form').parsley(
+        {
+            classHandler: function(parsleyField) {              
+                return parsleyField.$element.closest(".errorContainer");
+            },
+            errorsContainer: function(parsleyField) {              
+                return parsleyField.$element.closest(".errorContainer");
+            },
+        }
+    );
+
+
+}
+
 $.fn.view_days = function ()
 {
     try
     {
+       
         $.fn.reset_form('leave_days');
         $('#tbl_days > tbody').empty();
 
-        if ($('#leave_form').parsley('validate') == false)
+        if ($('#leave_form').parsley().validate() == false)
         {
             btn_view_days.stop();
             return;
@@ -1122,12 +1140,13 @@ $.fn.prepare_form = function ()
                 }
             });
 
-        $('#start_date').flatpickr({ dateFormat: 'dd-mm-yy' });
-        $('#end_date').flatpickr({ dateFormat: 'dd-mm-yy' });
+        $('#start_date').flatpickr({ dateFormat: 'd-M-Y' });
+        $('#end_date').flatpickr({ dateFormat: 'd-M-Y' });
 
         $.fn.get_leave_dropdown_data();
         $.fn.get_leave_details();
         $.fn.get_list(false);
+        $.fn.set_validation_form();
 
     }
     catch (err)
@@ -1169,30 +1188,23 @@ $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
 {
     try
     {
-		//$('#'+element_id).empty();
-        if(element_id == 'dd_expenses')
-        {
-       
-       // $('#dd_expenses').empty();
-        for (let item of dd_data.expenses)
-        {
-            $('#dd_expenses').append(`<option 
-                                                 data-type="expenses" 
-                                                 value="${item.id}">${item.descr}
-                                                 </option>`
-                                               );
-        }
-      //  $('#dd_leave_type').empty();
-        for (let item of dd_data.emp_leave_type)
-        {
-            $('#dd_leave_type').append(`<option 
-                                             data-type="emp_leave_type" 
-                                             value="${item.id}">${item.descr}
-                                             </option>`
-                                            );
-        }
-       
-    }
+		  $('#dd_expenses').empty();
+          $('#dd_expenses').append(`<option value="">Please Select</option>`);
+         for (let item of dd_data.expenses)
+         {
+             $('#dd_expenses').append(`<option  data-type="expenses"  value="${item.id}">${item.descr} </option>`);
+         }
+         $('#dd_leave_type').empty();
+         $('#dd_leave_type').append(`<option value="">Please Select</option>`);
+         for (let item of dd_data.emp_leave_type)
+         {
+             $('#dd_leave_type').append(`<option 
+                                              data-type="emp_leave_type" 
+                                              value="${item.id}">${item.descr}
+                                              </option>`
+                                             );
+         }
+        
         
     }
     catch(err)
