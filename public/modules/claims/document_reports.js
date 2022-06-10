@@ -32,7 +32,7 @@ $.fn.data_table_features = function ()
 {
     try
     {
-        var table = $('#tbl_list').DataTable
+        if (!$.fn.dataTable.isDataTable('#tbl_list'))
 				({
 					"searching": false,
 					"paging": false,
@@ -190,7 +190,7 @@ $.fn.populate_list_form = function (data, is_scroll)
 				}
 				else if (data[i].verified == 1 && data[i].approved == 0)
 				{
-					row += '<td><span class="text-success">Verified</span></td>';
+					row += '<td><span class="badge bg-soft-info text-info">Verified</span></td>';
 					row += '<td>';
 					if (allow_verify == 1)
 					{
@@ -211,7 +211,7 @@ $.fn.populate_list_form = function (data, is_scroll)
 				}
 				else if (data[i].verified == 1 && data[i].approved == 1)
 				{
-					row += '<td><span class="text-success">Approved</span></td>';
+					row += '<td><span class="badge bg-soft-success text-success">Approved</span></td>';
 					row += '<td>';
 					if (allow_approve == 1 && (data[i].category_id == 5 || data[i].category_id == 6 || data[i].category_id == 7))
 					{
@@ -227,7 +227,7 @@ $.fn.populate_list_form = function (data, is_scroll)
 				row += '</tr>';
 			}
 			$('#tbl_list tbody').append(row);
-			$('.load-more').show();
+			$('#div_load_more').show();
 
 			
 		}
