@@ -30,78 +30,77 @@
     <div id="searchPanel" class="row panel-body" style="display: block;">
         <div class="col-12">
             <div class="card mb-0">
-                <div class="col-xl-12" style="text-align:right">
+                <!--<div class="col-xl-12" style="text-align:right">
                     <div class="modal-header bg-light">
                         <h4 class="modal-title" > <i class="mdi mdi-magnify" aria-hidden="true"></i> Search</h4>
                         <button type="button" id="btn_close_search" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                     </div>
-                </div>
+                </div>-->
                 <div class="card-body">
-                    <!--<div class="float-end">
+                    <div class="float-end">
                         <a id="btn_close_search" href="javascript:void(0)">
                             <i class="mdi mdi-close-box m-0 text-muted h3"></i>
                         </a>
-                    </div>-->
+                    </div>
                     <div class="clearfix"></div>
                     <form class="form-horizontal">
-                        <div class="col-xl-12">
-                            <div class="col-xl-6 searchCol">
+                        <div class="row mt-2">
+                            <div class="col-lg-6">
+                                <!-- Title -->
                                 <div class="row">
-                                    <div class="col-md-12">
-                                        <label for="doc_date" class="col-4 col-form-label">Employee</label>
-                                        <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_employee" required>
-                                            <option value="All">All</option>
+                                    <label for="employee" class="col-4 col-form-label">Employee</label>
+                                    <div class="col-7 errorContainer">
+                                            <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_employee" required>
+                                                <option value="">Please Select</option>
+                                            </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <!-- Title -->
+                                <div class="row">
+                                    <label for="dd_leave_type" class="col-4 col-form-label">Leave Type</label>
+                                    <div class="col-7 errorContainer">
+                                        <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_leave_type" required>
+                                            <option value="">Please Select</option>
                                         </select>
+                                      
                                     </div>
-                            </div>
-                            </div>
-                            <div class="col-xl-6 searchCol">
-                                <div class="row">
-                                <div class="col-md-12">
-                                    <label for="dd_leave_type" class="col-4 col-form-label">Leave Type </label>
-                                    <select class="form-control form-select populate" data-toggle="select2" data-width="100%" id="dd_leave_type" required>
-                                        <option value="All">All</option>
-                                    </select>
                                 </div>
                             </div>
-                            </div>
-                           
+                          
                         </div>
-                        <div class="col-xl-12" >
-                            <div class="col-xl-6 searchCol">
+                        <div class="row mt-2">
+                            <div class="col-lg-6">
                                 <div class="row">
-                                    <div class="col-md-12">
-                                        <label for="doc_date" class="col-4 col-form-label">Date  </label>
-                                        <div class="input-group">
-                                           
-                                            <input type="text" id="doc_date" class="form-control flatpickr-input" placeholder="2018-10-03 to 2018-10-10" readonly="readonly">
-                                            <input type="hidden" id="from_date">
-                                            <input type="hidden" id="to_date">
-                                        </div>
-                                       
+                                    <label for="doc_date" class="col-4 col-form-label"></label>
+                                    <div class="col-7 errorContainer">
+                                        <input type="text" id="doc_date" class="form-control flatpickr-input" placeholder="2018-10-03 to 2018-10-10" readonly="readonly">
+                                        <input type="hidden" id="from_date">
+                                        <input type="hidden" id="to_date">
                                     </div>
+                                   
                                 </div>
                             </div>
-                            <div class="col-xl-6 searchCol">
+                            <div class="col-lg-6" style="margin-top: 10px;">
                                 <div class="row">
-                                    <div class="col-md-12">
-                                        <label for="end_date" class="col-4 col-form-label">&nbsp;</label>
+                                    <label for="chk_weekend" class="col-4 col-form-label">&nbsp;&nbsp;</label>
+                                    <div class="col-8 errorContainer">
                                         <div class="col-sm-12">
                                             <input type="checkbox" class="form-check-input"  id="chk_is_paid" name="chk_is_paid" checked="checked">
                                             Paid&nbsp;&nbsp;
                                             <input type="checkbox" class="form-check-input"  id="chk_is_unpaid" name="chk_is_unpaid" checked="checked">
                                             Unpaid
                                         </div>
-                                    
                                     </div>
                                 </div>
                             </div>
                         </div>
  
                         <div><br></div>
-                        <div class="form-group align-right">
+                        <div class="form-group align-right" style="margin-right: 38px; float: right;">
                             <button id="btn_reset" type="button" class="btn btn-light waves-effect waves-light m-1"><i class="fe-refresh-cw me-1"></i> Reset</button>
-                            <button id="btn_search_action" type="button" class="btn btn-success waves-effect waves-light mt-1 mb-1"><i class="fe-search me-1"></i> Search</button>
+                            <button id="btn_search_action" type="button" class="btn btn-success waves-effect waves-light mt-1 mb-1"><i class="fe-search me-1"></i> Search</button>    
                         </div>
                     </form>                 
                 </div>

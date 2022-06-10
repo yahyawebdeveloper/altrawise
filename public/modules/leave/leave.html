@@ -49,159 +49,154 @@
 
                             <form class="form-horizontal" data-validate="parsley" id="leave_form">
                             
-                                <div class="col-xl-12">
-                                    <div class="col-xl-6 searchCol">
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                       
                                         <div class="row">
-                                        <div class="col-md-12 errorContainer">
                                             <label for="validationCustom02" class="col-4 col-form-label">Leave Type </label>
-                                            <select id="dd_leave_type" style="width:100%" class="form-select"  onchange="$.fn.view_file_status(this.value)" required>
-                                               <!-- <option value="">Please Select</option>
-                                                <option data-type="emp_leave_type" value="47">Annual Leave</option>
-                                                <option data-type="emp_leave_type" value="48">Medical Leave</option>-->
-                                            </select>
-                                        </div>
-                                    </div>
-                                    </div>
-                                    <div class="col-xl-6 searchCol">
-                                        <div class="row">
-                                        <div class="col-md-12 errorContainer">
-                                        <label for="validationCustom02" class="col-4 col-form-label">Reason</label>
-                                        <input type="text" id="txt_reason" class="form-control flatpickr-input" placeholder="Reason"   style="border:2px solid #ced4da" required>
-                                            <!--<input type="text" class="form-control " id="txt_reason" placeholder="Required Field" required>-->
-                                        </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            
-                                <div class="col-xl-12">
-                                    <div class="col-xl-6 searchCol">
-                                        <div class="row">
-                                        <div class="col-md-12 errorContainer">
-                                            <label for="start_date" class="col-4 col-form-label">Start Date </label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control flatpickr-input" id="start_date" placeholder="e.g dd-mm-yyyy" required>
-                                               
+                                            <div class="col-7 errorContainer">
+                                                <select id="dd_leave_type" style="width:100%" class="form-select"  onchange="$.fn.view_file_status(this.value)" required>
+                                              
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
-                                    </div>
-                                    
-                                    <div class="col-xl-6 searchCol">
+                                    <div class="col-lg-6">
+                                       
                                         <div class="row">
-                                        <div class="col-md-12 errorContainer">
+                                            <label for="txt_leave_reason" class="col-4 col-form-label">Reason</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text"  class="form-control" id="txt_reason"  required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Start Date -->
+                                        <div class="row">
+                                            <label for="start_date" class="col-4 col-form-label">Start Date</label>
+                                            <div class="col-7 errorContainer">
+                                                <div class="input-group" data-placement="top" data-align="top" data-autoclose="true">
+                                                    <input type="text" class="form-control flatpickr-input" id="start_date" placeholder="dd-mm-yyyy" readonly="readonly" required>
+                                                    <!--<div class="input-group-text"><i class="mdi mdi-calendar"></i></div>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- End Date -->
+                                        <div class="row">
                                             <label for="end_date" class="col-4 col-form-label">End Date</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control flatpickr-input" id="end_date" placeholder="e.g dd-mm-yyyy" required>
-                                               
+                                            <div class="col-7 errorContainer">
+                                                <div class="input-group" data-placement="top" data-align="top" data-autoclose="true">
+                                                    <input type="text" class="form-control flatpickr-input" id="end_date" placeholder="dd-mm-yyyy" readonly="readonly" required>
+                                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-xl-12">
-                                <div class="col-xl-6 searchCol">
-                                    <div class="row">
-                                    <div class="col-md-12 ">
-                                        <label for="end_date" class="col-4 col-form-label">Allow Days</label>
-                                        <div class="col-sm-6">
-                                            <input type="checkbox" class="form-check-input" id="chk_allow_weekend" name="chk_allow_weekend">
-                                             Weekend Days
-                                            <input type="checkbox" class="form-check-input" id="chk_allow_holiday" name="chk_allow_holiday" >
-                                             Public Holidays
-                                        </div>
-                                    
-                                    </div>
-                                </div>
-                                </div>
-                                <div class="col-xl-6 searchCol" id="leave_file"  style="display: none;">
-                                    <div class="row">
-                                    <div class="col-md-12" >
-                                        <label for="fileupload" class="col-sm-2 control-label">File </label>
-                                        <div class="col-sm-12">
-                                            <span class="btn btn-success fileinput-button" id="btn_upload" style="width: 100%">
-                                                <span>Medical Bill</span>
-                                                <input id="fileupload_cert" type="file" name="files[]">
-                                            </span>
-                                           
-                                            <br/>
-                                        </div>
-                                        <div id="files" class="col-sm-5 col-sm-offset-7"></div>
-                                    </div>
-                                </div>
-                                </div>
-                               
-                            </div>
-                           
-                            <div class="col-xl-12">
-                                <div class="col-xl-6 searchCol">
-                                    <div class="row">
-                                    <div class="col-md-12">
-                                        <label for="dd_leave_type" class="col-4 col-form-label">Nature of Expenses </label>
-                                        <select id="dd_expenses" style="width:100%" class="form-control form-select populate"  onchange="$.fn.check_nature_of_expense(this.value)">
-                                            <option value="">Please Select</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                </div>
-                                <div class="col-xl-6 searchCol leave_file_cost">
-                                    <div class="row">
-                                    <div class="col-md-12">
-                                        <label for="txt_reason" class="col-4 col-form-label">Cost</label>
-                                        <div class="input-group">
-                                            <div class="input-group-text">RM</div>
-                                            <input type="number" min="0.00" step="0.01" value="0.00" class="form-control marginBottom10px" id="txt_cost" >
-                                        </div>
-                                    </div>
-                                </div>
-                                </div>
-                            </div> 
-
-                            
-                        
-                         
-                            <div class="col-xl-12 leave_file_cost">
-                                <div class="col-xl-6 searchCol">
-                                    <div class="row">
-                                    <div class="col-md-12">
-                                        <label for="dd_leave_type" class="col-4 col-form-label">SST / GST Amount </label>
-                                        <div class="input-group">
-                                            <div class="input-group-text">RM</div>
-                                            <input type="number" min="0.00" step="0.01" value="0.00" class="form-control marginBottom10px" id="txt_gst" >
-                                        </div>
-                                    </div>
-                                </div>
-                                </div>
-                                <div class="col-xl-6 searchCol">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <label for="dd_leave_type" class="col-4 col-form-label">Round Up </label>
-                                            <div class="input-group">
-                                                <div class="input-group-text">RM</div>
-                                                <input type="number" min="0.00" step="0.01" value="0.00" class="form-control marginBottom10px" id="txt_roundup" >
-                                            </div>
-                                        </div>
-                                </div>
-                                </div>
-                            </div>
-                          
-                          
-                                <div class="col-xl-12 leave_file_cost">
-                                    <div class="col-xl-6 searchCol">
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Title -->
                                         <div class="row">
-                                        <div class="col-md-12">
+                                            <label for="chk_weekend" class="col-4 col-form-label">Allow Days</label>
+                                            <div class="col-8 errorContainer">
+                                                <div class="col-sm-12">
+                                                    <input type="checkbox" class="form-check-input" id="chk_allow_weekend" name="chk_allow_weekend">
+                                                     Weekend Days
+                                                     &nbsp;<input type="checkbox" class="form-check-input" id="chk_allow_holiday" name="chk_allow_holiday" >
+                                                     Public Holidays
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6"  id="leave_file1"  style="display: none;">
+                                    <label for="fileupload" class="col-sm-2 control-label">File </label>
+                                        <div class="col-7 errorContainer">
+                                            <div class="input-group">
+                                                <span class="btn btn-success fileinput-button" id="btn_upload" style="width: 100%">
+                                                    <span>Medical Bill</span>
+                                                    <input id="fileupload_cert" type="file" name="files[]">
+                                                </span>
+                                                <br/>
+                                            </div>
+                                            <div id="files1" class="col-sm-5 col-sm-offset-7"></div>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Title -->
+                                        <div class="row">
+                                            <label for="dd_leave_type" class="col-4 col-form-label">Nature of Expenses </label>
+                                            <div class="col-7 errorContainer">
+                                                <select id="dd_expenses" style="width:100%" class="form-select populate"  onchange="$.fn.check_nature_of_expense(this.value)">
+                                                    <option value="">Please Select</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 leave_file_cost">
+                                        <!-- Doc Date -->
+                                        <div class="row">
+                                            <label for="txt_reason" class="col-4 col-form-label">Cost</label>
+                                            <div class="col-7 errorContainer">
+                                                <div class="input-group">
+		                                            <div class="input-group-text">RM</div>
+                                                     <input type="number" min="0.00" step="0.01" value="0.00" class="form-control marginBottom10px" id="txt_cost" >
+	                                        	</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2 leave_file_cost">
+                                    <div class="col-lg-6">
+                                        <!-- Title -->
+                                        <div class="row">
+                                            <label for="dd_leave_type" class="col-4 col-form-label">SST / GST Amount </label>
+                                            <div class="col-7 errorContainer">
+                                                <div class="input-group">
+		                                            <div class="input-group-text">RM</div>
+                                                    <input type="number" min="0.00" step="0.01" value="0.00" class="form-control marginBottom10px" id="txt_gst" >
+	                                        	</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Doc Date -->
+                                        <div class="row">
+                                            <label for="txt_reason" class="col-4 col-form-label">Round Up</label>
+                                            <div class="col-7 errorContainer">
+                                                <div class="input-group">
+                                                    <div class="input-group-text">RM</div>
+                                                    <input type="number" min="0.00" step="0.01" value="0.00" class="form-control marginBottom10px" id="txt_roundup" >
+	                                        	</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2 leave_file_cost">
+                                    <div class="col-lg-6">
+                                        <!-- Title -->
+                                        <div class="row">
                                             <label for="dd_leave_type" class="col-4 col-form-label">Total</label>
-                                            <div class="input-group">
-                                                <div class="input-group-text">RM</div>
-                                                <input type="number" step="0.01" value="0.00" class="form-control marginBottom10px" id="txt_total"  readonly="readonly">
+                                            <div class="col-7 errorContainer">
+                                                <div class="input-group">
+                                                    <div class="input-group-text">RM</div>
+                                                    <input type="number" step="0.01" value="0.00" class="form-control marginBottom10px" id="txt_total"  readonly="readonly">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    </div>
-                                    <div class="col-xl-6 searchCol">
+                                    <div class="col-lg-6">
+                                        <!-- Doc Date -->
                                         <div class="row">
-                                        <div class="col-md-12">
                                             <label for="txt_reason" class="col-4 col-form-label">File</label>
-                                            <div class="col-sm-12">
+                                            <div class="col-7 errorContainer">
                                                 <span class="btn btn-success fileinput-button" id="btn_upload" style="width: 100%">
                                                     <span>Medical Bill</span>
                                                     <input id="fileupload" type="file" name="files[]" >
@@ -211,12 +206,10 @@
                                             <div id="files" class="col-sm-5 col-sm-offset-7"></div>
                                         </div>
                                     </div>
-                                    </div>
-                                   
-                                </div> 
-                                
+                                </div>
+
                                     <div class="col-xl-12"> 
-                                        <div class="form-group" style="margin-right: 9px; margin-top: 50px; float: right;">
+                                        <div class="form-group" style="margin-right: 38px; margin-top: 50px; float: right;">
 
                                             <div class="pull-right">
                                                 <div class="col-sm-12" style="text-align:right">

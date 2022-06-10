@@ -1190,20 +1190,26 @@ $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
     {
 		  $('#dd_expenses').empty();
           $('#dd_expenses').append(`<option value="">Please Select</option>`);
-         for (let item of dd_data.expenses)
-         {
-             $('#dd_expenses').append(`<option  data-type="expenses"  value="${item.id}">${item.descr} </option>`);
-         }
+          if(dd_data.expenses!=null)
+          {
+            for (let item of dd_data.expenses)
+            {
+                $('#dd_expenses').append(`<option  data-type="expenses"  value="${item.id}">${item.descr} </option>`);
+            }
+          }
          $('#dd_leave_type').empty();
          $('#dd_leave_type').append(`<option value="">Please Select</option>`);
-         for (let item of dd_data.emp_leave_type)
+         if(dd_data.emp_leave_type!=null)
          {
-             $('#dd_leave_type').append(`<option 
-                                              data-type="emp_leave_type" 
-                                              value="${item.id}">${item.descr}
-                                              </option>`
-                                             );
-         }
+            for (let item of dd_data.emp_leave_type)
+            {
+                $('#dd_leave_type').append(`<option 
+                                                data-type="emp_leave_type" 
+                                                value="${item.id}">${item.descr}
+                                                </option>`
+                                                );
+            }
+        }
         
         
     }

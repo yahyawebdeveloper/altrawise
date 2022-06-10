@@ -47,7 +47,101 @@
                        </a>
                    </div>-->
                    <div class="clearfix"></div>
-                   <form class="form-horizontal">
+                    <form class="form-horizontal">
+
+                        <div class="row mt-2">
+                            <div class="col-lg-6">
+                                <!-- Title -->
+                                <div class="row">
+                                    <label for="search_question_category" class="col-4 col-form-label">Question Category</label>
+                                    <div class="col-7 errorContainer">
+                                        <select class="form-select populate form-control" data-toggle="select2" data-width="100%" id="search_question_category" required>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <!-- Created By -->
+                                <div class="row">
+                                    <label for="search_category" class="col-4 col-form-label">Employee Category</label>
+                                    <div class="col-7 errorContainer">
+                                        <select id="search_category" class="form-select populate" data-width="100%">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-lg-6">
+                                <!-- Type -->
+                                <div class="row">
+                                    <label for="search_approver" class="col-4 col-form-label">Approver</label>
+                                    <div class="col-7 errorContainer">
+                                        <select id="search_approver" class="form-select populate" data-width="100%">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <!-- Status -->
+                                <div class="row">
+                                    <label for="dd_status_search" class="col-4 col-form-label">Status</label>
+                                    <div class="col-7 errorContainer">
+                                        <select id="search_status" class="form-select populate" data-width="100%">
+                                            <option value="">All</option>
+                                            <option value="1">Approved</option>
+                                            <option value="0">Pending</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-lg-6">
+                                <!-- Document Date -->
+                                <div class="row">
+                                    <label for="dp_search_date" class="col-4 col-form-label"> Date</label>
+                                    <div class="col-7 errorContainer">
+                                        <input type="text" id="dp_search_date" class="form-control flatpickr-input" placeholder="2018-10-03 to 2022-10-10" readonly="readonly">
+                                    </div>
+                                   
+                                    <input type="hidden" id="from_date">
+                                    <input type="hidden" id="to_date">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <!-- Outbound Doc No -->
+                                    <div class="row">
+                                        <label for="search_created_by" class="col-4 col-form-label">Created By</label>
+                                        <div class="col-7 errorContainer">
+                                            <select id="search_created_by" style="width:100%" class="form-select populate" required>
+                                                <option value=""></option>
+                                             </select>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-lg-6">
+                            <!-- Type -->
+                            <div class="row">
+                                <label for="search_approver" class="col-4 col-form-label">Question</label>
+                                <div class="col-7 errorContainer">
+                                   <input class="form-control filter-change" id="search_question" >
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div><br></div>
+                        <div class="form-group align-right">
+                            <button id="btn_reset" type="button" class="btn btn-light waves-effect waves-light m-1"><i class="fe-refresh-cw me-1"></i> Reset</button>
+                            <button id="btn_search_action" type="button" class="btn btn-success waves-effect waves-light mt-1 mb-1"><i class="fe-search me-1"></i> Search</button>
+                        </div>
+                    </form> 
+                   <!--OldUI-->
+                   <!--<form class="form-horizontal">
 
                        <div class="col-xl-12">
                             <div class="col-xl-6 searchCol">
@@ -131,7 +225,7 @@
                            <button id="btn_reset" type="button" class="btn btn-light waves-effect waves-light m-1"><i class="fe-refresh-cw me-1"></i> Reset</button>
                            <button id="btn_search_action" type="button" class="btn btn-success waves-effect waves-light mt-1 mb-1"><i class="fe-search me-1"></i> Search</button>
                        </div>
-                   </form>                
+                   </form>-->                
                </div>
            </div>
        </div>
