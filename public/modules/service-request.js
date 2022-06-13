@@ -7,16 +7,16 @@ var SERVICE_NO = '';
 var CURRENT_PATH = '../../';
 
 //START - Category of Request for Service
-RAISE_INVOICE = '218';
-PAYMENT = '219';
-LOAN = '220';
-ASSET = '221';
+RAISE_INVOICE = 218;
+PAYMENT = 219;
+LOAN = 220;
+ASSET = 221;
 //END - Category of Request for Service
 
 //START - Status of Request for Service
-STATUS_DRAFT = '222';
-SEND_VERIFY_STATUS = '223';
-COMPLETE_STATUS = '224';
+STATUS_DRAFT = 222;
+SEND_VERIFY_STATUS = 223;
+COMPLETE_STATUS = 224;
 //END - Status of Request for Service
 
 
@@ -171,16 +171,26 @@ $.fn.populate_list_form = function (data, is_scroll)
                     '<td>' + data[i].created_date + '</td>' +
                     '<td>' + data[i].status_name + '</td>';
 
-                row += '<td width="10%">';
-                row += '<a class="tooltips" data-toggle="tooltip" data-placement="left" title="View Comments" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.view_remark(unescape($(this).attr(\'data-value\')))"><i class="fa fa-external-link"></i></a>';
-                if (MODULE_ACCESS.edit == 1)
-                {
-                    row += '&nbsp;&nbsp;<a class="tooltips" data-toggle="tooltip" data-placement="left" title="View Details" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.populate_detail_form(unescape($(this).attr(\'data-value\')))"><i class="fa fa-sign-in"></i></a>';
+                row += '<td width="15%">';
+               
+                row += `<button type="button" class="btn btn-outline-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="View Comments" data-value="${data_val}" onclick="$.fn.view_remark(decodeURIComponent('${data_val}'))">
+                            <i class="far fa-comment-alt"></i>
+                        </button>&nbsp;`;
+                
+                if (MODULE_ACCESS.edit == 1) {
 
+                    row += `<button type="button" class="btn btn-outline-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="View Details" data-value="${data_val}" onclick="$.fn.populate_detail_form(decodeURIComponent('${data_val}'))">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </button>`;
+                
                 }
-                if (MODULE_ACCESS.delete == 1)
-                {
-                    row += '&nbsp;&nbsp;<a class="tooltips" data-toggle="tooltip" data-placement="left" title="View Details" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.delete_service_request(unescape($(this).attr(\'data-value\')))"><i class="fa fa-trash-o"/></a>';
+                if (MODULE_ACCESS.delete == 1) {
+                    
+                    row += `&nbsp;
+                    <button type="button" class="btn btn-outline-danger btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-value="${data_val}" onclick="$.fn.delete_service_request(decodeURIComponent('${data_val}'), $(this).closest(\'tr\').prop(\'id\'))">
+                            <i class="far fa-trash-alt"></i>
+                        </button>`;
+
                 }
 
                 var status = '';
@@ -192,24 +202,31 @@ $.fn.populate_list_form = function (data, is_scroll)
                 {
                     if (json_approval.verify.verified == 1)
                     {
-                        status = '<i class="fa fa-pencil-square-o" aria-hidden="true">Verified</i><br/>';
+                        // status = '<i class="fa fa-pencil-square-o" aria-hidden="true">Verified</i><br/>';
+                        status = '<div class="pt-1"><i class="fas fa-pen-square" aria-hidden="true">&nbsp;Verified</i><br/></div>';
                     }
                     else
                     {
                         if (MODULE_ACCESS.verify == 1 && data[i].status_id == SEND_VERIFY_STATUS)
                         {
-                            verify = '<button type="button" class="btn btn-info-alt btn-sm btn-label ladda-button tooltips" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Verify" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,1)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs">Verify</span></button>';
+                            // verify = '<button type="button" class="btn btn-info-alt btn-sm btn-label ladda-button tooltips" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Verify" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,1)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs">Verify</span></button>';
+
+                            verify = '<div class="button-list pt-1"><button type="button" class="btn btn-xs btn-outline-info waves-effect waves-light" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Verify" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,1)"><span class="btn-label"><i class="fas fa-pen-square" aria-hidden="true"></i></span><span class="hidden-xs">Verify</span></button></div>';
+
                         }
                     }
                     if (json_approval.approve.approved == 1)
                     {
-                        status += '<i class="fa fa-check-square-o" aria-hidden="true">Approved</i>';
+                        // status += '<i class="fa fa-check-square-o" aria-hidden="true">Approved</i>';
+                        status += '<i class="fas fa-check-square" aria-hidden="true">&nbsp;Approved</i>';
                     }
                     else
                     {
                         if (MODULE_ACCESS.approve == 1)
                         {
-                            approve = '<button type="button" class="btn btn-success-alt btn-sm btn-label ladda-button tooltips" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Approve" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,2)"><i class="fa fa-check-square-o" aria-hidden="true"></i><span class="hidden-xs">Approve</span></button>';
+                            // approve = '<button type="button" class="btn btn-success-alt btn-sm btn-label ladda-button tooltips" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Approve" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,2)"><i class="fa fa-check-square-o" aria-hidden="true"></i><span class="hidden-xs">Approve</span></button>';
+
+                            approve = '<div class="button-list pt-1"><button type="button" class="btn btn-xs btn-outline-info waves-effect waves-light" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Approve" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,2)"><span class="btn-label"><i class="far fa-check-square" aria-hidden="true"></i></span><span class="hidden-xs">Approve</span></button></div>';
                         }
                     }
                 }
@@ -219,12 +236,16 @@ $.fn.populate_list_form = function (data, is_scroll)
                     {
                         if (data[i].status_id == SEND_VERIFY_STATUS)
                         {
-                            verify = '<button type="button" class="btn btn-info-alt btn-sm btn-label ladda-button tooltips" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Verify" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,1)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs">Verify</span></button>';
+                            // verify = '<button type="button" class="btn btn-info-alt btn-sm btn-label ladda-button tooltips" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Verify" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,1)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs">Verify</span></button>';
+
+                            verify = '<div class="button-list pt-1"><button type="button" class="btn btn-xs btn-outline-info waves-effect waves-light" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Verify" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,1)"><span class="btn-label"><i class="fas fa-pen-square" aria-hidden="true"></i></span><span class="hidden-xs">Verify</span></button></div>';
                         }
                     }
                     else if (MODULE_ACCESS.approve == 1)
                     {
-                        approve = '<button type="button" class="btn btn-success-alt btn-sm btn-label ladda-button tooltips" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Approve" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,2)"><i class="fa fa-check-square-o" aria-hidden="true"></i><span class="hidden-xs">Approve</span></button>';
+                        // approve = '<button type="button" class="btn btn-success-alt btn-sm btn-label ladda-button tooltips" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Approve" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,2)"><i class="fa fa-check-square-o" aria-hidden="true"></i><span class="hidden-xs">Approve</span></button>';
+
+                        approve = '<div class="button-list pt-1"><button type="button" class="btn btn-xs btn-outline-info waves-effect waves-light" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Approve" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,2)"><span class="btn-label"><i class="far fa-check-square" aria-hidden="true"></i></span><span class="hidden-xs">Approve</span></button></div>';
                     }
                 }
 
@@ -249,19 +270,27 @@ $.fn.save_edit_form = function ()
 {
     try
     {
+
+        if ($('#detail_form').parsley().validate() == false)
+        {
+            btn_save.stop();
+            return;
+        }
+
         var data = {
-            service_no: SERVICE_NO,
-            category_id: $('#dd_category').val(),
-            employer_id: $('#dd_company').val(),
-            emp_id: SESSIONS_DATA.emp_id
+            
+            service_no : SERVICE_NO,
+            category_id         : $('#dd_category').val(),
+            employer_id : $('#dd_company').val(),
+            emp_id : SESSIONS_DATA.emp_id
         };
+
 
         var attachment = [];
 
-        if (data.category_id == RAISE_INVOICE)
-        {
-            if ($('#invoice_form').parsley('validate') == false)
-            {
+        
+        if (data.category_id == RAISE_INVOICE) {
+            if ($('#invoice_form').parsley().validate() == false) {
                 btn_save.stop();
                 return;
             }
@@ -277,11 +306,9 @@ $.fn.save_edit_form = function ()
             data.client_id = $('#dd_invoice_client').val();
             data.contact_person = $('#txt_invoice_contact_person').val();
             data.payment_terms = $('#dd_invoice_payment_terms').val();
-        }
-        else if (data.category_id == PAYMENT)
-        {
-            if ($('#payment_form').parsley('validate') == false)
-            {
+
+        } else if (data.category_id == PAYMENT) {
+            if ($('#payment_form').parsley().validate() == false) {
                 btn_save.stop();
                 return;
             }
@@ -298,8 +325,7 @@ $.fn.save_edit_form = function ()
         }
         else if (data.category_id == LOAN)
         {
-            if ($('#loan_form').parsley('validate') == false)
-            {
+            if ($('#loan_form').parsley().validate() == false) {
                 btn_save.stop();
                 return;
             }
@@ -315,8 +341,7 @@ $.fn.save_edit_form = function ()
         }
         else if (data.category_id == ASSET)
         {
-            if ($('#asset_form').parsley('validate') == false)
-            {
+            if ($('#asset_form').parsley().validate() == false) {
                 btn_save.stop();
                 return;
             }
@@ -329,12 +354,15 @@ $.fn.save_edit_form = function ()
             data.asset_remark = $('#txt_asset_remark').val();
         }
 
-
+        console.log(data);
         $.fn.write_data
             (
                 $.fn.generate_parameter('add_edit_service_request', data),
+                
                 function (return_data)
                 {
+
+        
                     if (return_data.data)
                     {
                         $.fn.set_edit_form();
@@ -650,37 +678,34 @@ $.fn.view_remark = function (data)
     {
         var data = JSON.parse(data);
         var remarks = JSON.parse(data.remarks);
-
+        
         if (remarks) // check if there is any data, precaution
         {
             var row = '';
             var data_val = '';
             $('#tbl_remark_list tbody').html('');
 
-            for (var i = 0; i < remarks.length; i++)
-            {
+            for (var i = 0; i < remarks.length; i++) {
                 data.delete_data = [];
                 data.delete_data.push(JSON.stringify(remarks[i]));
                 data_val = escape(JSON.stringify(data));
 
-                row += '<tr>' +
-                    '<td><a class="tooltips" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.delete_remark(unescape($(this).attr(\'data-value\')))" data-trigger="hover" data-original-title="Delete data "><i class="fa fa-trash-o"/></a></td>' +
-                    '<td>' + remarks[i].remarks + '</td>' +
-                    '<td>' + remarks[i].created_by + '</td>' +
-                    '<td>' + remarks[i].created_date + '</td>';
+                row += `<tr><td><button type="button" class="btn btn-outline-danger btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete data" data-value="${data_val}" onclick="$.fn.delete_remark(decodeURIComponent('${data_val}'))">
+                            <i class="far fa-trash-alt"></i>
+                        </button></td>`  +
+                        '<td>' + remarks[i].remarks         + '</td>' +
+                        '<td>' + remarks[i].created_by      + '</td>' +
+                        '<td>' + remarks[i].created_date    + '</td>';
                 row += '</tr>';
-
             }
+            
             $('#tbl_remark_list tbody').html(row);
             $('.back-to-top-badge').removeClass('back-to-top-badge-visible');
-        }
-        else
-        {
+        } else {
             $('#tbl_remark_list > tbody').empty();
         }
-
         $('#service_request').attr('data-value', JSON.stringify(data));
-        $('#remarkListModal').modal();
+        $('#remarkListModal').modal('show');
     }
     catch (err)
     {
@@ -859,60 +884,60 @@ $.fn.reset_form = function (form)
         }
         else if (form == 'form')
         {
-            // SERVICE_NO = '';
-            // $('#dd_category').val('').change();
-            // $('#dd_company').val('').change();
+            SERVICE_NO = '';
+            $('#dd_category').val('').change();
+            $('#dd_company').val('').change();
 
-            // $('#dd_invoice_client').val('').change();
-            // $('#txt_invoice_contact_person').val('');
-            // $('#txt_invoice_description').val('');
-            // $('#txt_invoice_bank_details').val('');
-            // $('#txt_invoice_unit_price').val('');
-            // $('#txt_invoice_quantity').val('');
-            // $('#txt_invoice_amount').val('');
-            // $('#dd_invoice_gst_sst').val('0').change();
-            // $('#txt_invoice_total_amount').val('');
-            // $('#dd_invoice_payment_terms').val('').change();
-            // $('#dd_invoice_status').val(STATUS_DRAFT).change();
-            // $('#dd_invoice_status option[value="' + COMPLETE_STATUS + '"]').remove();
-            // $('#dd_invoice_status').removeAttr('disabled');
+            $('#dd_invoice_client').val('').change();
+            $('#txt_invoice_contact_person').val('');
+            $('#txt_invoice_description').val('');
+            $('#txt_invoice_bank_details').val('');
+            $('#txt_invoice_unit_price').val('');
+            $('#txt_invoice_quantity').val('');
+            $('#txt_invoice_amount').val('');
+            $('#dd_invoice_gst_sst').val('0').change();
+            $('#txt_invoice_total_amount').val('');
+            $('#dd_invoice_payment_terms').val('').change();
+            $('#dd_invoice_status').val(STATUS_DRAFT).change();
+            $('#dd_invoice_status option[value="' + COMPLETE_STATUS + '"]').remove();
+            $('#dd_invoice_status').removeAttr('disabled');
 
-            // $('#txt_payment_description').val('');
-            // $('#txt_payment_bank_details').val('');
-            // $('#txt_payment_unit_price').val('');
-            // $('#txt_payment_quantity').val('');
-            // $('#txt_payment_amount').val('');
-            // $('#dd_payment_gst_sst').val('0').change();
-            // $('#txt_payment_total_amount').val('');
-            // $('#txt_payment_payable_to').val('');
-            // $('#dd_payment_status').val(STATUS_DRAFT).change();
-            // $('#dd_payment_status option[value="' + COMPLETE_STATUS + '"]').remove();
-            // $('#dd_payment_status').removeAttr('disabled');
+            $('#txt_payment_description').val('');
+            $('#txt_payment_bank_details').val('');
+            $('#txt_payment_unit_price').val('');
+            $('#txt_payment_quantity').val('');
+            $('#txt_payment_amount').val('');
+            $('#dd_payment_gst_sst').val('0').change();
+            $('#txt_payment_total_amount').val('');
+            $('#txt_payment_payable_to').val('');
+            $('#dd_payment_status').val(STATUS_DRAFT).change();
+            $('#dd_payment_status option[value="' + COMPLETE_STATUS + '"]').remove();
+            $('#dd_payment_status').removeAttr('disabled');
 
-            // $('#txt_loan_description').val('');
-            // $('#txt_loan_amount').val('');
-            // $('#txt_loan_repayment_number').val('');
-            // $('#txt_loan_repayment_amount').val('');
-            // $('#txt_loan_advance').val('');
-            // $('#txt_loan_balance').val('');
-            // $('#date_loan_required').val('');
-            // $('#dd_loan_status').val(STATUS_DRAFT).change();
-            // $('#dd_loan_status option[value="' + COMPLETE_STATUS + '"]').remove();
-            // $('#dd_loan_status').removeAttr('disabled');
+            $('#txt_loan_description').val('');
+            $('#txt_loan_amount').val('');
+            $('#txt_loan_repayment_number').val('');
+            $('#txt_loan_repayment_amount').val('');
+            $('#txt_loan_advance').val('');
+            $('#txt_loan_balance').val('');
+            $('#date_loan_required').val('');
+            $('#dd_loan_status').val(STATUS_DRAFT).change();
+            $('#dd_loan_status option[value="' + COMPLETE_STATUS + '"]').remove();
+            $('#dd_loan_status').removeAttr('disabled');
 
-            // $('#dd_asset_type').val('').change();
-            // $('#txt_asset_duration').val('');
-            // $('#txt_asset_description').val('');
-            // $('#txt_asset_remarks').val('');
-            // $('#date_asset_needed').val('');
-            // $('#dd_asset_status').val(STATUS_DRAFT).change();
-            // $('#dd_asset_status option[value="' + COMPLETE_STATUS + '"]').remove();
-            // $('#dd_asset_status').removeAttr('disabled');
+            $('#dd_asset_type').val('').change();
+            $('#txt_asset_duration').val('');
+            $('#txt_asset_description').val('');
+            $('#txt_asset_remarks').val('');
+            $('#date_asset_needed').val('');
+            $('#dd_asset_status').val(STATUS_DRAFT).change();
+            $('#dd_asset_status option[value="' + COMPLETE_STATUS + '"]').remove();
+            $('#dd_asset_status').removeAttr('disabled');
 
-            // $('#invoice_form').parsley().destroy();
-            // $('#payment_form').parsley().destroy();
-            // $('#loan_form').parsley().destroy();
-            // $('#asset_form').parsley().destroy();
+            $('#invoice_form').parsley().destroy();
+            $('#payment_form').parsley().destroy();
+            $('#loan_form').parsley().destroy();
+            $('#asset_form').parsley().destroy();
         }
         else if (form == 'remark_list_modal')
         {
@@ -1045,7 +1070,7 @@ $.fn.prepare_form = function ()
             altFormat: "d-m-Y",
             dateFormat: "d-m-Y",
         });
-        // $('#date_loan_required,#date_asset_needed').datepicker({ dateFormat: 'dd-mm-yy' });
+
         $('.populate').select2({ tags: true, tokenSeparators: [",", " "] });
         $('.tooltips').tooltip();
 
@@ -1068,9 +1093,7 @@ $.fn.prepare_form = function ()
             $('#btn_list_pending_app').hide();
         }
         $.fn.get_service_request_search_dropdown();
-        // alert('1111');
         $.fn.get_list();
-        // alert('2222');
     }
     catch (err)
     {
@@ -1080,6 +1103,18 @@ $.fn.prepare_form = function ()
 
 $.fn.set_validation_form = function ()
 {
+
+    $('#invoice_form,#payment_form,#loan_form,#asset_form').parsley(
+        {
+            classHandler: function(parsleyField) {              
+                return parsleyField.$element.closest(".errorContainer");
+            },
+            errorsContainer: function(parsleyField) {              
+                return parsleyField.$element.closest(".errorContainer");
+            },
+        }
+    );
+
     $('#invoice_form').parsley
         ({
             successClass: 'has-success',
@@ -1178,6 +1213,7 @@ $.fn.form_load = function ()
 
 $.fn.bind_command_events = function ()
 {
+    $.fn.get_service_add_request_dropdown();
     try
     {
         $('#dd_category, #dd_company').change(function (e)
@@ -1415,6 +1451,45 @@ $.fn.send_email_verifier_approver_service_request = function (param)
     }
 };
 
+$.fn.get_service_add_request_dropdown = function()
+{
+    try
+    {   
+        let lead_access = $.fn.get_accessibility(6); //stake holders
+        let data    =
+        {   
+            emp_id   : SESSIONS_DATA.emp_id,
+            view_all : MODULE_ACCESS.viewall,
+            lead_access_view_all : lead_access.viewall,
+            lead_access_view     : lead_access.view
+        };
+        
+        $.fn.fetch_data
+        ( 
+            $.fn.generate_parameter('get_service_request_search_dropdown', data),
+            function(return_data)
+            {  
+                if (return_data.code == 0)
+                {  
+                    console.log(return_data.data);
+                    $.fn.populate_dd_values('dd_category', return_data.data);
+                    $.fn.populate_dd_values('dd_company', return_data.data);
+                    $.fn.populate_dd_values('dd_invoice_client', return_data.data);
+                    $.fn.populate_dd_values('dd_invoice_status', return_data.data);
+                    $.fn.populate_dd_values('dd_invoice_payment_terms', return_data.data);
+                    $.fn.populate_dd_values('dd_asset_type', return_data.data);
+                    
+                    
+                }
+            },true
+        );
+    }
+    catch(err)
+    {
+        $.fn.log_error(arguments.callee.caller,err.message);
+    }
+};
+
 $.fn.get_service_request_search_dropdown = function()
 {
     
@@ -1456,12 +1531,26 @@ $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
 {
     try
     {
-        $('#'+element_id).append(`<option value="">Please Select</option>`);
+        if(element_id != 'dd_asset_type') {
+            $('#'+element_id).append(`<option value="">Please Select</option>`);
+        }
+        
         
         if(element_id == 'dd_category_search') {
             for (let item of dd_data.category) {
                 
                 $('#dd_category_search').append(`<option 
+                                                 data-type="category" 
+                                                 value="${item.id}">${item.descr}
+                                                 </option>`
+                                                );
+            }
+        }
+
+        if(element_id == 'dd_category') {
+            for (let item of dd_data.category) {
+                
+                $('#dd_category').append(`<option 
                                                  data-type="category" 
                                                  value="${item.id}">${item.descr}
                                                  </option>`
@@ -1475,6 +1564,17 @@ $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
             for (let item of dd_data.employer) {
             
                 $('#dd_company_search').append(`<option 
+                                                    data-type="employer" 
+                                                    value="${item.id}">${item.employer_name}
+                                                    </option>`
+                                                );
+            }
+        }
+
+        if(element_id == 'dd_company') {
+            for (let item of dd_data.employer) {
+            
+                $('#dd_company').append(`<option 
                                                     data-type="employer" 
                                                     value="${item.id}">${item.employer_name}
                                                     </option>`
@@ -1503,7 +1603,52 @@ $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
                                                     </option>`
                                                 );
             }
-        }   
+        }
+        
+        if(element_id == 'dd_invoice_client') {
+            for (let item of dd_data.client) {
+                
+                $('#dd_invoice_client').append(`<option 
+                                                 data-type="client" 
+                                                 value="${item.id}">${item.name}
+                                                 </option>`
+                                                );
+            }
+        }
+
+        if(element_id == 'dd_invoice_status' || element_id == 'dd_payment_status' || element_id == 'dd_loan_status' || element_id == 'dd_asset_status') {
+            for (let item of dd_data.status) {
+                
+                $('#dd_invoice_status,#dd_payment_status,#dd_loan_status,#dd_asset_status').append(`<option 
+                                                 data-type="status" 
+                                                 value="${item.id}">${item.descr}
+                                                 </option>`
+                                                );
+            }
+        }
+
+        if(element_id == 'dd_invoice_payment_terms') {
+            for (let item of dd_data.payment_term) {
+                
+                $('#dd_invoice_payment_terms').append(`<option 
+                                                 data-type="status" 
+                                                 value="${item.id}">${item.descr}
+                                                 </option>`
+                                                );
+            }
+        }
+
+        if(element_id == 'dd_asset_type') {
+            for (let item of dd_data.asset_type) {
+                
+                $('#dd_asset_type').append(`<option 
+                                                 data-type="status" 
+                                                 value="${item.id}">${item.descr}
+                                                 </option>`
+                                                );
+            }
+        }
+
         
     }
     catch(err)
