@@ -9,9 +9,6 @@
 <link href="assets/libs/mohithg-switchery/switchery.min.css" rel="stylesheet" type="text/css" />
 <link href="assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
 <link href="./assets/libs/jquery-fileupload/css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
-
-<!-- <link href="assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" /> -->
-<!-- <link href="assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" /> -->
 <!-- third party css end -->
 
 <!-- List Block -->
@@ -134,11 +131,6 @@
                                 
                             </tbody>
                         </table>
-                        <!-- <div class="d-flex justify-content-center">
-                            <button id="btn_load_more" type="button" class="btn btn-sm btn-info waves-effect waves-light rounded-pill ">
-                                <i class="fa fa-arrow-down"></i>&nbsp;&nbsp;Load More&nbsp;&nbsp;<i class="fa fa-arrow-up"></i>
-                            </button>
-                        </div> -->
 
                         <div id="div_load_more" class="d-flex justify-content-center load-more" style="display: none;">
                             <button id="btn_load_more" type="button" class="btn btn-sm btn-info waves-effect waves-light rounded-pill ">
@@ -219,8 +211,7 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
-                    <!-- <h4 class="header-title mb-4" id="h4_primary_no">Service Request Number : -</h4> -->
-
+                    <h4 class="header-title mb-4" id="h4_primary_no">Service Request Number : -</h4>
                     
                     <div class="">
                         <div class="">
@@ -250,7 +241,7 @@
                             </form>   
                             <div id="div_invoice" style="display: none">
                                 <form class="form-horizontal" data-validate="parsley" id="invoice_form">
-                                    <div class="row mt-5">
+                                    <div class="row mt-2">
                                         <div class="col-lg-6">
                                             <!-- Client Name -->
                                             <div class="row">
@@ -272,7 +263,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="row mt-5">
+                                    <div class="row mt-2">
                                         <div class="col-lg-6">
                                             <!-- Descirption of service / Supply of Products -->
                                             <div class="row">
@@ -293,13 +284,13 @@
                                         </div>
                                     </div>
 
-                                    <div class="row mt-5">
+                                    <div class="row mt-2">
                                         <div class="col-lg-6">
                                             <!-- Unit Price (RM) -->
                                             <div class="row">
                                                 <label for="txt_invoice_unit_price" class="col-4 col-form-label">Unit Price (RM)</label>
                                                 <div class="col-7 errorContainer">
-                                                    <input type="text" required class="form-control" id="txt_invoice_unit_price" max="1000000" min="0" step="2" placeholder="" />
+                                                    <input type="number" required class="form-control" id="txt_invoice_unit_price" max="1000000" min="0" step="2" placeholder="" />
                                                 </div>
                                             </div>
                                         </div>
@@ -308,19 +299,19 @@
                                             <div class="row">
                                                 <label class="col-4 col-form-label">Quantity</label>
                                                 <div class="col-7 errorContainer">
-                                                    <input type="text" required class="form-control" id="txt_invoice_quantity" max="1000000" min="0" step="2" placeholder="" />
+                                                    <input type="number" required class="form-control" id="txt_invoice_quantity" max="1000000" min="0" step="2" placeholder="" />
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="row mt-5">
+                                    <div class="row mt-2">
                                         <div class="col-lg-6">
                                             <!-- Amount (RM) -->
                                             <div class="row">
                                                 <label for="txt_invoice_amount" class="col-4 col-form-label">Amount (RM)</label>
-                                                <div class="col-7 errorContainer">
-                                                    <input type="text" required class="form-control" id="txt_invoice_amount" max="1000000" min="0" step="2" disabled="disabled" placeholder="" />
+                                                <div class="col-7">
+                                                    <input type="number" class="form-control" id="txt_invoice_amount" max="1000000" min="0" step="2" disabled="disabled" placeholder="" />
                                                 </div>
                                             </div>
                                         </div>
@@ -339,15 +330,392 @@
                                         </div>
                                     </div>
 
+                                    <div class="row mt-2">
+                                        <div class="col-lg-6">
+                                            <!-- Total Amount (RM) -->
+                                            <div class="row">
+                                                <label for="txt_invoice_total_amount" class="col-4 col-form-label">Total Amount (RM)</label>
+                                                <div class="col-7">
+                                                    <input type="number" class="form-control" id="txt_invoice_total_amount" max="1000000" min="0" step="2" disabled="disabled" placeholder="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <!-- Payment Terms -->
+                                            <div class="row">
+                                                <label class="col-4 col-form-label">Payment Terms</label>
+                                                <div class="col-7 errorContainer">
+                                                    <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_invoice_payment_terms" required>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-lg-6">
+                                            <!-- Status -->
+                                            <div class="row">
+                                                <label for="dd_invoice_status" class="col-4 col-form-label">Status</label>
+                                                <div class="col-7 errorContainer">
+                                                    <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_invoice_status" required>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <!-- Attachments -->
+                                            <div class="row">
+                                                <label class="col-4 col-form-label">Attachments</label>
+                                                <div class="col-7 errorContainer">
+                                                    <span class="btn btn-success waves-effect waves-light fileinput-button" id="btn_add_image">
+                                                        <span>Browse File</span>
+                                                        <input id="doc_invoice" type="file" name="files[]" >
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-sm-offset-6" id="doc_invoice_files"></div>
+
+                                        <!-- <div id="doc_invoice_files">
+                                            <div class="row mt-2">
+                                                <div id="files" class="col-lg-10 offset-lg-2"></div>
+                                            </div>
+                                        </div> -->
+
+                                    </div>
+
                                 </form>
                             </div>
+
+                            <div id="div_payment" style="display: none">
+                                <form class="form-horizontal" data-validate="parsley" id="payment_form">
+                                    <div class="row mt-2">
+                                        <div class="col-lg-6">
+                                            <!-- Purpose / Descirption of service / Purchase of Products -->
+                                            <div class="row">
+                                                <label for="txt_payment_description" class="col-4 col-form-label">Purpose / Descirption of service / Purchase of Products</label>
+                                                <div class="col-7 errorContainer">
+                                                    <textarea name="txt_payment_description" id="txt_payment_description" class="form-control" required="required"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <!-- Bank Account Details -->
+                                            <div class="row">
+                                                <label class="col-4 col-form-label">Bank Account Details</label>
+                                                <div class="col-7 errorContainer">
+                                                    <textarea name="txt_payment_bank_details" id="txt_payment_bank_details" class="form-control" required="required"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-lg-6">
+                                            <!-- Unit Price (RM) -->
+                                            <div class="row">
+                                                <label for="txt_payment_unit_price" class="col-4 col-form-label">Unit Price (RM)</label>
+                                                <div class="col-7 errorContainer">
+                                                    <input type="number" required class="form-control" id="txt_payment_unit_price" max="1000000" min="0" step="2" placeholder="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <!-- Quantity -->
+                                            <div class="row">
+                                                <label class="col-4 col-form-label">Quantity</label>
+                                                <div class="col-7 errorContainer">
+                                                    <input type="number" required class="form-control" id="txt_payment_quantity" max="1000000" min="0" step="2" placeholder="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row mt-2">
+                                        <div class="col-lg-6">
+                                            <!-- Amount (RM) -->
+                                            <div class="row">
+                                                <label for="txt_payment_amount" class="col-4 col-form-label">Amount (RM)</label>
+                                                <div class="col-7 errorContainer">
+                                                    <input type="number" required class="form-control" id="txt_payment_amount" max="1000000" min="0" step="2" disabled="disabled" placeholder="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <!-- GST/SST -->
+                                            <div class="row">
+                                                <label class="col-4 col-form-label">GST/SST</label>
+                                                <div class="col-7 errorContainer">
+                                                    <select id="dd_payment_gst_sst" style="width:100%" class="form-control populate" required="required">
+                                                        <option value="0" selected="selected">0%</option>
+                                                        <option value="6">6%</option>
+                                                        <option value="10">10%</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-lg-6">
+                                            <!-- Total Amount (RM) -->
+                                            <div class="row">
+                                                <label for="txt_payment_total_amount" class="col-4 col-form-label">Total Amount (RM)</label>
+                                                <div class="col-7 errorContainer">
+                                                    <input type="number" required class="form-control" id="txt_payment_total_amount" max="1000000" min="0" step="2" disabled="disabled" placeholder="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <!-- Payable To -->
+                                            <div class="row">
+                                                <label class="col-4 col-form-label">Payable To</label>
+                                                <div class="col-7 errorContainer">
+                                                    <input type="text" required class="form-control" id="txt_payment_payable_to" placeholder="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-lg-6">
+                                            <!-- Status -->
+                                            <div class="row">
+                                                <label for="dd_payment_status" class="col-4 col-form-label">Status</label>
+                                                <div class="col-7 errorContainer">
+                                                    <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_payment_status" required>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <!-- Attachments -->
+                                            <div class="row">
+                                                <label class="col-4 col-form-label">Attachments</label>
+                                                <div class="col-7 errorContainer">
+                                                    <span class="btn btn-success waves-effect waves-light fileinput-button" id="btn_add_image">
+                                                        <span>Browse File</span>
+                                                        <input id="doc_payment" type="file" name="files[]" >
+                                                    </span>
+                                                </div>
+                                                <div class="col-sm-6 col-sm-offset-6" id="doc_payment_files"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div id="div_loan" style="display: none">
+                                <form class="form-horizontal" data-validate="parsley" id="loan_form">
+                                    
+                                    <div class="row mt-2">
+                                        <div class="col-lg-6">
+                                            <!-- Purpose of Advance -->
+                                            <div class="row">
+                                                <label for="txt_loan_description" class="col-4 col-form-label">Purpose of Advance</label>
+                                                <div class="col-7 errorContainer">
+                                                    <textarea name="txt_loan_description" id="txt_loan_description" class="form-control" required="required"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <!-- Amount (RM) -->
+                                            <div class="row">
+                                                <label class="col-4 col-form-label">Amount (RM)</label>
+                                                <div class="col-7 errorContainer">
+                                                    <input type="number" required class="form-control" id="txt_loan_amount" max="1000000" min="0" step="2" placeholder="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-lg-6">
+                                            <!-- Number of Repayment -->
+                                            <div class="row">
+                                                <label for="txt_loan_repayment_number" class="col-4 col-form-label">Number of Repayment</label>
+                                                <div class="col-7 errorContainer">
+                                                    <input type="number" required class="form-control" id="txt_loan_repayment_number" max="1000000" min="0" step="2" placeholder="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <!-- Each Repayment Amount (RM) -->
+                                            <div class="row">
+                                                <label class="col-4 col-form-label">Each Repayment Amount (RM)</label>
+                                                <div class="col-7 errorContainer">
+                                                    <input type="number" required class="form-control" id="txt_loan_repayment_amount" max="1000000" min="0" step="2" placeholder="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-lg-6">
+                                            <!-- Advance or Loan (RM) -->
+                                            <div class="row">
+                                                <label for="txt_loan_advance" class="col-4 col-form-label">Advance or Loan (RM)</label>
+                                                <div class="col-7 errorContainer">
+                                                    <input type="number" required class="form-control" id="txt_loan_advance" max="1000000" min="0" step="2" placeholder="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <!-- Current Balance Advance / Loan (RM) -->
+                                            <div class="row">
+                                                <label class="col-4 col-form-label">Current Balance Advance / Loan (RM)</label>
+                                                <div class="col-7 errorContainer">
+                                                    <input type="number" required class="form-control" id="txt_loan_balance" max="1000000" min="0" step="2" placeholder="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-lg-6">
+                                            <!-- Date Advance / Loan required -->
+                                            <div class="row">
+                                                <label for="date_loan_required" class="col-4 col-form-label">Date Advance / Loan required</label>
+                                                <div class="col-7 errorContainer">
+                                                    <div class="input-group" data-placement="top" data-align="top" data-autoclose="true">
+                                                        <input type="text" class="form-control" id="date_loan_required" required="required">
+                                                        <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <!-- Status -->
+                                            <div class="row">
+                                                <label class="col-4 col-form-label">Status</label>
+                                                <div class="col-7 errorContainer">
+                                                    <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_loan_status" required>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-lg-6">
+                                            <!-- Attachments -->
+                                            <div class="row">
+                                                <label class="col-4 col-form-label">Attachments</label>
+                                                <div class="col-7 errorContainer">
+                                                    <span class="btn btn-success waves-effect waves-light fileinput-button">
+                                                        <span>Browse File</span>
+                                                        <input id="doc_loan" type="file" name="files[]" >
+                                                    </span>
+                                                </div>
+                                                <div class="col-sm-6 col-sm-offset-6" id="doc_loan_files"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div id="div_asset" style="display: none">
+                                <form class="form-horizontal" data-validate="parsley" id="asset_form">
+
+                                    <div class="row mt-2">
+                                        <div class="col-lg-6">
+                                            <!-- Type of Assets -->
+                                            <div class="row">
+                                                <label for="dd_asset_type" class="col-4 col-form-label">Type of Assets</label>
+                                                <div class="col-7 errorContainer">
+                                                    <select class="form-control populate" data-toggle="select2" multiple="multiple" data-width="100%" id="dd_asset_type" required>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <!-- Duration -->
+                                            <div class="row">
+                                                <label class="col-4 col-form-label">Duration</label>
+                                                <div class="col-7 errorContainer">
+                                                    <input type="number" required class="form-control" id="txt_asset_duration" type="number" max="1000000" min="0" step="2" placeholder="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-lg-6">
+                                            <!-- Purpose -->
+                                            <div class="row">
+                                                <label for="dd_asset_type" class="col-4 col-form-label">Purpose</label>
+                                                <div class="col-7 errorContainer">
+                                                    <textarea name="txt_asset_description" id="txt_asset_description" class="form-control" required="required"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <!-- Remarks -->
+                                            <div class="row">
+                                                <label class="col-4 col-form-label">Remarks</label>
+                                                <div class="col-7 errorContainer">
+                                                    <textarea name="txt_asset_remark" id="txt_asset_remark" class="form-control" required="required"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        
+                                        <div class="col-lg-6">
+                                            <!-- Date Needed -->
+                                            <div class="row">
+                                                <label for="date_asset_needed" class="col-4 col-form-label">Date Advance / Loan required</label>
+                                                <div class="col-7 errorContainer">
+                                                    <div class="input-group" data-placement="top" data-align="top" data-autoclose="true">
+                                                        <input type="text" class="form-control" id="date_asset_needed" required="required">
+                                                        <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <!-- Status -->
+                                            <div class="row">
+                                                <label class="col-4 col-form-label">Status</label>
+                                                <div class="col-7 errorContainer">
+                                                    <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_asset_status" required>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-lg-6">
+                                            <!-- Attachments -->
+                                            <div class="row">
+                                                <label class="col-4 col-form-label">Attachments</label>
+                                                <div class="col-7 errorContainer">
+                                                    <span class="btn btn-success waves-effect waves-light fileinput-button">
+                                                        <span>Browse File</span>
+                                                        <input id="doc_asset" type="file" name="files[]" >
+                                                    </span>
+                                                </div>
+                                                <div class="col-sm-6 col-sm-offset-6" id="doc_asset_files"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+
+
 
                         </div>
 
                         
                     </div>
                     
-                    <div class=" col-md-12 mt-3" style="text-align:right;" id="actions_div">
+                    <div class=" col-md-12 mt-3" style="text-align:right;display: none;" id="div_button">
                         <button id="btn_cancel" type="button" class="btn btn-light waves-effect waves-light m-1"><i class="fa fa-times me-1"></i> Cancel</button>
                         <button id="btn_save" type="button" style="margin-right: 4%;" class="btn btn-success waves-effect waves-light mt-1 mb-1 ladda-button" data-color="green" data-style="expand-left"><i class="fa fa-check me-1"></i> Save</button>
                     </div>
