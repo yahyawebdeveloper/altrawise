@@ -370,14 +370,14 @@ $.fn.save_edit_form = function ()
                      console.log(attachment_data);
                         if ($('#files .file-upload.new').length > 0)
                         {
-                            $.fn.upload_file(`files`, 'outbound_no', DOC_NO,
+                           /*  $.fn.upload_file(`files`, 'outbound_no', DOC_NO,
                                 attachment_data, function (total_files, total_success, filename, attach_return_data)
                             {
                                 if (total_files == total_success)
                                 {
                                     $.fn.populate_fileupload(attach_return_data, `files`, true);
                                 }
-                            }, false, btn_save);
+                            }, false, btn_save); */
                         }
                         else
                         {

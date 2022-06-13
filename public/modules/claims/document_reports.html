@@ -29,7 +29,7 @@
     </div>     
     <!-- end page title -->
   
-    <div id="dynamicContent" style="display: block;">
+    <!-- <div id="dynamicContent" style="display: block;">
         <div class="form-group condition-row">
             <label class="col-sm-1 control-label">Fields</label>
             <div class="col-sm-3 error-container">
@@ -39,7 +39,7 @@
         
             <label  class="col-sm-1 control-label">Condition</label>
             <div class="col-sm-1 conditionContainer">
-                <select style="width:100%" class="form-control search-condition" name="search_condition">
+                <select style="width:100%" class="form-control search-condition" id="search_condition" name="search_condition">
                
                 </select>
             </div>
@@ -57,8 +57,65 @@
             </div>
             </div>
         </div>
-          
-
+           -->
+	    <div class="row panel-body"> 	
+        <div class="card col-12">	
+            <div class="card-body">	
+                <div><br></div>	
+                <div id="dynamicContent" style="display: block;">	
+                    <div class="form-group condition-row">	
+                        <div class="col-lg-4 float-end">	
+                            <!-- Fields -->	
+                            <div class="row">	
+                                <label for="search_field" class="col-3 col-form-label ">Fields</label>	
+                                <div class="col-7 errorContainer">	
+                                    <select id="search_field" name="search_field" class="form-control populate search-field select2Plugin" data-width="100%">	
+                                    </select>	
+                                </div>	
+                            </div>	
+                        </div>	
+                        <div class="col-lg-3">	
+                            <!-- Condition -->	
+                            <div class="row">	
+                                <label for="search_condition" class="col-4 col-form-label">Condition</label>	
+                                <div class="col-7 errorContainer">	
+                                    <select id="search_condition" name="search_condition" class="form-control populate search-condition" data-width="100%">	
+                                    </select>	
+                                </div>	
+                            </div>	
+                        </div>	
+                        <div class="col-lg-3">	
+                            <!-- Value -->	
+                            <div class="row">	
+                                <label for="search_value" class="col-3 col-form-label">Value</label>	
+                                <div class="col-8 errorContainer">	
+                                    <input class="form-control search-value" data-required="true" name="search_value" id="search_value" >	
+                                </div>	
+                            </div>	
+                        </div>	
+                        <div class="col-lg-1"></div>	
+                        <div class="col-lg-2">	
+                            <!-- Remove -->	
+                            <div class="row">	
+                                <button type="button" class="btn btn-danger waves-effect waves-light delete-condition"  style="width: 50%;display: block;">	
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>	
+                                    <span class="hidden-xs">Remove</span>	
+                                </button>	
+                            </div>	
+                        </div>	
+                    </div>	
+                    <form class="form-horizontal" data-validate="parsley" id="detail_form">	
+                    </form>	
+                </div>	
+                <div><br></div>	
+                <div class="form-group align-right">	
+                    <button id="btn_reset" type="button" class="btn btn-light waves-effect waves-light m-1"><i class="fe-refresh-cw me-1"></i> Reset</button>	
+                    <button id="btn_search" name="btn_search" type="button" class="btn btn-success waves-effect waves-light mt-1 mb-1"><i class="fe-search me-1"></i> Search</button>	
+                    <button class="btn btn-primary waves-effect waves-light m-1" id="add-condition"><i class="fas fa-plus"></i> Add Row</button>	
+                </div>	
+            </div>	
+        </div>	
+    </div>
 
 
     <div id="tblList" class="row">
@@ -91,11 +148,11 @@
                             <tbody>    
                             </tbody>
                         </table>
-                        <div id="div_load_more" class="d-flex justify-content-center load-more" style="display: none;">
+                        <!--<div id="div_load_more" class="d-flex justify-content-center load-more" style="display: none;">
                             <button id="btn_load_more" type="button" class="btn btn-sm btn-info waves-effect waves-light rounded-pill ">
                                 <i class="fa fa-arrow-down"></i>&nbsp;&nbsp;Load More&nbsp;&nbsp;<i class="fa fa-arrow-up"></i>
                             </button>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div> <!-- end card-->

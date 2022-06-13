@@ -428,7 +428,6 @@ $.fn.save_form = function ()
 			//c_emp_access_id: c_emp_access_id,
 			email: SESSIONS_DATA.office_email,
 
-
 			module_id: MODULE_ACCESS.module_id,
 			module_name: MODULE_ACCESS.module_name,
 			sender_name: SESSIONS_DATA.name,
@@ -492,93 +491,22 @@ $.fn.save_form = function ()
 									if (total_files == total_success)
 									{
 										$.fn.populate_fileupload(attach_return_data, `files`, true);
+										$.fn.get_list(false);
 									}
 								}, false, btn_save);
 							}
-
-							/*$.fn.upload_file('files', 'doc_no', return_data.data.doc_no,
-								attachment_data, function (total_files, total_success, filename, attach_return_data)
-							{
-								 if (total_files == total_success)
-								{
-									$.fn.get_list(false);
-									$.fn.show_right_success_noty('Data has been recorded successfully');
-									$.fn.reset_form();
-								}
-							}, false, btn_save); */
 						} 
-						$.fn.reset_form('form');
 						$.fn.show_right_success_noty('Data has been recorded successfully');
+						$('#list_div').show(400);
+						$('#new_div').hide(400);
 
 					}
 				}
 			);
-
-
-
-
-
-		//        $.fn.upload_file('files','','',
-		//        function(total_files, total_success,filename)
-		//        {
-		//        	data.filename  = filename;
-		//		 	$.fn.write_data
-		//			(
-		//				$.fn.generate_parameter('add_document', data),
-		//				function(return_data)
-		//				{
-		//					if(return_data.data)
-		//					{
-		//						$.fn.populate_list_form(return_data.data, false);
-		//						$.fn.show_right_success_noty('Data has been recorded successfully');
-		//						$.fn.reset_form();
-		//					}
-		//				},false, btn_save
-		//			);
-		//        },false,btn_save);
-
-		//        $.fn.write_data
-		//		(
-		//			$.fn.generate_parameter('add_document', data),
-		//			function(return_data)
-		//			{
-		//				if(return_data.data)
-		//				{
-		//					
-		//					
-		//					
-		//					$.fn.populate_list_form(return_data.data, false);
-		//					$.fn.show_right_success_noty('Data has been recorded successfully');
-		//					$.fn.reset_form();
-		//				}
-		//
-		//			},false, btn_save
-		//		);
-
-
-		//		$.fn.upload_file(function(filename)
-		//		{
-		//			data.filename  = filename;
-		//		 	$.fn.write_data
-		//			(
-		//				$.fn.generate_parameter('add_document', data),
-		//				function(return_data)
-		//				{
-		//					if(return_data.data)
-		//					{
-		//						$.fn.populate_list_form(return_data.data, false);
-		//						$.fn.show_right_success_noty('Data has been recorded successfully');
-		//						$.fn.reset_form();
-		//					}
-		//
-		//				},false, btn_save
-		//			);
-		//		});
-
 	}
 	catch (err)
 	{
-		//console.log(err.message);
+		console.log(err.message);
 		$.fn.log_error(arguments.callee.caller, err.message);
 	}
 };
@@ -775,9 +703,9 @@ $.fn.set_file_name = function (filename)
 	try 
 	{
 		let category = Number($('#dd_category').val());
-		let doc_date = moment($('#doc_date').val(), 'D-MMM-YYYY');
+		let doc_date = moment($('#doc_date').val(), 'DD-MMM-YYYY');
 		let doc_ext = filename.split('.').pop();
-		let name = SESSIONS_DATA.username.trim();
+		let name = SESSIONS_DATA.name.trim();
 		let new_name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
 
 		switch (category) 
@@ -1100,8 +1028,8 @@ $.fn.bind_command_events = function ()
 		$.fn.init_upload_file();
 	}
 	catch (err)
-	{
-		$.fn.log_error(arguments.callee.caller, err.message);
+	{ console.log(err);
+		//$.fn.log_error(arguments.callee.caller, err.message);
 	}
 };
 
