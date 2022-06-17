@@ -1,0 +1,160 @@
+<link href="./assets/libs/switchery/dist/switchery.min.css" rel="stylesheet" type="text/css" />
+<link href="./assets/libs/jquery-fileupload/css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
+<!-- start page title -->
+<div class="row mt-3 mb-1" >
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="page-title" style="float:left">COMMUNICATIONS</h4>
+			<div class="mt-3" style="float:right">
+				<button type="button" id="btn_new" class="btn btn-danger waves-effect waves-light" ><i class="mdi mdi-plus-circle me-1"></i> New Communication</button>
+				<a href="javascript:void(0);" style="display:none;" id="btn_back" class="btn btn-secondary"><i class="fe-arrow-left me-1"></i>Back</a>
+			</div>
+        </div>
+    </div>
+</div>
+<div class="row" id="list_div">
+    <div class="col-xl-12">
+		<div class="card mb-0">
+			<div class="col-md-12">
+				<div class="dark-header-white-font"><i class="mdi mdi-rss"></i> Active</h5></div>
+			</div>
+			<div class="card-body"  id="list_comm_active">
+			</div>
+		</div>
+	</div>
+	<div class="col-xl-12 mt-3">
+		<div class="card mb-0">
+			<div class="col-md-12">
+				<div class="dark-header-white-font" style="background:#f7b84b"><i class="mdi mdi-rss-off"></i> Completed</h5></div>
+			</div>
+			<div class="card-body" id="list_comm_completed">
+			</div>
+		</div>
+	</div>		
+</div>
+<div class="row" id="new_div" style="display:none">
+    <div class="col-xl-12">
+		<div class="card mb-0">
+			<div class="col-md-12">
+				<div class="modal-header bg-light white-background">
+					<h4 class="modal-title"><i class="mdi mdi-clipboard-plus" aria-hidden="true"></i> <span
+								id="h4_primary_no">Case No. : -</span></h4>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-12">
+							<form class="form-horizontal" id="detail_form">
+								<div class="row mb-3">
+									<div class="col-lg-6">
+										<div class="row">
+											<label for="simpleinput" class="col-4 col-form-label">Subject</label>
+											<div class="col-8 errorContainer">
+												<input type="text" id="txt_subject" placeholder="Required" required="required" class="form-control">
+											</div>
+										</div>
+									</div>
+
+									<div class="col-lg-6" >
+										<div class="row justify-content-end">
+											<label for="simpleinput" class="col-3 col-form-label">Enquiry Category</label>
+											<div class="col-8 errorContainer">
+												<select id="dd_category" required="required" class="form-control country" data-toggle="select2" data-width="100%">
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row mb-3" id="div_status" style="display:none">
+									<div class="col-lg-6">
+										<div class="row">
+											<label for="simpleinput" class="col-4 col-form-label">Status</label>
+											<div class="col-8 errorContainer">
+												<label class="control-label" id="div_lbl_status"></label>
+											</div>
+										</div>
+									</div>
+
+									<div class="col-lg-6" >
+										<div class="row justify-content-end">
+											<label for="simpleinput" class="col-3 col-form-label">Date Created</label>
+											<div class="col-8 errorContainer">
+												<label class="control-label" id="div_created_date"></label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row mb-3">
+									<label for="txt_task" class="col-2 col-form-label">Description</label>
+									<div class="col-10 errorContainer">
+										<div class="border rounded" style="padding:0" id="div_trail_btn">
+											<textarea id="txt_descr" rows="3" class="form-control border-0 resize-none" ></textarea>
+											<div class="p-2 bg-light d-flex justify-content-between align-items-center">
+												<div >
+													<a href="#" id="btn_upload_reply" class="btn btn-sm px-1 btn-light fileinput-button"><i class="mdi mdi-upload"></i> <input id="fileupload_reply" type="file" name="qqfile"></a>
+												</div>
+												<button type="button" id="btn_save" class="btn btn-sm btn-success"><i class="mdi mdi-send me-1"></i>Submit</button>
+											</div>
+										</div>
+										<div id="files_reply"></div>
+									</div>
+									
+								</div>
+								<div class="row mb-3" id="div_close_btn" style="display:none">
+									<div class="col-lg-6">
+										<div class="row">
+											<label for="simpleinput" class="col-4 col-form-label">Expected Reply By</label>
+											<div class="col-8 errorContainer" style="display: none">
+												<select id="dd_status" required="required" class="form-control country" data-toggle="select2" data-width="100%">
+												</select>
+											</div>
+											<div class="col-8 errorContainer" >
+												<label class="control-label" id="div_reply_by"></label>	
+											</div>
+										</div>
+									</div>
+
+									<div class="col-lg-6" >
+										<div class="row justify-content-end">
+											
+											<div class="col-8 errorContainer" style="text-align:right">
+												<button type="button" id="btn_status"
+										class="btn btn-success waves-effect waves-light mt-1 mb-1"><i
+											class="mdi mdi-check"></i> Accept Reply and Close this Case</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<hr id="div_hr"/>
+<form class="form-horizontal" id="div_thread" style="display:none;">
+	<div class="card">
+		<div class="card-body">
+			<h4 class="mb-4 mt-0 font-16"><div id="trail" class="avatar-initials-medium" width="30" height="30" data-name="Sayersilan1 Sayersilan1" ></div> Trail</h4>
+			<div class="border rounded" style="padding:0" id="div_trail_btn">
+				<textarea id="txt_reply_trail" rows="3" class="form-control border-0 resize-none" placeholder="Your message..."></textarea>
+
+				<div class="p-2 bg-light d-flex justify-content-between align-items-center">
+					<div >
+						<a href="#" id="btn_upload_reply" class="btn btn-sm px-1 btn-light fileinput-button"><i class="mdi mdi-upload"></i> <input id="fileupload_reply_trail" type="file" name="qqfile"></a>
+						
+					</div>
+					<button type="button" id="btn_reply_trail" class="btn btn-sm btn-success"><i class="mdi mdi-send me-1"></i>Submit</button>
+				</div>
+			</div>
+
+			<div id="files_reply_trail"></div>
+
+			<div class="mt-3" id="div_reply_trail"></div>
+		</div> <!-- end card-body-->
+	</div>
+</form>
+<script src="./assets/libs/switchery/dist/switchery.min.js"></script>
+<script src="./assets/js/moment.js/2.18.1/moment.min.js"></script>
+<script src="./assets/libs/flatpickr/flatpickr.min.js"></script>

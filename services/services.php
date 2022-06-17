@@ -2231,7 +2231,7 @@ if(isset($_SERVER['REQUEST_METHOD']))
 // 			return;
 // 		}
 
-		else if($param->method === 'get_files')
+		/* else if($param->method === 'get_files')
 		{
 			require_once constant('MODULES_DIR') 	. '/files.php';
 			echo get_files($param->data);
@@ -2242,7 +2242,7 @@ if(isset($_SERVER['REQUEST_METHOD']))
 			require_once constant('MODULES_DIR') 	. '/files.php';
 			echo add_files($param->data);
 			return;
-		}
+		}  */
 		else if($param->method === 'delete_files')
 		{
 			require_once constant('MODULES_DIR') 	. '/files.php';
@@ -2269,8 +2269,37 @@ if(isset($_SERVER['REQUEST_METHOD']))
 			echo get_service_request_search_dropdown($param->data);
 			return;
 		}
-
-
+		// My Communications
+		else if($param->method === 'get_everything_at_once_altrawise')
+        {
+        	require_once constant('MODULES_DIR') 	. '/common.php';
+         	echo get_everything_at_once_altrawise($param->data);
+		}
+		else if ($param->method === 'get_comm_enquiry_categories') 
+		{
+			require_once constant('MODULES_DIR') . '/common.php';
+			echo get_comm_enquiry_categories($param->data);
+			return;
+		}
+		else if ($param->method === 'get_comm_report_categories') 
+		{
+			require_once constant('MODULES_DIR') . '/common.php';
+			echo get_comm_report_categories($param->data);
+			return;
+		}
+		else if ($param->method === 'get_comm_report_status') 
+		{
+			require_once constant('MODULES_DIR') . '/common.php';
+			echo get_comm_report_status($param->data);
+			return;
+		}
+		else if ($param->method === 'get_comm_report_requestor') 
+		{
+			require_once constant('MODULES_DIR') . '/common.php';
+			echo get_comm_report_requestor($param->data);
+			return;
+		}
+		// My Communications
 require_once  'transporter.php';
 		
 	}

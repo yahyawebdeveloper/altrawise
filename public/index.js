@@ -183,11 +183,13 @@
 			 
 			 //get module access based on route url
 			 let module_access = $.fn.get_accessibility($.fn.get_page_name(route_url));
+			 
 			 MODULE_ACCESS = module_access;
  
 			 //if user can't view redirect to login page
 			 if (module_access == 0 || module_access.view == 0) {
 				 done(false);
+				 
 				 window.location.href = root + 'login.html';
 			 }
 			 
@@ -200,7 +202,7 @@
 			 //get module access based on route url
 			 let module_access = $.fn.get_accessibility($.fn.get_page_name(route_name));
 			 MODULE_ACCESS = module_access;
- 
+			
 			 //if user can't view redirect to login page
 			 if (module_access == 0 || module_access.view == 0) {
 				 done(false);
@@ -226,6 +228,12 @@
 			 // })
 			 .on("/task/my-task", () => { //task route
 				 $.fn.load_form('./modules/my-task.html');
+			 }, { before: middleware })
+			  .on("/comm/my-communications", () => { //my-communications route
+				 $.fn.load_form('./modules/comm/my-communications.html');
+			 }, { before: middleware })
+			 .on("/comm/report", () => { //my-communications->Report route
+				 $.fn.load_form('./modules/comm/report.html');
 			 }, { before: middleware })
 			 .on("/task/scheduling", () => { //scheduling route
 				 $.fn.load_form('./modules/task_admin.html');
