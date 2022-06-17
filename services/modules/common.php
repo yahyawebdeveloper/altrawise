@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 use setasign\Fpdi\FpdfTpl;
 use setasign\Fpdi\Fpdi as FpdiFpdi;
 use setasign\Fpdi\Tcpdf\Fpdi as TcpdfFpdi;
@@ -154,6 +154,109 @@ function get_service_request_search_dropdown($params) {
         $return_data = array('category' => $category,'employer' => $employer,'created_by' => $emp ,'status' => $status, 'client' => $client , 'payment_term' => $payment_term,'asset_type' => $asset_type );
 		echo json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );exit;
 
+    } catch(Exception $e) {
+        handle_exception($e);
+    }
+    
+} 
+function get_everything_at_once_altrawise($params){
+	$dataArray = [];
+	
+	for($i=0;$i<sizeof($params);$i++){
+		
+		$func_params = (!empty($params[$i]->params)) ? $params[$i]->params : false;
+		
+		if(!empty($params[$i]->func))
+			$dataArray[] = call_user_func($params[$i]->func,$func_params);
+		else
+			$dataArray[] = call_user_func($params[$i]);
+	}
+	echo json_encode( array( "code"=>0, "msg"=>"Success", 'data'=>$dataArray ) );exit;
+}
+function get_comm_enquiry_categories($params) {
+
+    try {
+            log_it(__FUNCTION__, $params);
+            $return_data    	= [];
+            $temp				= [];
+            $rs_category     		= db_query('id,descr,field1,field2,field3','cms_master_list',"category_id = 30 AND is_active = 1",'','','descr','');
+            for($i = 0; $i < count($rs_category); $i++)
+            {
+                $temp['id']   = $rs_category[$i]['id'];
+                $temp['desc'] = $rs_category[$i]['descr'];
+                $return_data[] = $temp;
+            }
+            return json_encode( array("code"=>0,"msg"=>"Success","data"=>$return_data) );
+    } catch(Exception $e) {
+        handle_exception($e);
+    }
+    
+}
+function get_comm_report_categories($params) {
+
+    try {
+            log_it(__FUNCTION__, $params);
+            $return_data    	= [];
+            $temp				= [];
+            $rs_category     		= db_query('id,descr,field1,field2,field3','cms_master_list',"category_id = 30 AND is_active = 1");
+            for($i = 0; $i < count($rs_category); $i++)
+            {
+                $temp['id']   = $rs_category[$i]['id'];
+                $temp['desc'] = $rs_category[$i]['descr'];
+                $return_data[] = $temp;
+            }
+            return json_encode( array("code"=>0,"msg"=>"Success","data"=>$return_data) );
+    } catch(Exception $e) {
+        handle_exception($e);
+    }
+    
+}
+function get_comm_report_status($params) {
+
+    try {
+            log_it(__FUNCTION__, $params);
+            $return_data    	= [];
+            $temp				= [];
+            $rs_category     		= db_query('id,descr','cms_master_list',"category_id = 31 AND is_active = 1");
+            for($i = 0; $i < count($rs_category); $i++)
+            {
+                $temp['id']   = $rs_category[$i]['id'];
+                $temp['desc'] = $rs_category[$i]['descr'];
+                $return_data[] = $temp;
+            }
+            return json_encode( array("code"=>0,"msg"=>"Success","data"=>$return_data) );
+    } catch(Exception $e) {
+        handle_exception($e);
+    }
+    
+}
+function get_comm_report_requestor($params) {
+
+    try {
+            log_it(__FUNCTION__, $params);
+            $emp_id                     = if_property_exist($params, 'emp_id',false);
+
+            $return_data    	= [];
+            $temp				= [];
+
+            if( isset($_SESSION['access']) )
+                $access = get_accessibility(42,$_SESSION['access']);
+            if(isset($access->viewall) && $access->viewall == 1)
+            {
+                $emp	= db_query('id,name,office_email','cms_employees','is_active = 1');
+            }
+            else
+            {
+                $emp   	= db_query('id,name,office_email','cms_employees',"id =" . $emp_id . " AND is_active = 1");
+            }
+            $rs_category     		= $emp;
+            for($i = 0; $i < count($rs_category); $i++)
+            {
+                $temp['id']   = $rs_category[$i]['id'];
+                $temp['desc'] = $rs_category[$i]['name'];
+                $return_data[] = $temp;
+            }
+            return json_encode( array("code"=>0,"msg"=>"Success","data"=>$return_data) );
     } catch(Exception $e) {
         handle_exception($e);
     }

@@ -1084,6 +1084,7 @@ $.fn.get_encrypt_password = function (password, salt, pbkdf2_rounds, rnd)
 
 $.fn.get_accessibility = function (module_id)
 {
+	
 	SESSIONS_DATA = $.jStorage.get('session_data');
 	
 	if(SESSIONS_DATA) {
@@ -1121,6 +1122,7 @@ $.fn.get_page_name = function (route_name) {
 
 	switch (route_name.toLowerCase())
 	{
+		
 		//documents module
 		case 'documents_module':
 			return 1;
@@ -1182,10 +1184,10 @@ $.fn.get_page_name = function (route_name) {
 		case 'communications_module':
 			return 4;
 			break;
-		case 'communications':
+		case 'comm/my-communications':
 			return 41;
 			break;
-		case 'communications/report':
+		case 'comm/report':
 			return 42;
 			break;
 		

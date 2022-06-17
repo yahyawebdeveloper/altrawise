@@ -85,6 +85,7 @@ $.fn.do_login = function ()
 						{
 							token: r_data.token,
 							emp_id: r_data.emp_id,
+							office_email: r_data.office_email,
 							name: r_data.name,
 							is_admin: r_data.is_admin,
 							super_admin: r_data.super_admin,
