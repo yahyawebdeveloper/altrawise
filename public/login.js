@@ -93,6 +93,7 @@ $.fn.do_login = function ()
 							cpanel_domain: r_data.CPANEL_DOMAIN,
 							logo_path: r_data.logo_path,
 							profile_pic_path: r_data.profile_pic_path,
+							company_id: r_data.company_id,
 						};
 						$.fn.set_session_values(session_info);
 						window.location.href = redirect_mainpage;

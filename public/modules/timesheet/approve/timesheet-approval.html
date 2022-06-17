@@ -1,0 +1,176 @@
+<!-- third party css -->
+<link href="assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/flatpickr/plugins/monthSelect/style.css" rel="stylesheet" type="text/css" />
+<!-- third party css end -->
+
+<div class="row">
+    <!-- start page title -->
+    <div class="row mt-3 mb-1">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <a href="javascript:void(0);" id="btn_search" class="btn btn-success mb-2 panel-collapse"><i class="fe-search me-1"></i>Search</a>
+                    <a href="#" class="btn btn-primary mb-2" title="Pending Finance Approval" id="btn_list_pending_finance">
+                        <span class="badge badge-warning" aria-hidden="true" id="badge_pending_finance">0</span>
+                        <span class="hidden-xs">Pending Finance Approval</span>
+                    </a>
+                    <a href="#" class="btn btn-secondary mb-2" title="Pending Supervisor Approval" id="btn_list_pending_sup">
+                        <span class="badge badge-danger" aria-hidden="true" id="badge_pending_sup">0</span>
+                        <span class="hidden-xs">Pending Supervisor Approval</span>
+                    </a>
+                    <a href="javascript:void(0);" id="btn_back_task" class="btn btn-secondary mb-2" style="display: none;">
+                        <i class="fe-arrow-left me-1"></i>Back
+                    </a>
+                </div>
+                <h4 class="page-title">
+                    <i class="fas fa-list"></i> Timesheet Approval
+                </h4>
+            </div>
+        </div>
+    </div>     
+    <!-- end page title -->
+
+    <div id="searchPanel" class="" style="display: none;">
+        <div class="col-12">
+            <div class="card">
+                <div class="modal-header bg-light">
+                    <h4 class="modal-title" ><i class="mdi mdi-magnify" aria-hidden="true"></i> Search</h4>
+                    <button type="button" id="btn_close_search" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="card-body">
+                    <form class="form-horizontal" id="form_search_timesheet" data-validate="parsley">
+
+                        <div class="row mt-2">
+                            <div class="col-lg-6">
+                                <!-- Month -->
+                                <div class="row">
+                                    <label for="dp_month" class="col-4 form-label">Month</label>
+                                    <div class="col-7 errorContainer">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control flatpickr-input" id="dp_month" required>
+                                            <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <!-- Employee -->
+                                <div class="row">
+                                    <label for="dd_employee" class="col-4 col-form-label">Employee</label>
+                                    <div class="col-7 errorContainer">
+                                        <select id="dd_employee" class="form-control populate" data-width="100%">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-lg-6">
+                                <!-- Supervisor Approved -->
+                                <div class="row justify-content-end">
+                                    
+                                    <div class="col-8 errorContainer">
+                                        <label for="dd_category_search" class="col-form-label">
+                                            <input type="checkbox" name="chk_sup_approved" id="chk_sup_approved" value=""> Supervisor Approved
+                                        </label>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <!-- Finance Approved -->
+                                <div class="row justify-content-end">
+                                    
+                                    <div class="col-8 errorContainer">
+                                        <label for="dd_category_search" class="col-form-label">
+                                            <input type="checkbox" name="chk_finance_approved" id="chk_finance_approved" value=""> Finance Approved
+                                        </label>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div><br></div>
+                        <div class="form-group align-right" style="margin-right: 4%;">
+                            <button id="btn_reset" type="button" class="btn btn-light waves-effect waves-light m-1"><i class="fe-refresh-cw me-1"></i> Reset</button>
+                            <button id="btn_search_action" type="button" class="btn btn-success waves-effect waves-light mt-1 mb-1 ladda-button" data-color="green" data-style="expand-left"><i class="fe-search me-1"></i> Search</button>
+                        </div>
+                    </form>                
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="timesheet_list_view_container">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table" id="timesheet_list_view">
+                            <thead>
+                                <th>Timesheet Name</th>
+                                <th>Date Range</th>
+                                <th>Submission Date</th>
+                                <!-- <th>Location</th> -->
+                                <th>Approval</th>
+                                <th>Action</th>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <div id="div_load_more" class="d-flex justify-content-center load-more" style="display: none;">
+                            <button id="btn_load_more" type="button" class="btn btn-sm btn-info waves-effect waves-light rounded-pill ">
+                                <i class="fa fa-arrow-down"></i>&nbsp;&nbsp;Load More&nbsp;&nbsp;<i class="fa fa-arrow-up"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+
+    <div class="row" style="display: none;" id="timesheet_task_view">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table" id="list_task">
+                            <thead>
+                                <th>Date</th>
+                                <th>Task</th>
+                                <th>Job Item</th>
+                                <th>Location</th>
+                                <th>Remarks</th>
+                                <th>Hours</th>
+                                <th>Chargeable Amount</th>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot>
+                                <th colspan="5" style="text-align: right;" id="min_wh_error"></th>
+                                <th id="total_hours"></th>
+                                <th id="total_amount"></th>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer" id="footer_task" style="background-color: #f5f5f5; display: none;">
+                    <button type="button" class="btn btn-default" id="btn_disapprove_timesheet">Disapprove</button>
+                    <button type="button" class="btn btn-primary" id="btn_approve_timesheet">Approve</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+</div>
+
+<!-- third party js -->
+<script src="./assets/js/moment.js/2.18.1/moment.min.js"></script>
+<script src="./assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="./assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+<script src="./assets/libs/flatpickr/flatpickr.min.js"></script>
+<script src="./assets/libs/flatpickr/plugins/monthSelect/index.js"></script>
+<!-- third party js ends -->
