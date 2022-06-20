@@ -110,16 +110,6 @@
 				&& (timesheet_access == 0 || timesheet_access.view == 0 ) && (timesheet_approval_access == 0 || timesheet_approval_access.view == 0)) {
 				 $('#hr_li').hide();
 			 }
-
-			//  console.log(leaves_list_access == 0, 'leaves_list_access');
-			//  console.log(users_access == 0, 'users_access');
-			//  console.log(leaves_approval_access == 0, 'leaves_approval_access');
-			//  console.log(leaves_report_access == 0, 'leaves_report_access');
-			 console.log(timesheet_access == 0, 'timesheet_access');
-			 console.log(timesheet_access.view == 0, 'timesheet_access_view');
-			//  console.log(timesheet_approval_access == 0, 'timesheet_approval_access');
-			//  console.log(timesheet_approval_access.view == 0, 'timesheet_approval_access_view');
- 
  
 			 //CRM
 			 let stake_holders = $('#mn_stake_holders').attr('href');

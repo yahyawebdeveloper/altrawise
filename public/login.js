@@ -60,11 +60,23 @@ $.fn.do_login = function ()
 {
 	try
 	{
+		let password = $.trim($('#txt_password').val());
+
+		let secret_key = "dy@r#tMsp@#iT3ct(M)$dnBhdNextGenOfHRM$g$dfg";
+		
+		//construct key and iv
+		let key_t   = CryptoJS.SHA256(secret_key).toString();
+		let key     = key_t.substring(0, 32);
+		let iv      = key.substring(0, 16);
+		
+		let encrypted = CryptoJS.AES.encrypt(password, CryptoJS.enc.Utf8.parse(key), {iv: CryptoJS.enc.Utf8.parse(iv)});
+		let open_ssl_string = CryptoJS.enc.Base64.stringify(encrypted.ciphertext);
+		let pass = btoa(open_ssl_string);
 
 		var param =
 		{
 			username: $.trim($('#txt_username').val()),
-			password: $.trim($('#txt_password').val()),
+			password: pass,
 			method: 'login'
 		};
 		$.ajax

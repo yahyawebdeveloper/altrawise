@@ -365,14 +365,14 @@ $.fn.show_task_view = function (data) {
             if (data.supervisor_id == SESSIONS_DATA.emp_id && data.sup_approved == 0) {
                 $('#footer_task').show(400);
                 $('#btn_approve_timesheet').removeData('finance');
-                $('#btn_approve_timesheet').html('Approve');
-                $('#btn_disapprove_timesheet').html('Disapprove');
+                $('#btn_approve_timesheet').html('<i class="fa fa-check me-1"></i>Approve');
+                $('#btn_disapprove_timesheet').html('<i class="fas fa-times me-1"></i>Disapprove');
             }
             else if (SESSIONS_DATA.is_admin == 1 && data.sup_approved == 1 && data.finance_accepted == 0) {
                 $('#footer_task').show(400);
                 $('#btn_approve_timesheet').data('finance', true);
-                $('#btn_approve_timesheet').html('Accept');
-                $('#btn_disapprove_timesheet').html('Decline');
+                $('#btn_approve_timesheet').html('<i class="fa fa-check me-1"></i>Accept');
+                $('#btn_disapprove_timesheet').html('<i class="fas fa-times me-1"></i>Decline');
             }
             else {
                 $('#footer_task').hide(400);
@@ -593,7 +593,7 @@ $.fn.bind_command_events = function () {
             e.preventDefault();
 
             let id = $('#btn_approve_timesheet').data('id');
-            let fin = $('#btn_approve_timesheet').data('finance')
+            let fin = $('#btn_approve_timesheet').data('finance');
             $.fn.reject_timesheet(id, fin);
         });
 
