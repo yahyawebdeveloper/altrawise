@@ -1936,10 +1936,10 @@ $.fn.bind_command_events = function()
         $("#dp_date").flatpickr({
             mode:"range",
             altFormat: "d-M-Y",
-            dateFormat: "Y-m-d",
+            dateFormat: "d/m/Y",
             onChange:function(selectedDates){
                 var _this=this;
-                var dateArr=selectedDates.map(function(date){return _this.formatDate(date,'Y-m-d');});
+                var dateArr=selectedDates.map(function(date){return _this.formatDate(date,'d/m/Y');});
                 $('#from_date').val(dateArr[0]);
                 $('#to_date').val(dateArr[1]);
             },
