@@ -24,6 +24,13 @@ $.fn.set_session_values = function (param)
 	$.jStorage.set('client_session_data', param);
 };
 
+$.fn.log_error = function (routine_name, error_msg)
+{
+	Ladda.stopAll();
+	$.unblockUI();
+	alert('Error Occur at : ' + routine_name + ' with error msg : ' + error_msg, $.jStorage.get('app_name'));
+};
+
 $.fn.clear_active_session = function ()
 {
 	$.removeData(document.body, "scheme");
@@ -49,11 +56,23 @@ $.fn.do_login = function ()
 {
 	try
 	{
+		let password = $.trim($('#txt_client_password').val());
+
+		let secret_key = "dy@r#tMsp@#iT3ct(M)$dnBhdNextGenOfHRM$g$dfg";
+		
+		//construct key and iv
+		let key_t   = CryptoJS.SHA256(secret_key).toString();
+		let key     = key_t.substring(0, 32);
+		let iv      = key.substring(0, 16);
+		
+		let encrypted = CryptoJS.AES.encrypt(password, CryptoJS.enc.Utf8.parse(key), {iv: CryptoJS.enc.Utf8.parse(iv)});
+		let open_ssl_string = CryptoJS.enc.Base64.stringify(encrypted.ciphertext);
+		let client_pass = btoa(open_ssl_string);
 
 		var param =
 		{
 			client_username: $.trim($('#txt_client_username').val()),
-			client_password: $.trim(md5($('#txt_client_password').val())),
+			client_password: client_pass,
 			method: 'client_login'
 		};
 		$.ajax

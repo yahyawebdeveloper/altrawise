@@ -79,14 +79,37 @@
 			 let leaves_approval_access = $.fn.get_accessibility($.fn.get_page_name(leaves_approval));
 			 let leaves_report = $('#mn_leave_report').attr('href');
 			 let leaves_report_access = $.fn.get_accessibility($.fn.get_page_name(leaves_report));
+
+			 let timesheet = $('#mn_timesheet').attr('href');
+			 let timesheet_access = $.fn.get_accessibility($.fn.get_page_name(timesheet));
+			 let timesheet_approval = $('#mn_timesheet_approval').attr('href');
+			 let timesheet_approval_access = $.fn.get_accessibility($.fn.get_page_name(timesheet_approval));
+
+			 if((timesheet_access == 0 || timesheet_access.view == 0 ) && (timesheet_approval_access == 0 || timesheet_approval_access.view == 0)) {
+				$('#timesheet_li').hide();
+				// $('#mn_timesheet').hide();
+			 }
+
+			 if(timesheet_access == 0 || timesheet_access.view == 0) {
+				// $('#timesheet_li').hide();
+				$('#mn_timesheet').hide();
+			 }
+
+			 if(timesheet_approval_access == 0 || timesheet_approval_access.view == 0) {
+				// $('#timesheet_li').hide();
+				$('#mn_timesheet_approval').hide();
+			 }
+
 			 if(users_access == 0 || users_access.view == 0) {
 				 // $('#hr_li').hide();
 				 $('#mn_users').hide();
 			 }
-			 if(leaves_list_access == 0 || leaves_list_access.view == 0 || leaves_approval_access == 0 || leaves_approval_access.view == 0 ||leaves_report_access == 0 || leaves_report_access.view == 0 ) {
+			
+			  if((leaves_list_access == 0 || leaves_list_access.view == 0) && (leaves_approval_access == 0 || leaves_approval_access.view == 0)  && (leaves_report_access == 0 || leaves_report_access.view == 0 )
+				&& (users_access == 0 || users_access.view == 0)
+				&& (timesheet_access == 0 || timesheet_access.view == 0 ) && (timesheet_approval_access == 0 || timesheet_approval_access.view == 0)) {
 				 $('#hr_li').hide();
 			 }
- 
  
 			 //CRM
 			 let stake_holders = $('#mn_stake_holders').attr('href');
@@ -183,11 +206,13 @@
 			 
 			 //get module access based on route url
 			 let module_access = $.fn.get_accessibility($.fn.get_page_name(route_url));
+			 
 			 MODULE_ACCESS = module_access;
  
 			 //if user can't view redirect to login page
 			 if (module_access == 0 || module_access.view == 0) {
 				 done(false);
+				 
 				 window.location.href = root + 'login.html';
 			 }
 			 
@@ -200,7 +225,7 @@
 			 //get module access based on route url
 			 let module_access = $.fn.get_accessibility($.fn.get_page_name(route_name));
 			 MODULE_ACCESS = module_access;
- 
+			
 			 //if user can't view redirect to login page
 			 if (module_access == 0 || module_access.view == 0) {
 				 done(false);
@@ -226,6 +251,12 @@
 			 // })
 			 .on("/task/my-task", () => { //task route
 				 $.fn.load_form('./modules/my-task.html');
+			 }, { before: middleware })
+			  .on("/comm/my-communications", () => { //my-communications route
+				 $.fn.load_form('./modules/comm/my-communications.html');
+			 }, { before: middleware })
+			 .on("/comm/report", () => { //my-communications->Report route
+				 $.fn.load_form('./modules/comm/report.html');
 			 }, { before: middleware })
 			 .on("/task/scheduling", () => { //scheduling route
 				 $.fn.load_form('./modules/task_admin.html');
@@ -307,6 +338,12 @@
 				 $('.footer').hide();
 				 $.fn.load_form('./user/document.html');
 			 })
+			 .on("/timesheet", () => { //timesheet
+					$.fn.load_form('./modules/timesheet/list/timesheet.html')
+			 }, { before: middleware })
+			 .on("/timesheet/approval", () => { //timesheet approval
+				$.fn.load_form('./modules/timesheet/approve/timesheet-approval.html')
+		 }, { before: middleware })
 			 .notFound(() => { // not found route - display 404 page
 				 console.log('404');
 			 })

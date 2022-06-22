@@ -458,3 +458,27 @@ table.custom > thead > tr > th{
 
 	box-shadow:none!important;
 }
+.dark-header-white-font{
+	background:#566676;
+	color:white;
+	font-size:16px;
+	padding:10px;
+	font-weight:normal
+}
+.avatar-initials-medium{
+	position: relative;
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    font: 10px / 23px Arial;
+    color:white;
+    text-align: center;
+    border-radius: 50%;
+    border: 1px solid white;
+}
+div.tasklist{
+	box-shadow: 0 2px 6px -2px rgb(0 0 0 / 16%), 0 2px 6px 0 rgb(0 0 0 / 12%);
+    padding: 15px;
+	margin-bottom:15px;
+	cursor:pointer;
+}

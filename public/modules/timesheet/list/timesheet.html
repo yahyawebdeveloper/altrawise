@@ -1,0 +1,216 @@
+<!-- third party css -->
+<link href="assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
+<!-- third party css end -->
+
+<style type="text/css">
+
+    .dataTable > thead > tr > th[class*="sort"]:before,
+    .dataTable > thead > tr > th[class*="sort"]:after {
+        content: "" !important;
+    }
+
+    #tbl_timesheet_list tr {
+        cursor: pointer;
+    }
+    .name-col {
+        color: #4f8edc;
+    }
+</style>
+
+<div id="dynamicContent" style="display: none;">
+    <table>
+    <tr>
+        <td class="cell-shrink p-1 py-2" width="50">
+            <input type="text" onchange="$.fn.calculate_total_hours($(this))" class="form-control txt_hours"/>
+        </td>
+        <td width="250" class="p-1 py-2">
+            <select onchange="$.fn.populate_sub_task($(this))" class="dd_tasks" style="width:100%;"></select>
+        </td>
+        <td width="250" class="p-1 py-2">
+            <select class="dd_sub_tasks" style="width:100%;"></select>
+        </td>
+        <td class="p-1 py-2" width="70"><input type="text" class="form-control txt_location" value=""></td>
+        <td class="p-1 py-2"><input type="text" class="form-control txt_remarks" value=""></td>
+    </tr>
+    </table>
+</div>
+
+
+<div class="row">
+    <!-- start page title -->
+    <div class="row mt-3 mb-1 g-0">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <a href="javascript:void(0);" id="btn_new" class="btn btn-danger mb-2" data-bs-toggle="modal" data-bs-target="#modal_create_timesheet">
+                        <i class="mdi mdi-plus-circle me-1"></i>New Timesheet
+                    </a>
+                    <a href="javascript:void(0);" id="btn_back_to_list" class="btn btn-secondary mb-2 me-1 view-2" style="display: none;">
+                        <i class="fe-arrow-left me-1"></i>Back
+                    </a>
+                    <button id="btn_save_task" type="button" class="btn btn-success waves-effect waves-light mb-2 ladda-button" data-color="green" data-style="expand-left" title="Save Tasks" style="display: none;">
+                        <span class="ladda-label">
+                            <i class="fas fa-save me-1" aria-hidden="true"></i>
+                            <span class="hidden-xs">Save</span>
+                        </span>
+                    </button>
+                </div>
+                <h4 class="page-title">
+                    <i class="fas fa-list-ol"></i> Timesheet
+                </h4>
+            </div>
+        </div>
+    </div>     
+    <!-- end page title -->
+
+    <div class="save-info view-2" style="display: none;">
+        <span>Last saved on ...</span>
+    </div>
+    
+    <div class="row view-1 g-0">
+        
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    
+                    <div class="table-responsive mt-3">
+                        <table id="tbl_timesheet_list" class="table table-centered table-striped w-100" id="products-datatable">
+                            <thead>
+                                <th>Timesheet Name</th>
+                                <th>Date range</th>
+                                <th>Status</th>
+                                <th width="200">Action</th>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                        <div id="div_load_more" class="d-flex justify-content-center load-more" style="display: none;">
+                            <button id="btn_load_more" type="button" class="btn btn-sm btn-info waves-effect waves-light rounded-pill ">
+                                <i class="fa fa-arrow-down"></i>&nbsp;&nbsp;Load More&nbsp;&nbsp;<i class="fa fa-arrow-up"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end card-->
+        </div> <!-- end col -->
+
+        <!-- Create Timesheet Modal -->
+        <div class="modal fade" id="modal_create_timesheet" tabindex="-1" role="dialog" aria-labelledby="timesheetModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-light">
+                        <h4 class="modal-title" id="timesheetModalLabel">Create New Timesheet</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <form class="form-horizontal" data-validate="parsley" id="form_new_timesheet">
+                            <div class="row mb-3">
+                                <div class="mb-2">
+                                    
+                                        <label for="dp_date" class="form-label">Date From</label>
+                                        <div class="errorContainer">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control flatpickr-input" id="dp_date" required>
+                                                <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                        
+                                    
+                                </div>
+                                <div class="mb-2">
+                                    
+                                        <label for="dp_date_to" class="form-label">Date To</label>
+                                        <div class="errorContainer">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control flatpickr-input" id="dp_date_to" required>
+                                                <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                        
+                                    
+                                </div>
+                            </div>
+                            
+
+                            
+        
+                            <div class="text-end">
+                                <button type="button" id="btn_close_modal" class="btn btn-light waves-effect waves-light m-1" data-bs-dismiss="modal"><i class="fa fa-times me-1"></i> Cancel</button>
+                                <button type="button" id="btn_create_timesheet" class="btn btn-success waves-effect waves-light mt-1 mb-1 ladda-button" data-color="green" data-style="expand-left"><i class="fa fa-check me-1"></i> Create Timesheet</button>
+                            </div>
+                        </form>
+                        
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </div>
+    <!-- end row -->
+
+    <div class="row view-2 g-0" style="display: none;">
+        <div class="col-sm-12">
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-3 col-sm-1 text-right">
+                            <span style="font-weight: bold;">Name</span>
+                        </div>
+
+                        <div class="col-xs-8 col-sm-10">
+                            <span class="hidden-xs">:</span>
+                            <span id="label_name"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-3 col-sm-1 text-right">
+                            <span style="font-weight: bold;">Month</span>
+                        </div>
+
+                        <div class="col-xs-8 col-sm-10">
+                            <span class="hidden-xs">:</span>
+                            <span id="label_month_year"></span>
+                        </div>
+                    </div>
+
+                    <!-- <div class="row">
+                        <div class="col-xs-3 col-sm-1 text-right">
+                            <span style="font-weight: bold;">Location</span>
+                        </div>
+
+                        <div class="col-xs-8 col-sm-10">
+                            <span class="hidden-xs">:</span>
+                            <span id="label_location"></span>
+                        </div>
+                    </div> -->
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <th class="">Date</th>
+                            <th class="">Hours</th>
+                            <th style="min-width: 100px;">Task</th>
+                            <th style="min-width: 100px;">Job Item</th>
+                            <th>Location</th>
+                            <th style="min-width: 200px;">Remarks</th>
+                            <th></th>
+                        </thead>
+                        <tbody id="tbl_timesheet_tasks"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+</div>
+
+<!-- third party js -->
+<script src="./assets/js/moment.js/2.18.1/moment.min.js"></script>
+<script src="./assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="./assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+<script src="./assets/libs/flatpickr/flatpickr.min.js"></script>
+<!-- third party js ends -->

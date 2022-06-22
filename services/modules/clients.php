@@ -798,14 +798,16 @@ function add_edit_contacts($params)
 
 		if($password != "")
         {
-            if(!isValidMd5($password))
-            {	
-            	$data = array_push_assoc($data,":password",md5($password));
-            }
-            else
-            {	
-            	$data = array_push_assoc($data,":password",$password);
-            }
+            // if(!isValidMd5($password))
+            // {	
+            // 	$data = array_push_assoc($data,":password",md5($password));
+            // }
+            // else
+            // {	
+            // 	$data = array_push_assoc($data,":password",$password);
+            // }
+
+			$data = array_push_assoc($data,":password",get_encrypt_password($password));
         }
 		if ($id && is_data_exist('cms_clients_contacts', 'id', $id))
 		{

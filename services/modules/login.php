@@ -38,7 +38,7 @@ function check_login($params)
 			return handle_fail_response('Password is mandatory');
 		}
 
-		$password = get_encrypt_password($password);
+		// $password = get_encrypt_password($password);
 		
 		$rs = db_query_new("id as emp_id, name, email,office_email, username
 						, is_admin, initial_pswd
