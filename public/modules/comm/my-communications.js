@@ -7,12 +7,11 @@ $.fn.add_edit_comm = function (status_id)
     try
     {
         
-        
-        if ($('#detail_form').parsley('validate') == false)
-        {
-            btn_save.stop();
-            return;
-        }
+       console.log($("#detail_form").parsley().validate());
+		if ($("#detail_form").parsley().validate() == false) {
+      btn_save.stop();
+      return;
+    }
 
         let str = JSON.parse(unescape($('#dd_category option:selected').attr('data-val')));
         let c_emp_access_id = str.field1;
@@ -194,6 +193,9 @@ $.fn.get_reply_list = function (comm_id)
                 $.fn.generate_parameter('get_comm_reply_list', { comm_id: comm_id }),
                 function (return_data)
                 {
+					if( return_data.code == 1 ){
+						$("#div_reply_trail").html(`<hr><h6 class='text-center'><i>No trails found</i></h6>`);
+					}
                     if (return_data.data)
                     {
                         $.fn.populate_list(return_data.data, 3);
@@ -341,13 +343,17 @@ $.fn.show_hide_form = function (form_status, reset_form)
 };
 $.fn.set_validation_form = function () {
   $("#detail_form").parsley({
-   classHandler: function (parsleyField) {
-      return parsleyField.$element.closest(".errorContainer");
-    },
-    errorsContainer: function (parsleyField) {
-      return parsleyField.$element.closest(".errorContainer");
+    successClass: "has-success",
+    errorClass: "has-error",
+    errors: {
+      classHandler: function (el) {
+        return $(el).closest(".form-group");
+      },
+      errorsWrapper: '<ul class="help-block list-unstyled"></ul>',
+      errorElem: "<li></li>",
     },
   });
+
   $("#div_thread").parsley({
     classHandler: function (parsleyField) {
       return parsleyField.$element.closest(".errorContainer");
@@ -369,6 +375,24 @@ function get_comm_enquiry_categories(rowData = false) {
       }
       $("#dd_category").html(row);
       $("#dd_category").select2();
+    }
+  } catch (err) {
+    // console.log(err.message);
+    $.fn.log_error(arguments.callee.caller,err.message);
+  }
+}
+function get_comm_status(rowData = false) {
+  try {
+    let row = "";
+    if (rowData) {
+      for (var i = 0; i < rowData.length; i++) {
+		let jsval = escape(JSON.stringify(rowData[i]));
+        row += `<option data-val="${jsval}" value=${rowData[i].id}>
+							 ${rowData[i].desc}
+						 </option>`;
+      }
+      $("#dd_status").html(row);
+      $("#dd_status").select2();
     }
   } catch (err) {
     // console.log(err.message);
@@ -647,7 +671,7 @@ $.fn.bind_command_events = function()
         });
 		$('#btn_save').click(function (e)
         {
-            event.preventDefault();
+            e.preventDefault();
             btn_save = Ladda.create(this);
             btn_save.start();
             $.fn.add_edit_comm("167");
@@ -667,7 +691,8 @@ $.fn.bind_command_events = function()
 			emp_id:SESSIONS_DATA.emp_id
 		}
 		var data = [
-			{ func: "get_comm_enquiry_categories", params: params }
+			{ func: "get_comm_enquiry_categories", params: params },
+			{ func: "get_comm_status", params: params }
 		];
 		$.fn.get_everything_at_once_altrawise(data);
 		$.fn.set_validation_form();

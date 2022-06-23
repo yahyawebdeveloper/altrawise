@@ -49,7 +49,7 @@
 										<div class="row">
 											<label for="simpleinput" class="col-4 col-form-label">Subject</label>
 											<div class="col-8 errorContainer">
-												<input type="text" id="txt_subject" placeholder="Required" required="required" class="form-control">
+												<input type="text" id="txt_subject" placeholder="Required" required class="form-control">
 											</div>
 										</div>
 									</div>
@@ -87,7 +87,7 @@
 									<label for="txt_task" class="col-2 col-form-label">Description</label>
 									<div class="col-10 errorContainer">
 										<div class="border rounded" style="padding:0" id="div_trail_btn">
-											<textarea id="txt_descr" rows="3" class="form-control border-0 resize-none" ></textarea>
+											<textarea required placeholder="Required" id="txt_descr" rows="3" class="form-control border-0 resize-none" ></textarea>
 											<div class="p-2 bg-light d-flex justify-content-between align-items-center">
 												<div >
 													<a href="#" id="btn_upload_reply" class="btn btn-sm px-1 btn-light fileinput-button"><i class="mdi mdi-upload"></i> <input id="fileupload_reply" type="file" name="qqfile"></a>
@@ -104,7 +104,7 @@
 										<div class="row">
 											<label for="simpleinput" class="col-4 col-form-label">Expected Reply By</label>
 											<div class="col-8 errorContainer" style="display: none">
-												<select id="dd_status" required="required" class="form-control country" data-toggle="select2" data-width="100%">
+												<select id="dd_status"  class="form-control country" data-toggle="select2" data-width="100%">
 												</select>
 											</div>
 											<div class="col-8 errorContainer" >

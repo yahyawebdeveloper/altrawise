@@ -1239,10 +1239,10 @@ $.fn.get_page_name = function (route_name) {
 		case 'attendance_module':
 			return 10;
 			break;
-		case 'attendance':
+		case 'attendance/list':
 			return 101;
 			break;
-		case 'attendance/report':
+		case 'attendance/reports':
 			return 102;
 			break;
 		case 'attendance/tracker':

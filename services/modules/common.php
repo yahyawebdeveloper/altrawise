@@ -192,6 +192,25 @@ function get_comm_enquiry_categories($params) {
     }
     
 }
+function get_comm_status($params) {
+
+    try {
+            log_it(__FUNCTION__, $params);
+            $return_data    	= [];
+            $temp				= [];
+            $rs_category     		= db_query('id,descr','cms_master_list',"category_id = 31 AND is_active = 1");
+            for($i = 0; $i < count($rs_category); $i++)
+            {
+                $temp['id']   = $rs_category[$i]['id'];
+                $temp['desc'] = $rs_category[$i]['descr'];
+                $return_data[] = $temp;
+            }
+            return json_encode( array("code"=>0,"msg"=>"Success","data"=>$return_data) );
+    } catch(Exception $e) {
+        handle_exception($e);
+    }
+    
+}
 function get_comm_report_categories($params) {
 
     try {
@@ -262,7 +281,66 @@ function get_comm_report_requestor($params) {
     }
     
 }
+function get_attendance_reports_employee($params) {
 
+    try {
+            log_it(__FUNCTION__, $params);
+            $emp_id                     = if_property_exist($params, 'emp_id',false);
+
+            $return_data    	= [];
+            $temp				= [];
+
+            if( isset($_SESSION['access']) )
+                $access = get_accessibility(42,$_SESSION['access']);
+            if(isset($access->viewall) && $access->viewall == 1)
+            {
+                $emp	= db_query('id,name,office_email','cms_employees','is_active = 1');
+            }
+            else
+            {
+                $emp   	= db_query('id,name,office_email','cms_employees',$emp_id . " IN(reporting_to_id,id) AND is_active = 1");
+            }
+            $rs_category     		= $emp;
+            for($i = 0; $i < count($rs_category); $i++)
+            {
+                $temp['id']   = $rs_category[$i]['id'];
+                $temp['desc'] = $rs_category[$i]['name'];
+                $return_data[] = $temp;
+            }
+            return json_encode( array("code"=>0,"msg"=>"Success","data"=>$return_data) );
+    } catch(Exception $e) {
+        handle_exception($e);
+    }
+    
+} 
+function get_attendance_tracker_employee($params) {
+
+    try {
+            log_it(__FUNCTION__, $params);
+            $emp_id                     = if_property_exist($params, 'emp_id',false);
+
+            $return_data    	= [];
+            $temp				= [];
+
+            $emp = db_query('cms_employees.id,cms_employees.name'
+                         , 'cms_employees
+                            inner join cms_employee_usage_log on cms_employees.id = cms_employee_usage_log.created_by'
+                         , 'cms_employees.is_active = 1 and cms_employees.name IS NOT NULL GROUP BY cms_employees.id ORDER BY cms_employees.name ASC');
+            $rs_category     		= $emp;
+            if( isset($rs_category) && count(rs_category) > 0 ){
+                for($i = 0; $i < count($rs_category); $i++)
+                {
+                    $temp['id']   = $rs_category[$i]['id'];
+                    $temp['desc'] = $rs_category[$i]['name'];
+                    $return_data[] = $temp;
+                }
+            }
+            return json_encode( array("code"=>0,"msg"=>"Success","data"=>$return_data) );
+    } catch(Exception $e) {
+        handle_exception($e);
+    }
+    
+}
 
 function get_contract_search_dropdown($params) {
     try {
@@ -298,5 +376,4 @@ function get_contract_search_dropdown($params) {
     }
     
 } 
-
 ?>

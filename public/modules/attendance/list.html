@@ -1,0 +1,448 @@
+<div class="row mt-3 mb-1" >
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="page-title" style="float:left">ATTENDANCE</h4>
+			<div class="mt-3" style="float:right">
+				<button type="button" data-color="green" id="showSearchDiv" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-magnify"></i> Search</button>
+			</div>
+        </div>
+    </div>
+</div>
+<!-- SEARCH DIV -->
+<div class="col-xl-12 mb-4"  id="searchDiv">
+	<div class="card mb-0">
+		<div class="col-xl-12" style="text-align:right">
+			 <!-- <h4 class="page-title customized">Search</h4>
+			<button type="button" id="closeSearch" class="btn waves-effect waves-light" ><b>X</b></button> -->
+			<div class="modal-header bg-light">
+				<h4 class="modal-title" ><i class="mdi mdi-magnify" aria-hidden="true"></i> Search</h4>
+				<button type="button" id="closeSearch" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+			</div>
+		</div>
+		<div class="card-body">
+			<!-- SEARCH ROW 1 -->
+				<div class="col-xl-12">
+					<div class="col-xl-6 searchCol">
+						<div class="row">
+						   <div class="col-md-4">
+							   <label for="simpleinput" class="col-form-label">Name</label>
+						   </div>
+						   <div class="col-md-8">
+							   <input type="text" id="txt_name_search" class="form-control" placeholder="Name">
+						   </div>
+					   </div>
+				   </div>					
+				</div>
+			<!-- SEARCH ROW 1 -->
+			<!-- SEARCH ROW 2 -->
+				<div class="col-xl-12 searchCol" style="text-align:right;overflow:auto;">
+					<div>
+						<button type="button" id="btn_reset" class="btn btn-light waves-effect waves-light" ><i class="mdi mdi-refresh"></i> Reset</button>
+						<button type="submit" id="btn_search" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-magnify"></i> Search</button>
+					</div>
+				</div>
+			<!-- SEARCH ROW 2 -->
+		</div>
+	</div>
+</div>
+<!-- SEARCH DIV -->
+<div class="row">
+    <div class="col-xl-12">
+		<div class="card mb-0">
+			<div class="card-body">
+				<h4 id="lbl_sync_time"></h4>
+				<div class="col-xl-12" style="text-align:right;">
+						<button class="btn btn-warning waves-effect waves-light"  id="btn_sync" name="btn_sync"><i class="mdi mdi-refresh"></i> SYNC NOW</button>&nbsp;
+						<div class="dropdown float-end">
+                        <a href="#" class="dropdown-toggle card-drop arrow-none" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="mdi mdi-dots-horizontal m-0 text-muted h3"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a class="dropdown-item" style="text-align:left" href="javascript:void(0)" onclick="exportTable2CSV('Document','tbl_list')" id="download_excel">Excel File (*.csv)</a>
+							<a class="dropdown-item" style="text-align:left" href="javascript:void(0)" onclick="exportTable2PDF('Document','tbl_list','p')" id="download_pdf">PDF File (*.pdf)</a>
+                        </div>
+                    </div>
+					</div>
+				 <div class="table-responsive">
+					<table class="table table-centered table-striped w-100" id="tbl_list">
+						<thead class="">
+							<tr>
+								<th>ID</th>
+								<th>Portal ID @ Emp. Name</th>
+								<th>Device Name</th>
+								<th>Group</th>
+								<th>Card</th>
+								<th>PIN2</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody id="">
+							<tr>
+								<td>11</td>
+								<td>33 @ Sreekamal Parthi</td>
+								<td>DESKTOP-33</td>
+								<td>1</td>
+								<td>0</td>
+								<td>111</td>
+								<td><i class="mdi mdi-login" aria-hidden="true"></i></td>
+							</tr>
+							<tr>
+								<td>12</td>
+								<td>58 @ Zaira</td>
+								<td>DESKTOP-21</td>
+								<td>1</td>
+								<td>0</td>
+								<td>121</td>
+								<td><i class="mdi mdi-login" aria-hidden="true"></i></td>
+							</tr>
+							<tr>
+								<td>71</td>
+								<td>3 @ Jamal</td>
+								<td>PC-22</td>
+								<td>0</td>
+								<td>0</td>
+								<td>123</td>
+								<td><i class="mdi mdi-login" aria-hidden="true"></i></td>
+							</tr>
+							<tr>
+								<td>21</td>
+								<td>333 @ Parimal</td>
+								<td>DESK-33</td>
+								<td>1</td>
+								<td>1</td>
+								<td>121</td>
+								<td><i class="mdi mdi-login" aria-hidden="true"></i></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>44 @ Sita</td>
+								<td>DESKTOP-3</td>
+								<td>13</td>
+								<td>0</td>
+								<td>11</td>
+								<td><i class="mdi mdi-login" aria-hidden="true"></i></td>
+							</tr>
+							<tr>
+								<td>13</td>
+								<td>14 @ Yahya</td>
+								<td>MAC-32</td>
+								<td>1</td>
+								<td>0</td>
+								<td>41</td>
+								<td><i class="mdi mdi-login" aria-hidden="true"></i></td>
+							</tr>
+							<tr>
+								<td>51</td>
+								<td>36 @ Syed</td>
+								<td>DESKTOP-99</td>
+								<td>33</td>
+								<td>0</td>
+								<td>14</td>
+								<td><i class="mdi mdi-login" aria-hidden="true"></i></td>
+							</tr>
+							<tr>
+								<td>15</td>
+								<td>35 @ Surekha</td>
+								<td>HP-DEV-33</td>
+								<td>6</td>
+								<td>7</td>
+								<td>31</td>
+								<td><i class="mdi mdi-login" aria-hidden="true"></i></td>
+							</tr>
+							<tr>
+								<td>5</td>
+								<td>45 @ Clever</td>
+								<td>SERVER-21</td>
+								<td>4</td>
+								<td>5</td>
+								<td>12</td>
+								<td><i class="mdi mdi-login" aria-hidden="true"></i></td>
+							</tr>
+							<tr>
+								<td>6</td>
+								<td>56 @ Suchen</td>
+								<td>KLPC-45</td>
+								<td>88</td>
+								<td>90</td>
+								<td>31</td>
+								<td><i class="mdi mdi-login" aria-hidden="true"></i></td>
+							</tr>
+						</tbody>
+					</table>
+					
+					<div id="div_load_more" class="load-more" style="display: none;">
+		                                	<a class="btn btn-info btn-xs" id="btn_load_more"><span class="fa fa-arrow-down fa-fw"></span>Load More<span class="fa fa-arrow-down fa-fw"></span></a>
+		                            	</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>	
+</div>
+<div class="row" id="new_div" style="display: none">
+	<div class="col-sm-12">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h4 id="h4_primary_no">-</h4>
+				<div class="options">
+					<a href="#" id="btn_back" class="btn-panel-opts" title="Back to list">
+						<i class="fa fa-arrow-circle-left fa-lg fa-fw" aria-hidden="true"></i>
+						<span class="hidden-xs">Back to list</span>
+					</a>
+				</div>
+			</div>
+
+			<div class="panel-body">
+
+				<div class="row">
+					<div class="table-responsive">
+						<table class="table" id="tbl_month">
+							<thead>
+							<tr>
+								<th width="30%">List of Month(s)</th>
+								<th>Status</th>
+								<th>Action</th>
+							</tr>
+							</thead>
+							<tbody>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="div_more_info_parent">
+<div id="div_more_info_detail" style="display:none;width: 100%">
+    <div class="box_arrow_left"></div>
+    <div class="pinched" style="width: 100%">
+        <div class="shadow_top"></div>
+        
+            <div style="overflow:auto; padding: 0px 20px;">
+                <div class="row">
+                   
+                	<div class="table-responsive">
+                   		<table class="table" id="tbl_month_detail">
+                       		<thead>
+                        		<tr onclick="exportTable2PDF($('#h4_primary_no').html(),'tbl_month_detail','p')">
+                               		<th>Date</th>
+                               		<th>Spent In (Hrs.)</th>
+                               		<th>Spent Out (Hrs.)</th>
+                               		<th>Appt. (Hrs.)</th>
+                               		<th>First In / Last Out</th>
+                               		<th>Status</th>
+                               		<th>Remarks
+                                    	<div class="btn-toolbar pull-right">
+                                    	<button class="btn btn-default btn-sm"><i class="fa fa-print"></i></button>
+                                    	</div>
+                               		</th>
+                               	</tr>
+                          	</thead>
+                          	<tbody>
+
+                      		</tbody>
+                   		</table>
+             		</div>
+             		
+                </div>
+            </div>
+            
+        <div class="shadow_bottom"></div>
+    </div>
+</div>
+</div>
+
+<div id="div_more_info_parent_item">
+<div id="div_more_info_detail_item" style="display:none;width: 100%">
+    <div class="box_arrow_left"></div>
+    <div class="pinched" style="width: 100%">
+        <div class="shadow_top"></div>
+        
+            <div style="overflow:auto; padding: 0px 20px;">
+                <div class="row">
+                   
+                	<div class="table-responsive">
+                   		<table class="table" id="tbl_month_detail_item" >
+                       		<thead>
+                        		<tr onclick="$('#div_more_info_detail_item').slideToggle()">
+                               		<th>Time</th>
+                               		<th>Check Status</th>
+                               	</tr>
+                          	</thead>
+                          	<tbody>
+
+                      		</tbody>
+                   		</table>
+             		</div>
+             		
+                </div>
+            </div>
+            
+        <div class="shadow_bottom"></div>
+    </div>
+</div>
+</div>
+
+<!-- Modal Appt Start-->
+    <div class="modal fade" id="appt_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="my_appt_modal_label">Appointments</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="reference_row_id" id="reference_row_id">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            Below are the appointment details.
+                        </div>
+                        <div class="col-sm-12">
+                            <table class="table" id="tbl_appt_detail_item" >
+	                       		<thead>
+	                        		<tr>
+	                               		<th width="20%">Date</th>
+	                               		<th width="20%">Email</th>
+	                               		<th width="10%">Check Time</th>
+	                               		<th width="30%">Address</th>
+	                               		<th>Client</th>
+	                               	</tr>
+	                          	</thead>
+	                          	<tbody>
+	
+	                      		</tbody>
+                   			</table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Modal Appt End-->
+
+<!-- Modal Appt Start-->
+    <div class="modal fade" id="leave_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="my_leave_modal_label">Leave</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="reference_row_id" id="reference_row_id">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            Below are the leave details.
+                        </div>
+                        <div class="col-sm-12">
+                            <table class="table" id="tbl_leave_detail_item" >
+	                       		<thead>
+	                        		<tr>
+	                               		<th>Date</th>
+	                               		<th>Leave Type</th>
+	                               		<th>Reason</th>
+	                               	</tr>
+	                          	</thead>
+	                          	<tbody>
+	
+	                      		</tbody>
+                   			</table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Modal Appt End-->
+
+
+<!-- Modal Remark for Reference Start-->
+    <div class="modal fade" id="remark_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Remarks</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="reference_row_id" id="reference_row_id">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            Please enter the remarks and click apply button below.
+                        </div>
+                        <div class="col-sm-12">
+                            <textarea style="width: 100%" name="txt_remark" id="txt_remark" cols="50" rows="20" required="required" maxlength="3999"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="btn_remarks_apply">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Modal Remark for Reference End-->
+
+
+<!-- Modal Remark List Start-->
+    <div class="modal fade" id="remarks_list_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Remark List</h4>
+                </div>
+                <div class="modal-body">
+<!--                     <input type="hidden" name="contract_no" id="contract_no"> -->
+                    <div class="row">
+                        <div id="remarkList" class="col-sm-12" style="height: 300px;overflow: auto;">
+                            <table class="table" id="tbl_remark_list" >
+								<thead>
+									<tr>
+										<th width="60%">Remark</th>
+										<th width="20%">Created By</th>
+                                        <th width="20%">Created Date</th>
+									</tr>
+								</thead>
+								<tbody>
+
+								</tbody>
+							</table>
+                        </div>
+                        <div class="col-sm-12"><br></div>
+                        
+                        <div class="col-sm-12"><br></div>
+                        <div class="col-sm-12">
+                            <textarea name="txt_main_remark" id="txt_main_remark" style="width: 100%" cols="50" rows="3" required="required"></textarea>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                	<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                	<button type="button" class="btn btn-primary ladda-button" data-style="expand-left" data-spinner-color="#000000" id="btn_add_remark">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+   <!-- Modal Remark List End-->
+<script src="./assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="./assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+<script src="./assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="./assets/libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="./assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+<script src="./assets/libs/datatables.net-select/js/dataTables.select.min.js"></script>
