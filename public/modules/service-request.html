@@ -33,20 +33,48 @@
     <div id="searchPanel" class="row" style="display: none;">
         <div class="col-12">
             <div class="card">
+                <div class="col-xl-12" style="text-align:right">
+                    <div class="modal-header bg-light">
+                        <h4 class="modal-title" ><i class="mdi mdi-magnify" aria-hidden="true"></i> Search</h4>
+                        <button type="button" id="btn_close_search" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                    </div>
+                </div>
                 <div class="card-body">
                     
-                    <div class="float-end">
+                    <!-- <div class="float-end">
                         <a id="btn_close_search" href="javascript:void(0)">
                             <i class="mdi mdi-close-box m-0 text-muted h3"></i>
                         </a>
-                    </div>
+                    </div> -->
                     <div class="clearfix"></div>
                     
                     <form class="form-horizontal">
 
-                        <div class="row mt-2">
+                        <div class="row">
+                            <div class="col-xl-6 searchCol">
+                                <div class="row">
+                                    <label for="simpleinput" class="col-4 col-form-label">Category</label>
+                                    <div class="col-8 errorContainer">
+                                        <select id="dd_category_search" class="form-control populate" data-width="100%">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-6 searchCol">
+                                <div class="row">
+                                    <label for="simpleinput" class="col-4 col-form-label">Created By</label>
+                                    <div class="col-8 errorContainer">
+                                        <select id="dd_created_by_search" class="form-control populate" data-width="100%">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- <div class="row mt-2">
                             <div class="col-lg-6">
-                                <!-- Category -->
                                 <div class="row">
                                     <label for="dd_category_search" class="col-4 col-form-label">Category</label>
                                     <div class="col-7 errorContainer">
@@ -56,7 +84,6 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <!-- Title -->
                                 <div class="row">
                                     <label for="dd_created_by_search" class="col-4 col-form-label">Created By</label>
                                     <div class="col-7 errorContainer">
@@ -65,11 +92,33 @@
                                     </div>
                                 </div>
                             </div>
+                        </div> -->
+
+                        <div class="row">
+                            <div class="col-xl-6 searchCol">
+                                <div class="row">
+                                    <label for="simpleinput" class="col-4 col-form-label">Company</label>
+                                    <div class="col-8 errorContainer">
+                                        <select id="dd_company_search" class="form-control populate" data-width="100%">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-6 searchCol">
+                                <div class="row">
+                                    <label for="simpleinput" class="col-4 col-form-label">Status</label>
+                                    <div class="col-8 errorContainer">
+                                        <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_status_search">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
 
-                        <div class="row mt-2">
+                        <!-- <div class="row mt-2">
                             <div class="col-lg-6">
-                                <!-- Company -->
                                 <div class="row">
                                     <label for="dd_company_search" class="col-4 col-form-label">Company</label>
                                     <div class="col-7 errorContainer">
@@ -79,7 +128,6 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <!-- Paid To -->
                                 <input type="hidden" id="txt_status" value="" />
                                 <div class="row">
                                     <label for="dd_status_search" class="col-4 col-form-label">Status</label>
@@ -89,7 +137,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group align-right">
                             <button id="btn_reset" type="button" class="btn btn-light waves-effect waves-light m-1"><i class="fe-refresh-cw me-1"></i> Reset</button>
@@ -363,10 +411,33 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <!-- <div class="col-lg-6"> -->
                                             <!-- Attachments -->
-                                            <div class="row">
+                                            <!-- <div class="row">
                                                 <label class="col-4 col-form-label">Attachments</label>
+                                                <div class="col-7 errorContainer">
+                                                    <span class="btn btn-success waves-effect waves-light fileinput-button" id="btn_add_image">
+                                                        <span>Browse File</span>
+                                                        <input id="doc_invoice" type="file" name="files[]" >
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div> -->
+
+                                        <!-- <div class="col-sm-6 col-sm-offset-6" id="doc_invoice_files"></div> -->
+
+                                        <!-- <div id="doc_invoice_files">
+                                            <div class="row mt-2">
+                                                <div id="files" class="col-lg-10 offset-lg-2"></div>
+                                            </div>
+                                        </div> -->
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-xl-6 searchCol">
+                                            <div class="row">
+                                                <label for="simpleinput" class="col-4 col-form-label">Attachments</label>
                                                 <div class="col-7 errorContainer">
                                                     <span class="btn btn-success waves-effect waves-light fileinput-button" id="btn_add_image">
                                                         <span>Browse File</span>
@@ -377,12 +448,6 @@
                                         </div>
 
                                         <div class="col-sm-6 col-sm-offset-6" id="doc_invoice_files"></div>
-
-                                        <!-- <div id="doc_invoice_files">
-                                            <div class="row mt-2">
-                                                <div id="files" class="col-lg-10 offset-lg-2"></div>
-                                            </div>
-                                        </div> -->
 
                                     </div>
 
