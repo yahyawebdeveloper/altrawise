@@ -264,6 +264,9 @@
 			  .on("/attendance/tracker", () => { //attendance route
 				 $.fn.load_form('./modules/attendance/tracker.html');
 			 }, { before: middleware })
+			 .on("/attendance/summary", () => { //attendance route
+				 $.fn.load_form('./modules/attendance/summary.html');
+			 }, { before: middleware })
 			 .on("/comm/report", () => { //my-communications->Report route
 				 $.fn.load_form('./modules/comm/report.html');
 			 }, { before: middleware })
