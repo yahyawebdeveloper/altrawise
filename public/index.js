@@ -166,6 +166,13 @@
 			if(service_request_access == 0 || service_request_access.view == 0) {
 				$('#operation_li').hide();
 			}
+
+			 //onBoarding
+			 let onBoarding = $('#mn_onboarding').attr('href');
+			 let onboarding_access = $.fn.get_accessibility($.fn.get_page_name(onBoarding));
+			 if(onboarding_access == 0 || onboarding_access.view == 0) {
+				 $('#operation_li').hide();
+			 }
 		 }
 		 
  
@@ -290,6 +297,9 @@
 			 }, { before: middleware })
 			 .on("/service-request", () => { //service request route
 				$.fn.load_form('./modules/service-request.html')
+			}, { before: middleware })
+			.on("/contract", () => {
+				$.fn.load_form('./modules/contract.html')
 			}, { before: middleware })
 			 .on("faqs", () => { //faq route
 				 $.fn.load_form('./modules/faq/faq_list.html')
