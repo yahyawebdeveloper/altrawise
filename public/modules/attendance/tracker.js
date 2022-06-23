@@ -85,7 +85,7 @@ $.fn.populate_list_form = function(data)
 				let type_of_day = '';
 				if(data[i].is_public_holiday != '')
 				{
-					type_of_day = `<i class="fa fa-home text-danger"> &nbsp;Public Holiday </i>`;
+					type_of_day = `<span class="badge bg-soft-danger text-danger"><i class="fa fa-home text-danger"> &nbsp;Public Holiday </i></span>`;
 				}
 				else if(data[i].leave_type != '')
 				{
@@ -93,11 +93,11 @@ $.fn.populate_list_form = function(data)
 				}
 				else if(data[i].day_name == 'Saturday' || data[i].day_name == 'Sunday')
 				{
-					type_of_day = `<i class="fa fa-home text-danger"> &nbsp;${data[i].day_name} </i>`;
+					type_of_day = `<span class="badge bg-soft-danger text-danger"><i class="fa fa-home text-danger"> &nbsp;${data[i].day_name} </i></span>`;
 				}
 				else
 				{	
-					type_of_day = `<i class="fa fa-briefcase text-success"> &nbsp;Working Day </i>`;
+					type_of_day = `<span class="badge bg-soft-success text-success"><i class="fa fa-briefcase text-success"> &nbsp;Working Day </i></span>`;
 				}
 
 				row += `<tr>

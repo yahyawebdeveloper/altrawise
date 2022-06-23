@@ -2281,6 +2281,12 @@ if(isset($_SERVER['REQUEST_METHOD']))
 			echo get_comm_enquiry_categories($param->data);
 			return;
 		}
+		else if ($param->method === 'get_comm_status') 
+		{
+			require_once constant('MODULES_DIR') . '/common.php';
+			echo get_comm_status($param->data);
+			return;
+		}
 		else if ($param->method === 'get_comm_report_categories') 
 		{
 			require_once constant('MODULES_DIR') . '/common.php';

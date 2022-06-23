@@ -192,6 +192,25 @@ function get_comm_enquiry_categories($params) {
     }
     
 }
+function get_comm_status($params) {
+
+    try {
+            log_it(__FUNCTION__, $params);
+            $return_data    	= [];
+            $temp				= [];
+            $rs_category     		= db_query('id,descr','cms_master_list',"category_id = 31 AND is_active = 1");
+            for($i = 0; $i < count($rs_category); $i++)
+            {
+                $temp['id']   = $rs_category[$i]['id'];
+                $temp['desc'] = $rs_category[$i]['descr'];
+                $return_data[] = $temp;
+            }
+            return json_encode( array("code"=>0,"msg"=>"Success","data"=>$return_data) );
+    } catch(Exception $e) {
+        handle_exception($e);
+    }
+    
+}
 function get_comm_report_categories($params) {
 
     try {

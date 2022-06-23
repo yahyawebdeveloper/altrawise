@@ -820,7 +820,7 @@ $.fn.populate_list_form = function (data, is_scroll)
 	{
 		if (is_scroll == false)
 		{
-			$('#tbl_list > tbody').empty();
+			$('#tbl_list1 > tbody').empty();
 		}
 
 		if (data.list.length > 0) // check if there is any data, precaution
@@ -856,7 +856,7 @@ $.fn.populate_list_form = function (data, is_scroll)
 							</td>`;
 
 			}
-			$('#tbl_list tbody').append(row);
+			$('#tbl_list1 tbody').append(row);
 			$('.load-more').show();
 		}
 	}
@@ -915,7 +915,7 @@ $.fn.get_list = function (is_scroll)
 		$.fn.fetch_data_for_table_v2
 			(
 				$.fn.generate_parameter('get_attendance_users_list', data),
-				$.fn.populate_list_form, is_scroll, 'tbl_list', false, false, false, true
+				$.fn.populate_list_form, is_scroll, 'tbl_list1', false, false, false, true
 			);
 	}
 	catch (err)
