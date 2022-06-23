@@ -2300,6 +2300,20 @@ if(isset($_SERVER['REQUEST_METHOD']))
 			return;
 		}
 		// My Communications
+		// Attendance
+		else if ($param->method === 'get_attendance_reports_employee') 
+		{
+			require_once constant('MODULES_DIR') . '/common.php';
+			echo get_comm_report_requestor($param->data);
+			return;
+		}
+		else if ($param->method === 'get_attendance_tracker_employee') 
+		{
+			require_once constant('MODULES_DIR') . '/common.php';
+			echo get_comm_report_requestor($param->data);
+			return;
+		}
+		// Attendance
 require_once  'transporter.php';
 		
 	}

@@ -185,12 +185,12 @@
 			 let module_access = $.fn.get_accessibility($.fn.get_page_name(route_url));
 			 
 			 MODULE_ACCESS = module_access;
- 
+			
 			 //if user can't view redirect to login page
 			 if (module_access == 0 || module_access.view == 0) {
 				 done(false);
 				 
-				 window.location.href = root + 'login.html';
+				window.location.href = root + 'login.html';
 			 }
 			 
 			 done(true); //if have access - proceed
@@ -202,7 +202,7 @@
 			 //get module access based on route url
 			 let module_access = $.fn.get_accessibility($.fn.get_page_name(route_name));
 			 MODULE_ACCESS = module_access;
-			
+	
 			 //if user can't view redirect to login page
 			 if (module_access == 0 || module_access.view == 0) {
 				 done(false);
@@ -231,6 +231,15 @@
 			 }, { before: middleware })
 			  .on("/comm/my-communications", () => { //my-communications route
 				 $.fn.load_form('./modules/comm/my-communications.html');
+			 }, { before: middleware })
+			  .on("/attendance/list", () => { //attendance route
+				 $.fn.load_form('./modules/attendance/list.html');
+			 }, { before: middleware })
+			  .on("/attendance/reports", () => { //attendance route
+				 $.fn.load_form('./modules/attendance/reports.html');
+			 }, { before: middleware })
+			  .on("/attendance/tracker", () => { //attendance route
+				 $.fn.load_form('./modules/attendance/tracker.html');
 			 }, { before: middleware })
 			 .on("/comm/report", () => { //my-communications->Report route
 				 $.fn.load_form('./modules/comm/report.html');
