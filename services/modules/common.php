@@ -261,6 +261,42 @@ function get_comm_report_requestor($params) {
         handle_exception($e);
     }
     
+}
+
+
+function get_contract_search_dropdown($params) {
+    try {
+
+        log_it(__FUNCTION__, $params);
+        $emp_id = if_property_exist($params, 'emp_id', '');
+        if (!isset($emp_id) || $emp_id == '') {
+            return handle_fail_response('Missing employee ID.');
+        }
+
+        $emp = array();
+        
+        // $access = get_accessibility(9, $_SESSION['access']);
+        // if (isset($access->viewall) && $access->viewall == 1)  {
+        //     $emp            = db_query('id,name,office_email', 'cms_employees', 'is_active = 1');
+        //     $where  =  "cms_clients.is_active = 1";
+        // } else {
+            $emp            = db_query('id,name,office_email', 'cms_employees', "id =" . $emp_id . " AND is_active = 1");
+            $where  =   "cms_clients.is_active = 1 AND FIND_IN_SET(" . $emp_id . ", cms_clients.assign_emp_id)";
+        // }
+
+        $client =  db_query('cms_clients.id,cms_clients.name',
+							'cms_clients
+                                LEFT JOIN cms_master_list as tbl_type ON FIND_IN_SET(tbl_type.id, cms_clients.type_id) > 0
+                                LEFT JOIN cms_master_category ON tbl_type.category_id = cms_master_category.id',
+							$where." AND tbl_type.descr = 'Client' AND cms_master_category.id = 59");
+        
+        $return_data = array('created_by' => $emp);
+		echo json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );exit;
+
+    } catch(Exception $e) {
+        handle_exception($e);
+    }
+    
 } 
 
 ?>

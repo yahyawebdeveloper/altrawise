@@ -2269,6 +2269,14 @@ if(isset($_SERVER['REQUEST_METHOD']))
 			echo get_service_request_search_dropdown($param->data);
 			return;
 		}
+
+		else if ($param->method === 'get_contract_search_dropdown') 
+		{
+			require_once constant('MODULES_DIR') . '/common.php';
+			echo get_contract_search_dropdown($param->data);
+			return;
+		}
+
 		// My Communications
 		else if($param->method === 'get_everything_at_once_altrawise')
         {
