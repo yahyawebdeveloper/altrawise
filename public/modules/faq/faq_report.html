@@ -16,15 +16,14 @@
    <!-- start page title -->
    <div class="row mt-3 mb-1">
        <div class="col-12">
-           <div class="page-title-box">
-                  <div class="page-title-right">
-                     <a href="javascript:void(0);" id="btn_search" class="btn btn-success mb-2 panel-collapse"><i class="fe-search me-1"></i>Search</a>
-                    
-                     <a href="javascript:void(0);" id="btn_new" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-1"></i>New FAQ</a>
-               </div>
-               <h4 class="page-title">
-                   <i class="fas fa-globe-asia"></i> FAQ | FAQ Report &nbsp;<span id="total_faq_report" class="badge rounded-pill bg-warning small-pill">0</span>
-               </h4>
+          <div class="page-title-box">
+			<div style="float:left"><h4 class="page-title" style="float:left"><i class="fas fa-globe-asia"></i>FAQ</h4></div>
+			<div style="float:left"><h5 class="page-title-medium" style="float:left;">&emsp;|&emsp;FAQ Report&nbsp;</h5></div>
+			<div style="float:left;line-height:77px;"><span id="total_faq_report" class="badge rounded-pill bg-warning small-pill">0</span></div>
+			<div class="mt-3" style="float:right">
+				<button type="button" id="btn_search" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-magnify"></i> Search</button>
+				<button type="button" id="btn_new" class="btn btn-danger waves-effect waves-light" ><i class="mdi mdi-plus-circle me-1"></i> New FAQ</button>
+			</div>
            </div>
        </div>
    </div>     
@@ -140,92 +139,7 @@
                             <button id="btn_search_action" type="button" class="btn btn-success waves-effect waves-light mt-1 mb-1"><i class="fe-search me-1"></i> Search</button>
                         </div>
                     </form> 
-                   <!--OldUI-->
-                   <!--<form class="form-horizontal">
-
-                       <div class="col-xl-12">
-                            <div class="col-xl-6 searchCol">
-                                <div class="row">
-                                <div class="col-md-12">
-                                    <label for="search_question_category" class="col-4 col-form-label">Question Category</label>
-                                    <select class="form-select populate form-control" data-toggle="select2" data-width="100%" id="search_question_category" required>
-                                    </select>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="col-xl-6 searchCol">
-                                <div class="row">
-                                <div class="col-md-12">
-                                    <label for="search_category" class="col-4 col-form-label">Employee Category</label>
-                                    <select id="search_category" class="form-select populate" data-width="100%">
-                                    </select>
-                                </div>
-                            </div>
-                           </div>
-                       </div>
-                       <div class="col-xl-12">
-                            <div class="col-xl-6 searchCol">
-                                <div class="row">
-                                <div class="col-md-12">
-                                    <label for="search_approver" class="col-4 col-form-label">Approver</label>
-                                    <select id="search_approver" class="form-select" data-width="100%">
-                                    </select>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="col-xl-6 searchCol">
-                                <div class="row">
-                                <div class="col-md-12">
-                                    <label for="dd_status_search" class="col-4 col-form-label">Status</label>
-                                    <select id="search_status" class="form-select" data-width="100%">
-                                        <option value="">All</option>
-                                        <option value="1">Approved</option>
-                                        <option value="0">Pending</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                       </div>
-                       <div class="col-xl-12">
-                        <div class="col-xl-6 searchCol">
-                            <div class="row">
-                            <div class="col-md-12">
-                                <label for="dp_search_date" class="col-4 col-form-label"> Date</label>
-                                <input type="text" id="dp_search_date" class="form-control flatpickr-input" placeholder="2018-10-03 to 2022-10-10" readonly="readonly">
-                                <input type="hidden" id="from_date">
-                                <input type="hidden" id="to_date">
-                            </div>
-                        </div>
-                        </div>
-                        <div class="col-xl-6 searchCol">
-                            <div class="row">
-                            <div class="col-md-12">
-                                <label for="search_created_by" class="col-4 col-form-label">Created By</label>
-                                <select id="search_created_by" style="width:100%" class="form-select" required>
-                                    <option value=""></option>
-                                 </select>
-                            </div>
-                        </div>
-                       </div>
-                   </div>
-                       <div class="col-xl-12">
-
-                        <div class="col-xl-6 searchCol">
-                            <div class="row">
-                            <div class="col-md-12">
-                                <label for="search_approver" class="col-4 col-form-label">Question</label>
-                                <input class="form-control filter-change" id="search_question" >
-                            </div>
-                        </div>
-                       </div>
-                   </div>
-
-                       <div><br></div>
-                       <div class="form-group align-right">
-                           <button id="btn_reset" type="button" class="btn btn-light waves-effect waves-light m-1"><i class="fe-refresh-cw me-1"></i> Reset</button>
-                           <button id="btn_search_action" type="button" class="btn btn-success waves-effect waves-light mt-1 mb-1"><i class="fe-search me-1"></i> Search</button>
-                       </div>
-                   </form>-->                
+                               
                </div>
            </div>
        </div>
@@ -268,11 +182,11 @@
                                
                            </tbody>
                        </table>
-                       <div id="div_load_more" class="d-flex justify-content-center load-more" style="display: none;">
+                       <!--<div id="div_load_more" class="d-flex justify-content-center load-more" style="display: none;">
                            <button id="btn_load_more" type="button" class="btn btn-sm btn-info waves-effect waves-light rounded-pill ">
                                <i class="fa fa-arrow-down"></i>&nbsp;&nbsp;Load More&nbsp;&nbsp;<i class="fa fa-arrow-up"></i>
                            </button>
-                       </div>
+                       </div>-->
                    </div>
                </div>
            </div> <!-- end card-->
@@ -284,15 +198,15 @@
 <div class="row" id="new_div" style="display: none">
    <!-- start page title -->
    <div class="row mt-3 mb-1">
-       <div class="col-12">
-           <div class="page-title-box">
-               <h4 class="page-title"><i class="fas fa-globe-asia"></i> FAQ</h4>
-               <div class="page-title-right">
-                   <a href="javascript:void(0);" id="btn_back" class="btn btn-secondary mb-2"><i class="fe-arrow-left me-1"></i>Back</a>
-               </div>
-           </div>
-       </div>
-   </div>     
+    <div class="col-12">
+		<div class="page-title-box header-with-backBtn">
+            <h4 class="page-title" style="float:left"><i class="fas fa-globe-asia"></i> FAQ</h4>
+			<div class="mt-3" style="float:right">
+                <a href="javascript:void(0);" id="btn_back" class="btn btn-secondary mb-2"><i class="fe-arrow-left me-1"></i>Back</a>
+			</div>
+        </div>
+    </div>
+   </div>
    <!-- end page title --> 
 
    <div class="row">
@@ -302,87 +216,79 @@
                <div class="card-body">
                    
                    <form class="form-horizontal" data-validate="parsley" id="detail_form">
-                       <div class="tab-content">
-                           
-                               <div class="tab-pane active" id="tab-one">
-                                <div class="col-xl-12">
-                                    <div class="col-xl-6 searchCol">
-                                        <div class="row">
-                                        <div class="col-md-12">
-                                            <label for="dd_question_category" class="col-4 col-form-label"> Question Category</label>
-                                            <select class="form-control form-select " data-toggle="select2" data-width="100%" id="dd_question_category" required>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    </div>
-                                    <div class="col-xl-6 searchCol">
-                                        <div class="row">
-                                        <div class="col-md-12">
-                                            <label for="dd_faq" class="col-4 col-form-label">Employee Category</label>
-                                            <select class="form-control form-select " data-toggle="select2" multiple placeholder="Select" data-width="100%" id="dd_faq" required>
-                                            </select>
-                                        </div>
-                                    </div>
-                                   </div>
-                                </div>
-                                <div class="col-xl-12">
-                                    <div class="col-xl-6 searchCol">
-                                        <div class="row">
-                                        <div class="col-md-12">
-                                            <label for="dd_approver" class="col-4 col-form-label">Approver</label>
-                                            <select class="form-control form-select " data-toggle="select2" data-width="100%" id="dd_approver" required>
-                                            </select>
-                                        </div>
-                                        
-                                    </div>
-                                    </div>
-                                    <div class="col-xl-6 searchCol">
-                                        <div class="row">
-                                        <div class="col-md-12">
-                                            <label for="txt_question" class="col-4 col-form-label">Question</label>
-                                            <textarea type="text" id="txt_question" class="form-control flatpickr-input" placeholder="Question" required></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-12">
-                                <div class="col-xl-12 searchCol">
-                                    <div class="row">
-                                    <div class="col-md-12">
-                                        <label for="txt_answer" class="col-4 col-form-label">Answer</label>
-                                        <textarea type="text" id="text_editor" class="form-control flatpickr-input" placeholder="Answer" required></textarea>
-                                    </div>
-                                </div>
-                                </div>
+                        <div class="row mt-2">
+                            <div class="col-lg-6">
                             
-                        </div>
-                            <div class="col-xl-12">
-
-                                <div class="col-xl-6 searchCol">
-                                    <div class="row">
-                                    <div class="col-md-12">
-                                        <label for="doc_upload" class="col-4 col-form-label">Attachments</label>
-                                        <span class="btn btn-success waves-effect waves-light fileinput-button" id="btn_add_image">
-                                            <span>Browse File</span>
-                                            <input id="doc_upload" type="file" name="qqfile">
-                                        </span>
+                                <div class="row">
+                                    <label for="dd_question_category" class="col-4 col-form-label">Question Category <span class="text-danger">*</span></label>
+                                    <div class="col-7 errorContainer">
+                                        <select class="form-select populate form-control" data-toggle="select2" data-width="100%" id="dd_question_category" required>
+                                        </select>
                                     </div>
-                                    <!--<div class="form-group">
-                                        <div id="files" class="col-sm-10 col-sm-offset-2"></div>
-                                     </div>-->
                                 </div>
                             </div>
-                           
-                        </div>
-                        <div class="col-xl-12" id="files_div">
-                            <div class="row mt-4">
-                                <div id="attachment_files" style="margin-top: 8px;margin-bottom: 10px;"></div>
-                                   <div id="files" class="col-lg-10 offset-lg-2"></div>
+                            <div class="col-lg-6">
+                            
+                                <div class="row">
+                                    <label for="dd_faq" class="col-4 col-form-label">Employee Category <span class="text-danger">*</span></label>
+                                    <div class="col-7 errorContainer">
+                                        <select class="form-control populate form-select " data-toggle="select2" multiple placeholder="Select" data-width="100%" id="dd_faq" required>
+                                        </select>
+                                    </div>
                                 </div>
-                       </div>
+                            </div>
                         </div>
-                       </div>
-                   
+                        <div class="row mt-2">
+                            <div class="col-lg-6">
+                            
+                                <div class="row">
+                                    <label for="dd_question_category" class="col-4 col-form-label">Approver <span class="text-danger">*</span></label>
+                                    <div class="col-7 errorContainer">
+                                        <select class="form-control populate form-select " data-toggle="select2" data-width="100%" id="dd_approver" required>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                            
+                                <div class="row">
+                                    <label for="txt_question" class="col-4 col-form-label">Question <span class="text-danger">*</span></label>
+                                    <div class="col-7 errorContainer">
+                                        <textarea type="text" id="txt_question" class="form-control flatpickr-input" placeholder="Question" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <label for="txt_answer" class="col-4 col-form-label">Answer</label>
+                                    <div class="col-12 errorContainer">
+                                        <textarea type="text" id="text_editor" class="form-control flatpickr-input" placeholder="Answer"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                                <div class="col-lg-6">
+                                    <div class="row">
+                                        <label for="doc_upload" class="col-4 col-form-label">Attachments</label>
+                                        <div class="col-7 errorContainer">
+                                            <span class="btn btn-success waves-effect waves-light fileinput-button" id="btn_add_image">
+                                                <span>Browse File</span>
+                                                <input id="doc_upload" type="file" name="qqfile">
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="files_div">
+                                <div class="row mt-2">
+                                    <div id="files" class="col-lg-10 offset-lg-2"></div>
+                                </div>
+                            </div>
+                     
                    <div class="form-group align-right" id="actions_div"><br />
                        <button id="btn_cancel" type="button" class="btn btn-light waves-effect waves-light m-1"><i class="fa fa-times me-1"></i> Cancel</button>
                        <button id="btn_save" type="submit" class="btn btn-success waves-effect waves-light mt-1 mb-1 ladda-button" data-color="green" data-style="expand-left"><i class="fa fa-check me-1"></i> Save</button>

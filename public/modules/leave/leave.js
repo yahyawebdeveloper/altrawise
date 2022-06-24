@@ -119,14 +119,14 @@ $.fn.get_leave_details = function ()
 {
     try
     {
-
+        var currentyear = new Date().getFullYear() ;
         var data =
-        {
+        {   
             em_type_id: EM_LEAVE_ID,
             emp_id: SESSIONS_DATA.emp_id,
-            year: SESSIONS_DATA.year
+            year: currentyear
         };
-
+        console.log(data);
         $.fn.fetch_data
             (
                 $.fn.generate_parameter('get_leave_details', data),
@@ -148,7 +148,7 @@ $.fn.get_leave_details = function ()
 
 
 $.fn.populate_leave_details = function (data)
-{
+{console.log(data);
     try
     {
         var row = '';
@@ -897,7 +897,7 @@ $.fn.view_days = function ()
                         holiday_str += '<h5><span class="text-info"><b>' + moment(curr_date).format(UI_DATE_FORMAT) + ' - ' + holiday_description[holidays.indexOf(temp_date)] + '</b></span></h5>';
                     }
 
-                    var day_name = moment(curr_date).format('dddd');
+                    var day_name = moment(curr_date).format('YYYY-MM-DD');
                     var view_row = true;
                     if (!allow_weekend && (day_name.trim() == 'Saturday' || day_name.trim() == 'Sunday'))
                     {
@@ -948,8 +948,8 @@ $.fn.view_days = function ()
                 }
 
                 for (var j = 0; count > j; j++)
-                {
-                    $('#chk_full_' + j + '').bootstrapToggle({
+                {  
+                  /*  $('#chk_full_' + j + '').bootstrapToggle({
                         on: 'FULL',
                         off: 'HALF',
                         size: 'small'
@@ -958,7 +958,9 @@ $.fn.view_days = function ()
                         on: 'FIRST',
                         off: 'SECOND',
                         size: 'small'
-                    });
+                    });*/
+               
+                   
                 }
 
                 $.fn.avaliable_leave_info();
@@ -1140,8 +1142,8 @@ $.fn.prepare_form = function ()
                 }
             });
 
-        $('#start_date').flatpickr({ dateFormat: 'd-M-Y' });
-        $('#end_date').flatpickr({ dateFormat: 'd-M-Y' });
+        $('#start_date').flatpickr({ dateFormat: 'd-m-Y' });
+        $('#end_date').flatpickr({ dateFormat: 'd-m-Y' });
 
         $.fn.get_leave_dropdown_data();
         $.fn.get_leave_details();

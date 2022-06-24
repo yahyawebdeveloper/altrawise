@@ -53,7 +53,7 @@ $.fn.get_list = function()
 			paid			: $('#chk_is_paid').is(':checked') 	? 1 : 0,
 			unpaid			: $('#chk_is_unpaid').is(':checked') 	? 1 : 0,
 			emp_id			: SESSIONS_DATA.emp_id,
-			module_id: "133"
+			module_id       : "133"
 	 	};
         console.log(data);
 	 	$.fn.fetch_data
