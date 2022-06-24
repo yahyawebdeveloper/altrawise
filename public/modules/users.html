@@ -199,6 +199,11 @@
                                 Leaves
                             </a>
                         </li>
+                        <li class="nav-item" id="tab_work_history">
+                            <a href="#tab_wh" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                Work History
+                            </a>
+                        </li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab-detail">
@@ -1194,9 +1199,140 @@
                             </div>
                         </div>
                         <!--Leaves-->
+                        <!--Work History-->
+                        <div id="tab_wh" class="tab-pane">
+                            <form class="form-horizontal" data-validate="parsley" id="rec_detail_form">
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Department -->
+                                        <div class="row">
+                                            <label for="his_dd_dept" class="col-4 col-form-label">Department <span class="mandatory">*</span></label>
+                                            <div class="col-7 errorContainer">
+                                                <select class="form-control populate" data-toggle="select2" data-width="100%" id="his_dd_dept" required>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Tied to Client -->
+                                        <div class="row">
+                                            <label for="his_dd_client" class="col-4 col-form-label">Tied to Client <span class="mandatory">*</span></label>
+                                            <div class="col-7 errorContainer">
+                                                <select class="form-control populate" data-toggle="select2" data-width="100%" id="his_dd_client" required>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Start Date -->
+                                        <div class="row">
+                                            <label for="his_start_date" class="col-4 col-form-label">Start Date</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" id="his_start_date" class="form-control flatpickr-input" placeholder="Required" required="required">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- End Date -->
+                                        <div class="row">
+                                            <label for="his_end_date" class="col-4 col-form-label">End Date</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" id="his_end_date" class="form-control flatpickr-input" placeholder="Required" required="required">
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Join Date -->
+                                        <div class="row">
+                                            <label for="his_join_date" class="col-4 col-form-label">Join Date</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" id="his_join_date" placeholder="Required" class="form-control flatpickr-input"  required="required">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Salary -->
+                                        <div class="row">
+                                            <label for="his_txt_salary" class="col-4 col-form-label">Salary</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="number" id="his_txt_salary" placeholder="Required" class="form-control" required="required">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Increment Date -->
+                                        <div class="row">
+                                            <label for="his_increment_date" class="col-4 col-form-label">Increment Date</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" id="his_increment_date"  class="form-control flatpickr-input" >
+                                              
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Increment Amount -->
+                                        <div class="row">
+                                            <label for="his_salary" class="col-4 col-form-label">Increment Amount</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="number" id="his_txt_increment_amount" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Next Increment Date -->
+                                        <div class="row">
+                                            <label for="his_next_increment_date" class="col-4 col-form-label">Next Increment Date</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" id="his_next_increment_date"  class="form-control flatpickr-input" >
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group align-right me-4 pe-1">
+                                    
+                                    <button type="button" class="btn btn-success waves-effect waves-light" id="btn_rec_save">
+                                        <i class="fa fa-save"></i> Save
+                                    </button>
+                                </div>
+                            </form>
+                            <hr>
+                            <div class="col-sm-12">
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="tbl_receive">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Client Name</th>
+                                                <th>Department</th>
+                                                <th>Start Date</th>
+                                                <th>End Date</th>
+                                                <th>Join Date</th>
+                                                <th>Salary</th>
+                                                <th>Created By</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Work History-->
                     </div>
                     <div class="form-group align-right" id="actions_div">
-                        <button id="btn_cancel" type="button" class="btn btn-light waves-effect waves-light m-1"><i class="fa fa-times me-1"></i> Cancel</button>
                         <button id="btn_save" type="button" class="btn btn-success waves-effect waves-light mt-1 mb-1 ladda-button" data-color="green" data-style="expand-left"><i class="fa fa-check me-1"></i> Save</button>
                     </div>
                 </div>

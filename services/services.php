@@ -452,11 +452,11 @@ if(isset($_SERVER['REQUEST_METHOD']))
 		    echo add_edit_employees($param->data);
 			return;
 		}
-// 		else if($param->method === 'add_edit_employees_history')
-// 		{
-// 		    require_once constant('MODULES_DIR') 	. '/employees.php';
-// 		    echo add_edit_employees_history($param->data);
-// 		}
+ 		else if($param->method === 'add_edit_employees_history')
+ 		{
+ 		    require_once constant('MODULES_DIR') 	. '/employees.php';
+ 		    echo add_edit_employees_history($param->data);return;
+		}
 		else if($param->method === 'add_edit_employees_leave')
 		{
 		    require_once constant('MODULES_DIR') 	. '/employees.php';
@@ -469,16 +469,16 @@ if(isset($_SERVER['REQUEST_METHOD']))
 		    echo get_employees_details($param->data);
 			return;
 		}
-// 		else if($param->method === 'get_employees_his_details')
-// 		{
-// 		    require_once constant('MODULES_DIR') 	. '/employees.php';
-// 		    echo get_employees_his_details($param->data);
-// 		}
-// 		else if($param->method === 'delete_work_history')
-// 		{
-// 		    require_once constant('MODULES_DIR') 	. '/employees.php';
-// 		    echo delete_work_history($param->data);
-// 		}
+ 		else if($param->method === 'get_employees_his_details')
+ 		{
+ 		    require_once constant('MODULES_DIR') 	. '/employees.php';
+ 		    echo get_employees_his_details($param->data);return;
+ 		}
+ 		else if($param->method === 'delete_work_history')
+ 		{
+ 		    require_once constant('MODULES_DIR') 	. '/employees.php';
+ 		    echo delete_work_history($param->data);return;
+ 		}
 		else if($param->method === 'delete_leave')
 		{
 			require_once constant('MODULES_DIR') 	. '/employees.php';

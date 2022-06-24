@@ -62,9 +62,9 @@ function get_employee_list($params)
             "cms_employees.id
             , cms_employees.employee_no
             , cms_employees.name
-			, IFNULL(JSON_UNQUOTE(cms_employees.json_field->'$.designation'),'') as designation
+			, IFNULL(JSON_UNQUOTE(JSON_EXTRACT(cms_employees.json_field,'$.designation')),'') as designation
 			, concat('" . constant('UPLOAD_DIR_URL') . "', 'photos/',cms_employees.id,'/',cms_employees.id,'.jpeg') as profile_pic
-            , IFNULL(JSON_UNQUOTE(cms_employees.json_field->'$.malaysia_phone'),'') as malaysia_phone
+            , IFNULL(JSON_UNQUOTE(JSON_EXTRACT(cms_employees.json_field,'$.malaysia_phone')),'') as malaysia_phone
             , cms_employees.email
 			, cms_employees.office_email
             , cms_employees.username
@@ -126,7 +126,7 @@ function get_employee_history_list($params)
             , cms_employees_work_history.emp_id
             , cms_employees.name
             , (select descr from cms_master_list where cms_master_list.id = cms_employees_work_history.dept_id) as department
-            , cms_employees_work_history.join_date
+            , date_format(cms_employees_work_history.join_date,'" . constant('UI_DATE_FORMAT') .  "') as join_date
             , (select descr from cms_master_list where cms_master_list.id = cms_employees_work_history.client_id) as client_name
             , date_format(cms_employees_work_history.work_start_date,'" . constant('UI_DATE_FORMAT') .  "') as work_start_date
             , date_format(cms_employees_work_history.work_end_date,'" . constant('UI_DATE_FORMAT') .  "') as work_end_date
@@ -527,7 +527,7 @@ function get_employees_details($params)
         cms_employees.id
         , cms_employees.employee_no
         , cms_employees.name
-		, date_format(IFNULL(cms_employees.json_field->'$.dob',''),'" . constant('UI_DATE_FORMAT') .  "') as dob
+		,date_format(IFNULL(JSON_UNQUOTE(JSON_EXTRACT(cms_employees.json_field,'$.dob')),''),'" . constant('UI_DATE_FORMAT') .  "') as dob
         , cms_employees.employer_id
 		, cms_employees.email
 		, cms_employees.office_email
@@ -537,24 +537,24 @@ function get_employees_details($params)
 		, cms_employees.dept_id
 		, cms_employees.reporting_to_id
 		, cms_employees.contract_no
-        , date_format(IFNULL(cms_employees.json_field->'$.work_start_date',''),'" . constant('UI_DATE_FORMAT') .  "') as work_start_date
-        , date_format(IFNULL(cms_employees.json_field->'$.work_end_date',''),'" . constant('UI_DATE_FORMAT') .  "') as work_end_date
-        , date_format(IFNULL(cms_employees.json_field->'$.ep_valid_till',''),'" . constant('UI_DATE_FORMAT') .  "') as ep_valid_till
-		, date_format(IFNULL(cms_employees.json_field->'$.marriage_date',''),'" . constant('UI_DATE_FORMAT') .  "') as marriage_date
+        , date_format(IFNULL(JSON_UNQUOTE(JSON_EXTRACT(cms_employees.json_field,'$.work_start_date')),''),'" . constant('UI_DATE_FORMAT') .  "') as work_start_date
+        , date_format(IFNULL(JSON_UNQUOTE(JSON_EXTRACT(cms_employees.json_field,'$.work_end_date')),''),'" . constant('UI_DATE_FORMAT') .  "') as work_end_date
+        , date_format(IFNULL(JSON_UNQUOTE(JSON_EXTRACT(cms_employees.json_field,'$.ep_valid_till')),''),'" . constant('UI_DATE_FORMAT') .  "') as ep_valid_till
+		, date_format(IFNULL(JSON_UNQUOTE(JSON_EXTRACT(cms_employees.json_field,'$.marriage_date')),''),'" . constant('UI_DATE_FORMAT') .  "') as marriage_date
 		, cms_employees.super_admin
 		, cms_employees.is_active
 		, concat('" . constant('UPLOAD_DIR_URL') . "', 'photos/',id,'/',id,'.jpeg') as profile_pic
-		, date_format(IFNULL(cms_employees.json_field->'$.leaving_date',''),'" . constant('UI_DATE_FORMAT') .  "') as leaving_date
+		, date_format(IFNULL(JSON_UNQUOTE(JSON_EXTRACT(cms_employees.json_field,'$.leaving_date')),''),'" . constant('UI_DATE_FORMAT') .  "') as leaving_date
 		, cms_employees.created_by
 		, cms_employees.contract_no as emp_contract_no
 		, (select a.name from cms_employees a where a.id = cms_employees.reporting_to_id) as reporting_to_name
         , (select cms_master_employer.employer_name from cms_master_employer where cms_master_employer.id = cms_employees.employer_id) as employer_name
 		, (select cms_master_list.descr from cms_master_list where cms_master_list.id = cms_employees.dept_id) as dept_name
-		, (select cms_master_list.descr from cms_master_list where cms_master_list.id = JSON_UNQUOTE(cms_employees.json_field->'$.notice_period')) as notice_period
-		, (select cms_country.name from cms_country where cms_country.id = JSON_UNQUOTE(cms_employees.json_field->'$.nationality')) as nationality_descr
-		, (select cc.name from cms_country cc where cc.id = JSON_UNQUOTE(cms_employees.json_field->'$.home_country')) as home_country_descr
-		, (select group_concat(cms_skills.skills_name) from cms_skills where FIND_IN_SET(cms_skills.id,(JSON_UNQUOTE(cms_employees.json_field->'$.general_skills')))) as general_skills_descr
-		, (select group_concat(cms_skills.skills_name) from cms_skills where FIND_IN_SET(cms_skills.id,(JSON_UNQUOTE(cms_employees.json_field->'$.specific_skills')))) as specific_skills_descr
+		, (select cms_master_list.descr from cms_master_list where cms_master_list.id = JSON_UNQUOTE(JSON_EXTRACT(cms_employees.json_field,'$.notice_period'))) as notice_period
+		, (select cms_country.name from cms_country where cms_country.id = JSON_UNQUOTE(JSON_EXTRACT(cms_employees.json_field,'$.nationality'))) as nationality_descr
+		, (select cc.name from cms_country cc where cc.id = JSON_UNQUOTE(JSON_EXTRACT(cms_employees.json_field,'$.home_country'))) as home_country_descr
+		, (select group_concat(cms_skills.skills_name) from cms_skills where FIND_IN_SET(cms_skills.id,(JSON_UNQUOTE(JSON_EXTRACT(cms_employees.json_field,'$.general_skills'))))) as general_skills_descr
+		, (select group_concat(cms_skills.skills_name) from cms_skills where FIND_IN_SET(cms_skills.id,(JSON_UNQUOTE(JSON_EXTRACT(cms_employees.json_field,'$.specific_skills'))))) as specific_skills_descr
 		, cms_employees.json_field
 		",
         "cms_employees",
@@ -566,7 +566,7 @@ function get_employees_details($params)
         $params->start_index 	= 0;
         $params->limit 		 	= 50;
         $params->emp_id 		= $id;
-        // $rs['work_list']     	= json_decode(get_employee_history_list($params))->data->list;
+        $rs['work_list']     	= json_decode(get_employee_history_list($params))->data->list;
 
 		
         $start_index			= 0;

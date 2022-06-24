@@ -7,15 +7,269 @@
  */
 var RECORD_INDEX 	= 0;
 var upload_section 	= '';
-var btn_save; EMP_ID = '';
+var btn_save = EMP_ID = EMP_HIS_ID = '';
 var btn_leave_save; EMP_LEAVE_ID = '';
+
+var btn_rec_save;
 var btn_test_email;
 var BACKUP_SESSION = '';
 var CODE_TRIGGERED = false;
 var p_status = '';
 var pid = "";
 var flatpickerEndTime, flatpickerEndTime = '';
+$.fn.delete_work_history = function (data)
+{
+	try
+	{
+		data = JSON.parse(data);
+		if (data.id == '')
+		{
+			$.fn.show_right_error_noty('Work History ID cannot be empty');
+			return;
+		}
 
+		var data =
+		{
+			id: data.id,
+			emp_id: data.emp_id,
+			emp_session_id: SESSIONS_DATA.emp_id
+		};
+
+		bootbox.confirm
+			({
+				title: "Delete Confirmation",
+				message: "Please confirm before you delete.",
+				buttons:
+				{
+					cancel:
+					{
+						label: '<i class="fa fa-times"></i> Cancel'
+					},
+					confirm:
+					{
+						label: '<i class="fa fa-check"></i> Confirm'
+					}
+				},
+				callback: function (result)
+				{
+					if (result == true)
+					{
+						$.fn.write_data
+							(
+								$.fn.generate_parameter('delete_work_history', data),
+								function (return_data)
+								{
+									if (return_data)
+									{
+										$('#tbl_leave > tbody').empty();
+										$.fn.populate_history_list_form(return_data.data.list, true);
+										$.fn.show_right_success_noty('Data has been deleted successfully');
+									}
+
+								}, false
+							);
+					}
+				}
+			});
+	}
+	catch (err)
+	{
+		$.fn.log_error(arguments.callee.caller, err.message);
+	}
+};
+
+function GetDate(str) {
+  var arr = str.split("-");
+  var months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  var i = 1;
+  for (i; i <= months.length; i++) {
+    if (months[i] == arr[1]) {
+      break;
+    }
+  }
+
+  var formatddate = i + 1 + "/" + arr[0] + "/" + arr[2];
+  return formatddate;
+}
+$.fn.populate_his_detail_form = function (data)
+{
+	try
+	{
+		var data = JSON.parse(data);
+		$('#btn_rec_save').html('<i class="fa fa-edit"></i> Update');
+		$.fn.fetch_data
+			(
+				$.fn.generate_parameter('get_employees_his_details', { id: data.id }),
+				function (return_data)
+				{
+					if (return_data.data)
+					{
+						var data = return_data.data[0];
+						EMP_HIS_ID = data.id;
+						console.log(data);
+						$('#his_dd_dept').val(data.dept_id).change();
+						$('#his_dd_client').val(data.client_id).change();
+						
+						let date1 = GetDate(data.work_start_date);
+						date1 = new Date(date1);
+						$('#his_start_date').flatpickr({dateFormat: "d-M-Y",}).setDate(date1);
+						
+						 date1 = GetDate(data.work_end_date);
+						date1 = new Date(date1);
+						$('#his_end_date').flatpickr({dateFormat: "d-M-Y",}).setDate(date1);
+						
+						 date1 = GetDate(data.join_date);
+						date1 = new Date(date1);
+						$('#his_join_date').flatpickr({dateFormat: "d-M-Y",}).setDate(date1);
+						
+						$('#his_txt_salary').val(data.salary);
+						
+						 date1 = GetDate(data.increment_date);
+						date1 = new Date(date1);
+						$('#his_increment_date').flatpickr({dateFormat: "d-M-Y",}).setDate(date1);
+						$('#his_txt_increment_amount').val(data.increment_amount);
+						
+						 date1 = GetDate(data.next_increment_date);
+						date1 = new Date(date1);
+						$('#his_next_increment_date').flatpickr({dateFormat: "d-M-Y",}).setDate(date1);
+					}
+				}, true
+			);
+
+
+	}
+	catch (err)
+	{
+		$.fn.log_error(arguments.callee.caller, err.message);
+	}
+};
+// Work History Form
+$.fn.populate_history_list_form = function (data, is_scroll)
+{
+	try
+	{
+		console.log(data);
+		if (data) // check if there is any data, precaution
+		{
+			if (is_scroll == false)
+			{
+				$('#tbl_receive > tbody').empty();
+			}
+
+			var row = '';
+			var data_val = '';
+			for (var i = 0; i < data.length; i++)
+			{
+				var end_date = '-';
+				var join_date = '-';
+				var salary = '-';
+
+				if (data[i].work_end_date != null)
+				{
+					end_date = data[i].work_end_date;
+				}
+				if (data[i].join_date != null)
+				{
+					join_date = data[i].join_date;
+				}
+				if (data[i].salary != null && data[i].salary != '0')
+				{
+					salary = data[i].salary;
+				}
+
+				data_val = escape(JSON.stringify(data[i])); //.replace(/'/,"");
+				row += `<tr>
+					<td>
+						<a class="action-icon" href="javascript:void(0)" data-value='${data_val}' onclick="$.fn.delete_work_history(unescape($(this).attr('data-value')))" data-trigger="hover" data-original-title="Delete data "><i class="mdi mdi-trash-can-outline"/></i></a> 
+						
+						<a class="action-icon" href="javascript:void(0)" data-value='${data_val}' onclick="$.fn.populate_his_detail_form(unescape($(this).attr('data-value')))" data-trigger="hover" data-original-title="Edit data "><i class="mdi mdi-square-edit-outline"/></i></a>
+					</td>
+						<td>${data[i].client_name}</td>
+						<td>${data[i].department}</td>
+						<td>${data[i].work_start_date}</td>
+						<td>${end_date}</td>
+						<td>${join_date}</td>
+						<td>${salary}</td>
+						<td>${data[i].created_by}</td>
+					</tr>`;
+
+			}
+			$('#tbl_receive tbody').html(row);
+			$('.back-to-top-badge').removeClass('back-to-top-badge-visible');
+		}
+		else
+		{
+			$('#tbl_receive tbody').html('');
+		}
+	}
+	catch (err)
+	{
+		$.fn.log_error(arguments.callee.caller, err.message);
+	}
+};
+// Work History Form
+$.fn.save_edit_wh_form = function ()
+{
+	try
+	{
+		if ($('#rec_detail_form').parsley().validate() == false)
+		{
+			btn_rec_save.stop();
+			return;
+		}
+
+
+		var data =
+		{
+			id: EMP_HIS_ID,
+			dept_id: $('#his_dd_dept').val(),
+			client_id: $('#his_dd_client').val(),
+			work_start_date: $('#his_start_date').val(),
+			work_end_date: $('#his_end_date').val(),
+			join_date: $('#his_join_date').val(),
+			salary: $('#his_txt_salary').val(),
+			increment_date: $('#his_increment_date').val(),
+			increment_amount: $('#his_txt_increment_amount').val(),
+			next_increment_date: $('#his_next_increment_date').val(),
+			emp_id: EMP_ID,
+			emp_session_id: SESSIONS_DATA.emp_id
+		};
+
+		$.fn.write_data
+			(
+				$.fn.generate_parameter('add_edit_employees_history', data),
+				function (return_data)
+				{
+					if (return_data.data)
+					{
+						$.fn.reset_form('his_form');
+						$.fn.populate_history_list_form(return_data.data.list, true);
+						$.fn.show_right_success_noty('Data has been recorded successfully');
+					}
+
+				}, false, btn_rec_save
+			);
+	}
+	catch (err)
+	{
+		console.log(err);
+		$.fn.log_error(arguments.callee.caller, err.message);
+	}
+};
+// Work History Form
 $(window).on('beforeunload', function ()
 {
 	// Temporary disable
@@ -86,6 +340,36 @@ $.fn.reset_form = function(form)
 			$('#dd_client_search').val('').change();
 			$('#dd_created_by_search').val('').change();
 			$('#txt_email_search').val('');
+		}
+		else if (form == 'his_form')
+		{
+			$('#his_dd_dept').val('0').change();
+			$('#his_dd_client').val('0').change();
+			$('#his_start_date').val('');
+			$('#his_end_date').val('');
+			$('#his_join_date').val('');
+			$('#his_txt_salary').val('');
+			$('#his_increment_date').val('');
+			$('#his_txt_increment_amount').val('');
+			$('#his_next_increment_date').val('');
+			EMP_HIS_ID = '';
+			$('#btn_rec_save').html('<i class="fa fa-save"></i> Save');
+
+			$('#rec_detail_form').parsley('destroy');
+			$('#rec_detail_form').parsley
+				({
+					successClass: 'has-success',
+					errorClass: 'has-error',
+					errors:
+					{
+						classHandler: function (el)
+						{
+							return $(el).closest('.form-group');
+						},
+						errorsWrapper: '<ul class=\"help-block list-unstyled\"></ul>',
+						errorElem: '<li></li>'
+					}
+				});
 		}
 		else if(form == 'form')
 		{
@@ -258,7 +542,7 @@ $.fn.populate_detail_form = function (data)
 	{
 		data = JSON.parse(data);
 		$.fn.show_hide_form('EDIT', true);
-		// $.fn.reset_form('his_form');
+		$.fn.reset_form('his_form');
 		$.fn.reset_form('leave_form');
 		// $.fn.reset_form('asset_form');
 		// $.fn.reset_form('track_form');
@@ -462,7 +746,8 @@ $.fn.populate_detail_form = function (data)
 						{
 							$('#leave_div').show();
 						}
-					// 	$.fn.populate_history_list_form(return_data.data.work_list, true);
+						console.log(return_data.data);
+						$.fn.populate_history_list_form(return_data.data.work_list, true);
 					// 	$.fn.populate_leave_list_form(return_data.data.leave_list, true);
 					// 	$.fn.populate_asset_list_form(return_data.data.asset_list, true);
 					// 	$.fn.populate_attachment_list_form(return_data.data.documents, 1);
@@ -713,12 +998,12 @@ $.fn.get_initial_data = function ()
 						$.fn.populate_dd('applicable_year', return_data.data.years);
 						$.fn.populate_dd('dd_created_by_search', return_data.data.created_by, false);
 						$.fn.populate_dd('dd_department', return_data.data.dept);
-						// $.fn.populate_dd('his_dd_dept', return_data.data.dept);
+						$.fn.populate_dd('his_dd_dept', return_data.data.dept);
 						$.fn.populate_dd('dd_sex', return_data.data.sex);
 						$.fn.populate_dd('dd_notice_period', return_data.data.notice_period);
 						$.fn.populate_dd('leave_type', return_data.data.leave_type);
 						$.fn.populate_dd('dd_employer', return_data.data.employer);
-						// $.fn.populate_dd('his_dd_client', return_data.data.client);
+						$.fn.populate_dd('his_dd_client', return_data.data.client);
 						$.fn.populate_dd('dd_client_search', return_data.data.client, false);
 						$.fn.populate_dd('dd_reporting_to', return_data.data.reporting_to);
 						$.fn.populate_dd('dd_general_skills', return_data.data.skills_general, true, false, false);
@@ -1600,15 +1885,15 @@ $.fn.populate_leave_list_form = function (data, is_scroll)
 			for (var i = 0; i < data.length; i++)
 			{
 				data_val = escape(JSON.stringify(data[i])); //.replace(/'/,"");
-				row += '<tr>' +
-					'<td><a class="tooltips" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.delete_leave(unescape($(this).attr(\'data-value\')))" data-trigger="hover" data-original-title="Delete data "><i class="fa fa-trash-o"/></a></td>' +
-					'<td>' + data[i].name + '</td>' +
-					'<td>' + data[i].leave_type + '</td>' +
-					'<td>' + data[i].no_of_days + '</td>' +
-					'<td>' + data[i].brought_forward + '</td>' +
-					'<td>' + data[i].applicable_year + '</td>' +
-					'<td>' + data[i].created_by + '</td>' +
-					'</tr>';
+				row += `<tr>
+					<td><a class="tooltips" href="javascript:void(0)" data-value="${data_val}" onclick="$.fn.delete_leave(unescape($(this).attr('data-value')))" data-trigger="hover" data-original-title="Delete data "><i class="mdi mdi-trash-can-outline"/></a></td>
+					<td>${data[i].name}</td>
+					<td>${data[i].leave_type}</td>
+					<td>${data[i].no_of_days}</td>
+					<td>${data[i].brought_forward}</td>
+					<td>${data[i].applicable_year}</td>
+					<td>${data[i].created_by}</td>
+				</tr>`;
 
 			}
 			$('#tbl_leave tbody').html(row);
@@ -2032,7 +2317,7 @@ $.fn.prepare_form = function()
 			#increment_date,#next_increment_date,
 			#leave_date,#his_join_date,#his_start_date,#his_end_date,
 			#his_increment_date,#his_next_increment_date,
-			#st_start_date,#st_end_date`).flatpickr({  
+			#st_start_date,#st_end_date,#his_start_date,#his_end_date,#his_join_date,#his_increment_date,#his_next_increment_date`).flatpickr({  
 				altInput: true,
 				altFormat: "d-M-Y",
 				dateFormat: "Y-m-d",
@@ -2087,6 +2372,18 @@ $.fn.prepare_form = function()
 			}
 		);
 		
+		//validation - Work history form
+		$('#rec_detail_form').parsley(
+			{
+				classHandler: function(parsleyField) {              
+					return parsleyField.$element.closest(".errorContainer");
+				},
+				errorsContainer: function(parsleyField) {              
+					return parsleyField.$element.closest(".errorContainer");
+				},
+			}
+		);
+		
 		//switchery
 		let elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
 		$('.js-switch').each(function () 
@@ -2129,6 +2426,13 @@ $.fn.bind_command_events = function()
 {	
 	try
 	{	
+		$('#btn_rec_save').click(function (e)
+		{
+			e.preventDefault();
+			btn_rec_save = Ladda.create(this);
+			btn_rec_save.start();
+			$.fn.save_edit_wh_form();
+		});
 		$('#chk_is_active').change(function (e)
 		{
 			if ($("#chk_is_active").is(":checked")) 
