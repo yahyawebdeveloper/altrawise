@@ -79,8 +79,19 @@ $.fn.get_faq_approval_list = function()
 					for(var i = 0; i < data.length; i++)
 					{
 						$.fn.populate_fileupload(data[i],'faq_list_'+i);
+						
 					}
 					$('#total_faq_approvals').html(data.length);
+				} else
+				{
+					$("#tbl_approver_list").append
+					(
+						`<tr>
+							<td colspan="5">
+								<div class='list-placeholder' >No Records Found</div>
+							</td>
+						</tr>`
+					);
 				}
 			},true
 		);

@@ -169,7 +169,17 @@ $.fn.populate_faq_list_report = function(data)
 			}
 			$('#tbl_faq_report > tbody').html(row);
 			$('#total_faq_report').html(data.length);
-		}
+		} else
+        {
+            $("#table_pic_list").append
+            (
+                `<tr>
+                    <td colspan="5">
+                        <div class='list-placeholder' >No Records Found</div>
+                    </td>
+                </tr>`
+            );
+        }
         
  
 	}

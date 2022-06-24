@@ -1145,7 +1145,7 @@ $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
     try
     {
 		$('#dd_employee').empty();
-		$('#dd_employee').append(`<option value="">All</option>`);
+		$('#dd_employee').append(`<option value="">Please Select</option>`);
 		 for (let item of dd_data.emp)
         {
             $('#dd_employee').append(`<option 
@@ -1155,7 +1155,7 @@ $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
                                                );
         }
         $('#dd_leave_type').empty();
-		$('#dd_leave_type').append(`<option value="">All</option>`);
+		$('#dd_leave_type').append(`<option value="">Please Select</option>`);
         for (let item of dd_data.leave_type)
         {
             $('#dd_leave_type').append(`<option 
@@ -1178,7 +1178,7 @@ $.fn.prepare_form = function ()
 {
 	try
 	{
-		//('.populate').select2({ placeholder: "Please Select" });
+		$('.populate').select2();
 		$('#detail_form').parsley
 			({
 				successClass: 'has-success',

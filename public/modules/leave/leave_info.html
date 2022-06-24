@@ -13,6 +13,7 @@
 <!-- third party css end -->
 <style>
     .file-upload.alert-light  { background:none !important;border:0cm !important;}
+   
 </style>
 <div class="row" id="list_div">
     <!-- start page title -->
@@ -54,7 +55,7 @@
                                 <div class="row">
                                     <label for="employee" class="col-4 col-form-label">Employee</label>
                                     <div class="col-7 errorContainer">
-                                            <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_employee" required>
+                                            <select class="form-select populate"  data-width="100%" id="dd_employee" required>
                                                 <option value="">Please Select</option>
                                             </select>
                                     </div>
@@ -79,7 +80,7 @@
                                 <div class="row">
                                     <label for="doc_date" class="col-4 col-form-label">Date &nbsp;&nbsp; <input type="checkbox" id="chk_is_date" name="chk_is_date" checked></label>
                                     <div class="col-7 errorContainer" id="date_container">
-                                        <input type="text" id="doc_date" class="form-control flatpickr-input" placeholder="2018-10-03 to 2018-10-10" readonly="readonly">
+                                        <input type="text" id="doc_date" class="form-control flatpickr-input" placeholder="2022-05-01 to 2022-06-01" readonly="readonly">
                                         <input type="hidden" id="from_date">
                                         <input type="hidden" id="to_date">
                                     </div>
@@ -168,9 +169,9 @@
                  <!-- start page title -->
                 <div class="row mt-3 mb-1">
                     <div class="col-12">
-                        <div class="page-title-box">
-                            <h4 class="page-title"><i class="fas fa-exchange-alt"></i> Leave </h4>
-                            <div class="page-title-right">
+                        <div class="page-title-box header-with-backBtn">
+                            <h4 class="page-title" style="float:left"><i class="fas fa-exchange-alt"></i> Leave </h4>
+                            <div class="mt-3" style="float:right">
                                 <a href="javascript:void(0);" id="btn_info_back" class="btn btn-secondary mb-2"><i class="fe-arrow-left me-1"></i>Back</a>
                             </div>
                         </div>

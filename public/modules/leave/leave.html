@@ -10,8 +10,10 @@
 <!-- <link href="assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" /> -->
 <link href="assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
 <link href="./assets/libs/jquery-fileupload/css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
+<link rel='stylesheet'  href='./assets/plugins/bootstrap-toggle/css/bootstrap-toggle.min.css?v=6.6.1' /> 
 <style>
     .file-upload.alert-light  { background:none !important;border:0cm !important;}
+    .ladda-button{background:#1abc9c !important;}
 </style>
 <div class="row"  id="page-content"> <!-- start page title -->
     
@@ -28,7 +30,7 @@
     <div id='wrap'>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12" style="display:none;">
+                <div class="col-md-12" style="display:block;">
                     <div class="panel panel-primary">
                         <div class="panel-body">
 
@@ -55,7 +57,7 @@
                                         <div class="row">
                                             <label for="validationCustom02" class="col-4 col-form-label">Leave Type </label>
                                             <div class="col-7 errorContainer">
-                                                <select id="dd_leave_type" style="width:100%" class="form-select"  onchange="$.fn.view_file_status(this.value)" required>
+                                                <select id="dd_leave_type" style="width:100%" class="form-select populate "  onchange="$.fn.view_file_status(this.value)" required>
                                               
                                                 </select>
                                             </div>
@@ -79,7 +81,7 @@
                                             <div class="col-7 errorContainer">
                                                 <div class="input-group" data-placement="top" data-align="top" data-autoclose="true">
                                                     <input type="text" class="form-control flatpickr-input" id="start_date" placeholder="dd-mm-yyyy" readonly="readonly" required>
-                                                    <!--<div class="input-group-text"><i class="mdi mdi-calendar"></i></div>-->
+                                                    <div class="input-group-text"><i class="mdi mdi-calendar"></i></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -92,7 +94,7 @@
                                             <div class="col-7 errorContainer">
                                                 <div class="input-group" data-placement="top" data-align="top" data-autoclose="true">
                                                     <input type="text" class="form-control flatpickr-input" id="end_date" placeholder="dd-mm-yyyy" readonly="readonly" required>
-                                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                    <div class="input-group-text"><i class="mdi mdi-calendar"></i></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -123,7 +125,7 @@
                                                 </span>
                                                 <br/>
                                             </div>
-                                            <div id="files1" class="col-sm-5 col-sm-offset-7"></div>
+                                            <div id="files1" class="col-sm-12 col-sm-offset-7"></div>
                                         </div>
                                        
                                     </div>
@@ -203,7 +205,7 @@
                                                 </span>
                                                 <br/>
                                             </div>
-                                            <div id="files" class="col-sm-5 col-sm-offset-7"></div>
+                                            <div id="files" class="col-sm-11 col-sm-offset-7" style="margin-top:10px;"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -213,8 +215,8 @@
 
                                             <div class="pull-right">
                                                 <div class="col-sm-12" style="text-align:right">
-                                                    <button type="button" class="btn btn-success waves-effect waves-light mb-2"  id="btn_view_days">View Leave Days</button>
-                                                    <button type="button" class="btn btn-success waves-effect waves-light mb-2 "  id="btn_save_time_off"><i class="fa fa-save"></i> Save</button>
+                                                    <button type="button" class="btn btn-success"  id="btn_view_days">View Leave Days</button>
+                                                    <button type="button" class="btn btn-success waves-effect waves-light mb-2 "  id="btn_save_time_off"><i class="fa fa-save"></i> Save1</button>
                                                 </div>
                                             </div>
 
@@ -234,7 +236,8 @@
                                         </tr>
                                         </tbody>
                                     </table>
-									<div class="col-sm-9">
+                                    <div class="row">
+									<div class="col-sm-8">
                                         <table id="tbl_days" width="100%" class="table table-hover table-condensed">
                                             <thead>
                                                 <th><input type="checkbox" id="chk_all" name="chk_all" onchange="$.fn.change_balance_leave('all')"></th>
@@ -248,7 +251,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-4">
                                     	<div class="alert alert-info">
                                     		<h3>Public Holidays</h3>
                                             <p id="div_holidays">
@@ -257,12 +260,12 @@
                                             <a href="https://www.onestopmalaysia.com/holidays-<?php echo(date('Y')); ?>.html" target="_blank">Click here</a> to view all the public holidays.
                                        </div>
                                     </div>
-
+                                    </div>
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <div class="pull-right">
-                                                <div class="btn-toolbar" style="text-align:right">
-                                                    <button type="button" class="btn btn-primary-alt ladda-button" data-style="expand-left" data-spinner-color="#000000" id="btn_add_leave"><i class="fa fa-save"></i> Save</button>
+                                                <div class="btn-toolbar col-sm-12" style="text-align:right">
+                                                    <button type="button" class="btn btn-primary-alt ladda-button" data-style="expand-left" data-spinner-color="#000000" id="btn_add_leave"><i class="fa fa-save"></i> Save2</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -403,4 +406,5 @@
 <script src="./assets/js/jspdf/plugins/jspdf.min.js"></script>
 <script src="./assets/js/jspdf/plugins/jspdf.plugin.autotable.js"></script>
 <script src="./assets/js/jspdf/exportpdf.js"></script>
+<script  src='./assets/plugins/bootstrap-toggle/js/bootstrap-toggle.min.js?v=6.6.1'></script> 
 <!-- third party js ends -->

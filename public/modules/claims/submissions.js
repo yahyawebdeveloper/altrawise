@@ -69,9 +69,10 @@ $.fn.reset_form = function (form)
             DOC_NO = '';
             CLIENT_ID = '';
 			$('#dd_category').val('').change();
-			$('#txt_remarks').val('');
-			$flatpickr = $("#doc_date").flatpickr();
-			$flatpickr.clear();
+			$('#txt_remarks').val(''); 
+			$(".flatpickr-input").val('');
+			//$flatpickr =
+			//$flatpickr.clear();
 			$('#detail_form').parsley().destroy();
 			$('#timesheet_from_date').val('');
 			$('#timesheet_to_date').val('');
@@ -136,24 +137,25 @@ $.fn.populate_list_form = function (data, is_scroll)
 						if (data[i].verified == 0)
 						{
 							data_val_check = escape(JSON.stringify(data[i].attachment[j]));
-							btn_delete = `<a href class="delete btn btn-outline-danger btn-xs waves-effect waves-light" data-id="`+data[i].doc_no+`" data-value="`+data_val_check+`">
+							btn_delete = `<a href class="delete btn btn-outline-danger btn-xs waves-effect waves-light" data-id="`+data[i].doc_no+`" title="Delete file" data-value="`+data_val_check+`">
 											<i class="fas fa-trash-alt" aria-hidden="true" title="Delete file"></i>
 										  </a> `;
 						}
 
 						let func = `$.fn.open_page('`+data[i].attachment[j].id+`','`+CURRENT_PATH+`download.php')`;
-						btn_attachment += btn_delete+`<a href="javascript:void(0)" class="link-view-file btn btn-outline-info btn-xs waves-effect waves-light" onclick="${func}"><i class="fas fa-image"/></a>`;
+						btn_attachment += btn_delete+`<a href="javascript:void(0)" title="View file" class="link-view-file btn btn-outline-info btn-xs waves-effect waves-light" onclick="${func}"><i class="fas fa-image"/></a>`;
 					}
 				}
 				row += btn_attachment;
 				
-			row += '</td><td>' + data[i].doc_no + '</td>' +
-					'<td>' + data[i].doc_date + '</td>' +
-					'<td>' + data[i].descr + '</td>' +
-					'<td>' + data[i].remarks + '</td>' +
-					'<td>' + data[i].status + '</td>' +
-					'<td><a class="btn btn-outline-primary btn-xs waves-effect waves-light"" data-toggle="tooltip" data-placement="left" title="View Comments" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.view_remark(unescape($(this).attr(\'data-value\')))"><i class="fas fa-external-link-alt"></i></a></td>' +
-					'</tr>';
+			row += `</td><td>${data[i].doc_no}</td>
+					<td>${data[i].doc_date}</td>
+					<td>${data[i].descr}</td>
+					<td>${data[i].remarks}</td>
+					<td>${data[i].status}</td>
+					<td><a class="btn btn-outline-primary btn-xs waves-effect waves-light"" data-toggle="tooltip" data-placement="left" title="View Comments" href="javascript:void(0)" data-value='${data_val}' onclick="$.fn.view_remark(unescape($(this).attr(\'data-value\')))"><i class="fas fa-external-link-alt"></i></a></td>
+					</tr>`;
+			
 			}
 			$('#tbl_list tbody').append(row);
 			$('.load-more').show();
@@ -216,13 +218,11 @@ $.fn.populate_remark_list_form = function (data)
 			for (var i = 0; i < data.length; i++)
 			{
 				data_val = escape(JSON.stringify(data[i]));
-
-				row += '<tr>' +
-					'<td>' + data[i].doc_remarks + '</td>' +
-					'<td>' + data[i].created_by + '</td>' +
-					'<td>' + data[i].created_date + '</td>' +
-					'<td>' + data[i].action + '</td>';
-				row += '</tr>';
+				row += `<tr><td>${data[i].doc_remarks}</td>
+					<td>${data[i].created_by}</td>
+					<td>${data[i].created_date}</td>
+					<td>${data[i].action}</td>
+					</tr>`;
 
 			}
 			$('#tbl_remark_list tbody').html(row);
@@ -253,20 +253,16 @@ $.fn.populate_leave_list_form = function (data)
 			for (var i = 0; i < data.length; i++)
 			{
 				data_val = JSON.stringify(data[i]); //.replace(/'/,"");
-
-				row += '<tr>' +
-					'<td>' + data[i].dd_leaves + '</td>' +
-					'<td>' + data[i].leave_from_date + '</td>' +
-					'<td>' + data[i].leave_to_date + '</td>' +
-					'<td>' + data[i].leave_days + '</td>' +
-					'<td>' +
-					'<button type="button" class="btn btn-primary rotate-45 btn_reference"' +
-					'onClick="$.fn.delete_leave(this);"' +
-					' data=\'' + data_val + '\'>' +
-					'<i class="fa fa-plus fa-fw" aria-hidden="true"></i>' +
-					'</button>' +
-					'</td>' +
-					'</tr>';
+				row += `<tr><td>${data[i].dd_leaves}</td>
+				<td>${data[i].leave_from_date}</td>
+				<td>${data[i].leave_to_date}</td>
+				<td>${data[i].leave_days}</td>
+				<td><button type="button" class="btn btn-primary rotate-45 btn_reference"' +
+				'onClick="$.fn.delete_leave(this);"' +
+				' data='${data_val}'>' +
+				'<i class="fa fa-plus fa-fw" aria-hidden="true"></i>' +
+				'</button></td>
+				</tr>`;
 			}
 			$('#base_row_leave').before(row);
 		}
@@ -420,7 +416,7 @@ $.fn.save_form = function ()
 			category_search_id: $('#dd_search_category').val(),
 			from_date: $('#from_search_date').val(),
 			to_date: $('#to_search_date').val(),
-			doc_date:  $('#doc_date').val(),
+			doc_date:  moment($('#doc_date').val(), 'DD-MM-YYYY'),
 			category_id: $('#dd_category').val(),
 			category_name: $('#dd_category option:selected').text(),
 			remarks: $('#txt_remarks').val(),
@@ -446,8 +442,8 @@ $.fn.save_form = function ()
 
 		if ($('#dd_category').val() == 103)
 		{
-			data.timesheet_from_date = moment($('#timesheet_from_date').val(), UI_DATE_FORMAT);
-			data.timesheet_to_date = moment($('#timesheet_to_date').val(), UI_DATE_FORMAT);
+			data.timesheet_from_date = moment($('#timesheet_from_date').val(), 'DD-MM-YYYY');
+			data.timesheet_to_date = moment($('#timesheet_to_date').val(), 'DD-MM-YYYY');
 
 			let ts_inputs = $(".btn_addleaves");
 			for (let i = 0; i < ts_inputs.length; i++)
@@ -703,7 +699,7 @@ $.fn.set_file_name = function (filename)
 	try 
 	{
 		let category = Number($('#dd_category').val());
-		let doc_date = moment($('#doc_date').val(), 'DD-MMM-YYYY');
+		let doc_date = moment($('#doc_date').val(), 'DD-MM-YYYY');
 		let doc_ext = filename.split('.').pop();
 		let name = SESSIONS_DATA.name.trim();
 		let new_name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
@@ -750,7 +746,7 @@ $.fn.prepare_form = function ()
 
 		$('#doc_date,#timesheet_from_date,#timesheet_to_date,#leave_from_date,#leave_to_date').flatpickr({ 
             altInput: true,
-            altFormat: "d-M-Y",
+            altFormat: "d-m-Y",
             dateFormat: "d-m-Y",
         });
 
