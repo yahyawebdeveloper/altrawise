@@ -11,7 +11,9 @@
 <link href="assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
 <link href="./assets/libs/jquery-fileupload/css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
 <!-- third party css end -->
-
+<style>
+    .datepicker-dropdown{ z-index:99999 !important;}
+</style>
 <!-- List Block -->
 <div class="row" id="view-list">
     <!-- start page title -->
@@ -87,9 +89,9 @@
                         <table class="table table-centered table-striped w-100"  id="tbl_list">
                             <thead>
                                 <tr>
-                                    <th width="10%">#</th>
                                     <th>Claimer</th>
                                     <th width="15%">Total Claims</th>
+                                    <th width="10%">Action</th>
                                 </tr>
                             </thead>
                             <tbody id="table_claim_list">

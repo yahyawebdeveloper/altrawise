@@ -166,65 +166,66 @@ $.fn.populate_list_form = function (data, is_scroll)
 					btn_attachment = `<a href="javascript:void(0)" class="link-view-file btn btn-outline-info btn-xs waves-effect waves-light" onclick="${func}"><i class="fas fa-image"/></a>`;
 				}
 				
-				row += '<tr id="TR_ROW_' + i + '">' +
-				'<td>' + btn_attachment + '</td>' +
-				'<td>' + data[i].doc_no + '</td>' +
-				'<td>' + data[i].created_by + '</td>' +
-				'<td>' + data[i].doc_date + '</td>' +
-				'<td>' + data[i].descr + '</td>' +
-				'<td><button type="button" class="btn btn-outline-primary btn-xs waves-effect waves-light btn_view_details" id="btn_remark" data-value=\'' + data_val + '\' onclick="$.fn.view_remark(unescape($(this).attr(\'data-value\')))">View</button></td>';
+				row += `<tr id="TR_ROW_${i}">
+				<td>${btn_attachment}</td>
+				<td>${data[i].doc_no}</td>
+				<td>${data[i].created_by}</td>
+				<td>${data[i].doc_date}</td>
+				<td>${data[i].descr}</td>
+				<td><button type="button" class="btn btn-outline-primary btn-xs waves-effect waves-light btn_view_details" id="btn_remark" data-value='${data_val}' onclick="$.fn.view_remark(unescape($(this).attr(\'data-value\')))">View</button>
+				</td>`;
 
 				if (data[i].verified == 0)
 				{
-					row += '<td>-</td>';
-					row += '<td>';
+					row += `<td>-</td>`;
+					row += `<td>`;
 					if (allow_verify == 1)
 					{
-						row += '<button class="btn btn-outline-warning btn-xs waves-effect waves-light btn_view_details" data-value=\'' + data_val + '\' onclick="$.fn.do_verify( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_search">Verify</button>';
+						row += `<button class="btn btn-outline-warning btn-xs waves-effect waves-light btn_view_details" data-value='${data_val}' onclick="$.fn.do_verify( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_search">Verify</button>`;
 					}
 					else
 					{
-						row += '-';
+						row += `-`;
 					}
-					row += '</td>';
+					row += `</td>`;
 				}
 				else if (data[i].verified == 1 && data[i].approved == 0)
 				{
-					row += '<td><span class="badge bg-soft-info text-info">Verified</span></td>';
-					row += '<td>';
+					row += `<td><span class="badge bg-soft-info text-info">Verified</span></td>`;
+					row += `<td>`;
 					if (allow_verify == 1)
 					{
-						row += '<button class="btn btn-outline-danger btn-xs waves-effect waves-light btn_view_details" data-value=\'' + data_val + '\' onclick="$.fn.cancel_verify( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_cancel">Cancel</button>';
+						row += `<button class="btn btn-outline-danger btn-xs waves-effect waves-light btn_view_details" data-value='${data_val}' onclick="$.fn.cancel_verify( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_cancel">Cancel</button>`;
 						//row += '<a  class="tooltips" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.cancel_verify(unescape($(this).attr(\'data-value\')),false)">Cancel</a><br>';
 					}
 					if (allow_approve == 1 && (data[i].category_id == 5 || data[i].category_id == 6 || data[i].category_id == 7))
 					{
-						row += '<br><button class="btn btn-outline-success btn-xs waves-effect waves-light btn_view_details mt-1" data-value=\'' + data_val + '\' onclick="$.fn.do_approve( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_approve">Approve</button>';
+						row += `<br><button class="btn btn-outline-success btn-xs waves-effect waves-light btn_view_details mt-1" data-value='${data_val}' onclick="$.fn.do_approve( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_approve">Approve</button>`;
 
 						//row += '<input type="checkbox" id="chk_is_approve" name="chk_is_approve" data-value=\'' + data_val + '\' onchange="$.fn.do_approve(unescape($(this).attr(\'data-value\')),$(this).is(\':checked\'))"> Approve';
 					}
 					else if (allow_verify != 1)
 					{
-						row += '-';
+						row += `-`;
 					}
-					row += '</td>';
+					row += `</td>`;
 				}
 				else if (data[i].verified == 1 && data[i].approved == 1)
 				{
-					row += '<td><span class="badge bg-soft-success text-success">Approved</span></td>';
-					row += '<td>';
+					row += `<td><span class="badge bg-soft-success text-success">Approved</span></td>`;
+					row += `<td>`;
 					if (allow_approve == 1 && (data[i].category_id == 5 || data[i].category_id == 6 || data[i].category_id == 7))
 					{
-						row += '<button class="btn btn-outline-danger btn-xs waves-effect waves-light btn_view_details" data-value=\'' + data_val + '\' onclick="$.fn.cancel_approve( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_cancel">Cancel</button>';
+						row += `<button class="btn btn-outline-danger btn-xs waves-effect waves-light btn_view_details" data-value='${data_val}' onclick="$.fn.cancel_approve( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_cancel">Cancel</button>`;
 						//row += '<a  class="tooltips" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.cancel_approve(unescape($(this).attr(\'data-value\')),false)">Cancel</a>';
 					}
 					else
 					{
-						row += '-';
+						row += `-`;
 					}
-					row += '</td>';
+					row += `</td>`;
 				}
-				row += '</tr>';
+				row += `</tr>`;
 			}
 			$('#tbl_list tbody').append(row);
 			$('#div_load_more').show();
@@ -255,15 +256,12 @@ $.fn.populate_remark_list_form = function (data)
 			for (var i = 0; i < data.length; i++)
 			{
 				data_val = escape(JSON.stringify(data[i]));
-
-				row += '<tr>' +
-					'<td><a class="tooltips" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.delete_form(unescape($(this).attr(\'data-value\')))" data-trigger="hover" data-original-title="Delete data "><i class="fas fa-trash-alt"/></a></td>' +
-					'<td>' + data[i].doc_remarks + '</td>' +
-					'<td>' + data[i].created_by + '</td>' +
-					'<td>' + data[i].created_date + '</td>' +
-					'<td>' + data[i].action + '</td>';
-				row += '</tr>';
-
+				row += `<tr><td><a class="tooltips" href="javascript:void(0)" data-value='${data_val}' onclick="$.fn.delete_form(unescape($(this).attr(\'data-value\')))" data-trigger="hover" data-original-title="Delete data "><i class="fas fa-trash-alt"/></a></td>
+				<td>${data[i].doc_remarks}</td>
+				<td>${data[i].created_by}</td>
+				<td>${data[i].created_date}</td>
+				<td>${data[i].action}</td>
+				</tr>`;
 			}
 			$('#tbl_remark_list tbody').html(row);
 			$('.back-to-top-badge').removeClass('back-to-top-badge-visible');
@@ -393,7 +391,7 @@ $.fn.get_list = function (is_scroll)
 
         $.fn.fetch_data(
             $.fn.generate_parameter('get_document_list_for_approval', param),
-            function(return_data) { console.log(return_data);
+            function(return_data) { //console.log(return_data);
                 if (return_data.data) {
                     var len = return_data.data.length;
                     if (return_data.data.rec_index)
@@ -439,57 +437,6 @@ $.fn.get_list = function (is_scroll)
     	 $.fn.log_error(arguments.callee.caller, err.message);
     }
 };
-
-/*
-$.fn.get_list = function ()
-{
-	try
-	{
-		var post_values = [];
-		var param = { emp_id: SESSIONS_DATA.emp_id };
-		$("#detail_form .condition-row").each(function ()
-		{
-			var data = {};
-
-			if ($(this).find("[name='search_field']").val() != '')
-			{
-				data.search_field = $(this).find("[name='search_field']").val();
-				data.search_condition = $(this).find("[name='search_condition']").val();
-
-				if (data.search_condition == 'like')
-				{
-					data.search_value = "%" + $.trim($(this).find("[name='search_value']").val()) + "%";
-				}
-				else
-				{
-					data.search_value = $.trim($(this).find("[name='search_value']").val());
-				}
-				post_values.push(data);
-			}
-		});
-
-		param.post_values = post_values;
-
-		// console.log(post_values);
-		$.fn.fetch_data
-			(
-				$.fn.generate_parameter('get_document_list_for_approval', param),
-				function (return_data)
-				{
-					if (return_data)
-					{
-						$.fn.data_table_destroy();
-						$.fn.populate_list_form(return_data.data);
-						$.fn.data_table_features();
-					}
-				}, true, btn_save
-			);
-	}
-	catch (err)
-	{
-		$.fn.log_error(arguments.callee.caller, err.message);
-	}
-};*/
 
 $.fn.get_drop_down_values = function ()
 {
@@ -541,23 +488,6 @@ $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
     }
 };
 
-/*$.fn.prepare_form = function ()
-{
-	try
-	{
-		$.fn.get_drop_down_values();
-
-		$('.populate').select2();
-		
-
-
-	}
-	catch (err)
-	{
-		$.fn.log_error(arguments.callee.caller, err.message);
-	}
-};*/
-
 $.fn.prepare_form = function ()
 {
     try
@@ -588,11 +518,6 @@ $.fn.prepare_form = function ()
         // CLIENTS_MODULE_ACCESS = $.fn.get_accessibility(152);
        // $.fn.get_drop_down_values();
 
-        /* let elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
-        $('.js-switch').each(function() 
-        {
-            new Switchery($(this)[0], $(this).data());
-        }); */
 		$.fn.get_drop_down_values();
         ROUTE_DATA = CURRENT_ROUTE.data;
         if(ROUTE_DATA != null) {
@@ -1124,10 +1049,10 @@ $.fn.create_drop_down = function (field)
 
 		$.each(select_options, function (id, value) 
 		{
-			select_html += '<option value="' + value['id'] + '">' + value['value'] + '</option>';
+			select_html += `<option value="${value['id']}">${value['value']}</option>`;
 		});
 
-		select_html += '</select>';
+		select_html += `</select>`;
 
 		return select_html;
 	}
@@ -1156,14 +1081,14 @@ $.fn.condition_drop_down = function (field)
 			select_conditions = ['=', 'like'];
 		}
 
-		let select_html = '<select class="form-control search-condition" name="search_condition">';
+		let select_html = `<select class="form-control search-condition" name="search_condition">`;
 
 		$.each(select_conditions, function (id, value) 
 		{
-			select_html += '<option value="' + value + '">' + value + '</option>';
+			select_html += `<option value="${value}">${value}</option>`;
 		});
 
-		select_html += '</select>';
+		select_html += `</select>`;
 		return select_html;
 	}
 	catch (err)

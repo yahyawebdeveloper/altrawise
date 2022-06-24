@@ -434,9 +434,9 @@ $.fn.get_claim_list = function()
                         $('#table_claim_list').append
                         (`
                             <tr>
-                                <td width="10%"><button type="button" class="btn btn-outline-primary btn-xs waves-effect waves-light btn_view_details" chat_id="${data.chat_id}" chat_name="${data.name}" data-value="${data.id}">View</button></td>
                                 <td>${data.name}</td>
                                 <td width="15%">${Number(data.total).toFixed(2)}</td>
+                                <td width="10%"><button type="button" class="btn btn-outline-primary btn-xs waves-effect waves-light btn_view_details" title="View Details" chat_id="${data.chat_id}" chat_name="${data.name}" data-value="${data.id}">View</button></td>
                             </tr>
                         `);
                     }
