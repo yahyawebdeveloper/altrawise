@@ -329,8 +329,8 @@ $.fn.edit_verify_status = function ()
 				{
 					if (return_data.data)
 					{
-						$.fn.remove_table_row(TABLE_ROW_ID);
-						//$.fn.reset_form('remark_form');
+						//$.fn.remove_table_row(TABLE_ROW_ID);
+						$.fn.reset_form('remark_form');
 						$.fn.show_right_success_noty('Data has been recorded successfully');
 						TABLE_ROW_ID = 0;
 						ROW_DATA = '';
@@ -390,7 +390,7 @@ $.fn.delete_form = function (data, table_row_id)
 								{
 									if (return_data)
 									{
-										$.fn.remove_table_row(TABLE_ROW_ID);
+									//	$.fn.remove_table_row(TABLE_ROW_ID);
 										$.fn.show_right_success_noty('Data has been deleted successfully');
 										TABLE_ROW_ID = 0;
 										ROW_DATA = '';
@@ -915,7 +915,7 @@ $.fn.edit_approve_status = function ()
 					reason: ROW_DATA.reason,
 					type_name: ROW_DATA.type
 				};
-
+console.log(data);
 				$.fn.write_data
 					(
 						$.fn.generate_parameter('leave_edit_approve', data),
@@ -923,7 +923,7 @@ $.fn.edit_approve_status = function ()
 						{
 							if (return_data.data)
 							{
-								$.fn.remove_table_row(TABLE_ROW_ID);
+								//$.fn.remove_table_row(TABLE_ROW_ID);
 								$.fn.show_right_success_noty('Data has been recorded successfully');
 								$.fn.reset_form('approve_leave');
 								TABLE_ROW_ID = 0;
