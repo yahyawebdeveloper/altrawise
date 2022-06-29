@@ -7,7 +7,7 @@ use setasign\Fpdi\Tfpdf\FpdfTpl as TfpdfFpdfTpl;
 use setasign\Fpdi\Tfpdf\Fpdi;
 
 
-function get_documents_drop_down_values_other() {
+/* function get_documents_drop_down_values_other() {
     try
     {   
         $drop_down_groups['document_type']  =   db_query('id,descr','cms_master_list',"category_id = 35 AND is_active = 1");
@@ -21,7 +21,73 @@ function get_documents_drop_down_values_other() {
     {
         handle_exception($e);
     }
+} */
+function get_documents_drop_down_values_other($params) {
+    try {
+        
+        $view_all                   = if_property_exist($params, 'view_all',false);
+        $emp_id                     = if_property_exist($params, 'emp_id',false);
+        $lead_access_view_all       = if_property_exist($params, 'lead_access_view_all',false);
+        $lead_access_view           = if_property_exist($params, 'lead_access_view',false);
+
+        $drop_down_groups   = array();
+
+        $drop_down_groups['company']  =   db_query(
+            "cms_master_employer.id as id
+            , cms_master_employer.employer_name as descr"
+            , "cms_master_employer"
+            , "cms_master_employer.is_active = 1"
+        );
+
+        $drop_down_groups['approval']['employees'] = db_query(
+            " cms_employees.id as id
+            , cms_employees.office_email as email
+            , CONCAT(cms_employees.name, ' - ',tbl_employer.employer_name) as descr",
+            "cms_employees
+            LEFT JOIN cms_master_employer tbl_employer on FIND_IN_SET(tbl_employer.id, JSON_UNQUOTE(JSON_EXTRACT(cms_employees.json_field, '$.employer')))",
+            "cms_employees.is_active = 1 AND cms_employees.office_email <> ''"
+        );
+
+        $drop_down_groups['approval']['companies'] = $drop_down_groups['client'] = array();
+
+        if ($lead_access_view_all == 1) {
+            $where  =  "cms_clients.is_active = 1";
+        } else {
+            $where  =   "cms_clients.is_active = 1 AND FIND_IN_SET(" . $emp_id . ", cms_clients.assign_emp_id)";
+        }
+
+        if ($lead_access_view == 1) {
+            $drop_down_groups['approval']['companies']  =   db_query(
+                " cms_clients_contacts.id
+                , cms_clients_contacts.email
+                , CONCAT(cms_clients_contacts.name, ' - ', cms_clients.name) as descr",
+                "cms_clients_contacts
+                LEFT JOIN cms_clients ON cms_clients.id = cms_clients_contacts.client",
+                $where . ' AND cms_clients_contacts.email <> "" GROUP BY cms_clients.id'
+            );
+
+            $drop_down_groups['client']  =   db_query(
+                " cms_clients.id as id
+                , cms_clients.name as descr",
+                "cms_clients
+                LEFT JOIN cms_master_list as tbl_type ON FIND_IN_SET(tbl_type.id, cms_clients.type_id) > 0
+                LEFT JOIN cms_master_category ON tbl_type.category_id = cms_master_category.id",
+                $where . " AND tbl_type.descr = 'Client' AND cms_master_category.id = 59"
+            );
+        }
+
+        $drop_down_groups['document_type']  =   db_query('id,descr','cms_master_list',"category_id = 35 AND is_active = 1");
+        $drop_down_groups['document_status'] = db_query('id,descr','cms_master_list',"category_id = 36 AND is_active = 1");
+        $drop_down_groups['sh_type'] = db_query('id,descr','cms_master_list',"category_id = 59 AND is_active = 1");
+       
+        return handle_success_response('Success', $drop_down_groups);
+    }
+    catch (Exception $e)
+    {
+        handle_exception($e);
+    }
 }
+
 
 function get_document_search_dropdown_data_check() {
     try

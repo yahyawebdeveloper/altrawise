@@ -254,7 +254,7 @@ $.fn.save_edit_form = function ()
         }
 
 
-        if ($('#files .file-upload.new').length == 0)
+        if ($('#files .file-upload.new').length == 0 && $('#files .file-upload').length == 0)
 		{
 			$.fn.show_right_error_noty('Please select file to upload');
 			btn_save.stop();
@@ -1124,8 +1124,8 @@ $.fn.get_documents_drop_down_values = function()
                     $.fn.populate_dd_values('dd_company', return_data.data.company);
                     $.fn.populate_dd_values('dd_client', return_data.data.client);
                     $.fn.populate_dd_values('dd_doc_type', return_data.data.category);
-                    $.fn.populate_dd_values('dd_notify_email', return_data.data.approval);
-                    APPROVALS = return_data.data.approval;
+                    //$.fn.populate_dd_values('dd_notify_email', return_data.data.approval);
+                    //APPROVALS = return_data.data.approval;
                     $.fn.populate_dd_values('dd_client_search', return_data.data.client, true);
                     $.fn.populate_dd_values('dd_created_by_search', return_data.data.created_by, true);
                     $.fn.populate_dd_values('dd_category_search', return_data.data.category, true);
@@ -1142,22 +1142,27 @@ $.fn.get_documents_drop_down_values = function()
 $.fn.get_documents_drop_down_values_other = function()
 {
     try
-    {   
+    {   let lead_access = $.fn.get_accessibility(115);
         let data    =
         {   
-        
+            emp_id   : SESSIONS_DATA.emp_id,
+            view_all : MODULE_ACCESS.viewall,
+            lead_access_view_all : lead_access.viewall,
+            lead_access_view     : lead_access.view
         };
        
         $.fn.fetch_data
         ( 
             $.fn.generate_parameter('get_documents_drop_down_values_other', data),
             function(return_data)
-            { 
+            { console.log(return_data);
                 if (return_data.code == 0)
                 {   
                     $.fn.populate_dd_values('dd_type', return_data.data.sh_type);
                     $.fn.populate_dd_values('dd_status', return_data.data.document_status);
                     $.fn.populate_dd_values('dd_status_search', return_data.data.document_status);
+                    $.fn.populate_dd_values('dd_notify_email', return_data.data.approval);
+                        APPROVALS = return_data.data.approval;
                 }
             },true
         );
@@ -1171,7 +1176,7 @@ $.fn.get_documents_drop_down_values_other = function()
 $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
 {
     try
-    {
+    { //console.log(dd_data);
         if(element_id == 'dd_notify_email')
         {
             $('#dd_approval_individual').empty();
@@ -1179,7 +1184,7 @@ $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
             {
                 $('#dd_approval_individual').append(`<option 
                                                      data-type="individual" 
-                                                     value="${item.id}">${item.descr}
+                                                     value="${item.email}">${item.descr}
                                                      </option>`
                                                    );
             }
@@ -1188,7 +1193,7 @@ $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
             {
                 $('#dd_approval_company').append(`<option 
                                                  data-type="company" 
-                                                 value="${item.id}">${item.descr}
+                                                 value="${item.email}">${item.descr}
                                                  </option>`
                                                 );
             }
