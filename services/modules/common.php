@@ -43,10 +43,6 @@ function get_document_search_dropdown_data_check() {
 function get_document_search_query_data_check() {
     try
     {   
-        $drop_down['category'] = db_query('id,descr','cms_master_list',"category_id = 2 AND is_active = 1");
-
-        $drop_down['emp']       = db_query('id,name as descr','cms_employees','is_active = 1');
-
         $drop_down['columns'] = array(
             array('id' => 'doc_no','descr' => 'Doc No'),
             array('id' => 'doc_date','descr' => 'Doc Date'),

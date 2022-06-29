@@ -11,6 +11,10 @@ var APPROVALS_SELECTED = '';
 COMPLETE_STATUS = '205';
 CURRENT_PATH = '../../';
 var CLIENTS_MODULE_ACCESS = '';
+var flatpickrdocument_date = "";
+var flatpickrnotify_date = "";
+var flatpickrfrom_date = "";
+var flatpickrto_date = "";
 CLIENT_ID = '';
 var FILE_UPLOAD_PATH = ''; //file upload mandatory field
 
@@ -169,15 +173,15 @@ $.fn.populate_list_form = function (data, is_scroll)
                     <td>${data[i].status_name}</td>`;
 
                     row += '<td width="15%">';
-                    row += '<a class="btn btn-outline-primary btn-xs waves-effect waves-light" data-toggle="tooltip" data-placement="left" title="View Comments" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.view_remark(unescape($(this).attr(\'data-value\')))"><i class="fas fa-external-link-alt"></i></a>';
+                    row += '<a class="btn btn-xs btn-primary waves-effect waves-light" data-toggle="tooltip" data-placement="left" title="View Comments" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.view_remark(unescape($(this).attr(\'data-value\')))"><i class="fas fa-external-link-alt"></i></a>';
                     if (MODULE_ACCESS.edit == 1)
                     {
-                        row += '&nbsp;&nbsp;<a class="btn btn-outline-success btn-xs waves-effect waves-light" data-toggle="tooltip" data-placement="left" title="View Details" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.populate_detail_form(unescape($(this).attr(\'data-value\')))"><i class="fas fa-sign-in-alt"></i></a>';
+                        row += '&nbsp;&nbsp;<a class="btn btn-xs btn-success waves-effect waves-light" data-toggle="tooltip" data-placement="left" title="View Details" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.populate_detail_form(unescape($(this).attr(\'data-value\')))"><i class="fas fa-sign-in-alt"></i></a>';
     
                     }
                     if (MODULE_ACCESS.delete == 1)
                     {
-                        row += '&nbsp;&nbsp;<a class="btn btn-outline-danger btn-xs waves-effect waves-light" data-toggle="tooltip" data-placement="left" title="View Details" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.delete_document_archiving(unescape($(this).attr(\'data-value\')))"><i class="fas fa-trash-alt"></i></a>';
+                        row += '&nbsp;&nbsp;<a class="btn btn-xs btn-danger waves-effect waves-light" data-toggle="tooltip" data-placement="left" title="View Details" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.delete_document_archiving(unescape($(this).attr(\'data-value\')))"><i class="fas fa-trash-alt"></i></a>';
                     }
 
                     var status = '';
@@ -195,7 +199,7 @@ $.fn.populate_list_form = function (data, is_scroll)
                         {
                             if (MODULE_ACCESS.verify == 1 && data[i].status_id == SEND_VERIFY_STATUS)
                             {
-                                verify = '<div class="button-list pt-1"><button type="button" class="btn btn-xs btn-outline-info waves-effect waves-light" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Verify" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,1)"><span class="btn-label"><i class="fas fa-pen-square" aria-hidden="true"></i></span><span class="hidden-xs">Verify</span></button></div>';
+                                verify = '<div class="button-list pt-1"><button type="button" class="btn btn-xs btn-info waves-effect waves-light" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Verify" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,1)"><span class="btn-label"><i class="fas fa-pen-square" aria-hidden="true"></i></span><span class="hidden-xs">Verify</span></button></div>';
                             }
                         }
                         if (json_approval.approve.approved == 1)
@@ -206,7 +210,7 @@ $.fn.populate_list_form = function (data, is_scroll)
                         {
                             if (MODULE_ACCESS.approve == 1)
                             {
-                                approve = '<div class="button-list pt-1"><button type="button" class="btn btn-xs btn-outline-info waves-effect waves-light" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Approve" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,2)"><span class="btn-label"><i class="far fa-check-square" aria-hidden="true"></i></span><span class="hidden-xs">Approve</span></button></div>';
+                                approve = '<div class="button-list pt-1"><button type="button" class="btn btn-xs btn-info waves-effect waves-light" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Approve" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,2)"><span class="btn-label"><i class="far fa-check-square" aria-hidden="true"></i></span><span class="hidden-xs">Approve</span></button></div>';
                             }
                         }
                     }
@@ -216,12 +220,12 @@ $.fn.populate_list_form = function (data, is_scroll)
                         {
                             if (data[i].status_id == SEND_VERIFY_STATUS)
                             {
-                                verify = '<div class="button-list pt-1"><button type="button" class="btn btn-xs btn-outline-info waves-effect waves-light" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Verify" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,1)"><span class="btn-label"><i class="fas fa-pen-square" aria-hidden="true"></i></span><span class="hidden-xs">Verify</span></button></div>';
+                                verify = '<div class="button-list pt-1"><button type="button" class="btn btn-xs btn-info waves-effect waves-light" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Verify" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,1)"><span class="btn-label"><i class="fas fa-pen-square" aria-hidden="true"></i></span><span class="hidden-xs">Verify</span></button></div>';
                             }
                         }
                         else if (MODULE_ACCESS.approve == 1)
                         {
-                            approve = '<div class="button-list pt-1"><button type="button" class="btn btn-xs btn-outline-info waves-effect waves-light" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Approve" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,2)"><span class="btn-label"><i class="far fa-check-square" aria-hidden="true"></i></span><span class="hidden-xs">Approve</span></button></div>';
+                            approve = '<div class="button-list pt-1"><button type="button" class="btn btn-xs btn-info waves-effect waves-light" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Approve" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,2)"><span class="btn-label"><i class="far fa-check-square" aria-hidden="true"></i></span><span class="hidden-xs">Approve</span></button></div>';
                         }
                     }
 
@@ -356,11 +360,7 @@ $.fn.save_edit_form = function ()
                             }
                         }
 
-                    
-
-
-
-                        $('#h4_primary_no').text('Document Number : ' + return_data.data.document_no);
+                     $('#h4_primary_no').text('Document Number : ' + return_data.data.document_no);
                         $.fn.show_right_success_noty('Data has been recorded successfully');
                     }
                 }, false, btn_save
@@ -378,6 +378,23 @@ $.fn.set_edit_form = function (data)
     FORM_STATE = 1;
     $('#btn_save').html('<i class="fa fa-edit"></i> Update');
 };
+
+
+function GetDate(str) {	
+    	
+    var arr = str.split('-');	
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']	
+    var i = 1; 	
+    for (i; i <= months.length; i++) { 	
+        if (months[i] == arr[1])	
+        {                   	
+            break;                     	
+        } 	
+    }	
+                	
+    var formatddate = (i+1)  + '-' + arr[0] + '-' + arr[2]; 
+    return formatddate;	
+}
 
 
 $.fn.populate_detail_form = function (data)
@@ -413,16 +430,42 @@ $.fn.populate_detail_form = function (data)
                             CLIENT_ID = data.client_id;
                         }
 
-                        $('#document_date').flatpickr().setDate(data.doc_date);
+						if (data.doc_date) {
+						  var retDate = GetDate(data.doc_date);
+						  var dateObject = new Date(retDate);
+						  var retDate = dateObject.toString();
+						  flatpickrdocument_date.setDate(dateObject);
+						}
+						if (data.from_date) {
+						  var retDate = GetDate(data.from_date);
+						  var dateObject = new Date(retDate);
+						  var retDate = dateObject.toString();
+						  flatpickrfrom_date.setDate(dateObject);
+						}
+						if (data.to_date) {
+						  var retDate = GetDate(data.to_date);
+						  var dateObject = new Date(retDate);
+						  var retDate = dateObject.toString();
+						  flatpickrto_date.setDate(dateObject);
+						}
+						if (data.notify_by) {
+						  var retDate = GetDate(data.notify_by);
+						  var dateObject = new Date(retDate);
+						  var retDate = dateObject.toString();
+						  flatpickrnotify_date.setDate(dateObject);
+						}
+						
+                        //$('#document_date').flatpickr().setDate(new Date(GetDate(data.doc_date)));
                         $('#dd_client').val(data.client_id).change();
                         $('#dd_company').val(data.employer_id).change();
-                        $('#from_date').flatpickr().setDate(data.from_date);
-                        $('#to_date').flatpickr().setDate(data.to_date);
+                        //$('#from_date').flatpickr().setDate(new Date(GetDate(data.from_date)));
+                        //$('#to_date').flatpickr().setDate(new Date(GetDate(data.to_date)));
                         $('#dd_doc_type').val(data.doc_type).change();
                         $('#dd_notify').val(data.notify).change();
-                        $('#notify_date').flatpickr().setDate(data.notify_by);
+                        //$('#notify_date').flatpickr().setDate(new Date(GetDate(data.notify_by)));
                         $('#txt_location').val(data.location);
                         $('#dd_notify_email').val(JSON.parse(data.notify_email)).change();
+						
                         if (data.status_id == COMPLETE_STATUS)
                         {
                             $('#dd_status').attr('disabled', 'disabled');
@@ -824,7 +867,10 @@ $.fn.reset_form = function (form)
             $('#txt_remark').val('');
             $('#txt_location').val('');
             $('#detail_form').parsley().destroy();
-
+			flatpickrdocument_date.clear();
+			flatpickrnotify_date.clear();
+			flatpickrfrom_date.clear();
+			flatpickrto_date.clear();
             $('#dd_status option[value="' + COMPLETE_STATUS + '"]').remove();
             $('#dd_status').removeAttr('disabled');
             $('#user_doc_no_div').hide();
@@ -928,11 +974,31 @@ $.fn.prepare_form = function ()
 {
     try
     {
-        $('#document_date,#notify_date,#from_date,#to_date').flatpickr({ 
-            altInput: true,
-            altFormat: "d-m-Y",
-            dateFormat: "d-m-Y",
-        });
+		flatpickrdocument_date = $("#document_date").flatpickr({
+		  altInput: true,
+		  altFormat: "d-M-Y",
+		  dateFormat: "Y-m-d",
+		  enableTime: false,
+		});
+		flatpickrnotify_date = $("#notify_date").flatpickr({
+		  altInput: true,
+		  altFormat: "d-M-Y",
+		  dateFormat: "Y-m-d",
+		  enableTime: false,
+		});
+		flatpickrfrom_date = $("#from_date").flatpickr({
+		  altInput: true,
+		  altFormat: "d-M-Y",
+		  dateFormat: "Y-m-d",
+		  enableTime: false,
+		});
+		flatpickrto_date = $("#to_date").flatpickr({
+		  altInput: true,
+		  altFormat: "d-M-Y",
+		  dateFormat: "Y-m-d",
+		  enableTime: false,
+		});
+		
         $('.populate').select2({ tags: true, tokenSeparators: [",", " "] });
         $('.tooltips').tooltip();
 
@@ -940,7 +1006,7 @@ $.fn.prepare_form = function ()
         $("#dp_search_date").flatpickr({
             mode:"range",
             altFormat: "d-M-Y",
-            dateFormat: "d-m-Y",
+            dateFormat: "Y-m-d",
             onChange:function(selectedDates){
                 var _this=this;
                 var dateArr=selectedDates.map(function(date){return _this.formatDate(date,'Y-m-d');});
@@ -1264,6 +1330,7 @@ $.fn.bind_command_events = function ()
         $('#btn_new').click(function (e)
         {
             e.preventDefault();
+            $.fn.reset_form('form');
             $.fn.show_hide_form('NEW');
         });
 

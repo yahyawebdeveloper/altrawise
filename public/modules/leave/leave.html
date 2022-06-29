@@ -237,10 +237,11 @@
                                         </tbody>
                                     </table>
                                     <div class="row">
-									<div class="col-sm-8">
+									<div class="col-sm-7">
                                         <table id="tbl_days" width="100%" class="table table-hover table-condensed">
                                             <thead>
-                                                <th><input type="checkbox" id="chk_all" name="chk_all" onchange="$.fn.change_balance_leave('all')"></th>
+                                                <th>
+                                                    <input type="checkbox" id="chk_all" class="form-check-input" name="chk_all" onchange="$.fn.change_balance_leave('all')"></th>
                                                 <th>DATE</th>
                                                 <th>DAY</th>
                                                 <th>DURATION</th>
@@ -262,15 +263,14 @@
                                     </div>
                                     </div>
                                     <div class="col-sm-12">
-                                        <div class="form-group">
+                                        <div class="form-group" style="margin-right: 38px; margin-top: 50px; float: right;">
                                             <div class="pull-right">
-                                                <div class="btn-toolbar col-sm-12" style="text-align:right">
-                                                    <button type="button" class="btn btn-primary-alt ladda-button" data-style="expand-left" data-spinner-color="#000000" id="btn_add_leave"><i class="fa fa-save"></i> Save2</button>
+                                                <div class="col-sm-12" style="text-align:right">
+                                                    <button type="button" class="btn btn-primary-alt ladda-button" data-style="expand-left" data-spinner-color="#000000" id="btn_add_leave"><i class="fa fa-save"></i> Save</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                            	</form>
 
@@ -299,7 +299,7 @@
                        </div>
                    </div>
                    <div class="table-responsive mt-3">
-                       <table class="table table-striped mb-0"  id="tbl_list">
+                       <table class="table table-striped mb-0  no-footer "  id="tbl_list">
                            <thead>
                             <tr>
                                 <th></th>

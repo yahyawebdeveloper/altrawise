@@ -742,7 +742,7 @@ $.fn.get_documents_drop_down_values = function()
             {
                 if (return_data.code == 0)
                 {
-                    // console.log(return_data);
+                     console.log(return_data);
                     $.fn.populate_dd_values('dd_category', return_data.data.category);
                     $.fn.populate_dd_values('dd_company', return_data.data.company);
                     $.fn.populate_dd_values('dd_approval', return_data.data.approval);
