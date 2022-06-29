@@ -1,6 +1,6 @@
 var FORM_STATE 		= 0;
 var RECORD_INDEX 	= 0;
-var SESSIONS_DATA	= '';
+// var SESSIONS_DATA	= '';
 var REF_ROW			= '';
 var btn_save,btn_save_remarks,btn_save_revoke_approval,btn_comments_reply,btn_assign_save,btn_upload,btn_send_offer, btn_send_for_approval, btn_create_employee; 
 CONTRACT_ID		= ''; 
@@ -1255,10 +1255,7 @@ $.fn.get_list = function(is_scroll)
 		
 		 $.fn.fetch_data(
             $.fn.generate_parameter('get_contract_list', data),
-            function(return_data) { 
-				// console.log('11111111111');
-                console.log(return_data.data);
-				// console.log('222222222222');
+            function(return_data) {
                  if (return_data.data.list) {
                     var len = return_data.data.list.length;
                     if (return_data.data.rec_index)
@@ -1359,16 +1356,31 @@ $.fn.populate_list_form = function(data,is_scroll)
 				// 	row += '<td>-</td>';
 				// }
 				
-				row += `<td width="10%">`;
-				row += `<a class="tooltips" data-toggle="tooltip" data-placement="left" title="View Summary" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.view_contract_summary(${data[i].contract_no})"><i class="fa fa-list"></i></a>`;
-					
+				
+				row += '<td width="15%">';
+				// row += `<a class="tooltips" data-toggle="tooltip" data-placement="left" title="View Summary" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.view_contract_summary(${data[i].contract_no})"><i class="fa fa-list"></i></a>`;
+
+				row += `<button type="button" class="btn btn-outline-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="View Summary" data-value="${data_val}" onclick="$.fn.view_contract_summary(decodeURIComponent('${data[i].contract_no}'))">
+                            <i class="mdi mdi-border-all"></i>
+                        </button>&nbsp;`;
+				
 				if(parseInt(MODULE_ACCESS.revoke_approval) == 1)
 				{
 					//row += '&nbsp;&nbsp;<a class="tooltips" data-toggle="tooltip" data-placement="right" title="Revoke Approval" href="javascript:void(0)" onclick="$.fn.display_revoke_approval(unescape($(this).closest(\'tr\').attr(\'data-value\')))"><i class="fa fa-undo"></i></a>';
 				}
 					
-				row += `&nbsp;&nbsp;<a class="tooltips" data-toggle="tooltip" data-placement="left" title="View Comments" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.view_remark(${data[i].contract_no})"><i class="fa fa-external-link"></i></a>`;
-				row += `&nbsp;&nbsp;<a class="tooltips" data-toggle="tooltip" data-placement="left" title="View Details" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.populate_detail_form(${data[i].contract_no})"><i class="fa fa-sign-in"></i></a>`;
+				// row += `&nbsp;&nbsp;<a class="tooltips" data-toggle="tooltip" data-placement="left" title="View Comments" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.view_remark(${data[i].contract_no})"><i class="fa fa-external-link"></i></a>`;
+
+				row += `<button type="button" class="btn btn-outline-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="View Comments" data-value="${data_val}" onclick="$.fn.view_remark(decodeURIComponent('${data[i].contract_no}'))">
+                            <i class="far fa-comment-alt"></i>
+                        </button>&nbsp;`;
+
+				// row += `&nbsp;&nbsp;<a class="tooltips" data-toggle="tooltip" data-placement="left" title="View Details" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.populate_detail_form(${data[i].contract_no})"><i class="fa fa-sign-in"></i></a>`;
+				
+				row += `<button type="button" class="btn btn-outline-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="View Details" data-value="${data_val}" onclick="$.fn.populate_detail_form(decodeURIComponent('${data[i].contract_no}'))">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </button>`;
+
 				row += '</td>';
 				
 				row += '</tr>';
@@ -1794,6 +1806,7 @@ $.fn.add_reference = function()
 
 $.fn.show_hide_form = function(form_status)
 {
+	// $.fn.reset_form('form');
     if(form_status == 'NEW')
     {	
 		$.fn.reset_form('form');
@@ -1805,8 +1818,8 @@ $.fn.show_hide_form = function(form_status)
         $('#h4_primary_no')	.text('Contract Number : -');
         $('#btn_save')		.html('<i class="fa fa-check"> </i> Save');
 
-        $('#div_trail_logs table tbody').empty();
-        $('#div_trail_logs').hide();
+        // $('#div_trail_logs table tbody').empty();
+        // $('#div_trail_logs').hide();
 
         $('#detail_form').parsley().destroy();
 		$.fn.init_upload_file();
@@ -2024,6 +2037,7 @@ $.fn.show_hide_approval = function(status_id, data, attachment = '')
 
 $.fn.get_contract_config = function()
 {
+	
     try
     {   
         let data    =
@@ -2321,7 +2335,7 @@ $.fn.prepare_form = function()
 
     	// $('#contract_date,#request_date,#emp_start_date,#emp_end_date,#billing_start_date,#billing_end_date,#txt_inc_date,#onboard_date,#txt_current_ep_expiry_date,#commencing_date,#txt_apply_ep_on_date,#date_of_birth,#ep_expiry_date,#marriage_date').datepicker({dateFormat: 'dd-M-yy'});
 
-		$('#contract_date,#request_date,#emp_start_date,#emp_end_date,#billing_start_date,#billing_end_date,#txt_inc_date,#onboard_date,#txt_current_ep_expiry_date,#commencing_date,#txt_apply_ep_on_date,#date_of_birth,#ep_expiry_date,#marriage_date').flatpickr({dateFormat: 'dd-M-yy'});
+		$('#contract_date,#request_date,#emp_start_date,#emp_end_date,#billing_start_date,#billing_end_date,#txt_inc_date,#onboard_date,#txt_current_ep_expiry_date,#commencing_date,#txt_apply_ep_on_date,#date_of_birth,#ep_expiry_date,#marriage_date').flatpickr({dateFormat: 'd-M-yy'});
 
         $('.populate').select2();
         $('.tooltips').tooltip();
@@ -2463,6 +2477,7 @@ $.fn.view_contract_summary = function(contract_no)
 {
 	try
 	{	
+		
 		$.fn.fetch_data
 		(
 			$.fn.generate_parameter('get_contract_summary',{contract_no : contract_no}),	
@@ -2498,31 +2513,107 @@ $.fn.view_contract_summary = function(contract_no)
 					let oc_total            = 0;
 					let total_cost          = 0;
 					let total_billing  		= 0;
-					let candidate_details   = `<dl>
-												<dt>Name : </dt>
-												<dd>${details.employee_name}</dd>
-												<dt>Designation : </dt>
-												<dd>${details.designation}</dd>
-												<dt>Email : </dt>
-												<dd>${details.email}</dd>
-												<dt>Contact No : </dt>
-												<dd>${details.contact_no}</dd>
-												<dt>Nationality : </dt>
-												<dd>${details.nationality}</dd>
-											</dl>`;
+					let candidate_details   = `
+					<div class="row">
+						<label for="dob_date" class="col-3 col-form-label">Name:</label>
+						<div class="col-4 col-form-label">
+						${details.employee_name}
+						</div>
+					</div>
 
-					let employment_details  = `<dl>
-												<dt>Category : </dt>
-												<dd>${details.employment_category}</dd>
-												<dt>Type : </dt>
-												<dd>${details.employment_type}</dd>
-												<dt>Start Date : </dt>
-												<dd>${details.emp_start_date}</dd>
-												<dt>End Date : </dt>
-												<dd>${details.emp_end_date}</dd>
-												<dt>Employer : </dt>
-												<dd>${details.employer_name}</dd>
-											</dl>`;
+					<div class="row">
+						<label for="dob_date" class="col-3 col-form-label">Designation:</label>
+						<div class="col-4 col-form-label">
+						${details.designation}
+						</div>
+					</div>
+
+					<div class="row">
+						<label for="dob_date" class="col-3 col-form-label">Email:</label>
+						<div class="col-4 col-form-label">
+						${details.email}
+						</div>
+					</div>
+
+					<div class="row">
+						<label for="dob_date" class="col-3 col-form-label">Contact No:</label>
+						<div class="col-4 col-form-label">
+						${details.contact_no}
+						</div>
+					</div>
+
+					<div class="row">
+						<label for="dob_date" class="col-3 col-form-label">Nationality:</label>
+						<div class="col-4 col-form-label">
+						${details.nationality}
+						</div>
+					</div>
+
+					`;
+					// let candidate_details   = `<dl>
+					// 							<dt>Name : </dt>
+					// 							<dd>${details.employee_name}</dd>
+					// 							<dt>Designation : </dt>
+					// 							<dd>${details.designation}</dd>
+					// 							<dt>Email : </dt>
+					// 							<dd>${details.email}</dd>
+					// 							<dt>Contact No : </dt>
+					// 							<dd>${details.contact_no}</dd>
+					// 							<dt>Nationality : </dt>
+					// 							<dd>${details.nationality}</dd>
+					// 						</dl>`;
+
+
+					let employment_details  = `
+					<div class="row">
+						<label for="dob_date" class="col-3 col-form-label">Category:</label>
+						<div class="col-4 col-form-label">
+						${details.employment_category}
+						</div>
+					</div>
+
+					<div class="row">
+						<label for="dob_date" class="col-3 col-form-label">Type:</label>
+						<div class="col-4 col-form-label">
+						${details.employment_type}
+						</div>
+					</div>
+
+					<div class="row">
+						<label for="dob_date" class="col-3 col-form-label">Start Date:</label>
+						<div class="col-4 col-form-label">
+						${details.emp_start_date}
+						</div>
+					</div>
+
+					<div class="row">
+						<label for="dob_date" class="col-3 col-form-label">End Date:</label>
+						<div class="col-4 col-form-label">
+						${details.emp_end_date}
+						</div>
+					</div>
+
+					<div class="row">
+						<label for="dob_date" class="col-3 col-form-label">Employer:</label>
+						<div class="col-4 col-form-label">
+						${details.employer_name}
+						</div>
+					</div>
+
+					`;
+
+					// let employment_details  = `<dl>
+					// 							<dt>Category : </dt>
+					// 							<dd>${details.employment_category}</dd>
+					// 							<dt>Type : </dt>
+					// 							<dd>${details.employment_type}</dd>
+					// 							<dt>Start Date : </dt>
+					// 							<dd>${details.emp_start_date}</dd>
+					// 							<dt>End Date : </dt>
+					// 							<dd>${details.emp_end_date}</dd>
+					// 							<dt>Employer : </dt>
+					// 							<dd>${details.employer_name}</dd>
+					// 						</dl>`;
 
 					// calculate monthly cost
 					$.each( allowance_data, function(index,allowance)
@@ -2670,7 +2761,7 @@ $.fn.view_contract_summary = function(contract_no)
 						}
 						oc_index++;
 					});
-
+					
 					$('#cost_summary_body').html(table_row);
 
 
@@ -2703,6 +2794,7 @@ $.fn.view_contract_summary = function(contract_no)
 						$('#billing_div').hide();
 
                 }
+				
 			},true
 		);
 
@@ -3103,7 +3195,12 @@ $.fn.view_remark = function(contract_no)
         );
 		
 		$('#contract_no').val(contract_no);
-		$('#remarkListModal')   .modal();
+		
+		$("#dd_send_to").select2({
+			dropdownParent: $('#remarkListModal .modal-content')
+		});
+
+		$('#remarkListModal').modal('show');
     }
     catch(err)
     {
@@ -3258,8 +3355,12 @@ $.fn.populate_remark_list_form = function(data)
 			{
 				data_val = escape(JSON.stringify(data[i]));
 
-				row += '<tr>'+
-							'<td><a class="tooltips" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.delete_form(unescape($(this).attr(\'data-value\')))" data-trigger="hover" data-original-title="Delete data "><i class="fa fa-trash-o"/></a></td>' +
+				row += `<tr><td><button type="button" class="btn btn-outline-danger btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete data" data-value="${data_val}" onclick="$.fn.delete_form(decodeURIComponent('${data_val}'))">
+                            <i class="far fa-trash-alt"></i>
+                        </button></td>`  +
+
+				// row += '<tr>'+
+				// 			'<td><a class="tooltips" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.delete_form(unescape($(this).attr(\'data-value\')))" data-trigger="hover" data-original-title="Delete data "><i class="fa fa-trash-o"/></a></td>' +
 							'<td>' + data[i].contract_remarks  	+ '</td>' +
 							'<td>' + data[i].created_by		+ '</td>' +							
 							'<td>' + data[i].created_date	+ '</td>' +
@@ -3756,7 +3857,14 @@ $.fn.add_child_input = function (value)
 		}
 		$('#tbl_child tbody').append(row);
 
-		$('.child_dob_date').datepicker({ dateFormat: 'dd-mm-yy' });
+		// $('.child_dob_date').datepicker({ dateFormat: 'dd-mm-yy' });
+
+		$('.child_dob_date').flatpickr({ 
+            altInput: true,
+            altFormat: "d-M-Y", //Display in input field
+            dateFormat: "Y-m-d", //Value to be set
+            defaultDate: "today"
+        });
 
 		$('.populate2').select2();
 	}
@@ -4767,11 +4875,8 @@ $.fn.get_contract_add_request_dropdown = function()
             function(return_data)
             {
                 if (return_data.code == 0)
-                {  
-                    console.log(return_data.data);
-                    $.fn.populate_dd_values('dd_created_by_search', return_data.data);
-                    
-                    
+                {
+                	$.fn.populate_dd_values('dd_created_by_search', return_data.data);
                 }
             },true
         );
@@ -4781,6 +4886,13 @@ $.fn.get_contract_add_request_dropdown = function()
         $.fn.log_error(arguments.callee.caller,err.message);
     }
 };
+
+$.fn.month_diff = function (startDate, endDate)
+{
+	let diffResult = Math.round((endDate - startDate) / (1000 * 60 * 60 * 24));
+	let months = (diffResult / 30.436875).toFixed(1);
+	return months;
+}
 
 
 // START of Document initialization
