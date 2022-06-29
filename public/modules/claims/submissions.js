@@ -137,13 +137,13 @@ $.fn.populate_list_form = function (data, is_scroll)
 						if (data[i].verified == 0)
 						{
 							data_val_check = escape(JSON.stringify(data[i].attachment[j]));
-							btn_delete = `<a href class="delete btn btn-outline-danger btn-xs waves-effect waves-light" data-id="`+data[i].doc_no+`" title="Delete file" data-value="`+data_val_check+`">
+							btn_delete = `<a href class="delete btn btn-xs btn-danger waves-effect waves-light" data-id="`+data[i].doc_no+`" title="Delete file" data-value="`+data_val_check+`">
 											<i class="fas fa-trash-alt" aria-hidden="true" title="Delete file"></i>
 										  </a> `;
 						}
 
 						let func = `$.fn.open_page('`+data[i].attachment[j].id+`','`+CURRENT_PATH+`download.php')`;
-						btn_attachment += btn_delete+`<a href="javascript:void(0)" title="View file" class="link-view-file btn btn-outline-info btn-xs waves-effect waves-light" onclick="${func}"><i class="fas fa-image"/></a>`;
+						btn_attachment += btn_delete+`<a href="javascript:void(0)" title="View file" class="link-view-file btn btn-xs btn-info waves-effect waves-light" onclick="${func}"><i class="fas fa-image"/></a>`;
 					}
 				}
 				row += btn_attachment;
@@ -153,7 +153,7 @@ $.fn.populate_list_form = function (data, is_scroll)
 					<td>${data[i].descr}</td>
 					<td>${data[i].remarks}</td>
 					<td>${data[i].status}</td>
-					<td><a class="btn btn-outline-primary btn-xs waves-effect waves-light"" data-toggle="tooltip" data-placement="left" title="View Comments" href="javascript:void(0)" data-value='${data_val}' onclick="$.fn.view_remark(unescape($(this).attr(\'data-value\')))"><i class="fas fa-external-link-alt"></i></a></td>
+					<td><a class="btn btn-xs btn-primary waves-effect waves-light"" data-toggle="tooltip" data-placement="left" title="View Comments" href="javascript:void(0)" data-value='${data_val}' onclick="$.fn.view_remark(unescape($(this).attr(\'data-value\')))"><i class="fas fa-external-link-alt"></i></a></td>
 					</tr>`;
 			
 			}
@@ -746,8 +746,8 @@ $.fn.prepare_form = function ()
 
 		$('#doc_date,#timesheet_from_date,#timesheet_to_date,#leave_from_date,#leave_to_date').flatpickr({ 
             altInput: true,
-            altFormat: "d-m-Y",
-            dateFormat: "d-m-Y",
+            altFormat: "d-M-Y", 
+            dateFormat: "Y-m-d"
         });
 
 		$('.populate').select2({tags: true, tokenSeparators: [",", " "] });
