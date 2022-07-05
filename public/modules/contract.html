@@ -1433,13 +1433,458 @@
                                     </table>
                                 </div>
 
-                               
+                                <br>
+                                <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Additional Allowance/Billing Details</h5>
+
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="tbl_allowance">
+                                        <thead>
+                                            <tr>
+                                                <th>Type</th>
+                                                <th>Amount</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr id="base_row">
+                                                <td width="50%">
+                                                    <select id="dd_td_allowance" style="width:100%" class="populate">
+                                                        
+                                                    </select>
+                                                </td>
+                                                <td width="30%"><input type="text" class="form-control marginBottom10px" id="txt_td_amount" maxlength="10" onkeypress="return validateNumber(event)"></td>
+                                                <td width="20%">
+                                                    <button id="btn_add_allowance" type="button" class="btn btn-primary" data-mode="0">
+                                                        <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <br>
+                                <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Increments</h5>
+
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="tbl_increment">
+                                        <thead>
+                                            <tr>
+                                                <th>Description</th>
+                                                <th>Amount</th>
+                                                <th>Date</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr id="base_row_increment">
+                                                <td width="40%">
+                                                    <input type="text" class="form-control marginBottom10px" id="txt_inc_description" >
+                                                </td>
+                                                <td width="20%">
+                                                    <input type="text" class="form-control marginBottom10px" id="txt_inc_amount" maxlength="10" onkeypress="return validateNumber(event)">
+                                                </td>
+                                                <td width="20%">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control flatpickr-input" id="txt_inc_date" pattern="(0[1-9]|[12][0-9]|3[01])[-]([A-Za-z]{3})[-](19|20)\d\d">
+                                                        <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                    </div>
+                                                </td>
+                                                <td width="20%">
+                                                    <button id="btn_add_increment" type="button" class="btn btn-primary" data-mode="0">
+                                                        <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <br>
+                                <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Additional Benefits</h5>
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Annual Leave -->
+                                        <div class="row">
+                                            <label for="txt_annual_leave" class="col-4 col-form-label">Annual Leave</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="number" id="txt_annual_leave"  class="form-control" data-parsley-type="number" max="30" min="0" onchange="$.fn.check_max_min(this)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Medical Leave -->
+                                        <div class="row">
+                                            <label for="txt_medical_leave" class="col-4 col-form-label">Medical Leave</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="number" id="txt_medical_leave"  class="form-control" data-parsley-type="number" max="30" min="0" onchange="$.fn.check_max_min(this)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row my-4">
+                                    <div class="col-lg-4">
+                                        <!-- Overtime Applicable -->
+                                        <div class="row">
+                                            <label for="chk_overtime_applicable" class="col-9 col-form-label">Overtime Applicable</label>
+                                            <div class="col-3 errorContainer pt-1">
+                                                <input type="checkbox" id="chk_overtime_applicable" name="chk_overtime_applicable" class="js-switch form-control" data-color="#64b0f2" data-size="small" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <!-- Client to Hire -->
+                                        <div class="row">
+                                            <label for="chk_client_to_hire_allow" class="col-9 col-form-label">Client to Hire</label>
+                                            <div class="col-3 errorContainer pt-1">
+                                                <input type="checkbox" id="chk_client_to_hire_allow" name="chk_client_to_hire_allow" class="js-switch form-control" data-color="#64b0f2" data-size="small" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <!-- Replacement Leave -->
+                                        <div class="row">
+                                            <label for="chk_replacement_leave_applicable" class="col-9 col-form-label">Replacement Leave</label>
+                                            <div class="col-3 errorContainer pt-1">
+                                                <input type="checkbox" id="chk_replacement_leave_applicable" name="chk_replacement_leave_applicable" class="js-switch form-control" data-color="#64b0f2" data-size="small" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <!-- Annual Leave En-Cash -->
+                                        <div class="row">
+                                            <label for="chk_annual_leave_encash_allow" class="col-9 col-form-label">Annual Leave En-Cash</label>
+                                            <div class="col-3 errorContainer pt-1">
+                                                <input type="checkbox" id="chk_annual_leave_encash_allow" name="chk_annual_leave_encash_allow" class="js-switch form-control" data-color="#64b0f2" data-size="small" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <!-- Active -->
+                                        <div class="row">
+                                            <label for="chk_is_active" class="col-9 col-form-label">Active</label>
+                                            <div class="col-3 errorContainer pt-1">
+                                                <input type="checkbox" id="chk_is_active" name="chk_is_active" class="js-switch form-control" data-color="#64b0f2" data-size="small" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="row my-12">
+                                    <div class="col-lg-12">
+                                        <!-- Claim Applicable -->
+                                        <div class="row">
+                                            <label for="chk_travelling_claim" class="col-3 col-form-label">Claim Applicable</label>
+                                            <div class="col-4 errorContainer pt-1">
+                                                <input type="checkbox" id="chk_travelling_claim" name="chk_travelling_claim" class="js-switch form-control" data-color="#64b0f2" data-size="small" />&nbsp;<label class="col-6">Travelling</label>
+                                            </div>
+                                            <div class="col-5 errorContainer pt-1">
+                                                <input type="checkbox" id="chk_medical_claim" name="chk_medical_claim" class="js-switch form-control" data-color="#64b0f2" data-size="small" />&nbsp;<label class="col-6">Medical</label>
+                                            </div>
+                                        
+                                        </div>
+                                    </div>
+                                </div>
                             </form>
                         </div>
 
+                        <!--Leaves-->
+                        <div id="tab-contract" class="tab-pane">
+
+                            <div class="row" id="list_task_group">
+                                <div id="emp_list_block"></div>
+                            </div>
+
+                            <form class="form-horizontal" data-validate="parsley" id="employment_form">
+
+                                <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Details</h5>
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Employment Category -->
+                                        <div class="row">
+                                            <label for="dd_employment_category" class="col-4 col-form-label">Employment Category</label>
+                                            <div class="col-7 errorContainer">
+                                                <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_employment_category" required>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="txt_employment_id" />
+                                    <div class="col-lg-6">
+                                        <!-- Employment Type -->
+                                        <div class="row">
+                                            <label for="dd_employment_type" class="col-4 col-form-label">Employment Type</label>
+                                            <div class="col-7 errorContainer">
+                                                <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_employment_type" required>
+                                                </select>   
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row mt-2">
+                                    
+                                    <div class="col-lg-6">
+                                        <!-- Employment Status -->
+                                        <div class="row">
+                                            <label for="dd_emp_status" class="col-4 col-form-label">Employment Status</label>
+                                            <div class="col-7 errorContainer">
+                                                <select id="dd_emp_status" style="width:100% " class="populate" required="required">
+                                                    <option value="">Select</option>
+                                                    <option value="1">Active</option>
+                                                    <option value="0">InActive</option>
+                                                </select>   
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Commencing Date -->
+                                        <div class="row">
+                                            <label for="commencing_date" class="col-4 col-form-label">Commencing Date</label>
+                                            <div class="col-7 errorContainer">
+                                                <div class="input-group" data-placement="top" data-align="top" data-autoclose="true">
+                                                    <input type="text" class="form-control" id="commencing_date" required="required">
+                                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+
+                                <div class="row mt-2">
+                                    
+                                    <div class="col-lg-6">
+                                        <!-- Employment Start Date -->
+                                        <div class="row">
+                                            <label for="emp_start_date" class="col-4 col-form-label">Employment Start Date</label>
+                                            <div class="col-7 errorContainer">
+                                                <div class="input-group" data-placement="top" data-align="top" data-autoclose="true">
+                                                    <input type="text" class="form-control" id="emp_start_date" required="required" pattern="(0[1-9]|[12][0-9]|3[01])[-]([A-Za-z]{3})[-](19|20)\d\d">
+                                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                </div>  
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Employment End Date -->
+                                        <div class="row">
+                                            <label for="emp_end_date" class="col-4 col-form-label">Employment End Date</label>
+                                            <div class="col-7 errorContainer">
+                                                <div class="input-group" data-placement="top" data-align="top" data-autoclose="true">
+                                                    <input type="text" class="form-control" id="emp_end_date" required="required" pattern="(0[1-9]|[12][0-9]|3[01])[-]([A-Za-z]{3})[-](19|20)\d\d">
+                                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Duration of Employment -->
+                                        <div class="row">
+                                            <label for="duration_of_employment" class="col-4 col-form-label">Duration of Employment</label>
+                                            <div class="col-7">
+                                                <div class="row">
+                                                    <div class="col-6 errorContainer">
+                                                        <input type="text" required id="duration_of_employment" class="form-control" maxlength="5" onkeypress="return validateNumber(event)">
+                                                    </div>
+                                                    <div class="col-6 errorContainer">
+                                                        <select id="dd_duration" style="width:100%" class="populate">
+                                                            <option value="0">Month(s)</option>
+                                                            <option value="1">Day(s)</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <!-- Notice Period -->
+                                        <div class="row">
+                                            <label for="dd_notice_period" class="col-4 col-form-label">Notice Period</label>
+                                            <div class="col-7">
+                                                <div class="row">
+                                                    <div class="col-7 errorContainer">
+                                                        <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_notice_period" required>
+                                                        </select>   
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Employer -->
+                                        <div class="row">
+                                            <label for="dd_employer" class="col-4 col-form-label">Employer</label>
+                                            <div class="col-7 errorContainer">
+                                                <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_employer" required>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-6">
+                                        <!-- Client Contract -->
+                                        <div class="row">
+                                            <label for="dd_client_contract" class="col-4 col-form-label">Client Contract</label>
+                                            <div class="col-7 errorContainer">
+                                                <select id="dd_client_contract" class="form-control populate" data-width="100%" multiple>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-12">
+                                        <div class="row form-group" id="dd_approvals_div">
+                                            <label class="col-2 col-form-label">Approvals</label>
+                                            <div class="col-sm-10">
+                                                <select id="dd_approvals" class="form-control populate" data-width="100%" multiple>
+                                                </select>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="approval_div">
+                                    <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Approval</h5>
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="pull-right">
+                                                <button type="button" id="send_for_approval" class="btn btn-primary">Send for Approval</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-2 col-sm-offset-7">
+                                            <div id="approval_stages_div" class="pull-right">
+                                            
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="pull-right"> 
+                                                <button type="button" id="chk_is_approve" class="btn btn-primary">Approve</button>
+                                                <button type="button" id="cancel_approval" class="btn btn-danger">Cancel Approval</button>
+                                                <button type="button" id="revoke_approval" class="btn btn-success">Revoke Approval</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+
+
+                                    <div class="row justify-content-end">
+                                        <div class="col-lg-3 me-4 pe-3">
+                                            <div class="mt-3">
+                                                <input type="file" class="dropify fileupload" name="qqfile" id="fileupload_po_file" data-show-remove="false" data-allowed-file-extensions="jpg jpeg png pdf" />
+                                            </div>
+                                            <div id="files"></div>
+                                        </div>
+                                    </div> <!-- end row -->
+
+                                </div>
+                                
+                            </form>
+
+                        </div>
                         
-                        
-                        
+                        <!--Contract Details Start-->
+                        <div id="tab-clients" class="tab-pane">
+
+                            <div class="row">
+                                <div id="clients_list_block"></div>
+                            </div>
+
+                            <form class="form-horizontal" data-validate="parsley" id="client_form">
+                                <input type="hidden" id="txt_client_id" />
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Client Name -->
+                                        <div class="row">
+                                            <label for="dd_client" class="col-4 col-form-label">Client Name</label>
+                                            <div class="col-7 errorContainer">
+                                                <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_client" required>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-6">
+                                        <!-- Hiring Manager Name -->
+                                        <div class="row">
+                                            <label for="txt_hiring_manager_name" class="col-4 col-form-label">Hiring Manager Name</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text"  class="form-control" id="txt_hiring_manager_name"  />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Hiring Manager Tel.No. -->
+                                        <div class="row">
+                                            <label for="txt_hiring_manager_telno" class="col-4 col-form-label">Hiring Manager Tel.No.</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" id="txt_hiring_manager_telno" class="form-control flatpickr-input" >
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Hiring Manager Email -->
+                                        <div class="row">
+                                            <label for="txt_hiring_manager_email" class="col-4 col-form-label">Hiring Manager Email</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" id="txt_hiring_manager_email" class="form-control" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Client Invoice Contact Person -->
+                                        <div class="row">
+                                            <label for="txt_client_invoice_contact_person" class="col-4 col-form-label">Client Invoice Contact Person</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" id="txt_client_invoice_contact_person" class="form-control" >
+                                              
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Client Address -->
+                                        <div class="row">
+                                            <label for="txt_client_invoice_address_to" class="col-4 col-form-label">Client Address</label>
+                                            <div class="col-7 errorContainer">
+                                                <textarea class="form-control" id="txt_client_invoice_address_to" rows="4"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+                            </form>
+                            
+                        </div>
                         <!--Work History-->
                     </div>
                     <div class="form-group align-right" id="actions_div">
