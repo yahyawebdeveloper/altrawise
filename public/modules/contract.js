@@ -7,6 +7,7 @@ CONTRACT_ID		= '';
 CREATED_BY		= '';
 CLIENT_ID		= '';
 CURRENT_PATH	= 	'../../';
+var UI_DATE_FORMAT = 'DD-MMM-YYYY';
 var btn_onboard_save;
 EMPLOYEE_NAME   = '';
 var FILE_UPLOAD_PATH        = ''; //file upload mandatory field
@@ -190,7 +191,8 @@ $.fn.reset_form = function(form)
 			$('#approval_div').hide();
 
 			$('#txt_duration').val('');
-			$('#dd_assignee') 	.val('').multiselect('reload');
+			//$('#dd_assignee') 	.val('').multiselect('reload');
+			$('#dd_assignee') 	.val('');
 
 			$('#btn_create_employee').hide();
 			$('#child_info').hide();
@@ -226,9 +228,9 @@ $.fn.reset_form = function(form)
 			$('#dd_emp_status').val('').change();
 			$('#dd_approvals').val('').change();
 
-			$('#dd_client_contract') 	.val('').multiselect('reload');
-			
-			$('#employment_form').parsley().destroy();
+			//$('#dd_client_contract') 	.val('').multiselect('reload');
+			$('#dd_client_contract') 	.val('');
+			//$('#employment_form').parsley().destroy();
 			$.fn.set_validation_form();
 		}
 		else if(form == 'client_form')
@@ -260,7 +262,7 @@ $.fn.reset_form = function(form)
 			$('#txt_fee_descr').val('');
 			$('#txt_total_contract_value').val('');
 
-			$('#client_form').parsley().destroy();
+			//$('#client_form').parsley().destroy();
 			$.fn.set_validation_form();
 			
 		}
@@ -314,11 +316,12 @@ $.fn.reset_form = function(form)
             $('#txt_reply')		.prop('readonly', true);
             $('#div_reply')		.hide();
             $('#assign_div')	.hide();
-            $('#dd_assignee') 	.val('').multiselect('reload');
+           // $('#dd_assignee') 	.val('').multiselect('reload');
+		   $('#dd_assignee') 	.val('');
         }
     }
     catch(err)
-    {
+    { //console.log(err);
         $.fn.log_error(arguments.callee.caller,err.message);
     }
 };
@@ -329,7 +332,7 @@ $.fn.populate_detail_form = function(contract_no)
 	{	
 		$.fn.show_hide_form	('EDIT');
 	 	$('#h4_primary_no').text('Contract Number : ' + contract_no);
-			
+		 $.fn.intialize_fileupload('fileupload_reply', 'files_reply');
 	 	$.fn.fetch_data
 		(
 			$.fn.generate_parameter('get_contract_details',{contract_no : contract_no}),	
@@ -470,7 +473,7 @@ $.fn.populate_detail_form = function(contract_no)
 						$('#chk_travelling_claim').prop('checked',parseInt(cost_json.travelling_claim));
 						$('#chk_medical_claim').prop('checked',parseInt(cost_json.medical_claim));
 					}
-					
+					$("#trail").attr("data-name",SESSIONS_DATA.name);
    					$.fn.populate_allowance_list_form(return_data.data.allowance);
 					$.fn.populate_dependent_list_form(return_data.data.dependent);
 					$.fn.populate_reference_list_form(return_data.data.reference);
@@ -484,6 +487,7 @@ $.fn.populate_detail_form = function(contract_no)
 					$.fn.show_hide_components(data);
 					ATTACHMENTS = return_data.data.attachments;
 					CONTRACT_DETAILS = return_data.data;
+					getInitials();
 				}
 			},true
 		);	
@@ -722,7 +726,7 @@ $.fn.save_edit_form = function()
 
 	}
 	catch(err)
-	{
+	{//console.log(err);
 		$.fn.log_error(arguments.callee.caller,err.message);
 	}
 };
@@ -876,8 +880,8 @@ $.fn.populate_employment_detail = function(element_id)
 		$('#dd_notice_period').val(json_field.notice_period).change();
 		$('#dd_employer').val(json_field.employer_id).change();
 
-		$('#dd_client_contract').val(json_field.client_contract_id.split(",")).multiselect( 'reload' );
-		
+		//$('#dd_client_contract').val(json_field.client_contract_id.split(",")).multiselect( 'reload' );
+		$('#dd_client_contract').val(json_field.client_contract_id.split(",")).change();
 		$('#dd_emp_status').val(json_field.is_active).change();
 		
 		if(json_field.approvals)
@@ -974,7 +978,7 @@ $.fn.populate_client_list_form = function(data)
 			}
 			$('#clients_list_block').append(row);
 			$("#dd_client_contract").append(client_contract);
-			$('#dd_client_contract').multiselect( 'reload' );
+			//$('#dd_client_contract').multiselect( 'reload' );
 		}
 	}
 	catch(err)
@@ -2052,7 +2056,7 @@ $.fn.get_contract_config = function()
 			function (return_data)
 			{
 				if (return_data.code == 0)
-				{
+				{ //console.log(return_data);
 					$.fn.populate_file_blocks(return_data.data.file_uploads);
 					$.fn.populate_dd_values('dd_approvals', return_data.data.approvals);
 					$.fn.populate_onboarding_status(return_data.data.contract_status);
@@ -2090,7 +2094,7 @@ $.fn.get_contract_config = function()
 
 					$.fn.populate_dd('dd_sales_person', return_data.data.approvals);
 
-					$.fn.populate_dd('dd_assignee', return_data.data.approvals);
+					$.fn.populate_dd_values('dd_assignee', return_data.data.approvals);
 
 					$.fn.populate_dd('dd_general_skills', return_data.data.skills_general, true, false, false);
 					$.fn.populate_dd('dd_specific_skills', return_data.data.skills_specific, true, false, false);
@@ -2102,7 +2106,7 @@ $.fn.get_contract_config = function()
 		);
     }
     catch(err)
-    {
+    {//console.log(err);
         $.fn.log_error(arguments.callee.caller,err.message);
     }
 };
@@ -2136,8 +2140,8 @@ $.fn.populate_country = function (obj_id, data, empty_it = true, is_search = fal
 	}
 	catch (err)
 	{
-		console.log(err.message);
-		// $.fn.log_error(arguments.callee.caller, err.message);
+		//console.log(err.message);
+		 $.fn.log_error(arguments.callee.caller, err.message);
 	}
 };
 
@@ -2236,6 +2240,16 @@ $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
             }
         }
 
+		if(element_id == 'dd_assignee') {
+            for (let item of dd_data) {
+                
+                $('#dd_assignee').append(`<option 
+                                                 data-type="category" 
+                                                 value="${item.id}">${item.descr}
+                                                 </option>`
+                                                );
+            }
+        }
         // if(is_search)
         // {
         //     $('#'+element_id).append(`<option value="">All</option>`);
@@ -3508,14 +3522,14 @@ $.fn.populate_comments_form = function (data)
 		// 	$('#dd_assignee').append(row);
 		// }
 		
-		$('#dd_assignee') 	.val('').multiselect('reload');
-
+		//$('#dd_assignee').val('').multiselect('reload');
+		$('#dd_assignee').val('');
 		if(json_field !== false)
 		{
 			if(json_field.assigned_to_id)
 	        {
-	        	$('#dd_assignee')   .val(json_field.assigned_to_id.split(",")).multiselect( 'reload' );
-
+	        	//$('#dd_assignee')   .val(json_field.assigned_to_id.split(",")).multiselect( 'reload' );
+				$('#dd_assignee')   .val(json_field.assigned_to_id.split(",")).change();
 	        	//enable comments
 	        	let assignees = json_field.assigned_to_id.split(",");
 	        	if($.inArray(SESSIONS_DATA.emp_id, assignees) !== -1)
@@ -3532,7 +3546,7 @@ $.fn.populate_comments_form = function (data)
 
     }
 	catch(err)
-	{
+	{ //console.log(err);
 		$.fn.log_error(arguments.callee.caller,err.message);
 	}
 };
@@ -3570,7 +3584,7 @@ $.fn.add_assignee = function()
 		
 	}
 	catch(err)
-	{
+	{//console.log(err);
 		$.fn.log_error(arguments.callee.caller,err.message);
 	}
 };
@@ -3623,7 +3637,7 @@ $.fn.add_edit_comment_reply = function ()
                 	
                 	if($('#files_reply .file-upload.new').length > 0)
                     {   
-                    	$.fn.populate_comment_row(return_data.data.details);
+                    	/* $.fn.populate_comment_row(return_data.data.details);
                         $.fn.upload_file('files_reply','contract_no',CONTRACT_ID,
                         attachment_data,function(total_files, total_success,filename, attach_return_data)
                         {
@@ -3633,14 +3647,32 @@ $.fn.add_edit_comment_reply = function ()
                                 btn_comments_reply.stop();
                                 $.fn.populate_fileupload(attach_return_data,'comment-'+COMMENT_ID, true);
                             }
-                        },false);
-                    }
-                    else
-                    {	
-                    	$('#txt_reply')     .val('');
-                    	btn_comments_reply.stop();
-						$.fn.populate_comment_row(return_data.data.details);
-                    }
+                        },false); */
+						$.fn.upload_file(`files_reply`, 'contract_no', CONTRACT_ID,
+						attachment_data, function (total_files, total_success, filename, return_data)
+							{
+								if (total_files == total_success)
+								{   
+									// if(file_uploaded == files_count)
+									// {
+										/* $.fn.reset_form('sub_form');
+										$.fn.get_reply_list();
+										$("#btn_reply").removeClass("ladda-button"); */
+										$('#txt_reply')     .val('');
+						btn_comments_reply.stop();
+						$.fn.populate_fileupload(return_data,'comment-'+COMMENT_ID, true);
+									// }
+									// file_uploaded++;
+								}
+							}, false, btn_save);
+					}
+					else
+					{	
+						$('#txt_reply')     .val('');
+						btn_comments_reply.stop();
+						$.fn.populate_fileupload(return_data,'comment-'+COMMENT_ID, true);
+						//$.fn.populate_comment_row(return_data.data.details);
+					}
                 }
             },false
         );
@@ -3693,6 +3725,7 @@ $.fn.populate_comments_list = function (data)
     }
 }
 
+
 $.fn.populate_comment_row = function (row_data, is_list = false)
 {
     try
@@ -3708,16 +3741,15 @@ $.fn.populate_comment_row = function (row_data, is_list = false)
 
         let date = moment(row_data.created_date).format(UI_DATE_FORMAT + " h:ma");
 
-        row += `<ul class="panel-comments">
-                    <li>
-                        <img src="${photo}" alt="profile">
-                        <div class="content">
-                            <span class="commented"><a href="#">${row_data.name ? row_data.name : EMPLOYEE_NAME}</a> enquired on <a href="#">${date}</a></span>
-                            ${row_data.descr} <br/><br/>
-                            <div id="${'comment-'+COMMENT_ID}"></div>
-                        </div>
-                    </li>
-                </ul>`;      
+        row += `
+				<div class="d-flex align-items-start mb-3">
+					<div style="margin-right:0.75rem" class="avatar-initials small" width="30" height="30" data-name="${SESSIONS_DATA.name}" ></div>
+					<div class="w-100">
+						<h5 class="mt-0 mb-2"><a href="contacts-profile.html" class="text-reset">${row_data.name}</a> <small class="text-muted">${date}</small></h5>
+						${row_data.descr}
+						<div id="${'comment-'+COMMENT_ID}"" class="mt-2"></div>
+					</div>
+				</div>`;      
         if(is_list)
         {
         	$('#div_reply').append(row);
@@ -4679,7 +4711,7 @@ $.fn.bind_command_events = function()
 		
     }
     catch(err)
-    {
+    {//console.log(err);
         $.fn.log_error(arguments.callee.caller,err.message);
     }
 };
@@ -4892,6 +4924,28 @@ $.fn.month_diff = function (startDate, endDate)
 	let diffResult = Math.round((endDate - startDate) / (1000 * 60 * 60 * 24));
 	let months = (diffResult / 30.436875).toFixed(1);
 	return months;
+}
+
+function getInitials(){
+	var colors = ["#1abc9c", "#2ecc71", "#3498db", "#9b59b6", "#34495e", "#16a085", "#27ae60", "#2980b9", "#8e44ad", "#2c3e50", "#f1c40f", "#e67e22", "#e74c3c", "#95a5a6", "#f39c12", "#d35400", "#c0392b", "#bdc3c7", "#7f8c8d"];
+	$( ".avatar-initials" ).each(function( index ) {
+		
+			var avatarElement = $(this);
+		    var avatarWidth = avatarElement.attr('width');
+			var avatarHeight = avatarElement.attr('height');
+			var name = avatarElement.attr('data-name');
+			var arr = name.split(' ');
+			if( arr.length == 1 )
+				name = name+" "+name;
+			var initials = name.split(' ')[0].charAt(0).toUpperCase() + name.split(" ")[1].charAt(0).toUpperCase();
+			var charIndex = initials.charCodeAt(0) - 65;
+			var colorIndex = charIndex % 19;
+
+		avatarElement.css({
+		  'background-color': colors[colorIndex],
+		})
+		.html(initials);
+	});
 }
 
 
