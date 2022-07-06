@@ -1787,9 +1787,8 @@ $.fn.add_reference = function()
 								</a>
 								<input type='hidden' value='${data_json}' class='ref_data'>
 							</td>
-							
-							<td>${data.name}dd</td>
-							<td>${data.contact_no}ddd</td>
+							<td>${data.name}</td>
+							<td>${data.contact_no}</td>
 							<td>${data.email}</td>
 							<td>${data.company_name}</td>
 							<td>${data.designation}</td>
@@ -2283,17 +2282,18 @@ $.fn.populate_file_blocks = function(data)
     {   
 		let attachment_block = '';
 		
-		let send_offer       = `<button class="btn btn-primary send-offer">
+		let send_offer       = `<button class="btn btn-primary send-offer mb-1">
 									Send Offer
-								</button>`;
+								</button><br>`;
 
     	for(let i = 0; i < data.length; i++)
 		{	
-			if(i % 2 != 0)
+			/* if(i % 2 != 0)
 			{
-				attachment_block += `<div class="row">`;
-			}
-	        attachment_block += `<div class="col-sm-6 doc_upload" id="${data[i]['name']}">
+				attachment_block += `<div class="">`;
+			} */
+			//attachment_block += `<div class="row">`;
+	        attachment_block += `<div class="col-sm-6 doc_upload mb-1" id="${data[i]['name']}">
 					                    <div class="dropzone needsclick dz-clickable ${data[i]['is_mandatory'] == 1 ? 'dropzone-mandatory' : 'dropzone-optional'}">
 					                      <div class="dz-message needsclick">
 					                        <div class="row">
@@ -2304,7 +2304,7 @@ $.fn.populate_file_blocks = function(data)
 												  <div class="col-sm-6">
 													  <div class="pull-right">
 													  	${data[i]['descr'] == 'Offer Letter' ? send_offer : ''}
-														<button type="submit" class="btn btn-start fileinput-button">
+														<button type="submit" class="btn btn-info fileinput-button">
 															Browse
 															<input id="fileupload_${data[i]['name']}" type="file" name="files[]" >
 														</button>
@@ -2321,10 +2321,10 @@ $.fn.populate_file_blocks = function(data)
 					                    </div>
 					                </div>`;
 			
-			if(i % 2 != 0)
+			/* if(i % 2 != 0)
 			{
 				attachment_block += `</div>`;
-			}
+			} */
 		}
 
 		$('#attachments-block').html(attachment_block);
@@ -3623,6 +3623,7 @@ $.fn.add_edit_comment_reply = function ()
     		contract_no	: CONTRACT_ID,
     		comments    : $('#txt_reply').val().replace(/(?:\r\n|\r|\n)/g,'<br/>'),
     		emp_id      : SESSIONS_DATA.emp_id,
+			emp_name    : SESSIONS_DATA.name,
         }
 
         $.fn.write_data
@@ -3630,62 +3631,44 @@ $.fn.add_edit_comment_reply = function ()
             $.fn.generate_parameter('add_edit_contract_comments', data),
             function(return_data)
             {
-                if (return_data.data.details)  // NOTE: Success
-                {
-                	let COMMENT_ID		= return_data.data.details.id;
-                	
-                	let attachment_data =   
-                    {
-                        id          	: '',
-                        primary_id  	: CONTRACT_ID,
-                        secondary_id	: COMMENT_ID,
-                        module_id   	: MODULE_ACCESS.module_id,
-                        filename    	: '',
-                        filesize    	: "0",
-                        json_field  	: {},
-                        emp_id      	: SESSIONS_DATA.emp_id
-                    };
-                	
-                	if($('#files_reply .file-upload.new').length > 0)
-                    {   
-                    	/* $.fn.populate_comment_row(return_data.data.details);
-                        $.fn.upload_file('files_reply','contract_no',CONTRACT_ID,
-                        attachment_data,function(total_files, total_success,filename, attach_return_data)
-                        {
-                        	if(total_files == total_success)
-                            {   
-                                $('#txt_reply').val('');
-                                btn_comments_reply.stop();
-                                $.fn.populate_fileupload(attach_return_data,'comment-'+COMMENT_ID, true);
-                            }
-                        },false); */
-						$.fn.upload_file(`files_reply`, 'contract_no', CONTRACT_ID,
-						attachment_data, function (total_files, total_success, filename, return_data)
+				if (return_data.data.details)
+					{
+						let COMMENT_ID		= return_data.data.details.id;
+							let attachment_data =   
+							{
+								id          	: '',
+								primary_id  	: CONTRACT_ID,
+								secondary_id	: COMMENT_ID,
+								module_id   	: MODULE_ACCESS.module_id,
+								filename    	: '',
+								filesize    	: "0",
+								json_field  	: {},
+								emp_id      	: SESSIONS_DATA.emp_id
+							};
+							
+						if ($('#files_reply .file-upload.new').length > 0)
+						{
+							$.fn.populate_comment_row(return_data.data.details);
+							$.fn.upload_file('files_reply','contract_no',CONTRACT_ID,
+								attachment_data,function(total_files, total_success,filename, attach_return_data)
 							{
 								if (total_files == total_success)
-								{   
-									// if(file_uploaded == files_count)
-									// {
-										/* $.fn.reset_form('sub_form');
-										$.fn.get_reply_list();
-										$("#btn_reply").removeClass("ladda-button"); */
-										$('#txt_reply')     .val('');
-						btn_comments_reply.stop();
-						$.fn.populate_fileupload(return_data,'comment-'+COMMENT_ID, true);
-									// }
-									// file_uploaded++;
+								{
+									$('#txt_reply').val('');
+									$.fn.populate_fileupload(attach_return_data, `comment-`+COMMENT_ID, true);
+									btn_comments_reply.stop();
 								}
 							}, false, btn_save);
+						} 
+						else
+						{	
+							$('#txt_reply')     .val('');
+							btn_comments_reply.stop();
+							$.fn.populate_comment_row(return_data.data.details);
+						}
+						$.fn.show_right_success_noty('Data has been recorded successfully');
 					}
-					else
-					{	
-						$('#txt_reply')     .val('');
-						btn_comments_reply.stop();
-						$.fn.populate_fileupload(return_data,'comment-'+COMMENT_ID, true);
-						//$.fn.populate_comment_row(return_data.data.details);
-					}
-                }
-            },false
+            }
         );
     } 
     catch (e) 
