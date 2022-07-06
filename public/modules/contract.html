@@ -10,7 +10,9 @@
 <link href="assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
 <link href="./assets/libs/jquery-fileupload/css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
 <!-- third party css end -->
-
+<style>
+    .actiondiv{display: none;}
+</style>
 <!-- List Block -->
 <div class="row" id="list_div">
     <!-- start page title -->
@@ -1805,9 +1807,21 @@
                         <!--Contract Details Start-->
                         <div id="tab-clients" class="tab-pane">
 
-                            <div class="row">
-                                <div id="clients_list_block"></div>
+                            <div class="row mt-2">
+                                <div  class="col-lg-9" id="clients_list_block">
+                                </div>
+
+                                <div class="pull-right col-lg-3">
+                                    <a href="#" id="btn_client_reset" class="btn btn-light waves-effect waves-light m-1"><i class="fe-refresh-cw me-1"></i> Reset</a>
+                                    <button type="button" id="btn_client_add" class="btn btn-success">
+                                        <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+                                        <span class="hidden-xs">Add</span>
+                                    </button>
+                                </div>
                             </div>
+                            
+                            <div class="clearfix"></div>
+                            <hr>
 
                             <form class="form-horizontal" data-validate="parsley" id="client_form">
                                 <input type="hidden" id="txt_client_id" />
@@ -1827,9 +1841,9 @@
                                     <div class="col-lg-6">
                                         <!-- Hiring Manager Name -->
                                         <div class="row">
-                                            <label for="txt_hiring_manager_name" class="col-4 col-form-label">Hiring Manager Name</label>
+                                            <label for="txt_hiring_manager_name" class="col-4 col-form-label" style="width:34%;">Hiring Manager Name</label>
                                             <div class="col-7 errorContainer">
-                                                <input type="text"  class="form-control" id="txt_hiring_manager_name"  />
+                                                <input type="text"  class="form-control" id="txt_hiring_manager_name"  required >
                                             </div>
                                         </div>
                                     </div>
@@ -1876,18 +1890,343 @@
                                         <div class="row">
                                             <label for="txt_client_invoice_address_to" class="col-4 col-form-label">Client Address</label>
                                             <div class="col-7 errorContainer">
-                                                <textarea class="form-control" id="txt_client_invoice_address_to" rows="4"></textarea>
+                                                <textarea class="form-control" id="txt_client_invoice_address_to"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Client Country -->
+                                        <div class="row">
+                                            <label for="dd_client_country" class="col-4 col-form-label">Client Country</label>
+                                            <div class="col-7 errorContainer">
+                                                <select id="dd_client_country" style="width:100%" class="form-select populate" required>
+                                                  
+                                                </select>
+                                              
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Client Location -->
+                                        <div class="row">
+                                            <label for="txt_client_invoice_address_to" class="col-4 col-form-label">Client Location</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text"  class="form-control" id="txt_client_location" value="" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Working Days -->
+                                        <div class="row">
+                                            <label for="dd_working_days" class="col-4 col-form-label">Working Days</label>
+                                            <div class="col-7 errorContainer">
+                                                <select id="dd_working_days" style="width:100%" class="form-select populate" required>
+                                                  
+                                                </select>
+                                              
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Overtime Rate -->
+                                        <div class="row">
+                                            <label for="txt_overtime_rate" class="col-4 col-form-label">Overtime Rate</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text"  class="form-control" id="txt_overtime_rate" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Annual Leave By Client -->
+                                        <div class="row">
+                                            <label for="txt_annual_leave_by_client" class="col-4 col-form-label">Annual Leave By Client</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="number" class="form-control marginBottom10px" id="txt_annual_leave_by_client" max="30" min="0" onchange="$.fn.check_max_min(this)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Medical Leave By Client -->
+                                        <div class="row">
+                                            <label for="txt_overtime_rate" class="col-4 col-form-label">MedicalLeave By Client</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="number" class="form-control marginBottom10px" id="txt_medical_leave_by_client" max="30" min="0" onchange="$.fn.check_max_min(this)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Billing Details</h5>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Currency -->
+                                        <div class="row">
+                                            <label for="dd_billing_currency" class="col-4 col-form-label">Currency</label>
+                                            <div class="col-7 errorContainer">
+                                                <select id="dd_billing_currency" style="width:100%" class="form-select populate" >
+                                                  
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Medical Leave By Client -->
+                                        <div class="row">
+                                            <label for="dd_billing_type" class="col-4 col-form-label">Billing Type<</label>
+                                            <div class="col-7 errorContainer">
+                                                <select id="dd_billing_type" style="width:100%" class="form-select populate" >
+                                                    <option value="0">Monthly</option>
+                                                    <option value="1">Daily</option>
+                                                    <option value="1">One Time</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Billing Cycle -->
+                                        <div class="row">
+                                            <label for="dd_billing_cycle" class="col-4 col-form-label">Billing Cycle</label>
+                                            <div class="col-7 errorContainer">
+                                                <select id="dd_billing_cycle" style="width:100%" class="form-select populate" >
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Billing Start Date -->
+                                        <div class="row">
+                                            <label for="txt_overtime_rate" class="col-4 col-form-label">Billing Start Date</label>
+                                            <div class="col-7 errorContainer">
+                                                <div class="input-group" data-placement="top" data-align="top" data-autoclose="true">
+                                                    <input type="text" class="form-control flatpickr-input" id="billing_start_date" placeholder="dd-mm-yyyy" readonly="readonly" required>
+                                                    <div class="input-group-text"><i class="mdi mdi-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Billing End Date -->
+                                        <div class="row">
+                                            <label for="dd_billing_cycle" class="col-4 col-form-label">Billing End Date</label>
+                                            <div class="col-7 errorContainer">
+                                                <div class="input-group" data-placement="top" data-align="top" data-autoclose="true">
+                                                    <input type="text" class="form-control flatpickr-input" id="billing_end_date" placeholder="dd-mm-yyyy" readonly="readonly" required>
+                                                    <div class="input-group-text"><i class="mdi mdi-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Billing Amount -->
+                                        <div class="row">
+                                            <label for="txt_billing_amount" class="col-4 col-form-label">Billing Amount</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" class="form-control marginBottom10px" id="txt_billing_amount">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- GST/SST -->
+                                        <div class="row">
+                                            <label for="dd_gst_sst" class="col-4 col-form-label">GST/SST</label>
+                                            <div class="col-4 errorContainer">
+                                                <select id="dd_gst_sst" style="width:100%" class="form-select populate" >
+                                                    <option value="0" selected="selected">0%</option>
+                                                    <option value="6">6%</option>
+                                                    <option value="10">10%</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-3 errorContainer">
+                                                <input type="text" class="form-control marginBottom10px" id="txt_billing_amount_with_gst" readonly="readonly">
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- One Time Fees  -->
+                                        <div class="row">
+                                            <label for="txt_one_time_fees" class="col-4 col-form-label">One Time Fees </label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" class="form-control marginBottom10px" id="txt_one_time_fees" onkeyup="$.fn.fill_amount_with_gst(this.value)" maxlength="10" onkeypress="return validateNumber(event)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Fee Descr.-->
+                                        <div class="row">
+                                            <label for="txt_fee_descr" class="col-4 col-form-label">Fee Descr.</label>
+                                            <div class="col-7 errorContainer">
+                                                <textarea class="form-control marginBottom10px" id="txt_fee_descr" maxlength="999"></textarea>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Total contract value -->
+                                        <div class="row">
+                                            <label for="txt_one_time_fees" class="col-4 col-form-label">Total contract value</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" class="form-control marginBottom10px" id="txt_total_contract_value" maxlength="10" onkeypress="return validateNumber(event)" readonly="readonly">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- No. of Month.-->
+                                        <div class="row">
+                                            <label for="txt_fee_descr" class="col-4 col-form-label">No. of Month.</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" class="form-control marginBottom10px" id="txt_billing_of_month" maxlength="10" onkeypress="return validateNumber(event)" readonly="readonly">
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+
                             </form>
                             
                         </div>
-                        
-                        
+                        <!--End of Contract with clients-->
+
+                        <!--Start Reference-->
+                        <div id="tab-ref" class="tab-pane">
+                           
+                            <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">References</h5>
+                            <div class="row mt-2">
+                                <div class="pull-right" class="col-sm-12" style="text-align:right">
+                                    <button type="button" id="btn_add_pic" class="btn btn-success" onclick="$.fn.contact_form()">
+                                        <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+                                        <span class="hidden-xs">Add New Reference</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row mt-2" id="new_reference_div" style="display:none;margin-top: 20px;margin-left: 10px;margin-right: -2px;">
+                                <form class="form-horizontal" id="reference_form">
+                                    <div class="row mt-2">
+                                        <div class="col-lg-4">
+                                            <!-- Name -->
+                                            <div class="row">
+                                                <label for="txt_one_time_fees" class="col-4 col-form-label">Name</label>
+                                                <div class="col-8 errorContainer">
+                                                    <input type="text" class="form-control marginBottom10px" id="txt_ref_name" data-required="true">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <!-- Contact No.-->
+                                            <div class="row">
+                                                <label for="txt_fee_descr" class="col-4 col-form-label">Contact&nbsp;No</label>
+                                                <div class="col-8 errorContainer">
+                                                    <input type="text" class="form-control marginBottom10px" id="txt_ref_contact_no" data-required="true">
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <!-- Email -->
+                                            <div class="row">
+                                                <label for="txt_ref_email" class="col-4 col-form-label">Email</label>
+                                                <div class="col-8 errorContainer">
+                                                    <input type="text" class="form-control marginBottom10px" id="txt_ref_email" data-required="true">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                      
+                                        <div class="col-lg-4">
+                                            <!--Company.-->
+                                            <div class="row">
+                                                <label for="txt_ref_company" class="col-4 col-form-label">Company</label>
+                                                <div class="col-8 errorContainer">
+                                                    <input type="text" class="form-control marginBottom10px" id="txt_ref_company" data-required="true">
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <!-- Designation -->
+                                            <div class="row">
+                                                <label for="txt_ref_designation" class="col-4 col-form-label">Designation</label>
+                                                <div class="col-8 errorContainer">
+                                                    <input type="text" class="form-control marginBottom10px" id="txt_ref_designation" data-required="true">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <!--Relationship.-->
+                                            <div class="row">
+                                                <label for="dd_ref_relationship" class="col-4 col-form-label">Relationship</label>
+                                                <div class="col-8 errorContainer">
+                                                    <select id="dd_ref_relationship" style="width:100%" class="populate">
+                                                            
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-lg-12">
+                                            <!-- Designation -->
+                                            <div class="row">
+                                                <label for="txt_ref_designation" class="col-1 col-form-label" style="width:11%;">Remarks</label>
+                                                <div class="col-10 errorContainer" style="width:89%;">
+                                                    <textarea id="txt_ref_remarks" class="form-control"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <br />
+                                    <div class="rpw mt-2">
+                                    <div class="pull-right" class="col-sm-12" style="text-align:right">
+                                        <button id="btn_reference_cancel" type="button" class="btn btn-primary  waves-effect waves-light" data-dismiss="modal">Cancel</button>
+                                        <button id="btn_reference_add" data-mode="add" type="button" class="btn btn-success  waves-effect waves-light" data-style="expand-left" data-spinner-color="#000000">Add</button>
+                                    </div>
+                                </div>
+                                </form>
+                             </div> 
+                             <div class="panel-body">
+                                <table class="table table-hover">
+                                    <thead class="border-top-2px">
+                                        <tr>
+                                            <th></th>
+                                            <th>Name</th>
+                                            <th>Contact No</th>
+                                            <th>Email</th>
+                                            <th>Company</th>
+                                            <th>Designation</th>
+                                            <th>Relationship</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table_ref_list">
+
+                                    </tbody>
+                                </table>
+                            </div>      
+                              
+                        </div>
+                         <!--End Reference-->
+
                         <!-- Enquiry -->
                         <div id="tab-enquiry" class="tab-pane">
                             <div class="form-group" id="assign_div">
@@ -1926,7 +2265,7 @@
                         <!--Work History-->
                     </div>
                     <div><br></div>
-                    <div class="form-group align-right" id="actions_div">
+                    <div class="form-group align-right actiondiv" id="actions_div">
                         <button id="btn_cancel" type="button" class="btn btn-primary waves-effect waves-light " data-style="expand-left"><i class="fa fa-times"></i> Cancel</button>&nbsp;
                         <button id="btn_save" type="button" class="btn btn-success  waves-effect waves-light " data-style="expand-left"><i class="fa fa-check"></i> Save</button>
                     </div>

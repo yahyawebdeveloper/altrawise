@@ -780,7 +780,7 @@ $.fn.save_edit_employment_form = function()
 							</div>
 							<div class="emp-body">
 								<div class="text-center"></div>
-								<small style="margin-top: 7px;"><span class="fa fa-calendar fa-fw"></span> ${data.emp_start_date} - ${data.emp_end_date}</small>
+								<small style="margin-top: 7px;"><span class="fa fa-calendar fa-fw" style="color:blue;"></span> ${data.emp_start_date} - ${data.emp_end_date}</small>
 							</div>
 						</a>
 					</div>`;
@@ -834,7 +834,7 @@ $.fn.populate_employment_list_form = function(data)
 							</div>
 							<div class="emp-body">
 								<div class="text-center"></div>
-								<small style="margin-top: 7px;"><span class="fa fa-calendar fa-fw"></span> ${json_field.emp_start_date} - ${json_field.emp_end_date}</small>
+								<small style="margin-top: 7px;"><span class="fa fa-calendar fa-fw"  style="color:blue;"></span> ${json_field.emp_start_date} - ${json_field.emp_end_date}</small>
 							</div>
 						</div>
 					</div>`;
@@ -961,13 +961,13 @@ $.fn.populate_client_list_form = function(data)
 				client_name = data[i].client_name;
 				let json_field 	= $.fn.get_json_string(data[i].json_field);
 				client_contract += `<option value="${data[i].id}">${client_name}</option>`; 
-				row += `<div class="col-md-2 client-block-container" id="client-container-${data[i].id}">
+				row += `<div class="col-md-2 client-block-container" id="client-container-${data[i].id}" style="box-shadow: 0 2px 4px 0 rgb(0 0 0 / 10%);width:25%;padding:6px;">
 						<div class="client-block">
 							<div class="client-heading">
 								<input type='hidden' value='${data[i].id}' class='txt_client_id'>
 								<input type='hidden' value='${data_val}' class='client_data'>
 								<div class="client-title pull-left">${client_name}</div>
-								<div class="pull-right remove-client"><button class="btn btn-danger btn-xs"><i class="fa fa-times"></i></button></div>
+								<div class="pull-right remove-client"><i class="mdi mdi-delete customized" aria-hidden="true" title="Delete file"></i></div>
 							</div>
 							<div class="client-body">
 								<div class="text-center"></div>
@@ -1118,7 +1118,7 @@ $.fn.save_edit_client_form = function()
 								<input type='hidden' value='${client_id}' class='txt_client_id'>
 								<input type='hidden' value=${data_json} class='client_data'>
 								<div class="client-title pull-left">${client}</div>
-								<div class="pull-right remove-client"><button class="btn btn-danger btn-xs"><i class="fa fa-times"></i></button></div>
+								<div class="pull-right remove-client"><button class="btn btn-danger btn-xs"><i class="fas fa-trash-alt"></i></button></div>
 							</div>
 							<div class="client-body">
 								<div class="text-center"></div>
@@ -1673,7 +1673,7 @@ $.fn.populate_reference_list_form = function(data)
 				row       +=  `<tr>
 									<td class='td-shrink'>
 										<a onclick='$.fn.delete_reference($(this));' data='${data_json}'>
-											<i class='fa fa-trash-o' aria-hidden='true'></i>
+										<i class="mdi mdi-delete customized" aria-hidden="true"></i>
 										</a>
 										<input type='hidden' value='${data_json}' class='ref_data'>
 									</td>
@@ -1781,14 +1781,15 @@ $.fn.add_reference = function()
 		};
 		let data_json = JSON.stringify(data);
 		let row     =  `<tr>
-							<td class='td-shrink'>
+							<td>
 								<a onclick='$.fn.delete_reference($(this));' data='${data_json}'>
-									<i class='fa fa-trash-o' aria-hidden='true'></i>
+								  <i class="mdi mdi-delete customized" aria-hidden="true"></i>
 								</a>
 								<input type='hidden' value='${data_json}' class='ref_data'>
 							</td>
-							<td>${data.name}</td>
-							<td>${data.contact_no}</td>
+							
+							<td>${data.name}dd</td>
+							<td>${data.contact_no}ddd</td>
 							<td>${data.email}</td>
 							<td>${data.company_name}</td>
 							<td>${data.designation}</td>
@@ -2095,7 +2096,7 @@ $.fn.get_contract_config = function()
 					$.fn.populate_dd('dd_sales_person', return_data.data.approvals);
 
 					$.fn.populate_dd_values('dd_assignee', return_data.data.approvals);
-
+					
 					$.fn.populate_dd('dd_general_skills', return_data.data.skills_general, true, false, false);
 					$.fn.populate_dd('dd_specific_skills', return_data.data.skills_specific, true, false, false);
 
@@ -2246,6 +2247,16 @@ $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
                 $('#dd_assignee').append(`<option 
                                                  data-type="category" 
                                                  value="${item.id}">${item.descr}
+                                                 </option>`
+                                                );
+            }
+        }
+		if(element_id == 'dd_client') {
+            for (let item of dd_data.client) {
+                
+                $('#dd_client').append(`<option 
+                                                 data-type="category" 
+                                                 value="${item.id}">${item.name}
                                                  </option>`
                                                 );
             }
@@ -3953,18 +3964,20 @@ $.fn.bind_command_events = function()
 				$.fn.open_page('0&user_id=' + $(this).find(":button").val(), '../users/users.php')
 			}
 		});
-
+       
     	//Hide common update toolbar for respective tabs
-		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) 
+		$('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) 
 		{
 			let target = $(e.target).attr("href") // activated tab
+			
 			if(target == '#tab-contract' || target == '#tab-clients' || target == '#tab-ref')
 			{
 				$('#actions_div').hide();
+				
 			}
 			else
 			{	
-				$('#actions_div').show();
+				$('#actions_div').hide();
 			}
 		});
 
@@ -4699,7 +4712,8 @@ $.fn.bind_command_events = function()
         $('.nav-tabs a').on('click', function(e)
         {
         	e.preventDefault();
-        	if($(this).attr('href') == '#tab-five')
+			
+        	if($(this).attr('href') == '#tab-five' || $(this).attr('href') == '#tab-clients' || $(this).attr('href') == '#tab-ref')
         	{
         		$('#actions_div').hide();
         	}
@@ -4905,10 +4919,11 @@ $.fn.get_contract_add_request_dropdown = function()
         ( 
             $.fn.generate_parameter('get_contract_search_dropdown', data),
             function(return_data)
-            {
+            {//console.log(return_data.data.client);
                 if (return_data.code == 0)
                 {
                 	$.fn.populate_dd_values('dd_created_by_search', return_data.data);
+					$.fn.populate_dd_values('dd_client', return_data.data);
                 }
             },true
         );
