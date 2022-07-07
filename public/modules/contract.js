@@ -961,7 +961,7 @@ $.fn.populate_client_list_form = function(data)
 				client_name = data[i].client_name;
 				let json_field 	= $.fn.get_json_string(data[i].json_field);
 				client_contract += `<option value="${data[i].id}">${client_name}</option>`; 
-				row += `<div class="col-md-2 client-block-container" id="client-container-${data[i].id}" style="box-shadow: 0 2px 4px 0 rgb(0 0 0 / 10%);width:25%;padding:6px;">
+				row += `<div class="col-md-2 client-block-container" id="client-container-${data[i].id}" style="box-shadow: 2px 2px 4px 2px rgb(0 0 0 / 10%);width:25%;padding:6px;">
 						<div class="client-block">
 							<div class="client-heading">
 								<input type='hidden' value='${data[i].id}' class='txt_client_id'>
@@ -2395,6 +2395,8 @@ $.fn.prepare_form = function()
 		});
 
 		$.fn.change_switchery($('#chk_pono_status'), false);
+		$('#billing_start_date').flatpickr({ dateFormat: 'd-m-Y' });
+        $('#billing_end_date').flatpickr({ dateFormat: 'd-m-Y' });
     }
     catch(err)
     {
