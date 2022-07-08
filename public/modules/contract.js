@@ -262,7 +262,7 @@ $.fn.reset_form = function(form)
 			$('#txt_fee_descr').val('');
 			$('#txt_total_contract_value').val('');
 
-			//$('#client_form').parsley().destroy();
+			$('#client_form').parsley().destroy();
 			$.fn.set_validation_form();
 			
 		}
@@ -1075,10 +1075,12 @@ $.fn.save_edit_client_form = function()
 {	
 	try
 	{	
-		if($('#client_form').parsley( 'validate' ) == false)
-		{
-			return;
-		}
+	
+		if ($('#client_form').parsley().validate() == false)
+			{
+				return false;
+			}
+
 
 		let data	= 
 		{
@@ -1762,10 +1764,11 @@ $.fn.add_reference = function()
 {
 	try
 	{
-		if($('#reference_form').parsley( 'validate' ) == false)
-		{
-			return;
-		}
+		
+		if ($('#reference_form').parsley().validate() == false)
+			{
+				return false;
+			}
 
 		let data	= 
 		{
@@ -3511,7 +3514,8 @@ $.fn.populate_comments_form = function (data)
 
     	let details  		= data.details;
     	let json_field 		= $.fn.get_json_string(details.json_field);
-    	FILE_UPLOAD_PATH    = `${MODULE_ACCESS.module_id}/${CONTRACT_ID}/`;
+    	//FILE_UPLOAD_PATH    = `${MODULE_ACCESS.module_id}/${CONTRACT_ID}/`;
+		FILE_UPLOAD_PATH = `../files/${MODULE_ACCESS.module_id}/${CONTRACT_ID}/`;
 		
     	if(SESSIONS_DATA.emp_id == Number(details.created_by))
     	{
@@ -3976,7 +3980,7 @@ $.fn.bind_command_events = function()
         {   
 			e.preventDefault();
 			
-
+           
 			if(ATTACHMENTS)
 			{	
 				let attach_li = '';
@@ -3992,7 +3996,7 @@ $.fn.bind_command_events = function()
 				$('#offer_files').html(attach_li);
 
 			}
-			$('#offer_letter_modal')    .modal();
+			$('#offer_letter_modal').modal('show');
 		});
 
 		$('#btn_create_employee').click( function(e)
@@ -4132,8 +4136,8 @@ $.fn.bind_command_events = function()
         {
             //e.preventDefault();
 			let doc_name = $(this).attr('data-name');
-            FILE_UPLOAD_PATH    =   `${MODULE_ACCESS.module_id}/${CONTRACT_ID}/`;
-			
+           // FILE_UPLOAD_PATH    =   `${MODULE_ACCESS.module_id}/${CONTRACT_ID}/`;
+		   FILE_UPLOAD_PATH = `../files/${MODULE_ACCESS.module_id}/${CONTRACT_ID}/`;
 			let attachment_data =   
 			{
 				id              : '',
@@ -4169,7 +4173,8 @@ $.fn.bind_command_events = function()
 		$('#btn_po_upload').click( function(e)
         {
             e.preventDefault();
-            FILE_UPLOAD_PATH    =   `${MODULE_ACCESS.module_id}/${CONTRACT_ID}/`;
+            //FILE_UPLOAD_PATH    =   `${MODULE_ACCESS.module_id}/${CONTRACT_ID}/`;
+			FILE_UPLOAD_PATH = `../files/${MODULE_ACCESS.module_id}/${CONTRACT_ID}/`;
 			let attachment_data =   
 			{
 				id              : '',

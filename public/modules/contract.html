@@ -2126,7 +2126,7 @@
                                             <div class="row">
                                                 <label for="txt_one_time_fees" class="col-4 col-form-label">Name</label>
                                                 <div class="col-8 errorContainer">
-                                                    <input type="text" class="form-control marginBottom10px" id="txt_ref_name" data-required="true">
+                                                    <input type="text" class="form-control marginBottom10px" id="txt_ref_name" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -2135,7 +2135,7 @@
                                             <div class="row">
                                                 <label for="txt_fee_descr" class="col-4 col-form-label">Contact&nbsp;No</label>
                                                 <div class="col-8 errorContainer">
-                                                    <input type="text" class="form-control marginBottom10px" id="txt_ref_contact_no" data-required="true">
+                                                    <input type="text" class="form-control marginBottom10px" id="txt_ref_contact_no" required>
                                                 </div>
                                             </div>
                                             
@@ -2145,7 +2145,7 @@
                                             <div class="row">
                                                 <label for="txt_ref_email" class="col-4 col-form-label">Email</label>
                                                 <div class="col-8 errorContainer">
-                                                    <input type="text" class="form-control marginBottom10px" id="txt_ref_email" data-required="true">
+                                                    <input type="text" class="form-control marginBottom10px" id="txt_ref_email" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -2157,7 +2157,7 @@
                                             <div class="row">
                                                 <label for="txt_ref_company" class="col-4 col-form-label">Company</label>
                                                 <div class="col-8 errorContainer">
-                                                    <input type="text" class="form-control marginBottom10px" id="txt_ref_company" data-required="true">
+                                                    <input type="text" class="form-control marginBottom10px" id="txt_ref_company" required>
                                                 </div>
                                             </div>
                                             
@@ -2167,7 +2167,7 @@
                                             <div class="row">
                                                 <label for="txt_ref_designation" class="col-4 col-form-label">Designation</label>
                                                 <div class="col-8 errorContainer">
-                                                    <input type="text" class="form-control marginBottom10px" id="txt_ref_designation" data-required="true">
+                                                    <input type="text" class="form-control marginBottom10px" id="txt_ref_designation" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -2242,6 +2242,34 @@
                                 </div>
                             </p>
                         </div>
+
+                        <!-- Modal for offer letter Start-->
+                        <div class="modal fade" id="offer_letter_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabel">Send Offer Letter</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="hidden" name="offer_contract_no" id="offer_contract_no">
+                                        <ul class="panel-tasks" id="offer_files">
+                                            
+                                        </ul>
+
+                                    </div>
+                                   
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-bs-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                                        <button type="button" class="btn btn-success" data-style="expand-left" data-spinner-color="#000000"  id="btn_send_offer">Send</button>
+                                        <!--<button type="button" class="btn btn-primary" id="btn_verify">Confirm</button>-->
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                        <!-- Modal offer letter End-->
                         
                         <!-- End Attachment -->
 
