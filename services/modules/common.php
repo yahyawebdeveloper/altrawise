@@ -148,12 +148,11 @@ function get_leave_dropdown_data($params) {
     {  
         $curr_year 	=  date("Y");
         $emp_id                     = if_property_exist($params, 'emp_id',false);
-        $drop_down_groups['emp_leave_type']  =   db_query('cms_master_list.id as id,cms_master_list.descr as descr,cms_emp_leave.no_of_days','cms_emp_leave INNER JOIN cms_master_list ON
-        cms_emp_leave.master_list_id = cms_master_list.id','cms_emp_leave.emp_id = '.$emp_id.' AND cms_emp_leave.applicable_year = ' . $curr_year . ' AND cms_emp_leave.is_active = 1');
-
-        $drop_down_groups['expenses']  =   db_query('id,descr','cms_master_list','id = 195 AND is_active = 1');     
-     
-        return handle_success_response('Success', $drop_down_groups);
+       //$drop_down_groups['emp_leave_type']  =   db_query('cms_master_list.id as id,cms_master_list.descr as descr,cms_emp_leave.no_of_days','cms_emp_leave INNER JOIN cms_master_list ON
+       //cms_emp_leave.master_list_id = cms_master_list.id','cms_emp_leave.emp_id = '.$emp_id.' AND cms_emp_leave.applicable_year = ' . $curr_year . ' AND cms_emp_leave.is_active = 1');
+       $drop_down_groups['emp_leave_type']  = db_query('id,descr','cms_master_list',"category_id = 16 AND is_active = 1 AND no_of_days=12");
+       $drop_down_groups['expenses']  =   db_query('id,descr','cms_master_list','id = 195 AND is_active = 1');     
+       return handle_success_response('Success', $drop_down_groups);
     }
     catch (Exception $e)
     {
@@ -420,18 +419,19 @@ function get_contract_search_dropdown($params) {
         //     $emp            = db_query('id,name,office_email', 'cms_employees', 'is_active = 1');
         //     $where  =  "cms_clients.is_active = 1";
         // } else {
-            $emp            = db_query('id,name,office_email', 'cms_employees', "id =" . $emp_id . " AND is_active = 1");
+            $drop_down_groups['created_by']            = db_query('id,name,office_email', 'cms_employees', "id =" . $emp_id . " AND is_active = 1");
             $where  =   "cms_clients.is_active = 1 AND FIND_IN_SET(" . $emp_id . ", cms_clients.assign_emp_id)";
         // }
 
-        $client =  db_query('cms_clients.id,cms_clients.name',
+        $drop_down_groups['client'] =  db_query('cms_clients.id,cms_clients.name',
 							'cms_clients
                                 LEFT JOIN cms_master_list as tbl_type ON FIND_IN_SET(tbl_type.id, cms_clients.type_id) > 0
                                 LEFT JOIN cms_master_category ON tbl_type.category_id = cms_master_category.id',
 							$where." AND tbl_type.descr = 'Client' AND cms_master_category.id = 59");
         
-        $return_data = array('created_by' => $emp);
-		echo json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );exit;
+       // $return_data = array('created_by' => $emp,'client'=> $client);
+	//	echo json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );
+    return handle_success_response('Success', $drop_down_groups);
 
     } catch(Exception $e) {
         handle_exception($e);
