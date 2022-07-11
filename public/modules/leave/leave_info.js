@@ -113,7 +113,7 @@ $.fn.populate_list_form = function (data, is_scroll)
 {
 	try
 	{
-
+		console.log(data);
 		if (is_scroll == false)
 		{
 			$('#tbl_list > tbody').empty();
@@ -237,7 +237,6 @@ $.fn.populate_list_form = function (data, is_scroll)
 				tr_row++;
 				
 				$('#tbl_list tbody').append(row);
-
 				$.fn.populate_fileupload(data[i], `leave_file_${data[i].id}`);
                 $("#tbl_list").find(`#leave_file_${data[i].id} .col-sm-4`).toggleClass('col-sm-4 col-sm-12');
 			}
@@ -563,7 +562,7 @@ $.fn.view_leave_record = function (data, table_row_id)
 	try
 	{
 		ROW_DATA = JSON.parse(data);
-		console.log(ROW_DATA);
+		//console.log(ROW_DATA);
 		console.log(moment(ROW_DATA.start_date, 'YYYY-MM-DD').year());
 		TABLE_ROW_ID = table_row_id;
 
@@ -915,7 +914,7 @@ $.fn.edit_approve_status = function ()
 					reason: ROW_DATA.reason,
 					type_name: ROW_DATA.type
 				};
-console.log(data);
+
 				$.fn.write_data
 					(
 						$.fn.generate_parameter('leave_edit_approve', data),
@@ -1121,7 +1120,7 @@ $.fn.get_leave_approval_dropdown_data = function()
 			is_supervisor: SESSIONS_DATA.is_supervisor,
 			is_admin: SESSIONS_DATA.is_admin,
         };
-       console.log(data);
+       
         $.fn.fetch_data
         ( 
             $.fn.generate_parameter('get_leave_approval_dropdown_data', data),

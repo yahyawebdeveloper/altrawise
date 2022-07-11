@@ -243,6 +243,14 @@ $.fn.populate_detail_form = function(data)
 					{
 						$('#dd_approver')			.val(data.approved_by).change();	
 					}
+					for (let i = 0; i < data.attachment.length; i++)
+					{ 
+						data.attachment[i]['name'] = data.attachment[i]['filename'];
+						data.attachment[i]['uuid'] = data.attachment[i]['id'];
+						data.attachment[i]['deleteFileParams'] =  JSON.stringify(data.attachment[i]);
+						delete data.attachment[i]['filename'];
+						delete data.attachment[i]['id'];
+					}
 					$.fn.populate_fileupload(data,'files');
 					
 				}
@@ -344,7 +352,7 @@ $.fn.get_faq_report = function()
 			function(return_data)
 			{
 				if(return_data)
-				{	console.log(return_data);
+				{	//console.log(return_data);
 					$.fn.data_table_destroy('tbl_faq_report');
 					$.fn.populate_faq_list_report(return_data.data);
 					$.fn.data_table_features('tbl_faq_report');
@@ -478,7 +486,7 @@ $.fn.save_edit_form = function()
                     	attachment_data,function(total_files, total_success,filename,attach_return_data)
             	        {
                     		if(total_files == total_success)
-                    		{	
+                    		{	//console.log('222');
                     			$.fn.populate_fileupload(attach_return_data,'files',true);
                     		}
             	        },false);
