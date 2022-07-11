@@ -314,8 +314,8 @@ $.fn.save_edit_form = function ()
             remark: $('#txt_remark').val(),
             location: $('#txt_location').val(),
             emp_id: SESSIONS_DATA.emp_id,
-            attachment: attachment/* ,
-            json_field: json_field */
+            attachment: attachment,
+            json_field: {},
         };
 
         $.fn.write_data
@@ -334,23 +334,45 @@ $.fn.save_edit_form = function ()
                         {
                             id: '',
                             primary_id: DOC_NO,
+                            secondary_id	: '',
                             module_id: MODULE_ACCESS.module_id,
                             filename: '',
                             filesize: "0",
                             json_field: {},
                             emp_id: SESSIONS_DATA.emp_id
                         };
-                     console.log(attachment_data);
+                    // console.log(attachment_data);
+                    /*  if ($('#files .file-upload.new').length > 0){
+							$.fn.populate_comment_row(return_data.data.details);
+							$.fn.upload_file('files_reply','contract_no',CONTRACT_ID,
+								attachment_data,function(total_files, total_success,filename, attach_return_data)
+							{
+								if (total_files == total_success)
+								{
+									$('#txt_reply').val('');
+									for (let i = 0; i < attach_return_data; i++)
+									{ 
+										attach_return_data[i]['name'] = attach_return_data[i]['filename'];
+										attach_return_data[i]['uuid'] = attach_return_data[i]['id'];
+										attach_return_data[i]['deleteFileParams'] =  JSON.stringify(attach_return_data[i]);
+										delete attach_return_data[i]['filename'];
+										delete attach_return_data[i]['id'];
+									}
+									$.fn.populate_fileupload(attach_return_data, `comment-`+COMMENT_ID, true);
+									btn_comments_reply.stop();
+								}
+							}, false, btn_save);
+						}  */
                         if ($('#files .file-upload.new').length > 0)
                         {
-                           /*  $.fn.upload_file(`files`, 'outbound_no', DOC_NO,
+                            $.fn.upload_file(`files`, 'document_upload', DOC_NO,
                                 attachment_data, function (total_files, total_success, filename, attach_return_data)
-                            {
-                                if (total_files == total_success)
                                 {
-                                    $.fn.populate_fileupload(attach_return_data, `files`, true);
-                                }
-                            }, false, btn_save); */
+                                    if (total_files == total_success)
+                                    {
+                                        $.fn.populate_fileupload(attach_return_data, `files`, true);
+                                    }
+                                }, false, btn_save); 
                         }
                         else
                         {
@@ -477,6 +499,7 @@ $.fn.populate_detail_form = function (data)
 				        { 
                             data.attachment[i]['name'] = data.attachment[i]['filename'];
                             data.attachment[i]['uuid'] = data.attachment[i]['id'];
+                            data.attachment[i]['deleteFileParams'] =  JSON.stringify(data.attachment[i]);
                             delete data.attachment[i]['filename'];
                             delete data.attachment[i]['id'];
                         }
@@ -1155,7 +1178,7 @@ $.fn.get_documents_drop_down_values_other = function()
         ( 
             $.fn.generate_parameter('get_documents_drop_down_values_other', data),
             function(return_data)
-            { console.log(return_data);
+            { //console.log(return_data);
                 if (return_data.code == 0)
                 {   
                     $.fn.populate_dd_values('dd_type', return_data.data.sh_type);

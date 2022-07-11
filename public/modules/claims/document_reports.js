@@ -43,7 +43,7 @@ $.fn.data_table_features = function ()
 					{
 						text: '<i class="fa fa-cog"></i>',
 						className: 'dd',
-						extend: 'colvis',
+						//extend: 'colvis',
 						columns: ':not(:first-child)',
 						columnText: function (dt, idx, title)
 						{
