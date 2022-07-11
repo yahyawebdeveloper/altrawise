@@ -480,11 +480,22 @@ $.fn.populate_detail_form = function(contract_no)
 					$.fn.populate_increment_list_form(return_data.data.increment);
 					$.fn.populate_employment_list_form(return_data.data.employment);
 					$.fn.populate_client_list_form(return_data.data.client);
+
+					for (let i = 0; i < return_data.data.attachments.length; i++)
+					{ 
+						return_data.data.attachments[i]['name'] = return_data.data.attachments[i]['filename'];
+						return_data.data.attachments[i]['uuid'] = return_data.data.attachments[i]['id'];
+						return_data.data.attachments[i]['deleteFileParams'] =  JSON.stringify(return_data.data.attachments[i]);
+						delete return_data.data.attachments[i]['filename'];
+						delete return_data.data.attachments[i]['id'];
+					}
+
 					$.fn.populate_attachments(return_data.data.attachments);
 
 					$.fn.populate_comments_form(return_data.data);
 
 					$.fn.show_hide_components(data);
+					
 					ATTACHMENTS = return_data.data.attachments;
 					CONTRACT_DETAILS = return_data.data;
 					getInitials();
@@ -502,6 +513,14 @@ $.fn.populate_attachments = function(data)
 {
 	$.each(data, function( doc_name, attachments ) 
 	{
+		for (let i = 0; i < attachments.length; i++)
+		{ 
+			attachments[i]['name'] = attachments[i]['filename'];
+			attachments[i]['uuid'] = attachments[i]['id'];
+			attachments[i]['deleteFileParams'] =  JSON.stringify(attachments[i]);
+			delete attachments[i]['filename'];
+			delete attachments[i]['id'];
+		}
 		let attachment_data = [];
 		attachment_data.attachment = attachments;
 		$.fn.populate_fileupload(attachment_data,'files_'+doc_name, true);
@@ -889,7 +908,7 @@ $.fn.populate_employment_detail = function(element_id)
 			$('#dd_approvals')   .val(json_field.approvals.split(",")).change();
 		}
 		if(attachment)
-		{	
+		{
 			let attachment_data = [];
 			attachment_data.attachment = attachment;
 			$.fn.populate_fileupload(attachment_data,'files_po_file', true);
@@ -3661,6 +3680,14 @@ $.fn.add_edit_comment_reply = function ()
 								if (total_files == total_success)
 								{
 									$('#txt_reply').val('');
+									for (let i = 0; i < attach_return_data; i++)
+									{ 
+										attach_return_data[i]['name'] = attach_return_data[i]['filename'];
+										attach_return_data[i]['uuid'] = attach_return_data[i]['id'];
+										attach_return_data[i]['deleteFileParams'] =  JSON.stringify(attach_return_data[i]);
+										delete attach_return_data[i]['filename'];
+										delete attach_return_data[i]['id'];
+									}
 									$.fn.populate_fileupload(attach_return_data, `comment-`+COMMENT_ID, true);
 									btn_comments_reply.stop();
 								}
@@ -3753,6 +3780,15 @@ $.fn.populate_comment_row = function (row_data, is_list = false)
         if(is_list)
         {
         	$('#div_reply').append(row);
+
+			for (let i = 0; i < row_data.attachment.length; i++)
+			{ 
+				row_data.attachment[i]['name'] = row_data.attachment[i]['filename'];
+				row_data.attachment[i]['uuid'] = row_data.attachment[i]['id'];
+				row_data.attachment[i]['deleteFileParams'] =  JSON.stringify(row_data.attachment[i]);
+				delete row_data.attachment[i]['filename'];
+				delete row_data.attachment[i]['id'];
+			}
         	$.fn.populate_fileupload(row_data,'comment-'+COMMENT_ID, true);
         }
         else

@@ -416,7 +416,7 @@ $.fn.save_form = function ()
 			category_search_id: $('#dd_search_category').val(),
 			from_date: $('#from_search_date').val(),
 			to_date: $('#to_search_date').val(),
-			doc_date:  moment($('#doc_date').val(), 'DD-MM-YYYY'),
+			doc_date:  $('#doc_date').val(),
 			category_id: $('#dd_category').val(),
 			category_name: $('#dd_category option:selected').text(),
 			remarks: $('#txt_remarks').val(),
@@ -430,7 +430,7 @@ $.fn.save_form = function ()
 			get_list: 0,
 			timesheet_data: { "leave": [] }
 		};
-
+//console.log(data); return false;
 		if ($('#dd_category').val() == 7 || $('#dd_category').val() == 5)
 		{
 			data.cost = $('#txt_cost').val();
