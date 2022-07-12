@@ -326,6 +326,15 @@ $.fn.reset_form = function(form)
     }
 };
 
+$.fn.change_switchery = function (obj, checked) 
+{
+	if (obj.is(':checked') != checked)
+	{
+		CODE_TRIGGERED = true;
+		obj.parent().find('.switchery').trigger('click');
+	}
+}
+
 $.fn.populate_detail_form = function(contract_no)
 {
 	try
@@ -335,7 +344,7 @@ $.fn.populate_detail_form = function(contract_no)
 		 $.fn.intialize_fileupload('fileupload_reply', 'files_reply');
 	 	$.fn.fetch_data
 		(
-			$.fn.generate_parameter('get_contract_details',{contract_no : contract_no}),	
+			$.fn.generate_parameter('get_contract_details',{contract_no : contract_no}),
 			function(return_data)
 			{
 				if(return_data.data)
@@ -367,16 +376,20 @@ $.fn.populate_detail_form = function(contract_no)
 					if(json_field !== false)
 					{	
 						let candidate_json 	= json_field.candidate;
+						console.log(candidate_json);
 						$('#txt_contact_no').val(candidate_json.candidate_contact_no);
 						$('#txt_nric').val(candidate_json.nric);
 						$('#txt_home_address').val(decodeURIComponent(candidate_json.home_address));
-						$('#txt_current_company').val(candidate_json.current_company);	
+						$('#txt_current_company').val(candidate_json.current_company);
 
 						$('#txt_current_ep_expiry_date').val(candidate_json.current_ep_expiry_date ? moment(candidate_json.current_ep_expiry_date).format(UI_DATE_FORMAT) : '');
 						$('#txt_apply_ep_on_date').val(candidate_json.apply_ep_on_date ? moment(candidate_json.apply_ep_on_date).format(UI_DATE_FORMAT) : '');
-						$('#chk_noc').prop('checked',parseInt(candidate_json.able_to_obtain_noc));
-						$('#chk_is_expat').prop('checked',parseInt(candidate_json.is_expat));
-						$('#chk_leave_country_required').prop('checked',parseInt(candidate_json.require_to_exit_country));
+						// $('#chk_noc').prop('checked',parseInt(candidate_json.able_to_obtain_noc));
+						$.fn.change_switchery($('#chk_noc'), (parseInt(candidate_json.able_to_obtain_noc) ? true : false));
+						$.fn.change_switchery($('#chk_is_expat'), (parseInt(candidate_json.is_expat) ? true : false));
+						$.fn.change_switchery($('#chk_leave_country_required'), (parseInt(candidate_json.require_to_exit_country) ? true : false));
+						// $('#chk_is_expat').prop('checked',//parseInt(candidate_json.is_expat));
+						// $('#chk_leave_country_required').prop('checked',//parseInt(candidate_json.require_to_exit_country));
 						$('#notification_month').val(candidate_json.notification_month);
 						$('#dd_requestor_name').val(candidate_json.requestor_name).change();
 						$('#request_date').val(candidate_json.request_date);
@@ -466,7 +479,8 @@ $.fn.populate_detail_form = function(contract_no)
 						$('#txt_other_cost_remarks').val($.fn.format_cost(cost_json.other_cost_remarks));
 						$('#txt_annual_leave').val($.fn.format_cost(cost_json.annual_leave));
 						$('#txt_medical_leave').val($.fn.format_cost(cost_json.medical_leave));
-						$('#chk_client_to_hire_allow').prop('checked',parseInt(cost_json.client_to_hire_allow));
+						// $('#chk_client_to_hire_allow').prop('checked',parseInt(cost_json.client_to_hire_allow));
+						$.fn.change_switchery($('#chk_client_to_hire_allow'), (parseInt(cost_json.client_to_hire_allow) ? true : false));
 						$('#chk_replacement_leave_applicable').prop('checked',parseInt(cost_json.replacement_leave_applicable));
 						$('#chk_annual_leave_encash_allow').prop('checked',parseInt(cost_json.annual_leave_encash_allow));
 						$('#chk_is_active').prop('checked',parseInt(cost_json.is_active));
@@ -533,10 +547,17 @@ $.fn.set_sub_edit_form = function(data)
 
 $.fn.save_edit_form = function()
 {	
+	//alert('999999');
 	try
 	{		
-		if($('#detail_form').parsley( 'validate' ) == false)
-		{
+		// if($('#detail_form').parsley( 'validate' ) == false)
+		// {
+		// 	btn_save.stop();
+		// 	return;
+		// }
+
+		if($('#detail_form').parsley().validate() == false)
+		{	
 			btn_save.stop();
 			return;
 		}
@@ -2429,20 +2450,32 @@ $.fn.navigate_form = function (contract_no)
 
 $.fn.set_validation_form = function()
 {
-	$('#detail_form').parsley
-    ({
-        successClass	: 'has-success',
-        errorClass		: 'has-error',
-        errors			:
+	$('#detail_form').parsley(
         {
-            classHandler: function(el)
-            {
-                return $(el).closest('.error-container');
+            classHandler: function(parsleyField) {
+                return parsleyField.$element.closest(".errorContainer");
             },
-            errorsWrapper	: '<ul class=\"help-block list-unstyled\"></ul>',
-            errorElem		: '<li></li>'
+            errorsContainer: function(parsleyField) {
+                return parsleyField.$element.closest(".errorContainer");
+            },
         }
-	});
+    );
+
+
+	// $('#detail_form').parsley
+    // ({
+    //     successClass	: 'has-success',
+    //     errorClass		: 'has-error',
+    //     errors			:
+    //     {
+    //         classHandler: function(el)
+    //         {
+    //             return $(el).closest('.error-container');
+    //         },
+    //         errorsWrapper	: '<ul class=\"help-block list-unstyled\"></ul>',
+    //         errorElem		: '<li></li>'
+    //     }
+	// });
 	
 	$('#reference_form').parsley
     ({
@@ -4284,6 +4317,7 @@ $.fn.bind_command_events = function()
 			btn_save = Ladda.create(this);
 	 		btn_save.start();
 			$.fn.save_edit_form();
+			$(this).removeClass('ladda-button');
 		});
 
 		$('#btn_reference_add').click( function(e)
