@@ -82,7 +82,7 @@ $.fn.get_list = function (is_scroll)
         $.fn.fetch_data(
             $.fn.generate_parameter('get_service_request_list', data),
             function(return_data) { 
-                console.log(return_data.data);
+                
                  if (return_data.data.list) {
                     var len = return_data.data.list.length;
                     if (return_data.data.rec_index)
@@ -354,7 +354,7 @@ $.fn.save_edit_form = function ()
             data.asset_remark = $('#txt_asset_remark').val();
         }
 
-        console.log(data);
+       
         $.fn.write_data
             (
                 $.fn.generate_parameter('add_edit_service_request', data),
@@ -406,7 +406,15 @@ $.fn.save_edit_form = function ()
                                 attachment_data, function (total_files, total_success, filename, attach_return_data)
                             {
                                 if (total_files == total_success)
-                                {
+                                {   
+                                    for (let i = 0; i < attach_return_data.attachment.length; i++)
+                                    { 
+                                        attach_return_data.attachment[i]['name'] = attach_return_data.attachment[i]['filename'];
+                                        attach_return_data.attachment[i]['uuid'] = attach_return_data.attachment[i]['id'];
+                                        attach_return_data.attachment[i]['deleteFileParams'] =  JSON.stringify(attach_return_data.attachment[i]);
+                                        delete attach_return_data.attachment[i]['filename'];
+                                        delete attach_return_data.attachment[i]['id'];
+                                    }
                                     $.fn.populate_fileupload(attach_return_data, `${id_doc}_files`, true);
                                 }
                             }, false, btn_save);
@@ -474,7 +482,15 @@ $.fn.populate_detail_form = function (data)
                                 $('#dd_invoice_status').append('<option value="' + data.status_id + '">' + data.status_name + '</option>');
                             }
                             $('#dd_invoice_status').val(data.status_id).change();
-
+                            
+                            for (let i = 0; i < return_data.data.attachment.length; i++)
+                            { 
+                                return_data.data.attachment[i]['name'] = return_data.data.attachment[i]['filename'];
+                                return_data.data.attachment[i]['uuid'] = return_data.data.attachment[i]['id'];
+                                return_data.data.attachment[i]['deleteFileParams'] =  JSON.stringify(return_data.data.attachment[i]);
+                                delete return_data.data.attachment[i]['filename'];
+                                delete return_data.data.attachment[i]['id'];
+                            }
                             $.fn.populate_fileupload(return_data.data, 'doc_invoice_files');
                         }
                         else if (data.category_id == PAYMENT)
@@ -493,7 +509,15 @@ $.fn.populate_detail_form = function (data)
                                 $('#dd_payment_status').append('<option value="' + data.status_id + '">' + data.status_name + '</option>');
                             }
                             $('#dd_payment_status').val(data.status_id).change();
-
+                            
+                            for (let i = 0; i < return_data.data.attachment.length; i++)
+                                    { 
+                                        return_data.data.attachment[i]['name'] = return_data.data.attachment[i]['filename'];
+                                        return_data.data.attachment[i]['uuid'] = return_data.data.attachment[i]['id'];
+                                        return_data.data.attachment[i]['deleteFileParams'] =  JSON.stringify(return_data.data.attachment[i]);
+                                        delete return_data.data.attachment[i]['filename'];
+                                        delete return_data.data.attachment[i]['id'];
+                                    }
                             $.fn.populate_fileupload(return_data.data, 'doc_payment_files');
                         }
                         else if (data.category_id == LOAN)
@@ -512,6 +536,14 @@ $.fn.populate_detail_form = function (data)
                             }
                             $('#dd_loan_status').val(data.status_id).change();
                             
+                            for (let i = 0; i < return_data.data.attachment.length; i++)
+                            { 
+                                return_data.data.attachment[i]['name'] = return_data.data.attachment[i]['filename'];
+                                return_data.data.attachment[i]['uuid'] = return_data.data.attachment[i]['id'];
+                                return_data.data.attachment[i]['deleteFileParams'] =  JSON.stringify(return_data.data.attachment[i]);
+                                delete return_data.data.attachment[i]['filename'];
+                                delete return_data.data.attachment[i]['id'];
+                            }
                             $.fn.populate_fileupload(return_data.data, 'doc_loan_files');
                         }
                         else if (data.category_id == ASSET)
@@ -527,7 +559,14 @@ $.fn.populate_detail_form = function (data)
                                 $('#dd_asset_status').append('<option value="' + data.status_id + '">' + data.status_name + '</option>');
                             }
                             $('#dd_asset_status').val(data.status_id).change();
-
+                            for (let i = 0; i < return_data.data.attachment.length; i++)
+                                { 
+                                    return_data.data.attachment[i]['name'] = return_data.data.attachment[i]['filename'];
+                                    return_data.data.attachment[i]['uuid'] = return_data.data.attachment[i]['id'];
+                                    return_data.data.attachment[i]['deleteFileParams'] =  JSON.stringify(return_data.data.attachment[i]);
+                                    delete return_data.data.attachment[i]['filename'];
+                                    delete return_data.data.attachment[i]['id'];
+                                }
                             $.fn.populate_fileupload(return_data.data, 'doc_asset_files');
                         }
                     }
@@ -1471,7 +1510,7 @@ $.fn.get_service_add_request_dropdown = function()
             {  
                 if (return_data.code == 0)
                 {  
-                    console.log(return_data.data);
+                    
                     $.fn.populate_dd_values('dd_category', return_data.data);
                     $.fn.populate_dd_values('dd_company', return_data.data);
                     $.fn.populate_dd_values('dd_invoice_client', return_data.data);
@@ -1511,7 +1550,7 @@ $.fn.get_service_request_search_dropdown = function()
             {  
                 if (return_data.code == 0)
                 {  
-                    console.log(return_data.data);
+                  
                     $.fn.populate_dd_values('dd_category_search', return_data.data);
                     $.fn.populate_dd_values('dd_created_by_search', return_data.data);
                     $.fn.populate_dd_values('dd_company_search', return_data.data);
