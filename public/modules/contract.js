@@ -1006,8 +1006,9 @@ $.fn.populate_client_list_form = function(data)
 							<div class="client-heading">
 								<input type='hidden' value='${data[i].id}' class='txt_client_id'>
 								<input type='hidden' value='${data_val}' class='client_data'>
+								<div class="pull-right remove-client" style="float:right;"><i class="mdi mdi-delete customized" aria-hidden="true" title="Delete file"></i></div>
 								<div class="client-title pull-left">${client_name}</div>
-								<div class="pull-right remove-client"><i class="mdi mdi-delete customized" aria-hidden="true" title="Delete file"></i></div>
+								
 							</div>
 							<div class="client-body">
 								<div class="text-center"></div>
@@ -2470,6 +2471,17 @@ $.fn.navigate_form = function (contract_no)
 $.fn.set_validation_form = function()
 {
 	$('#detail_form').parsley(
+        {
+            classHandler: function(parsleyField) {
+                return parsleyField.$element.closest(".errorContainer");
+            },
+            errorsContainer: function(parsleyField) {
+                return parsleyField.$element.closest(".errorContainer");
+            },
+        }
+    );
+
+	$('#client_form').parsley(
         {
             classHandler: function(parsleyField) {
                 return parsleyField.$element.closest(".errorContainer");
