@@ -211,6 +211,7 @@
 				 route_url = "dashboard";
 			 }
 			 
+			 
 			 //get module access based on route url
 			 let module_access = $.fn.get_accessibility($.fn.get_page_name(route_url));
 			 
@@ -247,6 +248,12 @@
 			 .on("/", () => { //dashboard route
 				 $.fn.load_form('./modules/dashboard.html');
 			 }, { before: middleware })
+			 .on("/dashboard/admin", () => { //admin dashboard route
+				$.fn.load_form('./modules/dashboard/admin_dash.html');
+			}, { before: middleware })
+			.on("/dashboard/user", () => { //user dashboard route
+				$.fn.load_form('./modules/dashboard/user_dash.html');
+			}, { before: middleware })
 			 .on("/signout", () => { //signout route
 				 $.fn.user_logout();
 			 })
