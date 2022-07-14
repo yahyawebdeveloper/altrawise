@@ -1,21 +1,11 @@
 <!-- third party css -->
-<link href="assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
-<link href="assets/libs/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" rel="stylesheet" type="text/css" />
-<link href="assets/libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css" rel="stylesheet" type="text/css" />
-<link href="assets/libs/datatables.net-select-bs5/css//select.bootstrap5.min.css" rel="stylesheet" type="text/css" />
-<link href="assets/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
-<link href="assets/libs/dropify/css/dropify.min.css" rel="stylesheet" type="text/css" />
-<link href="assets/libs/mohithg-switchery/switchery.min.css" rel="stylesheet" type="text/css" />
-<link href="assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
-<!-- <link href="assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" /> -->
-<link href="assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
 <link href="./assets/libs/jquery-fileupload/css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
 <!-- third party css end -->
 
 <!-- List Block -->
 <div class="row" id="view-list">
     <!-- start page title -->
-    <div class="row mt-3 mb-1">
+    <div class=" mt-3 mb-1">
         <div class="col-12">
             <div class="page-title-box">
                <!-- <div class="page-title-right">
@@ -26,99 +16,60 @@
                 </h4>
             </div>
         </div>
+        <div class="col-md-12">
+            <div class="panel panel-grape">
+               <!--<div class="panel-heading">
+                  <h4>Search</h4>
+                  <div class="options">
+                     <a href="javascript:;" class="panel-collapse"><i class="fa fa-chevron-down"></i></a>
+                  </div>
+                </div>-->
+                <div class="panel-body">
+                    <form class="form-horizontal" data-validate="parsley" id="detail_form">
+
+                    </form>
+                    <div class="form-group align-right"  style=" margin-right: 1%;">	
+                        <button id="btn_reset" type="button" class="btn btn-light waves-effect waves-light m-1"><i class="fe-refresh-cw me-1"></i> Reset</button>	
+                        <button id="btn_search" name="btn_search" type="button" class="btn btn-success waves-effect waves-light mt-1 mb-1"><i class="fe-search me-1"></i> Search</button>	
+                        <button class="btn btn-primary waves-effect waves-light m-1" id="add-condition"><i class="fas fa-plus"></i> Add Row</button>	
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>     
     <!-- end page title -->
-  
-    <!-- <div id="dynamicContent" style="display: block;">
+
+
+    <div id="dynamicContent" style="display: none;" class="row">
         <div class="form-group condition-row">
             <label class="col-sm-1 control-label">Fields</label>
-            <div class="col-sm-3 error-container">
-                <select id="search_field" name="search_field" class="form-control populate search-field select2Plugin" data-width="100%">
+            <div class="col-sm-3 errorContainer">
+                <select style="width:100%" class="select2Plugin search-field" name="search_field" required>
                 </select>
             </div>
         
             <label  class="col-sm-1 control-label">Condition</label>
             <div class="col-sm-1 conditionContainer">
-                <select style="width:100%" class="form-control search-condition" id="search_condition" name="search_condition">
-               
+                <select style="width:100%" class="select2Plugin search-condition" name="search_condition">
                 </select>
             </div>
         
             <label  class="col-sm-1 control-label">Value</label>
-            <div class="col-sm-3 error-container">
-                <input class="form-control search-value" data-required="true" name="search_value">
+            <div class="col-sm-3 errorContainer">
+                <input class="form-control search-value" required name="search_value" >
             </div>
-        
-            <div class="col-sm-2">
-                <button type="button" class="btn btn-danger delete-condition">
-                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                    <span class="hidden-xs">Remove</span>
-                </button>
-            </div>
-            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-2" style=" margin-left: -2%;">	
+                <!-- Remove -->		
+                    <button type="button" class="btn btn-danger waves-effect waves-light delete-condition"  >	
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>	
+                        <span class="hidden-xs">Remove</span>	
+                    </button>	
+            </div>   
         </div>
-           -->
-	    <div class="row panel-body"> 	
-        <div class="card col-12">	
-            <div class="card-body">	
-                <div><br></div>	
-                <div id="dynamicContent" style="display: block;">	
-                    <div class="form-group condition-row">	
-                        <div class="col-lg-4 float-end">	
-                            <!-- Fields -->	
-                            <div class="row">	
-                                <label for="search_field" class="col-3 col-form-label ">Fields</label>	
-                                <div class="col-7 errorContainer">	
-                                    <select id="search_field" name="search_field" class="form-control populate search-field select2Plugin" data-width="100%">	
-                                    </select>	
-                                </div>	
-                            </div>	
-                        </div>	
-                        <div class="col-lg-3">	
-                            <!-- Condition -->	
-                            <div class="row">	
-                                <label for="search_condition" class="col-4 col-form-label">Condition</label>	
-                                <div class="col-7 errorContainer">	
-                                    <select id="search_condition" name="search_condition" class="form-control populate search-condition" data-width="100%">	
-                                    </select>	
-                                </div>	
-                            </div>	
-                        </div>	
-                        <div class="col-lg-3">	
-                            <!-- Value -->	
-                            <div class="row">	
-                                <label for="search_value" class="col-3 col-form-label">Value</label>	
-                                <div class="col-8 errorContainer">	
-                                    <input class="form-control search-value" data-required="true" name="search_value" id="search_value" >	
-                                </div>	
-                            </div>	
-                        </div>	
-                        <div class="col-lg-1"></div>	
-                        <div class="col-lg-2">	
-                            <!-- Remove -->	
-                            <div class="row">	
-                                <button type="button" class="btn btn-danger waves-effect waves-light delete-condition"  style="width: 50%;display: block;">	
-                                    <i class="fa fa-trash-o" aria-hidden="true"></i>	
-                                    <span class="hidden-xs">Remove</span>	
-                                </button>	
-                            </div>	
-                        </div>	
-                    </div>	
-                    <form class="form-horizontal" data-validate="parsley" id="detail_form">	
-                    </form>	
-                </div>	
-                <div><br></div>	
-                <div class="form-group align-right">	
-                    <button id="btn_reset" type="button" class="btn btn-light waves-effect waves-light m-1"><i class="fe-refresh-cw me-1"></i> Reset</button>	
-                    <button id="btn_search" name="btn_search" type="button" class="btn btn-success waves-effect waves-light mt-1 mb-1"><i class="fe-search me-1"></i> Search</button>	
-                    <button class="btn btn-primary waves-effect waves-light m-1" id="add-condition"><i class="fas fa-plus"></i> Add Row</button>	
-                </div>	
-            </div>	
-        </div>	
     </div>
 
-
-    <div id="tblList" class="row">
+    <div id="tblList" class="">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
@@ -131,7 +82,7 @@
                             <p class="dropdown-item"  onclick="exportTable2PDF('Document Reports','tbl_list','p')" style="cursor: pointer;">Export as PDF</p>
                         </div>
                     </div>
-                    <div class="table-responsive">
+                    <div class="table-responsive  mt-0">
                         <table class="table table-centered table-striped w-100"  id="tbl_list">
                             <thead>
                                 <tr>
@@ -148,11 +99,6 @@
                             <tbody>    
                             </tbody>
                         </table>
-                        <!--<div id="div_load_more" class="d-flex justify-content-center load-more" style="display: none;">
-                            <button id="btn_load_more" type="button" class="btn btn-sm btn-info waves-effect waves-light rounded-pill ">
-                                <i class="fa fa-arrow-down"></i>&nbsp;&nbsp;Load More&nbsp;&nbsp;<i class="fa fa-arrow-up"></i>
-                            </button>
-                        </div>-->
                     </div>
                 </div>
             </div> <!-- end card-->
@@ -161,38 +107,6 @@
     <!-- end row -->
 </div>
 
-<!--<div class="modal fade" id="remarkModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Confirmation</h4>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" name="doc_no" id="doc_no">
-                    <input type="hidden" name="chk_val" id="chk_val">
-                    <input type="hidden" name="table_row" id="table_row">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            Please confirm the selection and add the remark below.
-                        </div>
-                        <div class="col-sm-12"><br><br></div>
-                        <div class="col-sm-4">
-                            Remark:
-                        </div>
-                        <div class="col-sm-8">
-                            <textarea name="doc_remark" id="doc_remark" cols="40" rows="3"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary ladda-button" data-style="expand-left" id="btn_verify">Confirm</button>
-                    <button type="button" class="btn btn-primary ladda-button" data-style="expand-left" id="btn_approve">Confirm</button>
-                </div>
-            </div>
-        </div>
-    </div>-->
 <div class="modal fade" id="remarkModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -282,30 +196,8 @@
 
 <!-- third party js -->
 <script src="./assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="./assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
-<script src="./assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-<script src="./assets/libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
-<script src="./assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-<script src="./assets/libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js"></script>
-<script src="./assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
-<script src="./assets/libs/datatables.net-buttons/js/buttons.flash.min.js"></script>
-<script src="./assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
-<script src="./assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-<script src="./assets/libs/datatables.net-select/js/dataTables.select.min.js"></script>
-<script src="./assets/libs/pdfmake/build/pdfmake.min.js"></script>
-<script src="./assets/libs/pdfmake/build/vfs_fonts.js"></script>
-<script src="./assets/libs/dropzone/min/dropzone.min.js"></script>
-<script src="./assets/libs/dropify/js/dropify.min.js"></script>
-<!-- <script src="assets/libs/select2/js/select2.min.js"></script> -->
-<script src="./assets/libs/mohithg-switchery/switchery.min.js"></script>
 <script src="./assets/libs/flatpickr/flatpickr.min.js"></script>
-<script src="./assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-<script src="./assets/libs/parsleyjs/parsley.min.js"></script>
-<!-- Tippy js-->
-<script src="./assets/libs/tippy.js/tippy.all.min.js"></script>
 <script src="./assets/js/moment.js/2.18.1/moment.min.js"></script>
-<script src="./assets/libs/ckeditor/ckeditor.js"></script>
-
 <script src="./assets/js/jspdf/plugins/jspdf.debug.js"></script>
 <script src="./assets/js/jspdf/plugins/jspdf.min.js"></script>
 <script src="./assets/js/jspdf/plugins/jspdf.plugin.autotable.js"></script>

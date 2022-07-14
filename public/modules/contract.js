@@ -1,12 +1,13 @@
 var FORM_STATE 		= 0;
 var RECORD_INDEX 	= 0;
-var SESSIONS_DATA	= '';
+// var SESSIONS_DATA	= '';
 var REF_ROW			= '';
 var btn_save,btn_save_remarks,btn_save_revoke_approval,btn_comments_reply,btn_assign_save,btn_upload,btn_send_offer, btn_send_for_approval, btn_create_employee; 
 CONTRACT_ID		= ''; 
 CREATED_BY		= '';
 CLIENT_ID		= '';
 CURRENT_PATH	= 	'../../';
+var UI_DATE_FORMAT = 'DD-MMM-YYYY';
 var btn_onboard_save;
 EMPLOYEE_NAME   = '';
 var FILE_UPLOAD_PATH        = ''; //file upload mandatory field
@@ -190,7 +191,8 @@ $.fn.reset_form = function(form)
 			$('#approval_div').hide();
 
 			$('#txt_duration').val('');
-			$('#dd_assignee') 	.val('').multiselect('reload');
+			//$('#dd_assignee') 	.val('').multiselect('reload');
+			$('#dd_assignee') 	.val('');
 
 			$('#btn_create_employee').hide();
 			$('#child_info').hide();
@@ -226,9 +228,9 @@ $.fn.reset_form = function(form)
 			$('#dd_emp_status').val('').change();
 			$('#dd_approvals').val('').change();
 
-			$('#dd_client_contract') 	.val('').multiselect('reload');
-			
-			$('#employment_form').parsley().destroy();
+			//$('#dd_client_contract') 	.val('').multiselect('reload');
+			$('#dd_client_contract') 	.val('');
+			//$('#employment_form').parsley().destroy();
 			$.fn.set_validation_form();
 		}
 		else if(form == 'client_form')
@@ -314,14 +316,24 @@ $.fn.reset_form = function(form)
             $('#txt_reply')		.prop('readonly', true);
             $('#div_reply')		.hide();
             $('#assign_div')	.hide();
-            $('#dd_assignee') 	.val('').multiselect('reload');
+           // $('#dd_assignee') 	.val('').multiselect('reload');
+		   $('#dd_assignee') 	.val('');
         }
     }
     catch(err)
-    {
+    { //console.log(err);
         $.fn.log_error(arguments.callee.caller,err.message);
     }
 };
+
+$.fn.change_switchery = function (obj, checked) 
+{
+	if (obj.is(':checked') != checked)
+	{
+		CODE_TRIGGERED = true;
+		obj.parent().find('.switchery').trigger('click');
+	}
+}
 
 $.fn.populate_detail_form = function(contract_no)
 {
@@ -329,10 +341,10 @@ $.fn.populate_detail_form = function(contract_no)
 	{	
 		$.fn.show_hide_form	('EDIT');
 	 	$('#h4_primary_no').text('Contract Number : ' + contract_no);
-			
+		 $.fn.intialize_fileupload('fileupload_reply', 'files_reply');
 	 	$.fn.fetch_data
 		(
-			$.fn.generate_parameter('get_contract_details',{contract_no : contract_no}),	
+			$.fn.generate_parameter('get_contract_details',{contract_no : contract_no}),
 			function(return_data)
 			{
 				if(return_data.data)
@@ -364,16 +376,20 @@ $.fn.populate_detail_form = function(contract_no)
 					if(json_field !== false)
 					{	
 						let candidate_json 	= json_field.candidate;
+						console.log(candidate_json);
 						$('#txt_contact_no').val(candidate_json.candidate_contact_no);
 						$('#txt_nric').val(candidate_json.nric);
 						$('#txt_home_address').val(decodeURIComponent(candidate_json.home_address));
-						$('#txt_current_company').val(candidate_json.current_company);	
+						$('#txt_current_company').val(candidate_json.current_company);
 
 						$('#txt_current_ep_expiry_date').val(candidate_json.current_ep_expiry_date ? moment(candidate_json.current_ep_expiry_date).format(UI_DATE_FORMAT) : '');
 						$('#txt_apply_ep_on_date').val(candidate_json.apply_ep_on_date ? moment(candidate_json.apply_ep_on_date).format(UI_DATE_FORMAT) : '');
-						$('#chk_noc').prop('checked',parseInt(candidate_json.able_to_obtain_noc));
-						$('#chk_is_expat').prop('checked',parseInt(candidate_json.is_expat));
-						$('#chk_leave_country_required').prop('checked',parseInt(candidate_json.require_to_exit_country));
+						// $('#chk_noc').prop('checked',parseInt(candidate_json.able_to_obtain_noc));
+						$.fn.change_switchery($('#chk_noc'), (parseInt(candidate_json.able_to_obtain_noc) ? true : false));
+						$.fn.change_switchery($('#chk_is_expat'), (parseInt(candidate_json.is_expat) ? true : false));
+						$.fn.change_switchery($('#chk_leave_country_required'), (parseInt(candidate_json.require_to_exit_country) ? true : false));
+						// $('#chk_is_expat').prop('checked',//parseInt(candidate_json.is_expat));
+						// $('#chk_leave_country_required').prop('checked',//parseInt(candidate_json.require_to_exit_country));
 						$('#notification_month').val(candidate_json.notification_month);
 						$('#dd_requestor_name').val(candidate_json.requestor_name).change();
 						$('#request_date').val(candidate_json.request_date);
@@ -463,27 +479,40 @@ $.fn.populate_detail_form = function(contract_no)
 						$('#txt_other_cost_remarks').val($.fn.format_cost(cost_json.other_cost_remarks));
 						$('#txt_annual_leave').val($.fn.format_cost(cost_json.annual_leave));
 						$('#txt_medical_leave').val($.fn.format_cost(cost_json.medical_leave));
-						$('#chk_client_to_hire_allow').prop('checked',parseInt(cost_json.client_to_hire_allow));
+						// $('#chk_client_to_hire_allow').prop('checked',parseInt(cost_json.client_to_hire_allow));
+						$.fn.change_switchery($('#chk_client_to_hire_allow'), (parseInt(cost_json.client_to_hire_allow) ? true : false));
 						$('#chk_replacement_leave_applicable').prop('checked',parseInt(cost_json.replacement_leave_applicable));
 						$('#chk_annual_leave_encash_allow').prop('checked',parseInt(cost_json.annual_leave_encash_allow));
 						$('#chk_is_active').prop('checked',parseInt(cost_json.is_active));
 						$('#chk_travelling_claim').prop('checked',parseInt(cost_json.travelling_claim));
 						$('#chk_medical_claim').prop('checked',parseInt(cost_json.medical_claim));
 					}
-					
+					$("#trail").attr("data-name",SESSIONS_DATA.name);
    					$.fn.populate_allowance_list_form(return_data.data.allowance);
 					$.fn.populate_dependent_list_form(return_data.data.dependent);
 					$.fn.populate_reference_list_form(return_data.data.reference);
 					$.fn.populate_increment_list_form(return_data.data.increment);
 					$.fn.populate_employment_list_form(return_data.data.employment);
 					$.fn.populate_client_list_form(return_data.data.client);
+
+					for (let i = 0; i < return_data.data.attachments.length; i++)
+					{ 
+						return_data.data.attachments[i]['name'] = return_data.data.attachments[i]['filename'];
+						return_data.data.attachments[i]['uuid'] = return_data.data.attachments[i]['id'];
+						return_data.data.attachments[i]['deleteFileParams'] =  JSON.stringify(return_data.data.attachments[i]);
+						delete return_data.data.attachments[i]['filename'];
+						delete return_data.data.attachments[i]['id'];
+					}
+
 					$.fn.populate_attachments(return_data.data.attachments);
 
 					$.fn.populate_comments_form(return_data.data);
 
 					$.fn.show_hide_components(data);
+					
 					ATTACHMENTS = return_data.data.attachments;
 					CONTRACT_DETAILS = return_data.data;
+					getInitials();
 				}
 			},true
 		);	
@@ -498,6 +527,14 @@ $.fn.populate_attachments = function(data)
 {
 	$.each(data, function( doc_name, attachments ) 
 	{
+		for (let i = 0; i < attachments.length; i++)
+		{ 
+			attachments[i]['name'] = attachments[i]['filename'];
+			attachments[i]['uuid'] = attachments[i]['id'];
+			attachments[i]['deleteFileParams'] =  JSON.stringify(attachments[i]);
+			delete attachments[i]['filename'];
+			delete attachments[i]['id'];
+		}
 		let attachment_data = [];
 		attachment_data.attachment = attachments;
 		$.fn.populate_fileupload(attachment_data,'files_'+doc_name, true);
@@ -529,10 +566,17 @@ $.fn.set_sub_edit_form = function(data)
 
 $.fn.save_edit_form = function()
 {	
+	//alert('999999');
 	try
 	{		
-		if($('#detail_form').parsley( 'validate' ) == false)
-		{
+		// if($('#detail_form').parsley( 'validate' ) == false)
+		// {
+		// 	btn_save.stop();
+		// 	return;
+		// }
+
+		if($('#detail_form').parsley().validate() == false)
+		{	
 			btn_save.stop();
 			return;
 		}
@@ -722,7 +766,7 @@ $.fn.save_edit_form = function()
 
 	}
 	catch(err)
-	{
+	{//console.log(err);
 		$.fn.log_error(arguments.callee.caller,err.message);
 	}
 };
@@ -776,7 +820,7 @@ $.fn.save_edit_employment_form = function()
 							</div>
 							<div class="emp-body">
 								<div class="text-center"></div>
-								<small style="margin-top: 7px;"><span class="fa fa-calendar fa-fw"></span> ${data.emp_start_date} - ${data.emp_end_date}</small>
+								<small style="margin-top: 7px;"><span class="fa fa-calendar fa-fw" style="color:blue;"></span> ${data.emp_start_date} - ${data.emp_end_date}</small>
 							</div>
 						</a>
 					</div>`;
@@ -830,7 +874,7 @@ $.fn.populate_employment_list_form = function(data)
 							</div>
 							<div class="emp-body">
 								<div class="text-center"></div>
-								<small style="margin-top: 7px;"><span class="fa fa-calendar fa-fw"></span> ${json_field.emp_start_date} - ${json_field.emp_end_date}</small>
+								<small style="margin-top: 7px;"><span class="fa fa-calendar fa-fw"  style="color:blue;"></span> ${json_field.emp_start_date} - ${json_field.emp_end_date}</small>
 							</div>
 						</div>
 					</div>`;
@@ -876,8 +920,8 @@ $.fn.populate_employment_detail = function(element_id)
 		$('#dd_notice_period').val(json_field.notice_period).change();
 		$('#dd_employer').val(json_field.employer_id).change();
 
-		$('#dd_client_contract').val(json_field.client_contract_id.split(",")).multiselect( 'reload' );
-		
+		//$('#dd_client_contract').val(json_field.client_contract_id.split(",")).multiselect( 'reload' );
+		$('#dd_client_contract').val(json_field.client_contract_id.split(",")).change();
 		$('#dd_emp_status').val(json_field.is_active).change();
 		
 		if(json_field.approvals)
@@ -885,7 +929,7 @@ $.fn.populate_employment_detail = function(element_id)
 			$('#dd_approvals')   .val(json_field.approvals.split(",")).change();
 		}
 		if(attachment)
-		{	
+		{
 			let attachment_data = [];
 			attachment_data.attachment = attachment;
 			$.fn.populate_fileupload(attachment_data,'files_po_file', true);
@@ -957,13 +1001,13 @@ $.fn.populate_client_list_form = function(data)
 				client_name = data[i].client_name;
 				let json_field 	= $.fn.get_json_string(data[i].json_field);
 				client_contract += `<option value="${data[i].id}">${client_name}</option>`; 
-				row += `<div class="col-md-2 client-block-container" id="client-container-${data[i].id}">
+				row += `<div class="col-md-2 client-block-container" id="client-container-${data[i].id}" style="box-shadow: 2px 2px 4px 2px rgb(0 0 0 / 10%);width:25%;padding:6px;">
 						<div class="client-block">
 							<div class="client-heading">
 								<input type='hidden' value='${data[i].id}' class='txt_client_id'>
 								<input type='hidden' value='${data_val}' class='client_data'>
 								<div class="client-title pull-left">${client_name}</div>
-								<div class="pull-right remove-client"><button class="btn btn-danger btn-xs"><i class="fa fa-times"></i></button></div>
+								<div class="pull-right remove-client"><i class="mdi mdi-delete customized" aria-hidden="true" title="Delete file"></i></div>
 							</div>
 							<div class="client-body">
 								<div class="text-center"></div>
@@ -974,7 +1018,7 @@ $.fn.populate_client_list_form = function(data)
 			}
 			$('#clients_list_block').append(row);
 			$("#dd_client_contract").append(client_contract);
-			$('#dd_client_contract').multiselect( 'reload' );
+			//$('#dd_client_contract').multiselect( 'reload' );
 		}
 	}
 	catch(err)
@@ -1071,10 +1115,12 @@ $.fn.save_edit_client_form = function()
 {	
 	try
 	{	
-		if($('#client_form').parsley( 'validate' ) == false)
-		{
-			return;
-		}
+	
+		if ($('#client_form').parsley().validate() == false)
+			{
+				return false;
+			}
+
 
 		let data	= 
 		{
@@ -1114,7 +1160,7 @@ $.fn.save_edit_client_form = function()
 								<input type='hidden' value='${client_id}' class='txt_client_id'>
 								<input type='hidden' value=${data_json} class='client_data'>
 								<div class="client-title pull-left">${client}</div>
-								<div class="pull-right remove-client"><button class="btn btn-danger btn-xs"><i class="fa fa-times"></i></button></div>
+								<div class="pull-right remove-client"><button class="btn btn-danger btn-xs"><i class="fas fa-trash-alt"></i></button></div>
 							</div>
 							<div class="client-body">
 								<div class="text-center"></div>
@@ -1255,10 +1301,7 @@ $.fn.get_list = function(is_scroll)
 		
 		 $.fn.fetch_data(
             $.fn.generate_parameter('get_contract_list', data),
-            function(return_data) { 
-				// console.log('11111111111');
-                console.log(return_data.data);
-				// console.log('222222222222');
+            function(return_data) {
                  if (return_data.data.list) {
                     var len = return_data.data.list.length;
                     if (return_data.data.rec_index)
@@ -1359,16 +1402,31 @@ $.fn.populate_list_form = function(data,is_scroll)
 				// 	row += '<td>-</td>';
 				// }
 				
-				row += `<td width="10%">`;
-				row += `<a class="tooltips" data-toggle="tooltip" data-placement="left" title="View Summary" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.view_contract_summary(${data[i].contract_no})"><i class="fa fa-list"></i></a>`;
-					
+				
+				row += '<td width="15%">';
+				// row += `<a class="tooltips" data-toggle="tooltip" data-placement="left" title="View Summary" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.view_contract_summary(${data[i].contract_no})"><i class="fa fa-list"></i></a>`;
+
+				row += `<button type="button" class="btn btn-outline-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="View Summary" data-value="${data_val}" onclick="$.fn.view_contract_summary(decodeURIComponent('${data[i].contract_no}'))">
+                            <i class="mdi mdi-border-all"></i>
+                        </button>&nbsp;`;
+				
 				if(parseInt(MODULE_ACCESS.revoke_approval) == 1)
 				{
 					//row += '&nbsp;&nbsp;<a class="tooltips" data-toggle="tooltip" data-placement="right" title="Revoke Approval" href="javascript:void(0)" onclick="$.fn.display_revoke_approval(unescape($(this).closest(\'tr\').attr(\'data-value\')))"><i class="fa fa-undo"></i></a>';
 				}
 					
-				row += `&nbsp;&nbsp;<a class="tooltips" data-toggle="tooltip" data-placement="left" title="View Comments" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.view_remark(${data[i].contract_no})"><i class="fa fa-external-link"></i></a>`;
-				row += `&nbsp;&nbsp;<a class="tooltips" data-toggle="tooltip" data-placement="left" title="View Details" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.populate_detail_form(${data[i].contract_no})"><i class="fa fa-sign-in"></i></a>`;
+				// row += `&nbsp;&nbsp;<a class="tooltips" data-toggle="tooltip" data-placement="left" title="View Comments" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.view_remark(${data[i].contract_no})"><i class="fa fa-external-link"></i></a>`;
+
+				row += `<button type="button" class="btn btn-outline-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="View Comments" data-value="${data_val}" onclick="$.fn.view_remark(decodeURIComponent('${data[i].contract_no}'))">
+                            <i class="far fa-comment-alt"></i>
+                        </button>&nbsp;`;
+
+				// row += `&nbsp;&nbsp;<a class="tooltips" data-toggle="tooltip" data-placement="left" title="View Details" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.populate_detail_form(${data[i].contract_no})"><i class="fa fa-sign-in"></i></a>`;
+				
+				row += `<button type="button" class="btn btn-outline-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="View Details" data-value="${data_val}" onclick="$.fn.populate_detail_form(decodeURIComponent('${data[i].contract_no}'))">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </button>`;
+
 				row += '</td>';
 				
 				row += '</tr>';
@@ -1657,7 +1715,7 @@ $.fn.populate_reference_list_form = function(data)
 				row       +=  `<tr>
 									<td class='td-shrink'>
 										<a onclick='$.fn.delete_reference($(this));' data='${data_json}'>
-											<i class='fa fa-trash-o' aria-hidden='true'></i>
+										<i class="mdi mdi-delete customized" aria-hidden="true"></i>
 										</a>
 										<input type='hidden' value='${data_json}' class='ref_data'>
 									</td>
@@ -1746,10 +1804,11 @@ $.fn.add_reference = function()
 {
 	try
 	{
-		if($('#reference_form').parsley( 'validate' ) == false)
-		{
-			return;
-		}
+		
+		if ($('#reference_form').parsley().validate() == false)
+			{
+				return false;
+			}
 
 		let data	= 
 		{
@@ -1765,9 +1824,9 @@ $.fn.add_reference = function()
 		};
 		let data_json = JSON.stringify(data);
 		let row     =  `<tr>
-							<td class='td-shrink'>
+							<td>
 								<a onclick='$.fn.delete_reference($(this));' data='${data_json}'>
-									<i class='fa fa-trash-o' aria-hidden='true'></i>
+								  <i class="mdi mdi-delete customized" aria-hidden="true"></i>
 								</a>
 								<input type='hidden' value='${data_json}' class='ref_data'>
 							</td>
@@ -1794,6 +1853,7 @@ $.fn.add_reference = function()
 
 $.fn.show_hide_form = function(form_status)
 {
+	// $.fn.reset_form('form');
     if(form_status == 'NEW')
     {	
 		$.fn.reset_form('form');
@@ -1805,8 +1865,8 @@ $.fn.show_hide_form = function(form_status)
         $('#h4_primary_no')	.text('Contract Number : -');
         $('#btn_save')		.html('<i class="fa fa-check"> </i> Save');
 
-        $('#div_trail_logs table tbody').empty();
-        $('#div_trail_logs').hide();
+        // $('#div_trail_logs table tbody').empty();
+        // $('#div_trail_logs').hide();
 
         $('#detail_form').parsley().destroy();
 		$.fn.init_upload_file();
@@ -2024,6 +2084,7 @@ $.fn.show_hide_approval = function(status_id, data, attachment = '')
 
 $.fn.get_contract_config = function()
 {
+	
     try
     {   
         let data    =
@@ -2038,7 +2099,7 @@ $.fn.get_contract_config = function()
 			function (return_data)
 			{
 				if (return_data.code == 0)
-				{
+				{ //console.log(return_data);
 					$.fn.populate_file_blocks(return_data.data.file_uploads);
 					$.fn.populate_dd_values('dd_approvals', return_data.data.approvals);
 					$.fn.populate_onboarding_status(return_data.data.contract_status);
@@ -2076,8 +2137,8 @@ $.fn.get_contract_config = function()
 
 					$.fn.populate_dd('dd_sales_person', return_data.data.approvals);
 
-					$.fn.populate_dd('dd_assignee', return_data.data.approvals);
-
+					$.fn.populate_dd_values('dd_assignee', return_data.data.approvals);
+					
 					$.fn.populate_dd('dd_general_skills', return_data.data.skills_general, true, false, false);
 					$.fn.populate_dd('dd_specific_skills', return_data.data.skills_specific, true, false, false);
 
@@ -2088,7 +2149,7 @@ $.fn.get_contract_config = function()
 		);
     }
     catch(err)
-    {
+    {//console.log(err);
         $.fn.log_error(arguments.callee.caller,err.message);
     }
 };
@@ -2122,8 +2183,8 @@ $.fn.populate_country = function (obj_id, data, empty_it = true, is_search = fal
 	}
 	catch (err)
 	{
-		console.log(err.message);
-		// $.fn.log_error(arguments.callee.caller, err.message);
+		//console.log(err.message);
+		 $.fn.log_error(arguments.callee.caller, err.message);
 	}
 };
 
@@ -2222,6 +2283,26 @@ $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
             }
         }
 
+		if(element_id == 'dd_assignee') {
+            for (let item of dd_data) {
+                
+                $('#dd_assignee').append(`<option 
+                                                 data-type="category" 
+                                                 value="${item.id}">${item.descr}
+                                                 </option>`
+                                                );
+            }
+        }
+		if(element_id == 'dd_client') {
+            for (let item of dd_data.client) {
+                
+                $('#dd_client').append(`<option 
+                                                 data-type="category" 
+                                                 value="${item.id}">${item.name}
+                                                 </option>`
+                                                );
+            }
+        }
         // if(is_search)
         // {
         //     $('#'+element_id).append(`<option value="">All</option>`);
@@ -2244,17 +2325,18 @@ $.fn.populate_file_blocks = function(data)
     {   
 		let attachment_block = '';
 		
-		let send_offer       = `<button class="btn btn-primary send-offer">
+		let send_offer       = `<button class="btn btn-primary send-offer mb-1">
 									Send Offer
-								</button>`;
+								</button><br>`;
 
     	for(let i = 0; i < data.length; i++)
 		{	
-			if(i % 2 != 0)
+			/* if(i % 2 != 0)
 			{
-				attachment_block += `<div class="row">`;
-			}
-	        attachment_block += `<div class="col-sm-6 doc_upload" id="${data[i]['name']}">
+				attachment_block += `<div class="">`;
+			} */
+			//attachment_block += `<div class="row">`;
+	        attachment_block += `<div class="col-sm-6 doc_upload mb-1" id="${data[i]['name']}">
 					                    <div class="dropzone needsclick dz-clickable ${data[i]['is_mandatory'] == 1 ? 'dropzone-mandatory' : 'dropzone-optional'}">
 					                      <div class="dz-message needsclick">
 					                        <div class="row">
@@ -2265,7 +2347,7 @@ $.fn.populate_file_blocks = function(data)
 												  <div class="col-sm-6">
 													  <div class="pull-right">
 													  	${data[i]['descr'] == 'Offer Letter' ? send_offer : ''}
-														<button type="submit" class="btn btn-start fileinput-button">
+														<button type="submit" class="btn btn-info fileinput-button">
 															Browse
 															<input id="fileupload_${data[i]['name']}" type="file" name="files[]" >
 														</button>
@@ -2282,10 +2364,10 @@ $.fn.populate_file_blocks = function(data)
 					                    </div>
 					                </div>`;
 			
-			if(i % 2 != 0)
+			/* if(i % 2 != 0)
 			{
 				attachment_block += `</div>`;
-			}
+			} */
 		}
 
 		$('#attachments-block').html(attachment_block);
@@ -2321,7 +2403,7 @@ $.fn.prepare_form = function()
 
     	// $('#contract_date,#request_date,#emp_start_date,#emp_end_date,#billing_start_date,#billing_end_date,#txt_inc_date,#onboard_date,#txt_current_ep_expiry_date,#commencing_date,#txt_apply_ep_on_date,#date_of_birth,#ep_expiry_date,#marriage_date').datepicker({dateFormat: 'dd-M-yy'});
 
-		$('#contract_date,#request_date,#emp_start_date,#emp_end_date,#billing_start_date,#billing_end_date,#txt_inc_date,#onboard_date,#txt_current_ep_expiry_date,#commencing_date,#txt_apply_ep_on_date,#date_of_birth,#ep_expiry_date,#marriage_date').flatpickr({dateFormat: 'dd-M-yy'});
+		$('#contract_date,#request_date,#emp_start_date,#emp_end_date,#billing_start_date,#billing_end_date,#txt_inc_date,#onboard_date,#txt_current_ep_expiry_date,#commencing_date,#txt_apply_ep_on_date,#date_of_birth,#ep_expiry_date,#marriage_date').flatpickr({dateFormat: 'd-M-yy'});
 
         $('.populate').select2();
         $('.tooltips').tooltip();
@@ -2356,6 +2438,8 @@ $.fn.prepare_form = function()
 		});
 
 		$.fn.change_switchery($('#chk_pono_status'), false);
+		$('#billing_start_date').flatpickr({ dateFormat: 'd-m-Y' });
+        $('#billing_end_date').flatpickr({ dateFormat: 'd-m-Y' });
     }
     catch(err)
     {
@@ -2385,20 +2469,32 @@ $.fn.navigate_form = function (contract_no)
 
 $.fn.set_validation_form = function()
 {
-	$('#detail_form').parsley
-    ({
-        successClass	: 'has-success',
-        errorClass		: 'has-error',
-        errors			:
+	$('#detail_form').parsley(
         {
-            classHandler: function(el)
-            {
-                return $(el).closest('.error-container');
+            classHandler: function(parsleyField) {
+                return parsleyField.$element.closest(".errorContainer");
             },
-            errorsWrapper	: '<ul class=\"help-block list-unstyled\"></ul>',
-            errorElem		: '<li></li>'
+            errorsContainer: function(parsleyField) {
+                return parsleyField.$element.closest(".errorContainer");
+            },
         }
-	});
+    );
+
+
+	// $('#detail_form').parsley
+    // ({
+    //     successClass	: 'has-success',
+    //     errorClass		: 'has-error',
+    //     errors			:
+    //     {
+    //         classHandler: function(el)
+    //         {
+    //             return $(el).closest('.error-container');
+    //         },
+    //         errorsWrapper	: '<ul class=\"help-block list-unstyled\"></ul>',
+    //         errorElem		: '<li></li>'
+    //     }
+	// });
 	
 	$('#reference_form').parsley
     ({
@@ -2463,6 +2559,7 @@ $.fn.view_contract_summary = function(contract_no)
 {
 	try
 	{	
+		
 		$.fn.fetch_data
 		(
 			$.fn.generate_parameter('get_contract_summary',{contract_no : contract_no}),	
@@ -2498,31 +2595,107 @@ $.fn.view_contract_summary = function(contract_no)
 					let oc_total            = 0;
 					let total_cost          = 0;
 					let total_billing  		= 0;
-					let candidate_details   = `<dl>
-												<dt>Name : </dt>
-												<dd>${details.employee_name}</dd>
-												<dt>Designation : </dt>
-												<dd>${details.designation}</dd>
-												<dt>Email : </dt>
-												<dd>${details.email}</dd>
-												<dt>Contact No : </dt>
-												<dd>${details.contact_no}</dd>
-												<dt>Nationality : </dt>
-												<dd>${details.nationality}</dd>
-											</dl>`;
+					let candidate_details   = `
+					<div class="row">
+						<label for="dob_date" class="col-3 col-form-label">Name:</label>
+						<div class="col-4 col-form-label">
+						${details.employee_name}
+						</div>
+					</div>
 
-					let employment_details  = `<dl>
-												<dt>Category : </dt>
-												<dd>${details.employment_category}</dd>
-												<dt>Type : </dt>
-												<dd>${details.employment_type}</dd>
-												<dt>Start Date : </dt>
-												<dd>${details.emp_start_date}</dd>
-												<dt>End Date : </dt>
-												<dd>${details.emp_end_date}</dd>
-												<dt>Employer : </dt>
-												<dd>${details.employer_name}</dd>
-											</dl>`;
+					<div class="row">
+						<label for="dob_date" class="col-3 col-form-label">Designation:</label>
+						<div class="col-4 col-form-label">
+						${details.designation}
+						</div>
+					</div>
+
+					<div class="row">
+						<label for="dob_date" class="col-3 col-form-label">Email:</label>
+						<div class="col-4 col-form-label">
+						${details.email}
+						</div>
+					</div>
+
+					<div class="row">
+						<label for="dob_date" class="col-3 col-form-label">Contact No:</label>
+						<div class="col-4 col-form-label">
+						${details.contact_no}
+						</div>
+					</div>
+
+					<div class="row">
+						<label for="dob_date" class="col-3 col-form-label">Nationality:</label>
+						<div class="col-4 col-form-label">
+						${details.nationality}
+						</div>
+					</div>
+
+					`;
+					// let candidate_details   = `<dl>
+					// 							<dt>Name : </dt>
+					// 							<dd>${details.employee_name}</dd>
+					// 							<dt>Designation : </dt>
+					// 							<dd>${details.designation}</dd>
+					// 							<dt>Email : </dt>
+					// 							<dd>${details.email}</dd>
+					// 							<dt>Contact No : </dt>
+					// 							<dd>${details.contact_no}</dd>
+					// 							<dt>Nationality : </dt>
+					// 							<dd>${details.nationality}</dd>
+					// 						</dl>`;
+
+
+					let employment_details  = `
+					<div class="row">
+						<label for="dob_date" class="col-3 col-form-label">Category:</label>
+						<div class="col-4 col-form-label">
+						${details.employment_category}
+						</div>
+					</div>
+
+					<div class="row">
+						<label for="dob_date" class="col-3 col-form-label">Type:</label>
+						<div class="col-4 col-form-label">
+						${details.employment_type}
+						</div>
+					</div>
+
+					<div class="row">
+						<label for="dob_date" class="col-3 col-form-label">Start Date:</label>
+						<div class="col-4 col-form-label">
+						${details.emp_start_date}
+						</div>
+					</div>
+
+					<div class="row">
+						<label for="dob_date" class="col-3 col-form-label">End Date:</label>
+						<div class="col-4 col-form-label">
+						${details.emp_end_date}
+						</div>
+					</div>
+
+					<div class="row">
+						<label for="dob_date" class="col-3 col-form-label">Employer:</label>
+						<div class="col-4 col-form-label">
+						${details.employer_name}
+						</div>
+					</div>
+
+					`;
+
+					// let employment_details  = `<dl>
+					// 							<dt>Category : </dt>
+					// 							<dd>${details.employment_category}</dd>
+					// 							<dt>Type : </dt>
+					// 							<dd>${details.employment_type}</dd>
+					// 							<dt>Start Date : </dt>
+					// 							<dd>${details.emp_start_date}</dd>
+					// 							<dt>End Date : </dt>
+					// 							<dd>${details.emp_end_date}</dd>
+					// 							<dt>Employer : </dt>
+					// 							<dd>${details.employer_name}</dd>
+					// 						</dl>`;
 
 					// calculate monthly cost
 					$.each( allowance_data, function(index,allowance)
@@ -2670,7 +2843,7 @@ $.fn.view_contract_summary = function(contract_no)
 						}
 						oc_index++;
 					});
-
+					
 					$('#cost_summary_body').html(table_row);
 
 
@@ -2703,6 +2876,7 @@ $.fn.view_contract_summary = function(contract_no)
 						$('#billing_div').hide();
 
                 }
+				
 			},true
 		);
 
@@ -3103,7 +3277,12 @@ $.fn.view_remark = function(contract_no)
         );
 		
 		$('#contract_no').val(contract_no);
-		$('#remarkListModal')   .modal();
+		
+		$("#dd_send_to").select2({
+			dropdownParent: $('#remarkListModal .modal-content')
+		});
+
+		$('#remarkListModal').modal('show');
     }
     catch(err)
     {
@@ -3258,8 +3437,12 @@ $.fn.populate_remark_list_form = function(data)
 			{
 				data_val = escape(JSON.stringify(data[i]));
 
-				row += '<tr>'+
-							'<td><a class="tooltips" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.delete_form(unescape($(this).attr(\'data-value\')))" data-trigger="hover" data-original-title="Delete data "><i class="fa fa-trash-o"/></a></td>' +
+				row += `<tr><td><button type="button" class="btn btn-outline-danger btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete data" data-value="${data_val}" onclick="$.fn.delete_form(decodeURIComponent('${data_val}'))">
+                            <i class="far fa-trash-alt"></i>
+                        </button></td>`  +
+
+				// row += '<tr>'+
+				// 			'<td><a class="tooltips" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.delete_form(unescape($(this).attr(\'data-value\')))" data-trigger="hover" data-original-title="Delete data "><i class="fa fa-trash-o"/></a></td>' +
 							'<td>' + data[i].contract_remarks  	+ '</td>' +
 							'<td>' + data[i].created_by		+ '</td>' +							
 							'<td>' + data[i].created_date	+ '</td>' +
@@ -3383,7 +3566,8 @@ $.fn.populate_comments_form = function (data)
 
     	let details  		= data.details;
     	let json_field 		= $.fn.get_json_string(details.json_field);
-    	FILE_UPLOAD_PATH    = `${MODULE_ACCESS.module_id}/${CONTRACT_ID}/`;
+    	//FILE_UPLOAD_PATH    = `${MODULE_ACCESS.module_id}/${CONTRACT_ID}/`;
+		FILE_UPLOAD_PATH = `../files/${MODULE_ACCESS.module_id}/${CONTRACT_ID}/`;
 		
     	if(SESSIONS_DATA.emp_id == Number(details.created_by))
     	{
@@ -3407,14 +3591,14 @@ $.fn.populate_comments_form = function (data)
 		// 	$('#dd_assignee').append(row);
 		// }
 		
-		$('#dd_assignee') 	.val('').multiselect('reload');
-
+		//$('#dd_assignee').val('').multiselect('reload');
+		$('#dd_assignee').val('');
 		if(json_field !== false)
 		{
 			if(json_field.assigned_to_id)
 	        {
-	        	$('#dd_assignee')   .val(json_field.assigned_to_id.split(",")).multiselect( 'reload' );
-
+	        	//$('#dd_assignee')   .val(json_field.assigned_to_id.split(",")).multiselect( 'reload' );
+				$('#dd_assignee')   .val(json_field.assigned_to_id.split(",")).change();
 	        	//enable comments
 	        	let assignees = json_field.assigned_to_id.split(",");
 	        	if($.inArray(SESSIONS_DATA.emp_id, assignees) !== -1)
@@ -3431,7 +3615,7 @@ $.fn.populate_comments_form = function (data)
 
     }
 	catch(err)
-	{
+	{ //console.log(err);
 		$.fn.log_error(arguments.callee.caller,err.message);
 	}
 };
@@ -3469,7 +3653,7 @@ $.fn.add_assignee = function()
 		
 	}
 	catch(err)
-	{
+	{//console.log(err);
 		$.fn.log_error(arguments.callee.caller,err.message);
 	}
 };
@@ -3497,6 +3681,7 @@ $.fn.add_edit_comment_reply = function ()
     		contract_no	: CONTRACT_ID,
     		comments    : $('#txt_reply').val().replace(/(?:\r\n|\r|\n)/g,'<br/>'),
     		emp_id      : SESSIONS_DATA.emp_id,
+			emp_name    : SESSIONS_DATA.name,
         }
 
         $.fn.write_data
@@ -3504,44 +3689,53 @@ $.fn.add_edit_comment_reply = function ()
             $.fn.generate_parameter('add_edit_contract_comments', data),
             function(return_data)
             {
-                if (return_data.data.details)  // NOTE: Success
-                {
-                	let COMMENT_ID		= return_data.data.details.id;
-                	
-                	let attachment_data =   
-                    {
-                        id          	: '',
-                        primary_id  	: CONTRACT_ID,
-                        secondary_id	: COMMENT_ID,
-                        module_id   	: MODULE_ACCESS.module_id,
-                        filename    	: '',
-                        filesize    	: "0",
-                        json_field  	: {},
-                        emp_id      	: SESSIONS_DATA.emp_id
-                    };
-                	
-                	if($('#files_reply .file-upload.new').length > 0)
-                    {   
-                    	$.fn.populate_comment_row(return_data.data.details);
-                        $.fn.upload_file('files_reply','contract_no',CONTRACT_ID,
-                        attachment_data,function(total_files, total_success,filename, attach_return_data)
-                        {
-                        	if(total_files == total_success)
-                            {   
-                                $('#txt_reply').val('');
-                                btn_comments_reply.stop();
-                                $.fn.populate_fileupload(attach_return_data,'comment-'+COMMENT_ID, true);
-                            }
-                        },false);
-                    }
-                    else
-                    {	
-                    	$('#txt_reply')     .val('');
-                    	btn_comments_reply.stop();
-						$.fn.populate_comment_row(return_data.data.details);
-                    }
-                }
-            },false
+				if (return_data.data.details)
+					{
+						let COMMENT_ID		= return_data.data.details.id;
+							let attachment_data =   
+							{
+								id          	: '',
+								primary_id  	: CONTRACT_ID,
+								secondary_id	: COMMENT_ID,
+								module_id   	: MODULE_ACCESS.module_id,
+								filename    	: '',
+								filesize    	: "0",
+								json_field  	: {},
+								emp_id      	: SESSIONS_DATA.emp_id
+							};
+							
+						if ($('#files_reply .file-upload.new').length > 0)
+						{
+							$.fn.populate_comment_row(return_data.data.details);
+							$.fn.upload_file('files_reply','contract_no',CONTRACT_ID,
+								attachment_data,function(total_files, total_success,filename, attach_return_data)
+							{
+								if (total_files == total_success)
+								{
+									$('#txt_reply').val('');
+									for (let i = 0; i < attach_return_data; i++)
+									{ 
+										attach_return_data[i]['name'] = attach_return_data[i]['filename'];
+										attach_return_data[i]['uuid'] = attach_return_data[i]['id'];
+										attach_return_data[i]['deleteFileParams'] =  JSON.stringify(attach_return_data[i]);
+										delete attach_return_data[i]['filename'];
+										delete attach_return_data[i]['id'];
+									}
+									$.fn.populate_fileupload(attach_return_data, `comment-`+COMMENT_ID, true);
+									btn_comments_reply.stop();
+								}
+							}, false, btn_save);
+						} 
+						else
+						{	
+							$('#txt_reply')     .val('');
+							btn_comments_reply.stop();
+							$.fn.populate_comment_row(return_data.data.details);
+						}
+						getInitials();
+						$.fn.show_right_success_noty('Data has been recorded successfully');
+					}
+            }
         );
     } 
     catch (e) 
@@ -3592,6 +3786,7 @@ $.fn.populate_comments_list = function (data)
     }
 }
 
+
 $.fn.populate_comment_row = function (row_data, is_list = false)
 {
     try
@@ -3606,20 +3801,27 @@ $.fn.populate_comment_row = function (row_data, is_list = false)
         }
 
         let date = moment(row_data.created_date).format(UI_DATE_FORMAT + " h:ma");
-
-        row += `<ul class="panel-comments">
-                    <li>
-                        <img src="${photo}" alt="profile">
-                        <div class="content">
-                            <span class="commented"><a href="#">${row_data.name ? row_data.name : EMPLOYEE_NAME}</a> enquired on <a href="#">${date}</a></span>
-                            ${row_data.descr} <br/><br/>
-                            <div id="${'comment-'+COMMENT_ID}"></div>
-                        </div>
-                    </li>
-                </ul>`;      
+        row += `
+				<div class="d-flex align-items-start mb-3">
+					<div style="margin-right:0.75rem" class="avatar-initials small" width="30" height="30" data-name="${row_data.name}" ></div>
+					<div class="w-100">
+						<h5 class="mt-0 mb-2"><a href="contacts-profile.html" class="text-reset">${row_data.name}</a> <small class="text-muted">${date}</small></h5>
+						${row_data.descr}
+						<div id="${'comment-'+COMMENT_ID}"" class="mt-2"></div>
+					</div>
+				</div>`;      
         if(is_list)
         {
         	$('#div_reply').append(row);
+
+			for (let i = 0; i < row_data.attachment.length; i++)
+			{ 
+				row_data.attachment[i]['name'] = row_data.attachment[i]['filename'];
+				row_data.attachment[i]['uuid'] = row_data.attachment[i]['id'];
+				row_data.attachment[i]['deleteFileParams'] =  JSON.stringify(row_data.attachment[i]);
+				delete row_data.attachment[i]['filename'];
+				delete row_data.attachment[i]['id'];
+			}
         	$.fn.populate_fileupload(row_data,'comment-'+COMMENT_ID, true);
         }
         else
@@ -3756,7 +3958,14 @@ $.fn.add_child_input = function (value)
 		}
 		$('#tbl_child tbody').append(row);
 
-		$('.child_dob_date').datepicker({ dateFormat: 'dd-mm-yy' });
+		// $('.child_dob_date').datepicker({ dateFormat: 'dd-mm-yy' });
+
+		$('.child_dob_date').flatpickr({ 
+            altInput: true,
+            altFormat: "d-M-Y", //Display in input field
+            dateFormat: "Y-m-d", //Value to be set
+            defaultDate: "today"
+        });
 
 		$('.populate2').select2();
 	}
@@ -3813,18 +4022,20 @@ $.fn.bind_command_events = function()
 				$.fn.open_page('0&user_id=' + $(this).find(":button").val(), '../users/users.php')
 			}
 		});
-
+       
     	//Hide common update toolbar for respective tabs
-		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) 
+		$('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) 
 		{
 			let target = $(e.target).attr("href") // activated tab
+			
 			if(target == '#tab-contract' || target == '#tab-clients' || target == '#tab-ref')
 			{
 				$('#actions_div').hide();
+				
 			}
 			else
 			{	
-				$('#actions_div').show();
+				$('#actions_div').hide();
 			}
 		});
 
@@ -3838,7 +4049,7 @@ $.fn.bind_command_events = function()
         {   
 			e.preventDefault();
 			
-
+           
 			if(ATTACHMENTS)
 			{	
 				let attach_li = '';
@@ -3854,7 +4065,7 @@ $.fn.bind_command_events = function()
 				$('#offer_files').html(attach_li);
 
 			}
-			$('#offer_letter_modal')    .modal();
+			$('#offer_letter_modal').modal('show');
 		});
 
 		$('#btn_create_employee').click( function(e)
@@ -3994,8 +4205,8 @@ $.fn.bind_command_events = function()
         {
             //e.preventDefault();
 			let doc_name = $(this).attr('data-name');
-            FILE_UPLOAD_PATH    =   `${MODULE_ACCESS.module_id}/${CONTRACT_ID}/`;
-			
+           // FILE_UPLOAD_PATH    =   `${MODULE_ACCESS.module_id}/${CONTRACT_ID}/`;
+		   FILE_UPLOAD_PATH = `../files/${MODULE_ACCESS.module_id}/${CONTRACT_ID}/`;
 			let attachment_data =   
 			{
 				id              : '',
@@ -4031,7 +4242,8 @@ $.fn.bind_command_events = function()
 		$('#btn_po_upload').click( function(e)
         {
             e.preventDefault();
-            FILE_UPLOAD_PATH    =   `${MODULE_ACCESS.module_id}/${CONTRACT_ID}/`;
+            //FILE_UPLOAD_PATH    =   `${MODULE_ACCESS.module_id}/${CONTRACT_ID}/`;
+			FILE_UPLOAD_PATH = `../files/${MODULE_ACCESS.module_id}/${CONTRACT_ID}/`;
 			let attachment_data =   
 			{
 				id              : '',
@@ -4141,6 +4353,7 @@ $.fn.bind_command_events = function()
 			btn_save = Ladda.create(this);
 	 		btn_save.start();
 			$.fn.save_edit_form();
+			$(this).removeClass('ladda-button');
 		});
 
 		$('#btn_reference_add').click( function(e)
@@ -4546,6 +4759,7 @@ $.fn.bind_command_events = function()
             btn_comments_reply = Ladda.create(this);
         	btn_comments_reply.start();
             $.fn.add_edit_comment_reply();
+						
         });
 
         $('#btn_assign_save').on('click', function(e) 
@@ -4559,7 +4773,8 @@ $.fn.bind_command_events = function()
         $('.nav-tabs a').on('click', function(e)
         {
         	e.preventDefault();
-        	if($(this).attr('href') == '#tab-five')
+			
+        	if($(this).attr('href') == '#tab-five' || $(this).attr('href') == '#tab-clients' || $(this).attr('href') == '#tab-ref')
         	{
         		$('#actions_div').hide();
         	}
@@ -4571,7 +4786,7 @@ $.fn.bind_command_events = function()
 		
     }
     catch(err)
-    {
+    {//console.log(err);
         $.fn.log_error(arguments.callee.caller,err.message);
     }
 };
@@ -4765,13 +4980,11 @@ $.fn.get_contract_add_request_dropdown = function()
         ( 
             $.fn.generate_parameter('get_contract_search_dropdown', data),
             function(return_data)
-            {
+            {//console.log(return_data.data.client);
                 if (return_data.code == 0)
-                {  
-                    console.log(return_data.data);
-                    $.fn.populate_dd_values('dd_created_by_search', return_data.data);
-                    
-                    
+                {
+                	$.fn.populate_dd_values('dd_created_by_search', return_data.data);
+					$.fn.populate_dd_values('dd_client', return_data.data);
                 }
             },true
         );
@@ -4781,6 +4994,35 @@ $.fn.get_contract_add_request_dropdown = function()
         $.fn.log_error(arguments.callee.caller,err.message);
     }
 };
+
+$.fn.month_diff = function (startDate, endDate)
+{
+	let diffResult = Math.round((endDate - startDate) / (1000 * 60 * 60 * 24));
+	let months = (diffResult / 30.436875).toFixed(1);
+	return months;
+}
+
+function getInitials(){ 
+	var colors = ["#1abc9c", "#2ecc71", "#3498db", "#9b59b6", "#34495e", "#16a085", "#27ae60", "#2980b9", "#8e44ad", "#2c3e50", "#f1c40f", "#e67e22", "#e74c3c", "#95a5a6", "#f39c12", "#d35400", "#c0392b", "#bdc3c7", "#7f8c8d"];
+	$( ".avatar-initials" ).each(function( index ) {
+		
+			var avatarElement = $(this);
+		    var avatarWidth = avatarElement.attr('width');
+			var avatarHeight = avatarElement.attr('height');
+			var name = avatarElement.attr('data-name');
+			var arr = name.split(' ');
+			if( arr.length == 1 )
+				name = name+" "+name;
+			var initials = name.split(' ')[0].charAt(0).toUpperCase() + name.split(" ")[1].charAt(0).toUpperCase();
+			var charIndex = initials.charCodeAt(0) - 65;
+			var colorIndex = charIndex % 19;
+
+		avatarElement.css({
+		  'background-color': colors[colorIndex],
+		})
+		.html(initials);
+	});
+}
 
 
 // START of Document initialization

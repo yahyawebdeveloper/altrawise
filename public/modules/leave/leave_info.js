@@ -113,7 +113,7 @@ $.fn.populate_list_form = function (data, is_scroll)
 {
 	try
 	{
-
+		console.log(data);
 		if (is_scroll == false)
 		{
 			$('#tbl_list > tbody').empty();
@@ -214,7 +214,7 @@ $.fn.populate_list_form = function (data, is_scroll)
 					}
 					row += '</td>';
 				}
-				row += `<td><div id="leave_file_${data[i].id}" style="width: max-content;border:none;background-color:none;"></div></td>`;
+				row += `<td width="10%"><div id="leave_file_${data[i].id}" style="width: 200px;word-break: break-word;border:none;background-color:none;"></div></td>`;
 				row += '<td width="15%"><div class="button-group">';
 				
 				if (data[i].verified == 0)
@@ -226,7 +226,7 @@ $.fn.populate_list_form = function (data, is_scroll)
 				}
 				if (data[i].type_id == MC_LEAVE_ID && data[i].filename != '' && data[i].filename != null)
 				{
-					row += '&nbsp;<a target="_blank" href="' + data[i].filepath + '"><i class="fa fa-picture-o"/></a>';
+					row += '&nbsp;<a target="_blank" href="' + data[i].filepath + '" ><i class="fa fa-picture-o"/></a>';
 				}
 				
 				row += '&nbsp;<a class="btn btn-outline-primary btn-xs waves-effect waves-light" data-toggle="tooltip" data-placement="left" title="View Remarks" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.view_remark(unescape($(this).attr(\'data-value\')))"><i class="fas fa-external-link-alt"></i></a>';
@@ -237,7 +237,14 @@ $.fn.populate_list_form = function (data, is_scroll)
 				tr_row++;
 				
 				$('#tbl_list tbody').append(row);
-
+				for (let j = 0; j < data[i].attachment.length; j++)
+					{ 
+						data[i].attachment[j]['name'] = data[i].attachment[j]['filename'];
+						data[i].attachment[j]['uuid'] = data[i].attachment[j]['id'];
+						data[i].attachment[j]['deleteFileParams'] =  JSON.stringify(data[i].attachment[j]);
+						delete data[i].attachment[j]['filename'];
+						delete data[i].attachment[j]['id'];
+					}
 				$.fn.populate_fileupload(data[i], `leave_file_${data[i].id}`);
                 $("#tbl_list").find(`#leave_file_${data[i].id} .col-sm-4`).toggleClass('col-sm-4 col-sm-12');
 			}
@@ -329,8 +336,8 @@ $.fn.edit_verify_status = function ()
 				{
 					if (return_data.data)
 					{
-						$.fn.remove_table_row(TABLE_ROW_ID);
-						//$.fn.reset_form('remark_form');
+						//$.fn.remove_table_row(TABLE_ROW_ID);
+						$.fn.reset_form('remark_form');
 						$.fn.show_right_success_noty('Data has been recorded successfully');
 						TABLE_ROW_ID = 0;
 						ROW_DATA = '';
@@ -390,7 +397,7 @@ $.fn.delete_form = function (data, table_row_id)
 								{
 									if (return_data)
 									{
-										$.fn.remove_table_row(TABLE_ROW_ID);
+									//	$.fn.remove_table_row(TABLE_ROW_ID);
 										$.fn.show_right_success_noty('Data has been deleted successfully');
 										TABLE_ROW_ID = 0;
 										ROW_DATA = '';
@@ -563,7 +570,7 @@ $.fn.view_leave_record = function (data, table_row_id)
 	try
 	{
 		ROW_DATA = JSON.parse(data);
-		console.log(ROW_DATA);
+		//console.log(ROW_DATA);
 		console.log(moment(ROW_DATA.start_date, 'YYYY-MM-DD').year());
 		TABLE_ROW_ID = table_row_id;
 
@@ -923,7 +930,7 @@ $.fn.edit_approve_status = function ()
 						{
 							if (return_data.data)
 							{
-								$.fn.remove_table_row(TABLE_ROW_ID);
+								//$.fn.remove_table_row(TABLE_ROW_ID);
 								$.fn.show_right_success_noty('Data has been recorded successfully');
 								$.fn.reset_form('approve_leave');
 								TABLE_ROW_ID = 0;
@@ -1121,7 +1128,7 @@ $.fn.get_leave_approval_dropdown_data = function()
 			is_supervisor: SESSIONS_DATA.is_supervisor,
 			is_admin: SESSIONS_DATA.is_admin,
         };
-       console.log(data);
+       
         $.fn.fetch_data
         ( 
             $.fn.generate_parameter('get_leave_approval_dropdown_data', data),

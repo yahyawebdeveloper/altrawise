@@ -55,7 +55,7 @@ $.fn.get_list = function()
 			emp_id			: SESSIONS_DATA.emp_id,
 			module_id       : "133"
 	 	};
-        console.log(data);
+       
 	 	$.fn.fetch_data
 		(
 			$.fn.generate_parameter('get_leave_report',data),
@@ -85,7 +85,7 @@ $.fn.get_list = function()
 };
 
 $.fn.pouplate_list = function(data)
-{
+{ 
 	try
 	{
 		if (data)
@@ -98,10 +98,11 @@ $.fn.pouplate_list = function(data)
 
 			for(var i = 0; i < data.length; i++)
 			{
-                let date = moment(data[i].leave_date, 'DD-MM-YYYY');
+                let date =  moment(data[i].leave_date);
+				//moment(data[i].leave_date, 'DD-MM-YYYY');
 
 				data_val = escape(JSON.stringify(data[i]));
-
+				
 				var day_info = '';
 				if(data[i].leave_no_of_days == 0.5)
 				{
@@ -134,14 +135,14 @@ $.fn.pouplate_list = function(data)
 				{
 					if(data[i].type_id != 48)
 					{
-						row += '<td class="text-center">' +  + '' + day_info	+ '<br/>PAID</td>';// date.format(UI_DATE_FORMAT)
+						row += '<td class="text-center">' + date.format('D-MMM-YYYY') + '' + day_info	+ '<br/>PAID</td>';// date.format(UI_DATE_FORMAT)
 						row += '<td>&nbsp;</td>';
 						row += '<td>&nbsp;</td>';
 					}
 					else
 					{
 						row += '<td>&nbsp;</td>';
-						row += '<td class="text-center">' + + '' + day_info	+ '</td>';// date.format(UI_DATE_FORMAT)
+						row += '<td class="text-center">' + date.format('D-MMM-YYYY') + '' + day_info	+ '</td>';// date.format(UI_DATE_FORMAT)
 						row += '<td>&nbsp;</td>';
 					}
 				}
@@ -149,13 +150,13 @@ $.fn.pouplate_list = function(data)
 				{
 					row += '<td>&nbsp;</td>';
 					row += '<td>&nbsp;</td>';
-					row += '<td class="text-center">' + + '' + day_info	+ '<br/>UNPAID</td>';// date.format(UI_DATE_FORMAT)
+					row += '<td class="text-center">' + date.format('D-MMM-YYYY') + '' + day_info	+ '<br/>UNPAID</td>';// date.format(UI_DATE_FORMAT)
 				}
 				row += '<td>&nbsp;</td>';
 				row += '<td>&nbsp;</td>';
 				row += '<td>&nbsp;</td>';
 				row += '</tr>';
-
+				
 				if(count == data[i].day_count)
 				{
 					row += `<tr onclick="$('.${data[i].employee_id}').show()" style="cursor: pointer">`;
@@ -240,7 +241,7 @@ $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
 {
     try
     {
-		
+		$('#dd_employee').empty();
 		 for (let item of dd_data.emp)
         {
             $('#dd_employee').append(`<option 
@@ -249,7 +250,7 @@ $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
                                                  </option>`
                                                );
         }
-     
+		$('#dd_leave_type').empty();
         for (let item of dd_data.leave_type)
         {
             $('#dd_leave_type').append(`<option 

@@ -432,7 +432,14 @@ $.fn.populate_payment_details = function (obj)
         $('#dd_department')       .val(data.department_id).change();
         $('#dd_client')             .val(data.client_id).change();
         $('#txt_amount')            .val(data.amount);
-        
+        for (let i = 0; i < data.attachment.length; i++)
+					{ 
+						data.attachment[i]['name'] = data.attachment[i]['filename'];
+						data.attachment[i]['uuid'] = data.attachment[i]['id'];
+						data.attachment[i]['deleteFileParams'] =  JSON.stringify(data.attachment[i]);
+						delete data.attachment[i]['filename'];
+						delete data.attachment[i]['id'];
+					}
         $.fn.populate_fileupload(data,'attachment_files',true);
 
     } 
@@ -484,6 +491,7 @@ $.fn.populate_payments_list = function (data)
                         </tr>`
 
                 $("#table_payments_list").append(row);
+               
                 $.fn.populate_fileupload(data[i],'payment-'+payment_id, true);
                 $("#table_payments_list").find('#payment-'+payment_id+' .col-sm-4').toggleClass('col-sm-4 col-sm-12');
             }

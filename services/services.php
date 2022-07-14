@@ -25,13 +25,13 @@ if(isset($_SERVER['REQUEST_METHOD']))
 		//echo test
 		//service exposed without token
 		//echo $param;
-		if($param->method === 'login')
+	/* 	if($param->method === 'login')
 		{
 			require_once constant('MODULES_DIR')  . '/login.php';
 			echo check_login($param);
 			return;
-		}
-		else if($param->method === 'recover_password')
+		} */
+	/* 	else if($param->method === 'recover_password')
 		{
 		    require_once constant('MODULES_DIR')  . '/login.php';
 		    echo recover_password($param->data);
@@ -42,8 +42,8 @@ if(isset($_SERVER['REQUEST_METHOD']))
 		    require_once constant('MODULES_DIR')  . '/login.php';
 		    echo reset_password($param->data);
 		    return;
-		}
-		else if($param->method === 'get_modules')
+		} */
+	/* 	else if($param->method === 'get_modules')
 		{
 		    require_once constant('MODULES_DIR')  . '/modules.php';
 		    echo get_modules($param->data);
@@ -155,7 +155,7 @@ if(isset($_SERVER['REQUEST_METHOD']))
         	require_once constant('MODULES_DIR') 	. '/task.php';
          	echo update_assignee_document($param->data);
 			return;
-		}
+		} */
 		// else if($param->method === 'get_task_reply_list_new')
         // {
         // 	require_once constant('MODULES_DIR') 	. '/task.php';
@@ -289,7 +289,7 @@ if(isset($_SERVER['REQUEST_METHOD']))
 // 		}
 		
 // 		// START DOCUMENT OTP
-		if ($param->method === 'generate_digital_signature') 
+		/* if ($param->method === 'generate_digital_signature') 
 		{
             require_once constant('MODULES_DIR') . '/user_documents.php';
             echo generate_digital_signature($param->data);
@@ -300,7 +300,7 @@ if(isset($_SERVER['REQUEST_METHOD']))
             require_once constant('MODULES_DIR') . '/user_documents.php';
             echo generate_otp_document($param->data);
             return;
-        }
+        } */
 
         // if ($param->method === 'validate_otp_document') 
 		// {
@@ -309,7 +309,7 @@ if(isset($_SERVER['REQUEST_METHOD']))
         //     return;
         // }
 
-        if ($param->method === 'verify_document') 
+    /*     if ($param->method === 'verify_document') 
 		{
             require_once constant('MODULES_DIR') . '/user_documents.php';
             echo verify_document($param->data);
@@ -335,7 +335,7 @@ if(isset($_SERVER['REQUEST_METHOD']))
             require_once constant('MODULES_DIR') . '/user_documents.php';
             echo update_view_time_doc($param->data);
             return;
-        }
+        } */
 // 		// END DOCUMENT OTP
 
 // 		if($param->method === 'is_token_valid')
@@ -422,7 +422,7 @@ if(isset($_SERVER['REQUEST_METHOD']))
 // 		}
 		
 		
-
+/* 
 		else if($param->method === 'get_user_initial_data')
 		{
 		    require_once constant('MODULES_DIR') 	. '/employees.php';
@@ -484,7 +484,7 @@ if(isset($_SERVER['REQUEST_METHOD']))
 			require_once constant('MODULES_DIR') 	. '/employees.php';
 			echo delete_leave($param->data);
 			return;
-		}
+		} */
 // 		else if($param->method === 'update_profile')
 // 		{
 // 			require_once constant('MODULES_DIR') 	. '/employees.php';
@@ -547,7 +547,7 @@ if(isset($_SERVER['REQUEST_METHOD']))
 // 		// }
 		
 		
-		
+	/* 	
 		else if($param->method === 'get_misc')
 		{
 		    require_once constant('MODULES_DIR') 	. '/master_settings.php';
@@ -564,13 +564,13 @@ if(isset($_SERVER['REQUEST_METHOD']))
  		{
  			require_once constant('MODULES_DIR') 	. '/master_settings.php';
  			echo add_edit_holiday($param->data);
-		}
+		} */
 // 		else if($param->method === 'get_dropdown')
 // 		{
 // 			require_once constant('MODULES_DIR') 	. '/master_settings.php';
 // 			echo get_misc($param->data);
 // 		}
-		else if($param->method === 'get_employers_list')
+	/* 	else if($param->method === 'get_employers_list')
 		{
 			require_once constant('MODULES_DIR') 	. '/master_settings.php';
 			echo get_employers_list($param->data);
@@ -597,17 +597,17 @@ if(isset($_SERVER['REQUEST_METHOD']))
  		{
  			require_once constant('MODULES_DIR') . '/master_settings.php';
  			echo get_public_holiday_upload($param->data);
- 		} 
+ 		}  */
 // 		else if ($param->method === 'add_ph_upload_batch') 
 // 		{
 // 			require_once constant('MODULES_DIR') . '/master_settings.php';
 // 			echo add_ph_upload_batch($param->data);
 // 		}
- 		else if ($param->method === 'remove_company_logo') 
+ 	/* 	else if ($param->method === 'remove_company_logo') 
  		{
  			require_once constant('MODULES_DIR') . '/master_settings.php';
  			echo remove_company_logo($param->data);
- 		}
+ 		} */
 
 		//--------Added by Sita----------- 
 		else if($param->method === 'get_document_search_dropdown_data_check')
@@ -1202,7 +1202,7 @@ if(isset($_SERVER['REQUEST_METHOD']))
 //         }
         
 // //         START OF CLIENTS SERVICE
-         else if($param->method === 'get_client_list')
+/*          else if($param->method === 'get_client_list')
          {
 			 
          	require_once constant('MODULES_DIR') 	. '/clients.php';
@@ -1224,7 +1224,7 @@ if(isset($_SERVER['REQUEST_METHOD']))
         	require_once constant('MODULES_DIR') 	. '/clients.php';
         	echo add_edit_contacts($param->data);
 			return;
-        }
+        } */
 //         else if($param->method === 'update_contact_attachment')
 //         {
 //         	require_once constant('MODULES_DIR') 	. '/clients.php';
@@ -1235,21 +1235,21 @@ if(isset($_SERVER['REQUEST_METHOD']))
 //         	require_once constant('MODULES_DIR') 	. '/clients.php';
 //         	echo add_edit_client_comm($param->data);
 //         }
-         else if($param->method === 'get_comm_list')
+      /*    else if($param->method === 'get_comm_list')
          {
          	require_once constant('MODULES_DIR') 	. '/clients.php';
          	echo get_comm_list($param->data);return;
-         }
+         } */
 //         else if($param->method === 'update_comm_attachment')
 //         {
 //         	require_once constant('MODULES_DIR') 	. '/clients.php';
 //         	echo update_comm_attachment($param->data);
 //         }
-        else if($param->method === 'get_client_contacts')
+       /*  else if($param->method === 'get_client_contacts')
          {
          	require_once constant('MODULES_DIR') 	. '/clients.php';
          	echo get_client_contacts($param->data);return;
-         }
+         } */
 //         else if($param->method === 'get_client_report')
 //         {
 //         	require_once constant('MODULES_DIR')    . '/clients.php';
@@ -1277,11 +1277,11 @@ if(isset($_SERVER['REQUEST_METHOD']))
 //         	require_once constant('MODULES_DIR') . '/clients.php';
 //         	echo approve_client_details($param->data);
 //         } 
-         else if ($param->method === 'get_contacts_for_approval') 
+        /*  else if ($param->method === 'get_contacts_for_approval') 
          {
          	require_once constant('MODULES_DIR') . '/clients.php';
          	echo get_contacts_for_approval($param->data);return;
-         } 
+         }  */
 //         else if ($param->method === 'assign_client_contacts') 
 //         {
 //         	require_once constant('MODULES_DIR') . '/clients.php';
@@ -1307,7 +1307,7 @@ if(isset($_SERVER['REQUEST_METHOD']))
 //         	require_once constant('MODULES_DIR') . '/clients.php';
 //         	echo add_edit_tmp_client($param->data);
 //         } 
-         else if ($param->method === 'get_documents_list_for_client') 
+       /*   else if ($param->method === 'get_documents_list_for_client') 
          {
          	require_once constant('MODULES_DIR') . '/clients.php';
          	echo get_documents_list_for_client($param->data);return;
@@ -1321,17 +1321,17 @@ if(isset($_SERVER['REQUEST_METHOD']))
         {
          	require_once constant('MODULES_DIR') . '/clients.php';
          	echo get_client_details($param->data);return;
-         }
+         } */
 //         else if ($param->method === 'assign_principal_account') 
 //         {
 //         	require_once constant('MODULES_DIR') . '/clients.php';
 //         	echo assign_principal_account($param->data);
 //         } 
-        else if ($param->method === 'get_principal_accounts') 
+       /*  else if ($param->method === 'get_principal_accounts') 
         {
         	require_once constant('MODULES_DIR') . '/clients.php';
         	echo get_principal_accounts($param->data);return;
-         } 
+         }  */
 //         else if ($param->method === 'delete_principal_account') 
 //         {	
 //         	require_once constant('MODULES_DIR') . '/clients.php';
@@ -1347,12 +1347,12 @@ if(isset($_SERVER['REQUEST_METHOD']))
 //         	require_once constant('MODULES_DIR') . '/clients.php';
 //         	echo validate_contact_email($param->data);
 //         }
-			else if ($param->method === 'get_clients_by_type') 
+			/* else if ($param->method === 'get_clients_by_type') 
 			{
 				require_once constant('MODULES_DIR') . '/clients.php';
 				echo get_clients_by_type($param->data);
 				return;
-			}
+			} */
 //         else if ($param->method === 'get_stake_holders_excel') 
 //         {
 //         	require_once constant('MODULES_DIR') . '/clients.php';
@@ -1392,12 +1392,12 @@ if(isset($_SERVER['REQUEST_METHOD']))
 //         	require_once constant('MODULES_DIR') 	. '/task.php';
 //         	echo get_task_report_assign_to_detail($param->data);
 //         }
-         else if($param->method === 'add_edit_schedule_tasks')
+       /*   else if($param->method === 'add_edit_schedule_tasks')
          {
          	require_once constant('MODULES_DIR') 	. '/task.php';
          	echo add_edit_schedule_tasks($param->data);
 			return;
-         }
+         } */
 //         else if($param->method === 'update_schedule_task_attachment')
 //         {
 //         	require_once constant('MODULES_DIR') 	. '/task.php';
@@ -1408,7 +1408,7 @@ if(isset($_SERVER['REQUEST_METHOD']))
 //         	require_once constant('MODULES_DIR') 	. '/task.php';
 //         	echo get_schedule_tasks_list($param->data);
 //         }
-         else if($param->method === 'get_tasks_list_group')
+     /*     else if($param->method === 'get_tasks_list_group')
          {
          	require_once constant('MODULES_DIR') 	. '/task.php';
          	echo get_tasks_list_group($param->data);
@@ -1439,23 +1439,23 @@ if(isset($_SERVER['REQUEST_METHOD']))
          {
          	require_once constant('MODULES_DIR') 	. '/task.php';
          	echo get_tasks_list_waiting_review_approval($param->data);return;
-        }
+        } */
 //         else if($param->method === 'get_task_reply_list_new')
 //         {
 //         	require_once constant('MODULES_DIR') 	. '/task.php';
 //         	echo get_task_reply_list_new($param->data);
 //         }
-        else if($param->method === 'add_edit_tasks_reply_new')
+       /*  else if($param->method === 'add_edit_tasks_reply_new')
         {
         	require_once constant('MODULES_DIR') 	. '/task.php';
         	echo add_edit_tasks_reply_new($param->data);
-        }
+        } */
 //         else if($param->method === 'update_task_attachment_reply_new')
 //         {
 //         	require_once constant('MODULES_DIR') 	. '/task.php';
 //         	echo update_task_attachment_reply_new($param->data);
 //         }
-         else if($param->method === 'add_edit_tasks_new')
+       /*   else if($param->method === 'add_edit_tasks_new')
          {
          	require_once constant('MODULES_DIR') 	. '/task.php';
          	echo add_edit_tasks_new($param->data);
@@ -1465,7 +1465,7 @@ if(isset($_SERVER['REQUEST_METHOD']))
          	require_once constant('MODULES_DIR') 	. '/task.php';
          	echo add_edit_client_tasks_new($param->data);
 			 return;
-         }
+         } */
 //         else if($param->method === 'update_task_attachment_new')
 //         {
 //         	require_once constant('MODULES_DIR') 	. '/task.php';
@@ -1497,17 +1497,17 @@ if(isset($_SERVER['REQUEST_METHOD']))
 //         	require_once constant('MODULES_DIR') 	. '/task.php';
 //         	echo get_sbg_report_list($param->data);
 //         }
-         else if($param->method === 'get_schedule_upload')
+       /*   else if($param->method === 'get_schedule_upload')
          {
         	require_once constant('MODULES_DIR') 	. '/task.php';
          	echo get_schedule_upload($param->data);return;
-         }
+         } */
 //         else if($param->method === 'add_schedule_upload_batch')
 //         {
 //         	require_once constant('MODULES_DIR') 	. '/task.php';
 //         	echo add_schedule_upload_batch($param->data);
 //         }
-         else if($param->method === 'get_tasks_count_waiting_review_approval')
+        /*  else if($param->method === 'get_tasks_count_waiting_review_approval')
          {
         	require_once constant('MODULES_DIR') 	. '/task.php';
          	echo get_tasks_count_waiting_review_approval($param->data);
@@ -1516,7 +1516,7 @@ if(isset($_SERVER['REQUEST_METHOD']))
          {
         	require_once constant('MODULES_DIR') 	. '/task.php';
         	echo get_tasks_my_priority($param->data);return;
-        }
+        } */
 //         else if($param->method === 'update_schedule_task_status')
 //         {
 //         	require_once constant('MODULES_DIR') 	. '/task.php';
@@ -1527,7 +1527,7 @@ if(isset($_SERVER['REQUEST_METHOD']))
 //         	require_once constant('MODULES_DIR') 	. '/task.php';
 //         	echo add_edit_schedule_tasks_batch($param->data);
 //         }
-         else if($param->method === 'get_tasks_template_list')
+       /*   else if($param->method === 'get_tasks_template_list')
          {
          	require_once constant('MODULES_DIR') 	. '/task.php';
          	echo get_tasks_template_list($param->data);
@@ -1536,7 +1536,7 @@ if(isset($_SERVER['REQUEST_METHOD']))
          {
          	require_once constant('MODULES_DIR') 	. '/task.php';
          	echo add_edit_tasks_template($param->data);
-         }
+         } */
 //         else if($param->method === 'update_task_template_attachment')
 //         {
 //         	require_once constant('MODULES_DIR') 	. '/task.php';
@@ -1562,7 +1562,7 @@ if(isset($_SERVER['REQUEST_METHOD']))
 //         	require_once constant('MODULES_DIR') . '/task.php';
 //         	echo get_tasks_for_timesheet($param->data);
 //         }
-         else if ($param->method === 'add_assignee_for_master_task') 
+     /*     else if ($param->method === 'add_assignee_for_master_task') 
  		{
              require_once constant('MODULES_DIR') . '/task.php';
              echo add_assignee_for_master_task($param->data);
@@ -1633,7 +1633,7 @@ if(isset($_SERVER['REQUEST_METHOD']))
              require_once constant('MODULES_DIR') . '/task.php';
              echo remove_assignee_for_task_template($param->data);
          }
-
+ */
         
 // //         END OF TASK SERVICE
         
@@ -2160,7 +2160,7 @@ if(isset($_SERVER['REQUEST_METHOD']))
 // //         END OF BACKUP SERVICE
 
 //         START OF DOCUMENT SERVICE
-		else if ($param->method === 'add_edit_documents') 
+	/* 	else if ($param->method === 'add_edit_documents') 
 		{
 			require_once constant('MODULES_DIR') . '/user_documents.php';
 			echo add_edit_documents($param->data);
@@ -2171,14 +2171,14 @@ if(isset($_SERVER['REQUEST_METHOD']))
 			require_once constant('MODULES_DIR') . '/user_documents.php';
 			echo get_documents_list($param->data);
 			return;
-		} 
+		}  */
 		/* else if ($param->method === 'get_documents_drop_down_values') 
 		{
 			require_once constant('MODULES_DIR') . '/user_documents.php';
 			echo get_documents_drop_down_values($param->data);
 			return;
 		}  */
-		else if ($param->method === 'get_doc_details') 
+	/* 	else if ($param->method === 'get_doc_details') 
 		{
 			require_once constant('MODULES_DIR') . '/user_documents.php';
 			echo get_doc_details($param->data);
@@ -2189,13 +2189,13 @@ if(isset($_SERVER['REQUEST_METHOD']))
 			require_once constant('MODULES_DIR') . '/user_documents.php';
 			echo send_email_notification_document($param->data);
 			return;
-		} 
+		}  */
 // 		else if ($param->method === 'archive_user_document') 
 // 		{
 // 			require_once constant('MODULES_DIR') . '/user_documents.php';
 // 			echo archive_user_document($param->data);
 // 		} 
-		else if ($param->method === 'delete_user_document') 
+		/* else if ($param->method === 'delete_user_document') 
 		{
 			require_once constant('MODULES_DIR') . '/user_documents.php';
 			echo delete_user_document($param->data);
@@ -2206,7 +2206,7 @@ if(isset($_SERVER['REQUEST_METHOD']))
 			require_once constant('MODULES_DIR') . '/user_documents.php';
 			echo get_document_initial_data($param->data);
 			return;
-		}
+		} */
 // //         END OF DOCUMENT SERVICE
 
 // //         START OF HELPER FILE SERVICE
@@ -2243,15 +2243,15 @@ if(isset($_SERVER['REQUEST_METHOD']))
 			echo add_files($param->data);
 			return;
 		}  */
-		else if($param->method === 'delete_files')
+		/* else if($param->method === 'delete_files')
 		{
 			require_once constant('MODULES_DIR') 	. '/files.php';
 			echo delete_files($param->data);
 			return;
-		}
+		} */
 //         END OF HELPER FILE SERVICE
 		// CLIENT PORTAL
-		else if($param->method === 'client_login') {
+		/* else if($param->method === 'client_login') {
 			require_once constant('MODULES_DIR') 	. '/client_login.php';
 			echo client_login($param);
 			return;
@@ -2260,7 +2260,7 @@ if(isset($_SERVER['REQUEST_METHOD']))
 			require_once constant('MODULES_DIR') 	. '/task.php';
 			echo get_client_task_list($param->data);
 			return;
-		}
+		} */
 
 
 		else if ($param->method === 'get_service_request_search_dropdown') 

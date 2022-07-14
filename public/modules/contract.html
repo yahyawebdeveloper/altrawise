@@ -8,9 +8,11 @@
 <link href="assets/libs/dropify/css/dropify.min.css" rel="stylesheet" type="text/css" />
 <link href="assets/libs/mohithg-switchery/switchery.min.css" rel="stylesheet" type="text/css" />
 <link href="assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
-<link href="./assets/libs/jquery-fileupload/css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/jquery-fileupload/css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
 <!-- third party css end -->
-
+<style>
+    .actiondiv{display: none;}
+</style>
 <!-- List Block -->
 <div class="row" id="list_div">
     <!-- start page title -->
@@ -137,9 +139,2188 @@
                 </div>
             </div> <!-- end card-->
         </div> <!-- end col -->
+
+        <!-- Modal Remark List Start -->
+	<!-- <div class="modal fade" id="remarkListModal"style="overflow:hidden;" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> -->
+        <div id="remarkListModal" class="modal fade" role="dialog" style="overflow:hidden;">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header bg-light">
+					<h4 class="modal-title" id="assigneeModalLabel">Remark List</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+				</div>
+				<div class="modal-body p-2">
+					<form class="form-horizontal" data-validate="parsley" id="remark_form">
+						<input type="hidden" name="contract_no" id="contract_no">
+						<div class="mb-2">
+							<div id="remarkList" class="col-sm-12">
+                                <table class="table" id="tbl_remark_list">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Remark</th>
+                                        <th>Created By</th>
+                                        <th>Created Date</th>
+                                        <th>Remark Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+						</div>
+
+                        <div class="mb-2">
+							<label for="voucher_remark" class="form-label">Send To:</label>
+                            <div class="errorContainer">
+                                <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_send_to" required>
+                                </select>
+                            </div>
+						</div>
+
+						<div class="mb-2">
+							<label for="voucher_remark" class="form-label">Remark:</label>
+                            <div class="errorContainer">
+                                <textarea name="contract_remark" id="contract_remark" class="form-control" required="required"></textarea>
+                            </div>
+						</div>
+	
+						<div class="text-end">
+							<button type="button" class="btn btn-light waves-effect waves-light m-1" data-bs-dismiss="modal"><i class="fa fa-times me-1"></i> Cancel</button>
+							<button type="button" id="btn_add_remark" class="btn btn-success waves-effect waves-light mt-1 mb-1 ladda-button" data-color="green" data-style="expand-left"><i class="fa fa-check me-1"></i> Save</button>
+						</div>
+					</form>
+					
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
     </div>
     <!-- end row -->
 </div>
+
+
+<div class="row" id="info_div" style="display: none">
+
+    <!-- start page title -->
+    <div class="row mt-3 mb-1">
+        <div class="col-12">
+            <div class="page-title-box">
+                <h4 class="page-title" style="float:left">Onboarding</h4>
+                <div class="mt-3" style="float:right">
+                    <a href="javascript:void(0);" id="btn_info_back" class="btn btn-secondary mb-2"><i class="fe-arrow-left me-1"></i>Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="col-sm-12">
+        <div class="panel panel-grape">
+            <div class="panel-heading">
+                <h4 id="h4_contract_no"></h4>
+            </div>
+            <div class="panel-body">
+            <div class="row mb-4">
+                <div class="col-sm-6 ">
+                    <h4 class="mb-3" style="font-weight: 600;">Candidate Details:</h4>
+                    <div id="summary_candidate_details">
+                        
+                    </div>
+                </div>
+                <div class="col-sm-6 ">
+                    <div class="pull-right">
+                        <h4 class="mb-3" style="font-weight: 600;">Employment Details:</h4>
+                        <div id="summary_employment_details">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover" id="cost_summary_table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th style="width:20%">Category</th>
+                                        <th>Item</th>
+                                        <th>Monthly Cost</th>
+                                        <th>Duration</th>
+                                        <th style="text-align: right">Cost</th>
+                                        <th style="text-align: right">Total Cost</th>
+                                    </tr>
+                                    </thead>
+                                <tbody id="cost_summary_body">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="border-radius: 0px;float: right;margin-top: 5%;">
+                    <div class="col-md-12 col-md-offset-9">
+                        <p class="text-right">Total Cost to Company: <span id="total_cost"></span></p>
+                        <div id="billing_div">
+                            <p class="text-right">Billing: <span id="total_billing"></span></p>
+                            <p class="text-right">Total Gross Profit: <span id="total_gross_profit"></span></p>
+                            <p class="text-right">Gross Profit Margin Per Month: <span id="total_gross_profit_per_month"></span></p>
+                            <hr>
+                            <h3 class="text-right"> Gross Profit(%) : <span id="gross_profit_percentage"></span>%</h3>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Add,Edit User Block -->
+<div class="row" id="new_div" style="display: none">
+    <!-- end page title -->
+    <!-- start page title -->
+    <div class="row mt-3 mb-1">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <a href="javascript:void(0);" id="btn_back" class="btn btn-secondary mb-2"><i class="fe-arrow-left me-1"></i>Back</a>
+                </div>
+                <h4 class="page-title">Onboarding</h4>
+            </div>
+        </div>
+    </div>     
+    <!-- end page title -->
+
+    <div class="row">
+
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title mb-4" id="h4_primary_no">Contract Number : -</h4>
+
+                    <ul class="nav nav-tabs nav-bordered">
+
+                        <li class="nav-item" id="candidate-tab">
+                            <a href="#tab-candidate" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
+                                Candidate
+                            </a>
+                        </li>
+                        <li class="nav-item" id="additional-tab">
+                            <a href="#tab-additional" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                Additional Details
+                            </a>
+                        </li>
+                        <li class="nav-item" id="cost-tab">
+                            <a href="#tab-cost" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                Cost to Company
+                            </a>
+                        </li>
+                        <li class="nav-item" id="contract-tab">
+                            <a href="#tab-contract" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                Employment
+                            </a>
+                        </li>
+                        <li class="nav-item" id="clients-tab">
+                            <a href="#tab-clients" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                Contract with Clients
+                            </a>
+                        </li>
+
+                        <li class="nav-item" id="ref-tab">
+                            <a href="#tab-ref" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                References
+                            </a>
+                        </li>
+
+                        <li class="nav-item" id="attach-tab">
+                            <a href="#tab-attach" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                Attachments
+                            </a>
+                        </li>
+
+                        <li class="nav-item" id="enquiry-tab">
+                            <a href="#tab-enquiry" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                Enquiries
+                            </a>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content border p-3">
+                        <div class="tab-pane active" id="tab-candidate">
+                            <form class="form-horizontal" data-validate="parsley" id="detail_form">
+
+                                
+                                <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Personal Information</h5>
+
+                                <div class="row mt-5">
+                                    <div class="col-lg-6">
+                                        <!-- Name -->
+                                        <div class="row">
+                                            <label for="txt_employee_name" class="col-4 col-form-label">Name</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" required  class="form-control" id="txt_employee_name"  />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- NRIC/Passport -->
+                                        <div class="row">
+                                            <label for="txt_nric" class="col-4 col-form-label">NRIC/Passport</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" required  class="form-control" id="txt_nric"  />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Designation -->
+                                        <div class="row">
+                                            <label for="txt_designation" class="col-4 col-form-label">Designation</label>
+                                            <div class="col-7 errorContainer">
+                                                <input id="txt_designation" type="text" required class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Sex -->
+                                        <div class="row">
+                                            <label for="dd_sex" class="col-4 col-form-label">Sex</label>
+                                            <div class="col-7 errorContainer">
+                                                <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_sex" required>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Personal Email -->
+                                        <div class="row">
+                                            <label for="txt_email" class="col-4 col-form-label">Email</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="email" required parsley-type="email"  class="form-control" id="txt_email" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Contact No. -->
+                                        <div class="row">
+                                            <label for="txt_contact_no" class="col-4 col-form-label">Contact No.</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" required  class="form-control" id="txt_contact_no" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Marital Status -->
+                                        <div class="row">
+                                            <label for="dd_marital_status" class="col-4 col-form-label">Marital Status</label>
+                                            <div class="col-7 errorContainer">
+                                                <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_marital_status" required>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Home Add. -->
+                                        <div class="row">
+                                            <label for="txt_home_address" class="col-4 col-form-label">Home Add.</label>
+                                            <div class="col-7 errorContainer">
+                                                <textarea class="form-control" id="txt_home_address" cols="45" rows="3" required></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br />
+                                
+                                <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Current Status</h5>
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Current Company Name -->
+                                        <div class="row">
+                                            <label for="txt_current_company" class="col-4 col-form-label">Current Company Name</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text"  class="form-control" id="txt_current_company" placeholder="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Current EP Expiry Date -->
+                                        <div class="row">
+                                            <label for="txt_current_ep_expiry_date" class="col-4 col-form-label">Current EP Expiry Date</label>
+                                            <div class="col-7 errorContainer">
+                                                <div class="input-group" data-placement="top" data-align="top" data-autoclose="true">
+                                                    <input type="text" class="form-control" id="txt_current_ep_expiry_date">
+                                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Apply EP On -->
+                                        <div class="row">
+                                            <label for="txt_apply_ep_on_date" class="col-4 col-form-label">Apply EP On</label>
+                                            <div class="col-7 errorContainer">
+                                                <div class="input-group" data-placement="top" data-align="top" data-autoclose="true">
+                                                    <input type="text" class="form-control" id="txt_apply_ep_on_date">
+                                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Is Expat -->
+                                        <div class="row">
+                                            <label for="chk_is_expat" class="col-4 col-form-label">Is Expat</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="checkbox" id="chk_is_expat" class="js-switch" data-color="#64b0f2" data-size="small" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Able to obtain NOC -->
+                                        <div class="row">
+                                            <label for="chk_noc" class="col-4 col-form-label">Able to obtain NOC</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="checkbox" id="chk_noc" class="js-switch" data-color="#64b0f2" data-size="small" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Require to exit the country -->
+                                        <div class="row">
+                                            <label for="chk_leave_country_required" class="col-4 col-form-label">Require to exit the country</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="checkbox" id="chk_leave_country_required" class="js-switch" data-color="#64b0f2" data-size="small" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- EP Required -->
+                                        <div class="row">
+                                            <label for="chk_ep_required" class="col-4 col-form-label">EP Required</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="checkbox" id="chk_ep_required" class="js-switch" data-color="#64b0f2" data-size="small" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Reference Check -->
+                                        <div class="row">
+                                            <label for="chk_reference_check" class="col-4 col-form-label">Reference Check</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="checkbox" id="chk_reference_check" class="js-switch" data-color="#64b0f2" data-size="small" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br>
+                                <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Internal Details</h5>
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Notification Email To -->
+                                        <div class="row">
+                                            <label for="dd_notification_email_to" class="col-4 col-form-label">Notification Email To</label>
+                                            <div class="col-7 errorContainer">
+                                                <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_notification_email_to">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Notification Month -->
+                                        <div class="row">
+                                            <label for="notification_month" class="col-4 col-form-label">Notification Month</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" class="form-control" id="notification_month" max="5" min="1" onchange="$.fn.check_max_min(this)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Remarks -->
+                                        <div class="row">
+                                            <label for="txt_emp_remarks" class="col-4 col-form-label">Remarks</label>
+                                            <div class="col-7 errorContainer">
+                                                <textarea class="form-control" id="txt_emp_remarks" maxlength="1000" rows="3"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Onboarding Status -->
+                                        <div class="row">
+                                            <label for="dd_onboarding_status" class="col-4 col-form-label">Onboarding Status</label>
+                                            <div class="col-7 errorContainer">
+                                                <select class="form-control populate" id="dd_onboarding_status" data-toggle="select2" data-width="100%">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6"></div>
+                                    <div class="col-lg-6">
+                                        <!-- User Reference -->
+                                        <div class="row">
+                                            <label for="dob_date" class="col-4 col-form-label">User Reference</label>
+                                            <div class="col-4 col-form-label" id="div_user_ref">
+                                                <!-- Test -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                
+                            </form>   
+                        </div>
+
+                        <div class="tab-pane" id="tab-additional">
+                            <form class="form-horizontal" data-validate="parsley" id="additional_form">
+                                
+                                <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Additional Details</h5>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Department -->
+                                        <div class="row">
+                                            <label for="dd_department" class="col-4 col-form-label">Department</label>
+                                            <div class="col-7 errorContainer">
+                                                <select class="form-control populate" id="dd_department" data-toggle="select2" data-width="100%">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Home Country -->
+                                        <div class="row">
+                                            <label for="dd_home_country" class="col-4 col-form-label">Home Country</label>
+                                            <div class="col-7 errorContainer">
+                                                <select class="form-control populate" id="dd_home_country" data-toggle="select2" data-width="100%">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+                                
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Address in Malaysia -->
+                                        <div class="row">
+                                            <label for="txt_address_malaysia" class="col-4 col-form-label">Address in Malaysia</label>
+                                            <div class="col-7 errorContainer">
+                                                <textarea class="form-control" id="txt_address_malaysia" rows="4"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Office Tel No -->
+                                        <div class="row">
+                                            <label for="txt_office_tel" class="col-4 col-form-label">Office Tel No</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" class="form-control" id="txt_office_tel" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+                                
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Nationality -->
+                                        <div class="row">
+                                            <label for="dd_nationality" class="col-4 col-form-label">Nationality</label>
+                                            <div class="col-7 errorContainer">
+                                                <select class="form-control populate" id="dd_nationality" data-toggle="select2" data-width="100%">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Date of Birth -->
+                                        <div class="row">
+                                            <label for="date_of_birth" class="col-4 col-form-label">Date of Birth</label>
+                                            <div class="col-7 errorContainer">
+                                                <div class="input-group" data-placement="top" data-align="top" data-autoclose="true">
+                                                    <input type="text" class="form-control" id="date_of_birth">
+                                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Age -->
+                                        <div class="row">
+                                            <label for="txt_age" class="col-4 col-form-label">Age</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" class="form-control" id="txt_age" readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Place of Birth -->
+                                        <div class="row">
+                                            <label for="txt_place_of_birth" class="col-4 col-form-label">Place of Birth</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text"  class="form-control" id="txt_place_of_birth"  />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Office Email ID -->
+                                        <div class="row">
+                                            <label for="txt_office_email" class="col-4 col-form-label">Office Email ID</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text"  class="form-control" id="txt_office_email"  />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Race -->
+                                        <div class="row">
+                                            <label for="txt_race" class="col-4 col-form-label">Race</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text"  class="form-control" id="txt_race"  />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Soft Skills -->
+                                        <div class="row">
+                                            <label for="dd_general_skills" class="col-4 col-form-label">Soft Skills</label>
+                                            <div class="col-7 errorContainer">
+                                                <select id="dd_general_skills" class="form-control populate" data-width="100%" multiple>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Technical Skills -->
+                                        <div class="row">
+                                            <label for="dd_specific_skills" class="col-4 col-form-label">Technical Skills</label>
+                                            <div class="col-7 errorContainer">
+                                                <select id="dd_specific_skills" class="form-control populate" data-width="100%" multiple>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br>
+                                <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Spouse Details</h5>
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Spouse Name -->
+                                        <div class="row">
+                                            <label for="txt_spouse_name" class="col-4 col-form-label">Spouse Name</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" class="form-control" id="txt_spouse_name"  />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Occupation -->
+                                        <div class="row">
+                                            <label for="txt_spouse_occupation" class="col-4 col-form-label">Occupation</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text"  class="form-control" id="txt_spouse_occupation"  />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Date of Marriage -->
+                                        <div class="row">
+                                            <label for="marriage_date" class="col-4 col-form-label">Date of Marriage</label>
+                                            <div class="col-7 errorContainer">
+                                                <div class="input-group" data-placement="top" data-align="top" data-autoclose="true">
+                                                    <input type="text" class="form-control" id="marriage_date">
+                                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Company -->
+                                        <div class="row">
+                                            <label for="txt_spouse_company" class="col-4 col-form-label">Company</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text"  class="form-control" id="txt_spouse_company"  />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Passport/IC No -->
+                                        <div class="row">
+                                            <label for="txt_spouse_ic" class="col-4 col-form-label">Passport/IC No</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text"  class="form-control" id="txt_spouse_ic"  />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                
+                                
+                                
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Company Address -->
+                                        <div class="row">
+                                            <label for="txt_spouse_company_address" class="col-4 col-form-label">Company Address</label>
+                                            <div class="col-7 errorContainer">
+                                                <textarea class="form-control" id="txt_spouse_company_address" rows="2"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- No Of Children -->
+                                        <div class="row">
+                                            <label for="txt_no_of_children" class="col-4 col-form-label">No Of Children</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="digit"  class="form-control" id="txt_no_of_children" data-parsley-type="digits" value="0" onkeyup="$.fn.add_child_input(this.value)"   />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="child_info" class="mt-3" style="display:none;">
+                                    <table id="tbl_child" class="table w-100">
+                                    <thead>
+                                        <tr>
+                                            <th width="4%">No</th>
+                                            <th width="30%">Child Name</th>
+                                            <th width="22%">Passport/My Kid No</th>
+                                            <th width="22%">Sex</th>
+                                            <th width="22%">Date of Birth</th>
+                                        </tr>
+                                    </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <br>
+                                <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Bank Details</h5>
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Name(For Bank Acc.) -->
+                                        <div class="row">
+                                            <label for="txt_bank_acc_name" class="col-4 col-form-label">Name(For Bank Acc.)</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text"  class="form-control" id="txt_bank_acc_name"  />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Passport/IC No(For Bank Acc.) -->
+                                        <div class="row">
+                                            <label for="txt_bank_acc_ic" class="col-4 col-form-label">Passport/IC No(For Bank Acc.)</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text"  class="form-control" id="txt_bank_acc_ic"  />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Bank Name -->
+                                        <div class="row">
+                                            <label for="txt_bank_name" class="col-4 col-form-label">Bank Name</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text"  class="form-control" id="txt_bank_name"  />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <label for="txt_acc_no" class="col-4 col-form-label">Account No</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text"  class="form-control" id="txt_acc_no"  />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Swift Code -->
+                                        <div class="row">
+                                            <label for="txt_swift_code" class="col-4 col-form-label">Swift Code</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text"  class="form-control" id="txt_swift_code"  />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br>
+                                <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Emergency Contact</h5>
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Emergency Contact Person -->
+                                        <div class="row">
+                                            <label for="txt_emergency_person" class="col-4 col-form-label">Emergency Contact Person</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text"  class="form-control" id="txt_emergency_person"  />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Relationship -->
+                                        <div class="row">
+                                            <label for="txt_emergency_relation" class="col-4 col-form-label">Relationship</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text"  class="form-control" id="txt_emergency_relation"  />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Emergency Contact Address -->
+                                        <div class="row">
+                                            <label for="txt_emergency_address" class="col-4 col-form-label">Emergency Contact Address</label>
+                                            <div class="col-7 errorContainer">
+                                                <textarea class="form-control" id="txt_emergency_address" rows="2"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Tel. No.(For Emergency) -->
+                                        <div class="row">
+                                            <label for="txt_emergency_phone" class="col-4 col-form-label">Tel. No.(For Emergency)</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="digit"  class="form-control" id="txt_emergency_phone" data-parsley-type="digits" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <button class="btn-primary btn" id="recruitment_toggle" style="padding-right: 22px;"><i class="fa fa-plus"></i>&nbsp;&nbsp;Recruitment Details</button>
+                                    </div>
+                                </div>
+
+                                <div id="recruitment_div" style="display: none;">
+
+                                    <div class="row mt-2">
+                                        <div class="col-lg-6">
+                                            <!-- Resume Source -->
+                                            <div class="row">
+                                                <label for="dd_resume_source" class="col-4 col-form-label">Resume Source</label>
+                                                <div class="col-7 errorContainer">
+                                                    <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_resume_source" required>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <!-- Referral -->
+                                            <div class="row">
+                                                <label for="txt_referal" class="col-4 col-form-label">Referral</label>
+                                                <div class="col-7">
+                                                    <div class="row">
+                                                        <div class="col-6 errorContainer">
+                                                            <input type="text" id="txt_referral_name" class="form-control" placeholder="Name">
+                                                        </div>
+                                                        <div class="col-6 errorContainer">
+                                                            <input type="text" id="txt_referral_amount" value="" class="form-control" placeholder="Amount" max="5000" min="0" onchange="$.fn.check_max_min(this)">
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-lg-6">
+                                            <!-- External Recruiter -->
+                                            <div class="row">
+                                                <label for="txt_referal_ext_rect" class="col-4 col-form-label">External Recruiter</label>
+                                                <div class="col-7">
+                                                    <div class="row">
+                                                        <div class="col-6 errorContainer">
+                                                            <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_ext_rec">
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-6 errorContainer">
+                                                            <input type="text" id="txt_ext_rec_amount" class="form-control" placeholder="Amount" max="5000" min="0" onchange="$.fn.check_max_min(this)">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <!-- External Sales -->
+                                            <div class="row">
+                                                <label for="txt_referal_ext_sales" class="col-4 col-form-label">External Sales</label>
+                                                <div class="col-7">
+                                                    <div class="row">
+                                                        <div class="col-6 errorContainer">
+                                                            <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_ext_sales">
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-6 errorContainer">
+                                                            <input type="text" id="txt_ext_sales_amount" class="form-control" placeholder="Amount" max="5000" min="0" onchange="$.fn.check_max_min(this)">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-lg-6">
+                                            <!-- Requestor Name -->
+                                            <div class="row">
+                                                <label for="dd_requestor_name" class="col-4 col-form-label">Requestor Name</label>
+                                                <div class="col-7 errorContainer">
+                                                    <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_requestor_name">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <!-- Request Date -->
+                                            <div class="row">
+                                                <label for="request_date" class="col-4 col-form-label">Request Date</label>
+                                                <div class="col-7 errorContainer">
+                                                    <div class="input-group" data-placement="top" data-align="top" data-autoclose="true">
+                                                        <input type="text" class="form-control" id="request_date">
+                                                        <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-lg-6">
+                                            <!-- Recruiter Name -->
+                                            <div class="row">
+                                                <label for="dd_recruiter_name" class="col-4 col-form-label">Recruiter Name</label>
+                                                <div class="col-7 errorContainer">
+                                                    <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_recruiter_name" required>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <!-- Sales Person -->
+                                            <div class="row">
+                                                <label for="dd_sales_person" class="col-4 col-form-label">Sales Person</label>
+                                                <div class="col-7 errorContainer">
+                                                    <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_sales_person" required>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <div class="tab-pane" id="tab-cost">
+                            <form class="form-horizontal" data-validate="parsley" id="cost_form">
+                                <input type="hidden" id="txt_duration" />
+
+                                <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Salary & Other Cost</h5>
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Currency -->
+                                        <div class="row">
+                                            <label for="cost_currency_id" class="col-4 col-form-label">Currency</label>
+                                            <div class="col-7 errorContainer">
+                                                <select class="form-control populate" data-toggle="select2" data-width="100%" id="cost_currency_id">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6"></div>
+                                </div>
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Basic Salary -->
+                                        <div class="row">
+                                            <label for="txt_salary" class="col-4 col-form-label">Basic Salary</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text"  class="form-control" id="txt_salary" maxlength="10" onkeypress="return validateNumber(event)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Basic Salary after Increment -->
+                                        <div class="row">
+                                            <label for="txt_salary_after_increment" class="col-4 col-form-label">Basic Salary after Increment</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text"  class="form-control" id="txt_salary_after_increment" maxlength="10" readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- /////////////////////////// -->
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- EPF -->
+                                        <div class="row">
+                                            <label for="txt_epf" class="col-4 col-form-label">EPF</label>
+                                            <div class="col-7">
+                                                <div class="row">
+                                                    <div class="col-6 errorContainer">
+                                                        <input type="text" id="txt_epf" class="form-control" maxlength="10" onkeypress="return validateNumber(event)">
+                                                    </div>
+                                                    <div class="col-6 errorContainer">
+                                                        <select id="dd_epf_percentage" style="width:100%" class="populate">
+                                                            <option value="">Please Select</option>
+                                                            <option value="0.13">13 %</option>
+                                                            <option value="0.12">12 %</option>
+                                                            <option value="0.11">11 %</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <!-- SOCSO -->
+                                        <div class="row">
+                                            <label for="txt_socso" class="col-4 col-form-label">SOCSO</label>
+                                            <div class="col-7">
+                                                <div class="row">
+                                                    <div class="col-10 errorContainer">
+                                                        <input type="text" id="txt_socso" class="form-control" maxlength="10" onkeypress="return validateNumber(event)">
+                                                    </div>
+                                                    <div class="col-2 errorContainer">
+                                                        <input type="checkbox" id="chk_socso_tick" class="js-switch" data-color="#64b0f2" data-size="small" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- EP Cost -->
+                                        <div class="row">
+                                            <label for="txt_epcost" class="col-4 col-form-label">EP Cost</label>
+                                            <div class="col-7">
+                                                <div class="row">
+                                                    <div class="col-10 errorContainer">
+                                                        <input type="text" id="txt_epcost" class="form-control" maxlength="10" onkeypress="return validateNumber(event)">
+                                                    </div>
+                                                    <div class="col-2 errorContainer">
+                                                        <input type="checkbox" id="chk_ep_tick" class="js-switch" data-color="#64b0f2" data-size="small" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <!-- Recruiter Commission -->
+                                        <div class="row">
+                                            <label for="txt_recruiter_commission" class="col-4 col-form-label">Recruiter Commission</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" id="txt_recruiter_commission" class="form-control" maxlength="10" onkeypress="return validateNumber(event)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Outpatient Medical -->
+                                        <div class="row">
+                                            <label for="txt_outpatient_medical_cost" class="col-4 col-form-label">Outpatient Medical</label>
+                                            <div class="col-7">
+                                                <div class="row">
+                                                    <div class="col-10 errorContainer">
+                                                        <input type="text" id="txt_outpatient_medical_cost" class="form-control" maxlength="10" onkeypress="return validateNumber(event)">
+                                                    </div>
+                                                    <div class="col-2 errorContainer">
+                                                        <input type="checkbox" id="chk_om_tick" class="js-switch" data-color="#64b0f2" data-size="small" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <!-- Medical Insurance -->
+                                        <div class="row">
+                                            <label for="txt_medical_insurance_cost" class="col-4 col-form-label">Medical Insurance</label>
+                                            <div class="col-7">
+                                                <div class="row">
+                                                    <div class="col-10 errorContainer">
+                                                        <input type="text" id="txt_medical_insurance_cost" class="form-control" maxlength="10" onkeypress="return validateNumber(event)">
+                                                    </div>
+                                                    <div class="col-2 errorContainer">
+                                                        <input type="checkbox" id="chk_mi_tick" class="js-switch" data-color="#64b0f2" data-size="small" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Overseas Visa -->
+                                        <div class="row">
+                                            <label for="txt_overseas_visa_cost" class="col-4 col-form-label">Overseas Visa</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" id="txt_overseas_visa_cost" class="form-control" maxlength="10" onkeypress="return validateNumber(event)">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <!-- Laptop -->
+                                        <div class="row">
+                                            <label for="txt_laptop_cost" class="col-4 col-form-label">Laptop</label>
+                                            <div class="col-7">
+                                                <div class="row">
+                                                    <div class="col-10 errorContainer">
+                                                        <input type="text" id="txt_laptop_cost" class="form-control" maxlength="10" onkeypress="return validateNumber(event)">
+                                                    </div>
+                                                    <div class="col-2 errorContainer">
+                                                        <input type="checkbox" id="chk_laptop_tick" class="js-switch" data-color="#64b0f2" data-size="small" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Temp. Accommodation -->
+                                        <div class="row">
+                                            <label for="txt_temp_accommodation_cost" class="col-4 col-form-label">Temp. Accommodation</label>
+                                            <div class="col-7">
+                                                <div class="row">
+                                                    <div class="col-10 errorContainer">
+                                                        <input type="text" id="txt_temp_accommodation_cost" class="form-control" maxlength="10" onkeypress="return validateNumber(event)">
+                                                    </div>
+                                                    <div class="col-2 errorContainer">
+                                                        <input type="checkbox" id="chk_ta_tick" class="js-switch" data-color="#64b0f2" data-size="small" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <!-- Mobilization -->
+                                        <div class="row">
+                                            <label for="txt_mobilization_cost" class="col-4 col-form-label">Mobilization</label>
+                                            <div class="col-7">
+                                                <div class="row">
+                                                    <div class="col-10 errorContainer">
+                                                        <input type="text" id="txt_mobilization_cost" class="form-control" maxlength="10" onkeypress="return validateNumber(event)">
+                                                    </div>
+                                                    <div class="col-2 errorContainer">
+                                                        <input type="checkbox" id="chk_mobilization_tick" class="js-switch" data-color="#64b0f2" data-size="small" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Flight Ticket -->
+                                        <div class="row">
+                                            <label for="txt_flight_ticket_cost" class="col-4 col-form-label">Flight Ticket</label>
+                                            <div class="col-7">
+                                                <div class="row">
+                                                    <div class="col-10 errorContainer">
+                                                        <input type="text" id="txt_flight_ticket_cost" class="form-control" maxlength="10" onkeypress="return validateNumber(event)">
+                                                    </div>
+                                                    <div class="col-2 errorContainer">
+                                                        <input type="checkbox" id="chk_ft_tick" class="js-switch" data-color="#64b0f2" data-size="small" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <!-- Notice Period Buyout -->
+                                        <div class="row">
+                                            <label for="txt_notice_period_buyout" class="col-4 col-form-label">Notice Period Buyout</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" id="txt_notice_period_buyout" class="form-control" maxlength="10" onkeypress="return validateNumber(event)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Bonus -->
+                                        <div class="row">
+                                            <label for="txt_bonus" class="col-4 col-form-label">Bonus</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text"  class="form-control" id="txt_bonus" maxlength="10" onkeypress="return validateNumber(event)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Sales Commission -->
+                                        <div class="row">
+                                            <label for="txt_sales_commission" class="col-4 col-form-label">Sales Commission</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text"  class="form-control" id="txt_sales_commission" maxlength="10" onkeypress="return validateNumber(event)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- EIS -->
+                                        <div class="row">
+                                            <label for="txt_eis" class="col-4 col-form-label">EIS</label>
+                                            <div class="col-7">
+                                                <div class="row">
+                                                    <div class="col-10 errorContainer">
+                                                        <input type="text" id="txt_eis" class="form-control" max="100" min="0" onchange="$.fn.check_max_min(this)">
+                                                    </div>
+                                                    <div class="col-2 errorContainer">
+                                                        <input type="checkbox" id="chk_eis_tick" class="js-switch" data-color="#64b0f2" data-size="small" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <!-- HRDF -->
+                                        <div class="row">
+                                            <label for="txt_hrdf" class="col-4 col-form-label">HRDF</label>
+                                            <div class="col-7">
+                                                <div class="row">
+                                                    <div class="col-10 errorContainer">
+                                                        <input type="text" id="txt_hrdf" class="form-control" max="10000" min="0" onchange="$.fn.check_max_min(this)">
+                                                    </div>
+                                                    <div class="col-2 errorContainer">
+                                                        <input type="checkbox" id="chk_hrdf_tick" class="js-switch" data-color="#64b0f2" data-size="small" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Other Cost -->
+                                        <div class="row">
+                                            <label for="txt_other_cost" class="col-4 col-form-label">Other Cost</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text"  class="form-control" id="txt_other_cost" maxlength="10" onkeypress="return validateNumber(event)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Other Cost Remarks -->
+                                        <div class="row">
+                                            <label for="txt_other_cost_remarks" class="col-4 col-form-label">Other Cost Remarks</label>
+                                            <div class="col-7 errorContainer">
+                                                <textarea class="form-control" id="txt_other_cost_remarks" rows="2" maxlength="1000"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- /////////////////////////////// -->
+                                <br>
+                                <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Dependants Details</h5>
+
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="tbl_dependent">
+                                        <thead>
+                                            <tr>
+                                                <th>Type</th>
+                                                <th>Quantity</th>
+                                                <th>Amount</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr id="base_row_dependent">
+                                                <td width="30%">
+                                                    <select id="dd_td_dependent" style="width:100%" class="populate">
+                                                        
+                                                    </select>
+                                                </td>
+                                                <td width="20%">
+                                                    <select id="dd_dp_qty" style="width:100%" class="populate">
+                                                        <option value="0">Please Select</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="6">6</option>
+                                                        <option value="7">7</option>
+                                                        <option value="8">8</option>
+                                                        <option value="9">9</option>
+                                                        <option value="10">10</option>
+                                                    </select>
+                                                </td>
+                                                <td width="30%"><input type="text" class="form-control marginBottom10px" id="txt_td_dependent_amount" maxlength="10" onkeypress="return validateNumber(event)"></td>
+                                                <td width="20%">
+                                                    <button id="btn_add_dependent" type="button" class="btn btn-primary" data-mode="0">
+                                                        <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <br>
+                                <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Additional Allowance/Billing Details</h5>
+
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="tbl_allowance">
+                                        <thead>
+                                            <tr>
+                                                <th>Type</th>
+                                                <th>Amount</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr id="base_row">
+                                                <td width="50%">
+                                                    <select id="dd_td_allowance" style="width:100%" class="populate">
+                                                        
+                                                    </select>
+                                                </td>
+                                                <td width="30%"><input type="text" class="form-control marginBottom10px" id="txt_td_amount" maxlength="10" onkeypress="return validateNumber(event)"></td>
+                                                <td width="20%">
+                                                    <button id="btn_add_allowance" type="button" class="btn btn-primary" data-mode="0">
+                                                        <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <br>
+                                <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Increments</h5>
+
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="tbl_increment">
+                                        <thead>
+                                            <tr>
+                                                <th>Description</th>
+                                                <th>Amount</th>
+                                                <th>Date</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr id="base_row_increment">
+                                                <td width="40%">
+                                                    <input type="text" class="form-control marginBottom10px" id="txt_inc_description" >
+                                                </td>
+                                                <td width="20%">
+                                                    <input type="text" class="form-control marginBottom10px" id="txt_inc_amount" maxlength="10" onkeypress="return validateNumber(event)">
+                                                </td>
+                                                <td width="20%">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control flatpickr-input" id="txt_inc_date" pattern="(0[1-9]|[12][0-9]|3[01])[-]([A-Za-z]{3})[-](19|20)\d\d">
+                                                        <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                    </div>
+                                                </td>
+                                                <td width="20%">
+                                                    <button id="btn_add_increment" type="button" class="btn btn-primary" data-mode="0">
+                                                        <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <br>
+                                <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Additional Benefits</h5>
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Annual Leave -->
+                                        <div class="row">
+                                            <label for="txt_annual_leave" class="col-4 col-form-label">Annual Leave</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="number" id="txt_annual_leave"  class="form-control" data-parsley-type="number" max="30" min="0" onchange="$.fn.check_max_min(this)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Medical Leave -->
+                                        <div class="row">
+                                            <label for="txt_medical_leave" class="col-4 col-form-label">Medical Leave</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="number" id="txt_medical_leave"  class="form-control" data-parsley-type="number" max="30" min="0" onchange="$.fn.check_max_min(this)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row my-4">
+                                    <div class="col-lg-4">
+                                        <!-- Overtime Applicable -->
+                                        <div class="row">
+                                            <label for="chk_overtime_applicable" class="col-9 col-form-label">Overtime Applicable</label>
+                                            <div class="col-3 errorContainer pt-1">
+                                                <input type="checkbox" id="chk_overtime_applicable" name="chk_overtime_applicable" class="js-switch form-control" data-color="#64b0f2" data-size="small" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <!-- Client to Hire -->
+                                        <div class="row">
+                                            <label for="chk_client_to_hire_allow" class="col-9 col-form-label">Client to Hire</label>
+                                            <div class="col-3 errorContainer pt-1">
+                                                <input type="checkbox" id="chk_client_to_hire_allow" name="chk_client_to_hire_allow" class="js-switch form-control" data-color="#64b0f2" data-size="small" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <!-- Replacement Leave -->
+                                        <div class="row">
+                                            <label for="chk_replacement_leave_applicable" class="col-9 col-form-label">Replacement Leave</label>
+                                            <div class="col-3 errorContainer pt-1">
+                                                <input type="checkbox" id="chk_replacement_leave_applicable" name="chk_replacement_leave_applicable" class="js-switch form-control" data-color="#64b0f2" data-size="small" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <!-- Annual Leave En-Cash -->
+                                        <div class="row">
+                                            <label for="chk_annual_leave_encash_allow" class="col-9 col-form-label">Annual Leave En-Cash</label>
+                                            <div class="col-3 errorContainer pt-1">
+                                                <input type="checkbox" id="chk_annual_leave_encash_allow" name="chk_annual_leave_encash_allow" class="js-switch form-control" data-color="#64b0f2" data-size="small" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <!-- Active -->
+                                        <div class="row">
+                                            <label for="chk_is_active" class="col-9 col-form-label">Active</label>
+                                            <div class="col-3 errorContainer pt-1">
+                                                <input type="checkbox" id="chk_is_active" name="chk_is_active" class="js-switch form-control" data-color="#64b0f2" data-size="small" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="row my-12">
+                                    <div class="col-lg-12">
+                                        <!-- Claim Applicable -->
+                                        <div class="row">
+                                            <label for="chk_travelling_claim" class="col-3 col-form-label">Claim Applicable</label>
+                                            <div class="col-4 errorContainer pt-1">
+                                                <input type="checkbox" id="chk_travelling_claim" name="chk_travelling_claim" class="js-switch form-control" data-color="#64b0f2" data-size="small" />&nbsp;<label class="col-6">Travelling</label>
+                                            </div>
+                                            <div class="col-5 errorContainer pt-1">
+                                                <input type="checkbox" id="chk_medical_claim" name="chk_medical_claim" class="js-switch form-control" data-color="#64b0f2" data-size="small" />&nbsp;<label class="col-6">Medical</label>
+                                            </div>
+                                        
+                                        </div>
+                                    </div>
+                                </div>
+                           </form>
+                        </div>
+
+
+						<!--Leaves-->
+                        <div id="tab-contract" class="tab-pane">
+
+                            <div class="row" id="list_task_group">
+                                <div id="emp_list_block"></div>
+                            </div>
+
+                            <form class="form-horizontal" data-validate="parsley" id="employment_form">
+
+                                <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Details</h5>
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Employment Category -->
+                                        <div class="row">
+                                            <label for="dd_employment_category" class="col-4 col-form-label">Employment Category</label>
+                                            <div class="col-7 errorContainer">
+                                                <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_employment_category" required>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="txt_employment_id" />
+                                    <div class="col-lg-6">
+                                        <!-- Employment Type -->
+                                        <div class="row">
+                                            <label for="dd_employment_type" class="col-4 col-form-label">Employment Type</label>
+                                            <div class="col-7 errorContainer">
+                                                <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_employment_type" required>
+                                                </select>   
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row mt-2">
+                                    
+                                    <div class="col-lg-6">
+                                        <!-- Employment Status -->
+                                        <div class="row">
+                                            <label for="dd_emp_status" class="col-4 col-form-label">Employment Status</label>
+                                            <div class="col-7 errorContainer">
+                                                <select id="dd_emp_status" style="width:100% " class="populate" required="required">
+                                                    <option value="">Select</option>
+                                                    <option value="1">Active</option>
+                                                    <option value="0">InActive</option>
+                                                </select>   
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Commencing Date -->
+                                        <div class="row">
+                                            <label for="commencing_date" class="col-4 col-form-label">Commencing Date</label>
+                                            <div class="col-7 errorContainer">
+                                                <div class="input-group" data-placement="top" data-align="top" data-autoclose="true">
+                                                    <input type="text" class="form-control" id="commencing_date" required="required">
+                                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+
+                                <div class="row mt-2">
+                                    
+                                    <div class="col-lg-6">
+                                        <!-- Employment Start Date -->
+                                        <div class="row">
+                                            <label for="emp_start_date" class="col-4 col-form-label">Employment Start Date</label>
+                                            <div class="col-7 errorContainer">
+                                                <div class="input-group" data-placement="top" data-align="top" data-autoclose="true">
+                                                    <input type="text" class="form-control" id="emp_start_date" required="required" pattern="(0[1-9]|[12][0-9]|3[01])[-]([A-Za-z]{3})[-](19|20)\d\d">
+                                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                </div>  
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Employment End Date -->
+                                        <div class="row">
+                                            <label for="emp_end_date" class="col-4 col-form-label">Employment End Date</label>
+                                            <div class="col-7 errorContainer">
+                                                <div class="input-group" data-placement="top" data-align="top" data-autoclose="true">
+                                                    <input type="text" class="form-control" id="emp_end_date" required="required" pattern="(0[1-9]|[12][0-9]|3[01])[-]([A-Za-z]{3})[-](19|20)\d\d">
+                                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Duration of Employment -->
+                                        <div class="row">
+                                            <label for="duration_of_employment" class="col-4 col-form-label">Duration of Employment</label>
+                                            <div class="col-7">
+                                                <div class="row">
+                                                    <div class="col-6 errorContainer">
+                                                        <input type="text" required id="duration_of_employment" class="form-control" maxlength="5" onkeypress="return validateNumber(event)">
+                                                    </div>
+                                                    <div class="col-6 errorContainer">
+                                                        <select id="dd_duration" style="width:100%" class="populate">
+                                                            <option value="0">Month(s)</option>
+                                                            <option value="1">Day(s)</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <!-- Notice Period -->
+                                        <div class="row">
+                                            <label for="dd_notice_period" class="col-4 col-form-label">Notice Period</label>
+                                            <div class="col-7">
+                                                <div class="row">
+                                                    <div class="col-7 errorContainer">
+                                                        <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_notice_period" required>
+                                                        </select>   
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Employer -->
+                                        <div class="row">
+                                            <label for="dd_employer" class="col-4 col-form-label">Employer</label>
+                                            <div class="col-7 errorContainer">
+                                                <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_employer" required>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-6">
+                                        <!-- Client Contract -->
+                                        <div class="row">
+                                            <label for="dd_client_contract" class="col-4 col-form-label">Client Contract</label>
+                                            <div class="col-7 errorContainer">
+                                                <select id="dd_client_contract" class="form-control populate" data-width="100%" multiple>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-12">
+                                        <div class="row form-group" id="dd_approvals_div">
+                                            <label class="col-2 col-form-label">Approvals</label>
+                                            <div class="col-sm-10">
+                                                <select id="dd_approvals" class="form-control populate" data-width="100%" multiple>
+                                                </select>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="approval_div">
+                                    <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Approval</h5>
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="pull-right">
+                                                <button type="button" id="send_for_approval" class="btn btn-primary">Send for Approval</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-2 col-sm-offset-7">
+                                            <div id="approval_stages_div" class="pull-right">
+                                            
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="pull-right"> 
+                                                <button type="button" id="chk_is_approve" class="btn btn-primary">Approve</button>
+                                                <button type="button" id="cancel_approval" class="btn btn-danger">Cancel Approval</button>
+                                                <button type="button" id="revoke_approval" class="btn btn-success">Revoke Approval</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+
+
+                                    <div class="row justify-content-end">
+                                        <div class="col-lg-3 me-4 pe-3">
+                                            <div class="mt-3">
+                                                <input type="file" class="dropify fileupload" name="qqfile" id="fileupload_po_file" data-show-remove="false" data-allowed-file-extensions="jpg jpeg png pdf" />
+                                            </div>
+                                            <div id="files"></div>
+                                        </div>
+                                    </div> <!-- end row -->
+
+                                </div>
+                                
+                            </form>
+
+                        </div>
+                        
+                        <!--Contract Details Start-->
+                        <div id="tab-clients" class="tab-pane">
+
+                            <div class="row mt-2">
+                                <div  class="col-lg-9" >
+                                    <div class="row" id="clients_list_block">
+                                    </div>    
+                                </div>
+
+                                <div class="pull-right col-lg-3">
+                                    <a href="#" id="btn_client_reset" class="btn btn-light waves-effect waves-light m-1"><i class="fe-refresh-cw me-1"></i> Reset</a>
+                                    <button type="button" id="btn_client_add" class="btn btn-success">
+                                        <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+                                        <span class="hidden-xs">Add</span>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="clearfix"></div>
+                            <hr>
+
+                            <form class="form-horizontal" data-validate="parsley" id="client_form">
+                                <input type="hidden" id="txt_client_id" />
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Client Name -->
+                                        <div class="row">
+                                            <label for="dd_client" class="col-4 col-form-label">Client Name</label>
+                                            <div class="col-7 errorContainer">
+                                                <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_client" required>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-6">
+                                        <!-- Hiring Manager Name -->
+                                        <div class="row">
+                                            <label for="txt_hiring_manager_name" class="col-4 col-form-label" style="width:34%;">Hiring Manager Name</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text"  class="form-control" id="txt_hiring_manager_name"  required >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Hiring Manager Tel.No. -->
+                                        <div class="row">
+                                            <label for="txt_hiring_manager_telno" class="col-4 col-form-label">Hiring Manager Tel.No.</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" id="txt_hiring_manager_telno" class="form-control flatpickr-input" >
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Hiring Manager Email -->
+                                        <div class="row">
+                                            <label for="txt_hiring_manager_email" class="col-4 col-form-label">Hiring Manager Email</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" id="txt_hiring_manager_email" class="form-control" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Client Invoice Contact Person -->
+                                        <div class="row">
+                                            <label for="txt_client_invoice_contact_person" class="col-4 col-form-label">Client Invoice Contact Person</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" id="txt_client_invoice_contact_person" class="form-control" >
+                                              
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Client Address -->
+                                        <div class="row">
+                                            <label for="txt_client_invoice_address_to" class="col-4 col-form-label">Client Address</label>
+                                            <div class="col-7 errorContainer">
+                                                <textarea class="form-control" id="txt_client_invoice_address_to"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Client Country -->
+                                        <div class="row">
+                                            <label for="dd_client_country" class="col-4 col-form-label">Client Country</label>
+                                            <div class="col-7 errorContainer">
+                                                <select id="dd_client_country" style="width:100%" class="form-select populate" required>
+                                                  
+                                                </select>
+                                              
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Client Location -->
+                                        <div class="row">
+                                            <label for="txt_client_invoice_address_to" class="col-4 col-form-label">Client Location</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text"  class="form-control" id="txt_client_location" value="" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Working Days -->
+                                        <div class="row">
+                                            <label for="dd_working_days" class="col-4 col-form-label">Working Days</label>
+                                            <div class="col-7 errorContainer">
+                                                <select id="dd_working_days" style="width:100%" class="form-select populate" required>
+                                                  
+                                                </select>
+                                              
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Overtime Rate -->
+                                        <div class="row">
+                                            <label for="txt_overtime_rate" class="col-4 col-form-label">Overtime Rate</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text"  class="form-control" id="txt_overtime_rate" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Annual Leave By Client -->
+                                        <div class="row">
+                                            <label for="txt_annual_leave_by_client" class="col-4 col-form-label">Annual Leave By Client</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="number" class="form-control marginBottom10px" id="txt_annual_leave_by_client" max="30" min="0" onchange="$.fn.check_max_min(this)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Medical Leave By Client -->
+                                        <div class="row">
+                                            <label for="txt_overtime_rate" class="col-4 col-form-label">MedicalLeave By Client</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="number" class="form-control marginBottom10px" id="txt_medical_leave_by_client" max="30" min="0" onchange="$.fn.check_max_min(this)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Billing Details</h5>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Currency -->
+                                        <div class="row">
+                                            <label for="dd_billing_currency" class="col-4 col-form-label">Currency</label>
+                                            <div class="col-7 errorContainer">
+                                                <select id="dd_billing_currency" style="width:100%" class="form-select populate" >
+                                                  
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Medical Leave By Client -->
+                                        <div class="row">
+                                            <label for="dd_billing_type" class="col-4 col-form-label">Billing Type</label>
+                                            <div class="col-7 errorContainer">
+                                                <select id="dd_billing_type" style="width:100%" class="form-select populate" >
+                                                    <option value="0">Monthly</option>
+                                                    <option value="1">Daily</option>
+                                                    <option value="1">One Time</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Billing Cycle -->
+                                        <div class="row">
+                                            <label for="dd_billing_cycle" class="col-4 col-form-label">Billing Cycle</label>
+                                            <div class="col-7 errorContainer">
+                                                <select id="dd_billing_cycle" style="width:100%" class="form-select populate" >
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Billing Start Date -->
+                                        <div class="row">
+                                            <label for="txt_overtime_rate" class="col-4 col-form-label">Billing Start Date</label>
+                                            <div class="col-7 errorContainer">
+                                                <div class="input-group" data-placement="top" data-align="top" data-autoclose="true">
+                                                    <input type="text" class="form-control flatpickr-input" id="billing_start_date" placeholder="dd-mm-yyyy" readonly="readonly" required>
+                                                    <div class="input-group-text"><i class="mdi mdi-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Billing End Date -->
+                                        <div class="row">
+                                            <label for="dd_billing_cycle" class="col-4 col-form-label">Billing End Date</label>
+                                            <div class="col-7 errorContainer">
+                                                <div class="input-group" data-placement="top" data-align="top" data-autoclose="true">
+                                                    <input type="text" class="form-control flatpickr-input" id="billing_end_date" placeholder="dd-mm-yyyy" readonly="readonly" required>
+                                                    <div class="input-group-text"><i class="mdi mdi-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Billing Amount -->
+                                        <div class="row">
+                                            <label for="txt_billing_amount" class="col-4 col-form-label">Billing Amount</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" class="form-control marginBottom10px" id="txt_billing_amount">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- GST/SST -->
+                                        <div class="row">
+                                            <label for="dd_gst_sst" class="col-4 col-form-label">GST/SST</label>
+                                            <div class="col-4 errorContainer">
+                                                <select id="dd_gst_sst" style="width:100%" class="form-select populate" >
+                                                    <option value="0" selected="selected">0%</option>
+                                                    <option value="6">6%</option>
+                                                    <option value="10">10%</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-3 errorContainer">
+                                                <input type="text" class="form-control marginBottom10px" id="txt_billing_amount_with_gst" readonly="readonly">
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- One Time Fees  -->
+                                        <div class="row">
+                                            <label for="txt_one_time_fees" class="col-4 col-form-label">One Time Fees </label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" class="form-control marginBottom10px" id="txt_one_time_fees" onkeyup="$.fn.fill_amount_with_gst(this.value)" maxlength="10" onkeypress="return validateNumber(event)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Fee Descr.-->
+                                        <div class="row">
+                                            <label for="txt_fee_descr" class="col-4 col-form-label">Fee Descr.</label>
+                                            <div class="col-7 errorContainer">
+                                                <textarea class="form-control marginBottom10px" id="txt_fee_descr" maxlength="999"></textarea>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Total contract value -->
+                                        <div class="row">
+                                            <label for="txt_one_time_fees" class="col-4 col-form-label">Total contract value</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" class="form-control marginBottom10px" id="txt_total_contract_value" maxlength="10" onkeypress="return validateNumber(event)" readonly="readonly">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- No. of Month.-->
+                                        <div class="row">
+                                            <label for="txt_fee_descr" class="col-4 col-form-label">No. of Month.</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="text" class="form-control marginBottom10px" id="txt_billing_of_month" maxlength="10" onkeypress="return validateNumber(event)" readonly="readonly">
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+
+                            </form>
+                            
+                        </div>
+                        <!--End of Contract with clients-->
+
+                        <!--Start Reference-->
+                        <div id="tab-ref" class="tab-pane">
+                           
+                            <h5 class="text-uppercase bg-light p-2 mt-0 mb-3">References</h5>
+                            <div class="row mt-2">
+                                <div class="pull-right" class="col-sm-12" style="text-align:right">
+                                    <button type="button" id="btn_add_pic" class="btn btn-success" onclick="$.fn.contact_form()">
+                                        <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+                                        <span class="hidden-xs">Add New Reference</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row mt-2" id="new_reference_div" style="display:none;margin-top: 20px;margin-left: 10px;margin-right: -2px;">
+                                <form class="form-horizontal" id="reference_form">
+                                    <div class="row mt-2">
+                                        <div class="col-lg-4">
+                                            <!-- Name -->
+                                            <div class="row">
+                                                <label for="txt_one_time_fees" class="col-4 col-form-label">Name</label>
+                                                <div class="col-8 errorContainer">
+                                                    <input type="text" class="form-control marginBottom10px" id="txt_ref_name" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <!-- Contact No.-->
+                                            <div class="row">
+                                                <label for="txt_fee_descr" class="col-4 col-form-label">Contact&nbsp;No</label>
+                                                <div class="col-8 errorContainer">
+                                                    <input type="text" class="form-control marginBottom10px" id="txt_ref_contact_no" required>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <!-- Email -->
+                                            <div class="row">
+                                                <label for="txt_ref_email" class="col-4 col-form-label">Email</label>
+                                                <div class="col-8 errorContainer">
+                                                    <input type="text" class="form-control marginBottom10px" id="txt_ref_email" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                      
+                                        <div class="col-lg-4">
+                                            <!--Company.-->
+                                            <div class="row">
+                                                <label for="txt_ref_company" class="col-4 col-form-label">Company</label>
+                                                <div class="col-8 errorContainer">
+                                                    <input type="text" class="form-control marginBottom10px" id="txt_ref_company" required>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <!-- Designation -->
+                                            <div class="row">
+                                                <label for="txt_ref_designation" class="col-4 col-form-label">Designation</label>
+                                                <div class="col-8 errorContainer">
+                                                    <input type="text" class="form-control marginBottom10px" id="txt_ref_designation" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <!--Relationship.-->
+                                            <div class="row">
+                                                <label for="dd_ref_relationship" class="col-4 col-form-label">Relationship</label>
+                                                <div class="col-8 errorContainer">
+                                                    <select id="dd_ref_relationship" style="width:100%" class="populate">
+                                                            
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-lg-12">
+                                            <!-- Designation -->
+                                            <div class="row">
+                                                <label for="txt_ref_designation" class="col-1 col-form-label" style="width:11%;">Remarks</label>
+                                                <div class="col-10 errorContainer" style="width:89%;">
+                                                    <textarea id="txt_ref_remarks" class="form-control"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <br />
+                                    <div class="rpw mt-2">
+                                    <div class="pull-right" class="col-sm-12" style="text-align:right">
+                                        <button id="btn_reference_cancel" type="button" class="btn btn-primary  waves-effect waves-light" data-dismiss="modal">Cancel</button>
+                                        <button id="btn_reference_add" data-mode="add" type="button" class="btn btn-success  waves-effect waves-light" data-style="expand-left" data-spinner-color="#000000">Add</button>
+                                    </div>
+                                </div>
+                                </form>
+                             </div> 
+                             <div class="panel-body">
+                                <table class="table table-hover">
+                                    <thead class="border-top-2px">
+                                        <tr>
+                                            <th></th>
+                                            <th>Name</th>
+                                            <th>Contact No</th>
+                                            <th>Email</th>
+                                            <th>Company</th>
+                                            <th>Designation</th>
+                                            <th>Relationship</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table_ref_list">
+
+                                    </tbody>
+                                </table>
+                            </div>      
+                              
+                        </div>
+                         <!--End Reference-->
+						 
+						<!-- Attachment -->
+                        <div id="tab-attach" class="tab-pane">
+                            <p>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h4>Attachments</h4>
+                                    </div>
+                                </div>
+                                <div class="row" id="attachments-block">
+                                    
+                                </div>
+                            </p>
+                        </div>
+
+                        <!-- Modal for offer letter Start-->
+                        <div class="modal fade" id="offer_letter_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabel">Send Offer Letter</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="hidden" name="offer_contract_no" id="offer_contract_no">
+                                        <ul class="panel-tasks" id="offer_files">
+                                            
+                                        </ul>
+
+                                    </div>
+                                   
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-bs-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                                        <button type="button" class="btn btn-success" data-style="expand-left" data-spinner-color="#000000"  id="btn_send_offer">Send</button>
+                                        <!--<button type="button" class="btn btn-primary" id="btn_verify">Confirm</button>-->
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                        <!-- Modal offer letter End-->
+                        
+                        <!-- End Attachment -->
+
+                        <!-- Enquiry -->
+                        <div id="tab-enquiry" class="tab-pane">
+                            <div class="form-group" id="assign_div">
+                                <label class="control-label col-sm-1">Assign To</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control populate form-select " data-toggle="select2" multiple placeholder="Select" data-width="100%" id="dd_assignee" required>
+                                    </select>
+                                </div>
+                                <div class="col-sm-1"></div>
+                                <div class="col-sm-3">
+                                    <a href="#" class="btn btn-primary  waves-effect waves-light" id="btn_cancel"><i class="fa fa-times"></i> Cancel</a>
+                                    <a href="#" class="btn btn-success  waves-effect waves-light " data-style="expand-left" data-spinner-color="#000000" id="btn_assign_save"><i class="fa fa-check"></i> Save</a>
+                                </div>
+                            </div>
+                            <div  class="form-group">
+                                <div class="col-sm-1">
+                                    <div id="trail" class="avatar-initials" width="30" height="30" data-name="" ></div>
+                                </div> 
+                                <div class="col-sm-11">
+                                    <div class="border rounded" style="padding:0" id="div_trail_btn">
+                                        <textarea id="txt_reply" rows="3" class="form-control border-0 resize-none" placeholder="Your message..."></textarea>
+                                        <div class="p-2 bg-light d-flex justify-content-between align-items-center">
+                                            <div >
+                                                <a href="#" id="btn_upload_reply" class="btn btn-sm px-1 btn-light fileinput-button"><i class="mdi mdi-upload"></i> <input id="fileupload_reply" type="file" name="files"></a>
+                                            </div>
+                                            <button type="button" id="btn_reply" class="btn btn-sm btn-success"><i class="mdi mdi-send me-1"></i>Send</button>
+                                        </div>
+                                    </div>
+                                    <div id="files_reply"></div>
+                                    <div class="mt-3" id="div_reply"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Enquiry-->
+
+                        <!--Work History-->
+                    </div>
+                    <div><br></div>
+                    <div class="form-group align-right" id="actions_div">
+                        <button id="btn_cancel" type="button" class="btn btn-light waves-effect waves-light" data-style="expand-left"><i class="fa fa-times"></i> Cancel</button>&nbsp;
+                        <button id="btn_save" type="button" class="btn btn-success  waves-effect waves-light " data-style="expand-left"><i class="fa fa-check"></i> Save</button>
+                    </div>
+                </div>
+            </div> <!-- end card-->
+        </div> <!-- end col -->
+        
+    </div>
+    <!-- end row -->
 
     
 
@@ -173,7 +2354,6 @@
 <script src="assets/js/jspdf/plugins/jspdf.plugin.autotable.js"></script>
 <script src="assets/js/jspdf/exportpdf.js"></script>
 <script src="assets/js/custom/md5.js"></script>
-<script src="./assets/js/fileupload/js/jquery.fileupload.js"></script>
 
 
                 

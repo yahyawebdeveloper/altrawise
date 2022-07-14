@@ -61,8 +61,78 @@ $.fn.do_login = function ()
 	try
 	{
 		let password = $.trim($('#txt_password').val());
+		
+		var param ={
+			method: 'login_salt'
+		};
+		$.ajax
+		({
+			type: 'POST',
+			dataType: 'json',
+			contentType: 'application/json',
+			data: JSON.stringify(param),
+			url: services_URL,
+			success: function (data)
+			{
+				let pass = $.fn.get_encrypt_password(password, data.data.salt, data.data.pbkdf2_rounds, data.data.rnd);	
 
-		let secret_key = "dy@r#tMsp@#iT3ct(M)$dnBhdNextGenOfHRM$g$dfg";
+				var param =
+				{
+					username: $.trim($('#txt_username').val()),
+					password: pass,
+					method: 'login'
+				};
+				$.ajax
+					({
+						type: 'POST',
+						dataType: 'json',
+						contentType: 'application/json',
+						data: JSON.stringify(param),
+						url: services_URL,
+						success: function (data)
+						{	
+							if ($.fn.is_success(data.code) == false)
+								alert(data.msg);
+							else
+							{
+								let r_data = data.data;
+								var session_info =
+								{
+									token: r_data.token,
+									emp_id: r_data.emp_id,
+									office_email: r_data.office_email,
+									name: r_data.name,
+									is_admin: r_data.is_admin,
+									super_admin: r_data.super_admin,
+									access: r_data.access,
+									modules: r_data.modules,
+									cpanel_domain: r_data.CPANEL_DOMAIN,
+									logo_path: r_data.logo_path,
+									profile_pic_path: r_data.profile_pic_path,
+									company_id: r_data.company_id,
+								};
+								$.fn.set_session_values(session_info);
+								window.location.href = redirect_mainpage;
+		
+							}
+						},
+						error: function (err)
+						{
+							alert('Resource is not available. One or more of the services on which we depend is unavailable. Please try again later after the service has had a chance to recover.');
+						},
+						beforeSend: function ()
+						{
+							$.blockUI({ message: '<span class="loader_text">' + loading_image + loading_text + '</span>' });
+						},
+						complete: function ()
+						{
+							$.unblockUI();
+						}
+					});
+			}
+		});
+	
+		/* let secret_key = "dy@r#tMsp@#iT3ct(M)$dnBhdNextGenOfHRM$g$dfg";
 		
 		//construct key and iv
 		let key_t   = CryptoJS.SHA256(secret_key).toString();
@@ -71,67 +141,29 @@ $.fn.do_login = function ()
 		
 		let encrypted = CryptoJS.AES.encrypt(password, CryptoJS.enc.Utf8.parse(key), {iv: CryptoJS.enc.Utf8.parse(iv)});
 		let open_ssl_string = CryptoJS.enc.Base64.stringify(encrypted.ciphertext);
-		let pass = btoa(open_ssl_string);
+		let pass = btoa(open_ssl_string); */
 
-		var param =
-		{
-			username: $.trim($('#txt_username').val()),
-			password: pass,
-			method: 'login'
-		};
-		$.ajax
-			({
-				type: 'POST',
-				dataType: 'json',
-				contentType: 'application/json',
-				data: JSON.stringify(param),
-				url: services_URL,
-				success: function (data)
-				{	
-					if ($.fn.is_success(data.code) == false)
-						alert(data.msg);
-					else
-					{
-						let r_data = data.data;
-						var session_info =
-						{
-							token: r_data.token,
-							emp_id: r_data.emp_id,
-							office_email: r_data.office_email,
-							name: r_data.name,
-							is_admin: r_data.is_admin,
-							super_admin: r_data.super_admin,
-							access: r_data.access,
-							modules: r_data.modules,
-							cpanel_domain: r_data.CPANEL_DOMAIN,
-							logo_path: r_data.logo_path,
-							profile_pic_path: r_data.profile_pic_path,
-							company_id: r_data.company_id,
-						};
-						$.fn.set_session_values(session_info);
-						window.location.href = redirect_mainpage;
-
-					}
-				},
-				error: function (err)
-				{
-					alert('Resource is not available. One or more of the services on which we depend is unavailable. Please try again later after the service has had a chance to recover.');
-				},
-				beforeSend: function ()
-				{
-					$.blockUI({ message: '<span class="loader_text">' + loading_image + loading_text + '</span>' });
-				},
-				complete: function ()
-				{
-					$.unblockUI();
-				}
-			});
+	
 	}
 	catch (err)
 	{
 		$.fn.log_error(arguments.callee.caller, err.message);
 	}
 };
+
+$.fn.get_encrypt_password = function (password, salt, pbkdf2_rounds, rnd)
+{
+	//let check_login_salt = login_salt(); console.log(check_login_salt);
+	var pwmd5 = calcMD5(salt + $.trim(password));
+
+	if (pbkdf2_rounds > 0)
+	{
+		pwmd5 = sjcl.codec.hex.fromBits(sjcl.misc.pbkdf2(sjcl.codec.hex.toBits(pwmd5), salt, pbkdf2_rounds));
+	}
+	return calcMD5(rnd + pwmd5);
+
+}
+
 
 $(document).ready(function () 
 {

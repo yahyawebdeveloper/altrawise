@@ -30,22 +30,20 @@ var fields_with_numbers = ['cost'
 
 $.fn.data_table_features = function ()
 {
-    try
+	try
     {
         if (!$.fn.dataTable.isDataTable('#tbl_list'))
-				({
-					"searching": false,
-					"paging": false,
-					"info": false,
-					"order": []
-				});
-
-			/* var buttons = new $.fn.dataTable.Buttons(table, {
-				buttons: [
+        {
+            table = $('#tbl_list').DataTable({
+                "searching": false,
+                "paging": false,
+                "info": false,
+                "order": [],
+				"buttons": [
 					{
 						text: '<i class="fa fa-cog"></i>',
 						className: 'dd',
-						extend: 'colvis',
+						//extend: 'colvis',
 						columns: ':not(:first-child)',
 						columnText: function (dt, idx, title)
 						{
@@ -53,51 +51,15 @@ $.fn.data_table_features = function ()
 						}
 					}
 				]
-			}).container().insertAfter($('.btn-toolbar .btn-group')); */
+            });
+        }
     }
     catch (err)
-    { //console.log(err.message);
-        $.fn.log_error(arguments.callee.caller, err.message);
+    {
+		$.fn.log_error(arguments.callee.caller, err.message);
     }
+
 };
-
-/* $.fn.data_table_features = function ()
-{
-	try
-	{
-
-		if (!$.fn.dataTable.isDataTable('#tbl_list'))
-		{
-
-			table = $('#tbl_list').DataTable
-				({
-					"searching": false,
-					"paging": false,
-					"info": false,
-					"order": []
-				});
-
-			var buttons = new $.fn.dataTable.Buttons(table, {
-				buttons: [
-					{
-						text: '<i class="fa fa-cog"></i>',
-						className: 'dd',
-						extend: 'colvis',
-						columns: ':not(:first-child)',
-						columnText: function (dt, idx, title)
-						{
-							return '<label class="checkbox-inline pull-left"><input type="checkbox" class="colvisCheckbox" checked>&nbsp' + title + '</label>';
-						}
-					}
-				]
-			}).container().insertAfter($('.btn-toolbar .btn-group'));
-		}
-	}
-	catch (err)
-	{  console.log(err.message);
-		//$.fn.log_error(arguments.callee.caller, err.message);
-	}
-}; */
 
 $.fn.data_table_destroy = function ()
 {
@@ -155,15 +117,12 @@ $.fn.populate_list_form = function (data, is_scroll)
 			data = data;
 			for (var i = 0; i < data.length; i++)
 			{	
-				//var date = moment(data[i].doc_date, 'DD-MM-YYYY');
-				data_val = escape(JSON.stringify(data[i])); //.replace(/'/,"");
-				//row += '<tr>' + '<td width="10%">';
-
+				data_val = escape(JSON.stringify(data[i])); 
 				let btn_attachment = '';
 				if (data[i].attachment.length > 0)
 				{
 					let func = `$.fn.open_page('${data[i].attachment[0].id}','${CURRENT_PATH}download.php')`;
-					btn_attachment = `<a href="javascript:void(0)" class="link-view-file btn btn-outline-info btn-xs waves-effect waves-light" onclick="${func}"><i class="fas fa-image"/></a>`;
+					btn_attachment = `<a href="javascript:void(0)" class="link-view-file btn btn-xs btn-info waves-effect waves-light" onclick="${func}"><i class="fas fa-image"/></a>`;
 				}
 				
 				row += `<tr id="TR_ROW_${i}">
@@ -172,7 +131,7 @@ $.fn.populate_list_form = function (data, is_scroll)
 				<td>${data[i].created_by}</td>
 				<td>${data[i].doc_date}</td>
 				<td>${data[i].descr}</td>
-				<td><button type="button" class="btn btn-outline-primary btn-xs waves-effect waves-light btn_view_details" id="btn_remark" data-value='${data_val}' onclick="$.fn.view_remark(unescape($(this).attr(\'data-value\')))">View</button>
+				<td><button type="button" class="btn btn-xs btn-primary waves-effect waves-light btn_view_details" id="btn_remark" data-value='${data_val}' onclick="$.fn.view_remark(unescape($(this).attr(\'data-value\')))">View</button>
 				</td>`;
 
 				if (data[i].verified == 0)
@@ -181,7 +140,7 @@ $.fn.populate_list_form = function (data, is_scroll)
 					row += `<td>`;
 					if (allow_verify == 1)
 					{
-						row += `<button class="btn btn-outline-warning btn-xs waves-effect waves-light btn_view_details" data-value='${data_val}' onclick="$.fn.do_verify( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_search">Verify</button>`;
+						row += `<button class="btn btn-xs btn-warning waves-effect waves-light btn_view_details" data-value='${data_val}' onclick="$.fn.do_verify( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_search">Verify</button>`;
 					}
 					else
 					{
@@ -195,14 +154,11 @@ $.fn.populate_list_form = function (data, is_scroll)
 					row += `<td>`;
 					if (allow_verify == 1)
 					{
-						row += `<button class="btn btn-outline-danger btn-xs waves-effect waves-light btn_view_details" data-value='${data_val}' onclick="$.fn.cancel_verify( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_cancel">Cancel</button>`;
-						//row += '<a  class="tooltips" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.cancel_verify(unescape($(this).attr(\'data-value\')),false)">Cancel</a><br>';
+						row += `<button class="btn btn-xs btn-danger waves-effect waves-light btn_view_details" data-value='${data_val}' onclick="$.fn.cancel_verify( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_cancel">Cancel</button>`;
 					}
 					if (allow_approve == 1 && (data[i].category_id == 5 || data[i].category_id == 6 || data[i].category_id == 7))
 					{
-						row += `<br><button class="btn btn-outline-success btn-xs waves-effect waves-light btn_view_details mt-1" data-value='${data_val}' onclick="$.fn.do_approve( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_approve">Approve</button>`;
-
-						//row += '<input type="checkbox" id="chk_is_approve" name="chk_is_approve" data-value=\'' + data_val + '\' onchange="$.fn.do_approve(unescape($(this).attr(\'data-value\')),$(this).is(\':checked\'))"> Approve';
+						row += `<br><button class="btn btn-xs btn-success waves-effect waves-light btn_view_details mt-1" data-value='${data_val}' onclick="$.fn.do_approve( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_approve">Approve</button>`;
 					}
 					else if (allow_verify != 1)
 					{
@@ -216,8 +172,7 @@ $.fn.populate_list_form = function (data, is_scroll)
 					row += `<td>`;
 					if (allow_approve == 1 && (data[i].category_id == 5 || data[i].category_id == 6 || data[i].category_id == 7))
 					{
-						row += `<button class="btn btn-outline-danger btn-xs waves-effect waves-light btn_view_details" data-value='${data_val}' onclick="$.fn.cancel_approve( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_cancel">Cancel</button>`;
-						//row += '<a  class="tooltips" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.cancel_approve(unescape($(this).attr(\'data-value\')),false)">Cancel</a>';
+						row += `<button class="btn btn-xs btn-danger waves-effect waves-light btn_view_details" data-value='${data_val}' onclick="$.fn.cancel_approve( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_cancel">Cancel</button>`;
 					}
 					else
 					{
@@ -235,7 +190,7 @@ $.fn.populate_list_form = function (data, is_scroll)
 	}
 	catch (err)
 	{
-		//console.log(err.message);
+	//	console.log(err.message);
 		$.fn.log_error(arguments.callee.caller,err.message);
 	}
 };
@@ -350,10 +305,10 @@ $.fn.open_file = function (data)
 	}
 };
 
-$.fn.get_list = function (is_scroll)
+$.fn.get_list = function(is_scroll)
 {
     try
-    {
+    { //console.log('Hi');
 
 		var post_values = [];
 		var param = { 
@@ -380,10 +335,13 @@ $.fn.get_list = function (is_scroll)
 				{
 					data.search_value = $.trim($(this).find("[name='search_value']").val());
 				}
-				post_values.push(data);
+				if(jQuery.isEmptyObject(data.search_condition) == false && jQuery.isEmptyObject(data.search_field) == false && jQuery.isEmptyObject(data.search_value) == false){
+					post_values.push(data);
+				}
 			}
 		});
 		param.post_values = post_values;
+		
         if (is_scroll)
         {
             param.start_index = RECORD_INDEX;
@@ -391,8 +349,8 @@ $.fn.get_list = function (is_scroll)
 
         $.fn.fetch_data(
             $.fn.generate_parameter('get_document_list_for_approval', param),
-            function(return_data) { //console.log(return_data);
-                if (return_data.data) {
+            function(return_data) {  
+                if (return_data.data) { 
                     var len = return_data.data.length;
                     if (return_data.data.rec_index)
                     {
@@ -427,18 +385,29 @@ $.fn.get_list = function (is_scroll)
                             $.fn.show_right_success_noty('No more records to be loaded');
                         }
                     }
-                }
+                }else{
+					$('#btn_load_more').hide();
+					$.fn.data_table_destroy();
+					$('#tbl_list tbody').empty().append
+						(
+							`<tr>
+								<td colspan="8">
+									<div class="list-placeholder">No records found!</div>
+								</td>
+							</tr>`
+						);
+				}
             },
             true
         );
     }
     catch (err)
-    {// console.log(err.message);
+    { //console.log(err.message);
     	 $.fn.log_error(arguments.callee.caller, err.message);
     }
 };
 
-$.fn.get_drop_down_values = function ()
+$.fn.get_drop_down_values1 = function ()
 {
 	try
 	{
@@ -447,10 +416,8 @@ $.fn.get_drop_down_values = function ()
 				$.fn.generate_parameter('get_document_search_query_data_check'),
 				function (return_data)
 				{
-					$.fn.populate_dd_values('category', return_data.data.category);
-					$.fn.populate_dd_values('emp', return_data.data.emp);
-					$.fn.populate_dd_values('search_field', return_data.data.columns);
-					$.fn.populate_dd_values('search_condition', return_data.data.conditions);
+					$.fn.populate_dd_values('search-field', return_data.data.columns);
+					$.fn.populate_dd_values('search-condition', return_data.data.conditions);
 				}
 			);
 
@@ -460,25 +427,44 @@ $.fn.get_drop_down_values = function ()
 		$.fn.log_error(arguments.callee.caller, err.message);
 	}
 };
+$.fn.get_drop_down_values = function ()
+{
+	try
+	{
+		$.fn.fetch_data
+			(
+				$.fn.generate_parameter('get_document_report_drop_down_values'),
+				function (return_data)
+				{
+					drop_down_values = return_data;
+				}
+			);
+
+	}
+	catch (err)
+	{
+		$.fn.log_error(arguments.callee.caller, err.message);
+	}
+};
 
 
 $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
 {
     try
     {
-		$('#'+element_id).empty();
+		$('.'+element_id).empty();
 		if(is_search)
 		{
-			$('#'+element_id).append(`<option value="">All</option>`);
+			$('.'+element_id).append(`<option value="">All</option>`);
 		}
-		else if(element_id != 'dd_notify_email')
+		else if(element_id != 'search-condition')
 		{
-			$('#'+element_id).append(`<option value="">Please Select</option>`);
+			$('.'+element_id).append(`<option value="">Please Select</option>`);
 		}
 
 		for (let item of dd_data)
 		{
-			$('#'+element_id).append(`<option value="${item.id}">${item.descr}</option>`);
+			$('.'+element_id).append(`<option value="${item.id}">${item.descr}</option>`);
 		}
         
     }
@@ -493,32 +479,20 @@ $.fn.prepare_form = function ()
     try
     { 
        	$('.populate').select2();
-        //$.fn.load_editor('text_editor');
-        //$.fn.set_validation_form();
+		$('#detail_form').parsley(
+			{
+				classHandler: function(parsleyField) {              
+					return parsleyField.$element.closest(".errorContainer");
+				},
+				errorsContainer: function(parsleyField) {              
+					return parsleyField.$element.closest(".errorContainer");
+				},
+			}
+		);
 
-		/* $('#detail_form').parsley
-			({
-				successClass: 'has-success',
-				errorClass: 'has-error',
-				errors:
-				{
-					classHandler: function (el)
-					{
-						return $(el).closest('.error-container');
-					},
-					container: function (el)
-					{
-						return $(el).closest('.error-container');
-					},
-					errorsWrapper: '<ul class=\"help-block list-unstyled\"></ul>',
-					errorElem: '<li></li>'
-				}
-			}); */
-
-        // CLIENTS_MODULE_ACCESS = $.fn.get_accessibility(152);
-       // $.fn.get_drop_down_values();
 
 		$.fn.get_drop_down_values();
+		$.fn.get_drop_down_values1();
         ROUTE_DATA = CURRENT_ROUTE.data;
         if(ROUTE_DATA != null) {
             ROUTE_DATA_ACTION = ROUTE_DATA.action;
@@ -536,7 +510,7 @@ $.fn.prepare_form = function ()
             }
             
         }else { 
-            $.fn.get_list();
+            $.fn.get_list(true);
         }
 
     }
@@ -549,9 +523,8 @@ $.fn.prepare_form = function ()
 $.fn.form_load = function ()
 {
 	try
-	{ 	//	SESSIONS_DATA = JSON.parse($('#session_data').val());
-		//MODULE_ACCESS = $.fn.get_accessibility($('#menu_document').attr('data-val'));
-		//	    console.log(MODULE_ACCESS.approve_it);
+	{ 	// SESSIONS_DATA = JSON.parse($('#session_data').val());
+		// MODULE_ACCESS = $.fn.get_accessibility($('#menu_document').attr('data-val'));
 		$.fn.prepare_form();
 		$.fn.bind_command_events();
 	}
@@ -591,7 +564,7 @@ $.fn.prepare_remark_form = function (no, status, is_verify, is_approve)
 $.fn.do_verify = function (data, table_row_id)
 {
 	try
-	{ console.log(data);
+	{// console.log(data);
 		data = JSON.parse(data);
 		$('#table_row').val(table_row_id);
 		TO_EMP_ID = data.emp_id;
@@ -763,7 +736,6 @@ $.fn.edit_remark = function ()
 {
 	try
 	{
-	
 		var data =
 		{
 			doc_no: $('#document_no').val(),
@@ -801,7 +773,7 @@ $.fn.bind_command_events = function ()
 {
 	try
 	{
-		$('body').on('click', '.search-field', function (e)
+		$('body').on('change', '.search-field', function (e)
 		{
 			let current_value = $(this).val();
 			let this_class = $(this);
@@ -811,8 +783,6 @@ $.fn.bind_command_events = function ()
 			let select_condition = $.fn.condition_drop_down(current_value);
 			this_class.parents('.condition-row').find('.conditionContainer').html(select_condition);
 
-
-
 			if ($.inArray(current_value, fields_with_drop_down) !== -1)
 			{
 				let select_html = $.fn.create_drop_down(current_value);
@@ -820,34 +790,24 @@ $.fn.bind_command_events = function ()
 			}
 			else if ($.inArray(current_value, fields_with_datepicker) !== -1)
 			{
-				let input_html = `<button class="btn btn-default search-value">
-									<i class="fa fa-calendar-o"></i> 
-									<span>${moment().subtract('days', 29).format('D MMM YYYY')} - ${moment().format('D MMM YYYY')}</span> 
-									<b class="caret"></b><input type="hidden" class="date_range_value" name="search_value" value="${moment().subtract('days', 29).format('YYYY-MM-DD')}/${moment().format('YYYY-MM-DD')}">
-									</button>`;
+				let input_html = `<div class="errorContainer">
+										<input type="text" id="dp_search_date" class="form-control flatpickr-input search-value" placeholder="16-06-2021 to 30-06-2021" readonly="readonly">
+									</div>
+									<input type="hidden" class="date_range_value" name="search_value" id="date_range_value">`;
+
 
 				this_class.parents('.condition-row').find('.search-value').replaceWith(input_html);
 
-				this_class.parents('.condition-row').find('.search-value').daterangepicker
-					({
-						ranges:
-						{
-							'Today': [moment(), moment()],
-							'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
-							'Last 7 Days': [moment().subtract('days', 6), moment()],
-							'Last 30 Days': [moment().subtract('days', 29), moment()],
-							'This Month': [moment().startOf('month'), moment().endOf('month')],
-							'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
-						},
-						opens: 'left',
-						startDate: moment().subtract('days', 29),
-						endDate: moment()
-
-					},
-						function (start, end)
-						{
-							this_class.parents('.condition-row').find('.search-value span').html(start.format('D MMM YYYY') + ' - ' + end.format('D MMM YYYY'));
-							this_class.parents('.condition-row').find('.date_range_value').val(start.format('YYYY-MM-DD') + '/' + end.format('YYYY-MM-DD'));
+				this_class.parents('.condition-row').find('.search-value').flatpickr({
+							mode:"range",
+							altFormat: "d-M-Y",
+							dateFormat: "Y-m-d",
+							onChange:function(selectedDates){
+								var _this=this;
+								var dateArr=selectedDates.map(function(date){return _this.formatDate(date,'Y-m-d');});
+								$('#date_range_value').val(dateArr[0]+'/'+dateArr[1]);
+								
+							},
 						});
 			}
 			else
@@ -886,7 +846,18 @@ $.fn.bind_command_events = function ()
 			e.preventDefault();
 			$.fn.reset_form();
 			$.fn.reset_search();
-			//$.fn.get_list('false');
+			$.fn.get_list(true);
+		});
+
+
+		$('#btn_search').click(function (e)
+		{
+			e.preventDefault();
+			if ($('#detail_form').parsley().validate() == false)
+			{
+				return false;
+			}
+			$.fn.get_list(false);
 		});
 
 		$('#btn_back, #btn_cancel').click(function (e)
@@ -905,21 +876,6 @@ $.fn.bind_command_events = function ()
             e.preventDefault();
             $.fn.get_list(true);
         });
-
-		$('#btn_search_action').click(function (e)
-		{
-			e.preventDefault();
-
-			//btn_save = Ladda.create(this);
-			//btn_save.start();
-
-			/* if ($('#detail_form').parsley().validate() == false || $('#detail_form').parsley().validate() == null)
-			{
-				btn_save.stop();
-				return;
-			} */
-			$.fn.get_list();
-		});
 
 		$('#btn_verify').click(function (e)
 		{
@@ -1026,7 +982,7 @@ $.fn.add_remove_delete = function ()
 $.fn.create_drop_down = function (field)
 {
 	try
-	{
+	{ 
 		let data = drop_down_values;
 
 		let employees = ['approved_by'
@@ -1045,7 +1001,7 @@ $.fn.create_drop_down = function (field)
 			select_options = data['data'][field];
 		}
 
-		let select_html = '<select class="form-control search-value" name="search_value">';
+		let select_html = '<select class="form-control search-value" name="search_value" required>';
 
 		$.each(select_options, function (id, value) 
 		{
@@ -1081,7 +1037,7 @@ $.fn.condition_drop_down = function (field)
 			select_conditions = ['=', 'like'];
 		}
 
-		let select_html = `<select class="form-control search-condition" name="search_condition">`;
+		let select_html = `<select class="form-control search-condition" name="search_condition" required>`;
 
 		$.each(select_conditions, function (id, value) 
 		{
@@ -1092,38 +1048,31 @@ $.fn.condition_drop_down = function (field)
 		return select_html;
 	}
 	catch (err)
-	{  //console.log(err.message);
+	{ // console.log(err.message);
 		$.fn.log_error(arguments.callee.caller, err.message);
 	}
 };
 
 $.fn.reset_validation = function ()
 {
-	//$('#detail_form').parsley().destroy();
-	//$('#detail_form').parsley
-		/* ({
-			successClass: 'has-success',
-			errorClass: 'has-error',
-			errors:
-			{
-				classHandler: function (el)
-				{
-					return $(el).closest('.error-container');
-				},
-				container: function (el)
-				{
-					return $(el).closest('.error-container');
-				},
-				errorsWrapper: '<ul class=\"help-block list-unstyled\"></ul>',
-				errorElem: '<li></li>'
-			}
-		}); */
+	$('#detail_form').parsley().destroy();
+	$('#detail_form').parsley(
+		{
+			classHandler: function(parsleyField) {              
+				return parsleyField.$element.closest(".errorContainer");
+			},
+			errorsContainer: function(parsleyField) {              
+				return parsleyField.$element.closest(".errorContainer");
+			},
+		}
+	);
 };
 
 $(document).ready(function ()
 {
 	try
 	{
+		$.fn.reset_search();
 		$.fn.form_load();
 	}
 	catch (err)

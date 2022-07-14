@@ -359,6 +359,7 @@ $.fn.save_edit_form = function ()
                         {
                             if (total_files == total_success)
                             {
+
                                 $.fn.populate_fileupload(attach_return_data, `doc_upload_files`, true);
                             }
                         }, false, btn_save);
@@ -494,6 +495,15 @@ $.fn.populate_detail_form = function (data)
                         $.fn.load_editor('text_editor');
                         CKEDITOR.instances.text_editor.setData(decodeURIComponent(data.email_content));
 
+                        for (let i = 0; i < data.attachment.length; i++)
+				        { 
+                            data.attachment[i]['name'] = data.attachment[i]['filename'];
+                            data.attachment[i]['uuid'] = data.attachment[i]['id'];
+                            data.attachment[i]['deleteFileParams'] =  JSON.stringify(data.attachment[i]);
+                            delete data.attachment[i]['filename'];
+                            delete data.attachment[i]['id'];
+                        }
+                       
                         $.fn.populate_fileupload(data, 'doc_upload_files');
 
                         if (data.is_to_verify == 1)
@@ -742,13 +752,13 @@ $.fn.get_documents_drop_down_values = function()
             {
                 if (return_data.code == 0)
                 {
-                    // console.log(return_data);
+                     console.log(return_data);
                     $.fn.populate_dd_values('dd_category', return_data.data.category);
                     $.fn.populate_dd_values('dd_company', return_data.data.company);
                     $.fn.populate_dd_values('dd_approval', return_data.data.approval);
-                    $.fn.populate_dd_values('dd_type', return_data.data.outbound_type);
+                   // $.fn.populate_dd_values('dd_type', return_data.data.outbound_type);
                     $.fn.populate_dd_values('dd_client', return_data.data.client);
-                    $.fn.populate_dd_values('dd_verification_type', return_data.data.verification_type);
+                    //$.fn.populate_dd_values('dd_verification_type', return_data.data.verification_type);
                     $('#txt_template').val(return_data.data.template);
                     $.fn.load_editor('text_editor');
                     CKEDITOR.instances.text_editor.setData(atob($('#txt_template').val()));
@@ -765,6 +775,37 @@ $.fn.get_documents_drop_down_values = function()
         $.fn.log_error(arguments.callee.caller,err.message);
     }
 };
+
+$.fn.get_documents_drop_down_values_other = function()
+{
+    try
+    {   let lead_access = $.fn.get_accessibility(115);
+        let data    =
+        {   
+            emp_id   : SESSIONS_DATA.emp_id,
+            view_all : MODULE_ACCESS.viewall,
+            lead_access_view_all : lead_access.viewall,
+            lead_access_view     : lead_access.view
+        };
+       
+        $.fn.fetch_data
+        ( 
+            $.fn.generate_parameter('get_documents_drop_down_values_other', data),
+            function(return_data)
+            { //console.log(return_data);
+                if (return_data.code == 0)
+                {   
+                    $.fn.populate_dd_values('dd_type', return_data.data.sh_type);
+                }
+            },true
+        );
+    }
+    catch(err)
+    {
+        $.fn.log_error(arguments.callee.caller,err.message);
+    }
+};
+
 
 $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
 {
@@ -1431,6 +1472,7 @@ $.fn.prepare_form = function ()
 
         // CLIENTS_MODULE_ACCESS = $.fn.get_accessibility(152);
         $.fn.get_documents_drop_down_values();
+        $.fn.get_documents_drop_down_values_other();
 
         let elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
         $('.js-switch').each(function() 

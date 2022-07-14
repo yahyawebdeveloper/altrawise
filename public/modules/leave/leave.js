@@ -284,7 +284,8 @@ $.fn.save_edit_form = function ()
             leave_data.push(leave_param);
             leave_days = $('#dd_leave_time_off').val();
         }
-
+        console.log(leave_type_id);
+      
         if (leave_data.length == 0)
         {
             $.fn.show_right_error_noty('Please select at least one leave');
@@ -356,7 +357,7 @@ $.fn.save_edit_form = function ()
 };
 
 $.fn.upload_medical_certificate = function (files_total)
-{alert('fff')
+{
     try
     {
         if ($('#files_cert .file-upload.new').length > 0)
@@ -519,6 +520,14 @@ $.fn.populate_list_form = function (data, is_scroll)
 
                 if (data[i].type_id == MC_LEAVE_ID)
                 {
+                    for (let j = 0; j < data[i].attachment.length; j++)
+					{ 
+						data[i].attachment[j]['name'] = data[i].attachment[j]['filename'];
+						data[i].attachment[j]['uuid'] = data[i].attachment[j]['id'];
+						data[i].attachment[j]['deleteFileParams'] =  JSON.stringify(data[i].attachment[j]);
+						delete data[i].attachment[j]['filename'];
+						delete data[i].attachment[j]['id'];
+					}
                     $.fn.populate_fileupload(data[i], `leave_file_${data[i].id}`);
                     $("#tbl_list").find(`#leave_file_${data[i].id} .col-sm-4`).toggleClass('col-sm-4 col-sm-12');
                 }
@@ -770,17 +779,18 @@ $.fn.change_balance_leave = function (action)
     var day_option = [];
     var all_leave_days = 0.0;
     var count = 0;
-    $('#leave_form input[name="chk_full"]').each(function () 
+    // $('#leave_form input[name="chk_full"]').each(function () 
+    $('.checkfull input[name="chk_full"]').each(function () 
     {
         if ($(this).is(':checked'))
-        {
+        {  
             day_option.push(1.0);
             all_leave_days = parseFloat(all_leave_days) + 1.0;
             $("#half_option_" + $(this).attr('data-value') + "").hide();
         }
         if (!$(this).is(':checked'))
         {
-            console.log();
+            
             day_option.push(0.5);
             all_leave_days = parseFloat(all_leave_days) + 0.5;
             $("#half_option_" + $(this).attr('data-value') + "").show();
@@ -790,7 +800,7 @@ $.fn.change_balance_leave = function (action)
     });
 
     var half_day_opt = [];
-    $('#leave_form input[name="chk_half_opt"]').each(function () 
+    $('.checkhalf input[name="chk_half_opt"]').each(function () 
     {
         if ($(this).is(':checked'))
         {
@@ -805,7 +815,7 @@ $.fn.change_balance_leave = function (action)
     var count = 0;
     leave_days = 0.0;
     leave_data = [];
-    $('#leave_form input[name="chk_day"]').each(function () 
+    $('.chkday input[name="chk_day"]').each(function () 
     {
         var leave_param = {};
         if (action == 'one')
@@ -925,13 +935,15 @@ $.fn.view_days = function ()
                     if (view_row)
                     {
                         row += '<tr class="' + txt_class + '">';
-                        row += '<td width="10%"><input type="checkbox" name="chk_day" value="' + moment(curr_date).format('YYYY-MM-DD') + '" onchange="$.fn.change_balance_leave(\'one\')"></td>';
+                        row += '<td width="10%" class="chkday"><input type="checkbox" class="form-check-input" name="chk_day" value="' + moment(curr_date).format('YYYY-MM-DD') + '" onchange="$.fn.change_balance_leave(\'one\')"></td>';
                         row += '<td width="25%">' + moment(curr_date).format('DD-MM-YYYY') + '</td>';
                         row += '<td width="25%">' + day_name + '</td>';
-                        row += '<td><input type="checkbox" id="chk_full_' + i + '" data-value="' + i + '" name="chk_full" data-toggle="toggle" checked onchange="$.fn.change_balance_leave(\'one\')"></td>';
-                        row += '<td><div id="half_option_' + i + '" data-value="' + i + '" style="display: none;"><input type="checkbox" id="chk_half_opt_' + i + '" name="chk_half_opt" data-toggle="toggle" checked onchange="$.fn.change_balance_leave(\'one\')"></div></td>';
+                        row += '<td><div class="form-check form-switch checkfull"><input type="checkbox" id="chk_full_' + i + '" data-value="' + i + '" name="chk_full"  class="form-check-input" data-color="#99d683"  checked onchange="$.fn.change_balance_leave(\'one\')"></div></td>';
+                        row += '<td><div id="half_option_' + i + '" data-value="' + i + '" style="display: none;" class="form-check form-switch checkhalf"><input type="checkbox" id="chk_half_opt_' + i + '" name="chk_half_opt" class="form-check-input" data-toggle="toggle" checked onchange="$.fn.change_balance_leave(\'one\')"></div></td>';
                         //row 	+= '<td><div class="control-label"><div class="toggle"></div></div><input type="checkbox" id="chk_full" name="chk_full" checked></td>';
                         row += '</tr>';
+                        
+													
                     }
                     curr_date = moment(curr_date).add(1, 'days');
                     count++;
@@ -949,17 +961,18 @@ $.fn.view_days = function ()
 
                 for (var j = 0; count > j; j++)
                 {  
+                  
                   /*  $('#chk_full_' + j + '').bootstrapToggle({
                         on: 'FULL',
                         off: 'HALF',
-                        size: 'small'
+                        size: 'small'data-on="Ready"
                     });
                     $('#chk_half_opt_' + j + '').bootstrapToggle({
                         on: 'FIRST',
                         off: 'SECOND',
                         size: 'small'
-                    });*/
-               
+                    });
+               */
                    
                 }
 
@@ -978,6 +991,16 @@ $.fn.view_days = function ()
         $.fn.log_error(arguments.callee.caller, err.message);
     }
 };
+
+$.fn.change_switchery = function(obj, checked) 
+{
+	if(obj.is(':checked') != checked)
+	{
+		CODE_TRIGGERED = true;
+		obj.parent().find('.switchery').trigger('click');
+	}
+}
+
 
 $.fn.avaliable_leave_info = function ()
 {
@@ -1087,7 +1110,7 @@ $.fn.select_all_checkbox = function (status)
 {
     try
     {
-        $('#leave_form input[name="chk_day"]').each(function () 
+        $('.chkday input[name="chk_day"]').each(function () 
         {
             if (status == true)
             {
@@ -1144,7 +1167,11 @@ $.fn.prepare_form = function ()
 
         $('#start_date').flatpickr({ dateFormat: 'd-m-Y' });
         $('#end_date').flatpickr({ dateFormat: 'd-m-Y' });
-
+        var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+        $('.js-switch').each(function() 
+        {
+            new Switchery($(this)[0], $(this).data());
+        });
         $.fn.get_leave_dropdown_data();
         $.fn.get_leave_details();
         $.fn.get_list(false);
