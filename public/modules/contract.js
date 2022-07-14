@@ -341,7 +341,7 @@ $.fn.populate_detail_form = function(contract_no)
 	{	
 		$.fn.show_hide_form	('EDIT');
 	 	$('#h4_primary_no').text('Contract Number : ' + contract_no);
-		 $.fn.intialize_fileupload('fileupload_reply', 'files_reply');
+		$.fn.intialize_fileupload('fileupload_reply', 'files_reply');
 	 	$.fn.fetch_data
 		(
 			$.fn.generate_parameter('get_contract_details',{contract_no : contract_no}),
@@ -481,11 +481,16 @@ $.fn.populate_detail_form = function(contract_no)
 						$('#txt_medical_leave').val($.fn.format_cost(cost_json.medical_leave));
 						// $('#chk_client_to_hire_allow').prop('checked',parseInt(cost_json.client_to_hire_allow));
 						$.fn.change_switchery($('#chk_client_to_hire_allow'), (parseInt(cost_json.client_to_hire_allow) ? true : false));
-						$('#chk_replacement_leave_applicable').prop('checked',parseInt(cost_json.replacement_leave_applicable));
-						$('#chk_annual_leave_encash_allow').prop('checked',parseInt(cost_json.annual_leave_encash_allow));
-						$('#chk_is_active').prop('checked',parseInt(cost_json.is_active));
-						$('#chk_travelling_claim').prop('checked',parseInt(cost_json.travelling_claim));
-						$('#chk_medical_claim').prop('checked',parseInt(cost_json.medical_claim));
+						$.fn.change_switchery($('#chk_replacement_leave_applicable'), (parseInt(cost_json.replacement_leave_applicable) ? true : false));
+						// $('#chk_replacement_leave_applicable').prop('checked',parseInt(cost_json.replacement_leave_applicable));
+						$.fn.change_switchery($('#chk_annual_leave_encash_allow'), (parseInt(cost_json.annual_leave_encash_allow) ? true : false));
+						// $('#chk_annual_leave_encash_allow').prop('checked', parseInt(cost_json.annual_leave_encash_allow));
+						$.fn.change_switchery($('#chk_is_active'), (parseInt(cost_json.is_active) ? true : false));
+						// $('#chk_is_active').prop('checked',parseInt(cost_json.is_active));
+						$.fn.change_switchery($('#chk_travelling_claim'), (parseInt(cost_json.travelling_claim) ? true : false));
+						// $('#chk_travelling_claim').prop('checked',parseInt(cost_json.travelling_claim));
+						$.fn.change_switchery($('#chk_medical_claim'), (parseInt(cost_json.medical_claim) ? true : false));
+						// $('#chk_medical_claim').prop('checked',parseInt(cost_json.medical_claim));
 					}
 					$("#trail").attr("data-name",SESSIONS_DATA.name);
    					$.fn.populate_allowance_list_form(return_data.data.allowance);
@@ -566,15 +571,9 @@ $.fn.set_sub_edit_form = function(data)
 
 $.fn.save_edit_form = function()
 {	
-	//alert('999999');
+	
 	try
 	{		
-		// if($('#detail_form').parsley( 'validate' ) == false)
-		// {
-		// 	btn_save.stop();
-		// 	return;
-		// }
-
 		if($('#detail_form').parsley().validate() == false)
 		{	
 			btn_save.stop();
@@ -775,9 +774,10 @@ $.fn.save_edit_employment_form = function()
 {	
 	try
 	{	
-		if($('#employment_form').parsley( 'validate' ) == false)
+
+		if ($('#employment_form').parsley().validate() == false)
 		{
-			return;
+			return false;
 		}
 
 		let approvals = [];
@@ -857,20 +857,27 @@ $.fn.populate_employment_list_form = function(data)
 			for(var i = 0; i < data.length; i++)
 			{	
 
+				if (i == 0) {
+					styleCss = '';
+				} else {
+					styleCss = '0px 1px 0px 40px';
+				}
+
 				let json_field 	= data[i].json_field;
 				emp_type 		= data[i].emp_type;
 				data_val 		= JSON.stringify(data[i].json_field);
 				data_att 		= JSON.stringify(data[i].attachment);
 				duration        += parseInt(json_field.duration_of_employment);
-				row += `<div class="col-md-2 emp-block-container" id="emp-container-${data[i].id}">
-						<div class="emp-block">
+				row += `<div class="col-md-2 emp-block-container" id="emp-container-${data[i].id}" style="float: left !important;padding:${styleCss}">
+						<div class="emp-block" style="cursor: pointer;box-shadow: 2px 2px 4px 2px rgb(0 0 0 / 10%);width:140%;padding:6px;margin-bottom:7%;">
 							<div class="emp-heading">
 								<input type='hidden' value='${data[i].id}' class='txt_employment_id'>
 								<input type='hidden' value='${data_val}' class='emp_data'>
 								<input type='hidden' value='${data_att}' class='att_data'>
 								<input type='hidden' value='${data[i].status_id}' class='emp_status_id'>
-								<div class="pull-left">${emp_type}</div>
-								<div class="pull-right remove-employment"><button class="btn btn-danger btn-xs"><i class="fa fa-times"></i></button></div>
+								<div class="pull-left">${emp_type}
+									<div class="pull-right remove-employment"><button class="btn btn-danger btn-xs" style="float: right;margin-top: -12% !important;"><i class="far fa-trash-alt"></i></button></div>
+								</div>
 							</div>
 							<div class="emp-body">
 								<div class="text-center"></div>
@@ -2099,7 +2106,8 @@ $.fn.get_contract_config = function()
 			function (return_data)
 			{
 				if (return_data.code == 0)
-				{ //console.log(return_data);
+				{ 
+					console.log(return_data.data.approvals);
 					$.fn.populate_file_blocks(return_data.data.file_uploads);
 					$.fn.populate_dd_values('dd_approvals', return_data.data.approvals);
 					$.fn.populate_onboarding_status(return_data.data.contract_status);
@@ -2272,6 +2280,19 @@ $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
             $('#'+element_id).append(`<option value="">Please Select</option>`);
         }
 
+		
+
+		// if(element_id == 'dd_approvals') {
+        //     for (let item of dd_data.approvals) {
+                
+        //         $('#dd_approvals').append(`<option 
+        //                                          data-type="category" 
+        //                                          value="${item.id}">${item.descr}
+        //                                          </option>`
+        //                                         );
+        //     }
+        // }
+
 		if(element_id == 'dd_created_by_search') {
             for (let item of dd_data.created_by) {
                 
@@ -2303,19 +2324,19 @@ $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
                                                 );
             }
         }
-        // if(is_search)
-        // {
-        //     $('#'+element_id).append(`<option value="">All</option>`);
-        // }
-        // for (let item of dd_data)
-        // {	
-        //     $('#'+element_id).append(`<option value="${item.id}">${item.descr}</option>`);
-        // }
-        // $('#'+element_id).val('').change();
+        if(is_search)
+        {
+            $('#'+element_id).append(`<option value="">All</option>`);
+        }
+        for (let item of dd_data)
+        {	
+            $('#'+element_id).append(`<option value="${item.id}">${item.descr}</option>`);
+        }
+        $('#'+element_id).val('').change();
     }
     catch(err)
     {
-        $.fn.log_error(arguments.callee.caller,err.message);
+        // $.fn.log_error(arguments.callee.caller,err.message);
     }
 };
 
@@ -2403,7 +2424,7 @@ $.fn.prepare_form = function()
 
     	// $('#contract_date,#request_date,#emp_start_date,#emp_end_date,#billing_start_date,#billing_end_date,#txt_inc_date,#onboard_date,#txt_current_ep_expiry_date,#commencing_date,#txt_apply_ep_on_date,#date_of_birth,#ep_expiry_date,#marriage_date').datepicker({dateFormat: 'dd-M-yy'});
 
-		$('#contract_date,#request_date,#emp_start_date,#emp_end_date,#billing_start_date,#billing_end_date,#txt_inc_date,#onboard_date,#txt_current_ep_expiry_date,#commencing_date,#txt_apply_ep_on_date,#date_of_birth,#ep_expiry_date,#marriage_date').flatpickr({dateFormat: 'd-M-yy'});
+		$('#contract_date,#request_date,#emp_start_date,#emp_end_date,#billing_start_date,#billing_end_date,#txt_inc_date,#onboard_date,#txt_current_ep_expiry_date,#commencing_date,#txt_apply_ep_on_date,#date_of_birth,#ep_expiry_date,#marriage_date').flatpickr({dateFormat: 'd-M-Y'});
 
         $('.populate').select2();
         $('.tooltips').tooltip();
@@ -2469,7 +2490,7 @@ $.fn.navigate_form = function (contract_no)
 
 $.fn.set_validation_form = function()
 {
-	$('#detail_form').parsley(
+	$('#detail_form,#employment_form').parsley(
         {
             classHandler: function(parsleyField) {
                 return parsleyField.$element.closest(".errorContainer");
@@ -2479,39 +2500,8 @@ $.fn.set_validation_form = function()
             },
         }
     );
-
-
-	// $('#detail_form').parsley
-    // ({
-    //     successClass	: 'has-success',
-    //     errorClass		: 'has-error',
-    //     errors			:
-    //     {
-    //         classHandler: function(el)
-    //         {
-    //             return $(el).closest('.error-container');
-    //         },
-    //         errorsWrapper	: '<ul class=\"help-block list-unstyled\"></ul>',
-    //         errorElem		: '<li></li>'
-    //     }
-	// });
 	
 	$('#reference_form').parsley
-    ({
-        successClass	: 'has-success',
-        errorClass		: 'has-error',
-        errors			:
-        {
-            classHandler: function(el)
-            {
-                return $(el).closest('.form-group');
-            },
-            errorsWrapper	: '<ul class=\"help-block list-unstyled\"></ul>',
-            errorElem		: '<li></li>'
-        }
-	});
-	
-	$('#employment_form').parsley
     ({
         successClass	: 'has-success',
         errorClass		: 'has-error',
@@ -3206,7 +3196,8 @@ $.fn.display_revoke_approval = function(data)
 		
 		$('#revoke_users').html(user_li);
         $('#div_revoke_approval_title').html("Revoke Approval For " + data.employee_name);
-		$('#approval_revoke_modal')    .modal();
+		// $('#approval_revoke_modal')    .modal();
+		$('#approval_revoke_modal').modal('show');
     }
     catch(err)
     {
@@ -4014,6 +4005,7 @@ $.fn.bind_command_events = function()
 	$.fn.get_contract_add_request_dropdown();
     try
     {	
+		
 		$('#div_user_ref').click(function (event)
 		{
 			event.preventDefault();
@@ -4030,6 +4022,7 @@ $.fn.bind_command_events = function()
 			
 			if(target == '#tab-contract' || target == '#tab-clients' || target == '#tab-ref')
 			{
+
 				$('#actions_div').hide();
 				
 			}
@@ -4153,7 +4146,7 @@ $.fn.bind_command_events = function()
 		$('#btn_employment_add').click( function(e)
 		{
 			e.preventDefault();
-			$.fn.save_edit_employment_form();
+			$.fn.save_edit_employment_form(); 
 		});
 
 		$('#btn_employment_reset').click( function(e)
@@ -4774,7 +4767,7 @@ $.fn.bind_command_events = function()
         {
         	e.preventDefault();
 			
-        	if($(this).attr('href') == '#tab-five' || $(this).attr('href') == '#tab-clients' || $(this).attr('href') == '#tab-ref')
+        	if($(this).attr('href') == '#tab-five' || $(this).attr('href') == '#tab-clients' || $(this).attr('href') == '#tab-ref' || $(this).attr('href') == '#tab-contract')
         	{
         		$('#actions_div').hide();
         	}

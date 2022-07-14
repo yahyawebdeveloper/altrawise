@@ -1597,9 +1597,36 @@
 						<!--Leaves-->
                         <div id="tab-contract" class="tab-pane">
 
-                            <div class="row" id="list_task_group">
-                                <div id="emp_list_block"></div>
+
+                            <div class="row mt-2">
+                                <div  class="col-lg-9" >
+                                    <div class="row" id="emp_list_block">
+                                    </div>    
+                                </div>
+
+                                <div class="pull-right col-lg-3">
+                                    <a href="#" id="btn_employment_reset" class="btn btn-light waves-effect waves-light m-1"><i class="fe-refresh-cw me-1"></i> Reset</a>
+                                    <button type="button" id="btn_employment_add" class="btn btn-success" onclick="$.fn.contact_form()">
+                                        <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+                                        <span class="hidden-xs">Add</span>
+                                    </button>
+                                </div>
                             </div>
+
+
+
+                            <!-- <div class="row" id="list_task_group">
+                                <div id="emp_list_block"></div>
+
+                                <div class="pull-right">
+                                    <a href="#" id="btn_employment_reset" class="btn btn-default"><i class="fa fa-refresh fa-fw"></i> Reset</a>
+                                    <button type="button" id="btn_employment_add" class="btn btn-success" onclick="$.fn.contact_form()">
+                                        <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+                                        <span class="hidden-xs">Add</span>
+                                    </button>
+                                </div>
+
+                            </div> -->
 
                             <form class="form-horizontal" data-validate="parsley" id="employment_form">
 
@@ -2269,9 +2296,32 @@
                         </div>
                     </div>
                     
-                        <!-- Modal offer letter End-->
-                        
-                        <!-- End Attachment -->
+                    <!-- Modal offer letter End-->
+                    <!-- End Attachment -->
+
+
+                        <!-- Modal for approval revoke Start-->
+                        <div class="modal fade" id="approval_revoke_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-light">
+                                        <h4 class="modal-title" id="div_revoke_approval_title">Revoke Approval</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                                    </div>
+                                    <div class="modal-body p-4">
+                                        <input type="hidden" name="revoke_contract_no" id="revoke_contract_no">
+                                        <ul class="panel-tasks" id="revoke_users">
+                                        </ul>
+
+                                        <div class="text-end">
+                                            <button type="button" class="btn btn-default" data-bs-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                                            <button type="button" class="btn btn-success" data-style="expand-left" data-spinner-color="#000000"  id="btn_revoke_approval">Apply</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal approval revoke End-->
 
                         <!-- Enquiry -->
                         <div id="tab-enquiry" class="tab-pane">
