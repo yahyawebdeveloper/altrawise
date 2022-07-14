@@ -253,6 +253,9 @@
 			 .on("/users", () => { //users route
 				 $.fn.load_form('./modules/users.html');
 			 }, { before: middleware })
+			  .on("/users/users-history-report", () => { //users route
+				 $.fn.load_form('./modules/users/users-history-report.html');
+			 }, { before: middleware })
 			 // .on("/quotation", () => { //quotation route
 			 // 	$.fn.load_form('./modules/quote.html');
 			 // })

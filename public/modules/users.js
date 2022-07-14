@@ -9,14 +9,196 @@ var RECORD_INDEX 	= 0;
 var upload_section 	= '';
 var btn_save = EMP_ID = EMP_HIS_ID = '';
 var btn_leave_save; EMP_LEAVE_ID = '';
-
+var btn_attach_save;
 var btn_rec_save;
+var btn_exit_attach_save;
 var btn_test_email;
 var BACKUP_SESSION = '';
 var CODE_TRIGGERED = false;
 var p_status = '';
 var pid = "";
 var flatpickerEndTime, flatpickerEndTime = '';
+// Exit Checklist Form
+$.fn.exit_save_edit_form = function ()
+{
+	try
+	{
+		if ($('#exit_attach_files .file-upload.new').length > 0)
+		{
+			FILE_UPLOAD_PATH = `${MODULE_ACCESS.module_id}/${EMP_ID}/`;
+			let ctg = $('#dd_exit_category option:selected').text();
+			if ($('#dd_exit_category').val() == 'Please Select')
+			{
+				ctg = '-NO CATEGORY-';
+			}
+
+			let attachment_data =
+			{
+				id: '',
+				primary_id: EMP_ID,
+				secondary_id: 2,
+				module_id: MODULE_ACCESS.module_id,
+				filename: '',
+				filesize: "0",
+				json_field:
+				{
+					remarks: ($('#txt_exit_attach_remarks').val().replace(/['"]/g, '')),
+					category: ctg,
+					is_visible: $('#chk_exit_file_visible').is(':checked') ? "1" : "0"
+				},
+				emp_id: SESSIONS_DATA.emp_id
+			};
+
+			$.fn.upload_file('exit_attach_files', 'id', EMP_ID,
+				attachment_data, function (total_files, total_success, filename, attach_return_data)
+			{
+				if (total_files == total_success)
+				{
+					$.fn.populate_attachment_list_form(attach_return_data.attachment, 2);
+				}
+			}, false, btn_exit_attach_save);
+		}
+	}
+	catch (err)
+	{
+		$.fn.log_error(arguments.callee.caller, err.message);
+	}
+};
+// Exit Checklist Form
+// Attach Form
+$.fn.populate_attachment_list_form = function (data, type)
+{
+	try
+	{
+		if (type == 1)
+		{
+			$('#tbl_attachment').empty();
+			if (data) // check if there is any data, precaution
+			{
+				var row = '';
+				for (var i = 0; i < data.length; i++)
+				{
+					let json_field = $.fn.get_json_string(data[i].json_field);
+					if (json_field !== false)
+					{
+						let is_checked = '';
+						if (parseInt(json_field.is_visible) == 1)
+						{
+							is_checked = `checked`;
+						}
+
+						let check = `<input type="checkbox" name="chk_file_visible" ${is_checked} onchange="$.fn.make_is_visible_to_owner_files(this)">`;
+						row += `<tr data-value="${escape(JSON.stringify(data[i]))}">
+								<td><a class="tooltips" href="javascript:void(0)" onclick="$.fn.open_page('${data[i].id}','${CURRENT_PATH}download.php')"
+									data-trigger="hover" data-original-title="View File "><i class="fa fa-picture-o"/></a></td>
+								<td>${check}</td>
+								<td>${json_field.category}</td>
+								<td>${data[i].filename}</td>
+								<td>${json_field.remarks}</td>
+								<td>${data[i].created_by}</td>
+								<td>${data[i].created_date}</td>
+								<td>${data[i].status}</td>
+							</tr>`;
+					}
+				}
+				$('#tbl_attachment').append(row);
+			}
+		}
+		else if (type == 2)
+		{
+			$('#tbl_exit').empty();
+			if (data) // check if there is any data, precaution
+			{
+				var row = '';
+				for (var i = 0; i < data.length; i++)
+				{
+					let json_field = $.fn.get_json_string(data[i].json_field);
+					if (json_field)
+					{
+						let is_checked = '';
+						if (parseInt(json_field.is_visible) == 1)
+						{
+							is_checked = `checked`;
+						}
+
+						let check = `<input type="checkbox" name="chk_exit_file_visible" ${is_checked} onchange="$.fn.make_is_visible_to_owner_files(this)">`;
+						row += `<tr data-value="${escape(JSON.stringify(data[i]))}">
+									<td><a class="tooltips" href="javascript:void(0)" onclick="$.fn.open_page('${data[i].id}','${CURRENT_PATH}download.php')"
+										data-trigger="hover" data-original-title="View File "><i class="fa fa-picture-o"/></a></td>
+									<td>${check}</td>
+									<td>${json_field.category}</td>
+									<td>${data[i].filename}</td>
+									<td>${json_field.remarks}</td>
+									<td>${data[i].created_by}</td>
+									<td>${data[i].created_date}</td>
+									<td>${data[i].status}</td>
+								</tr>`;
+
+					}
+				}
+				$('#tbl_exit').append(row);
+			}
+		}
+	}
+	catch (err)
+	{
+		//		console.log(err.message);
+		$.fn.log_error(arguments.callee.caller, err.message);
+	}
+};
+// Attach Form
+$.fn.attach_save_edit_form = function ()
+{
+	try
+	{
+		if ($('#attach_files .file-upload.new').length > 0)
+		{
+			FILE_UPLOAD_PATH = `${MODULE_ACCESS.module_id}/${EMP_ID}/`;
+			let ctg = $('#dd_attach_category option:selected').text();
+			if ($('#dd_attach_category').val() == 'Please Select')
+			{
+				ctg = '-NO CATEGORY-';
+			}
+
+			let attachment_data =
+			{
+				id: '',
+				primary_id: EMP_ID,
+				secondary_id: 1,
+				module_id: MODULE_ACCESS.module_id,
+				filename: '',
+				filesize: "0",
+				json_field:
+				{
+					remarks: ($('#txt_attach_remarks').val().replace(/['"]/g, '')),
+					category: ctg,
+					is_visible: $('#chk_file_visible').is(':checked') ? 1 : 0
+				},
+				emp_id: SESSIONS_DATA.emp_id
+			};
+
+
+			$.fn.upload_file('attach_files', 'emp_id', EMP_ID,
+				attachment_data, function (total_files, total_success, filename, attach_return_data)
+			{
+				if (total_files == total_success)
+				{
+					$.fn.populate_attachment_list_form(attach_return_data.attachment, 1);
+				}
+			}, false, btn_attach_save);
+
+		}
+		else{
+			console.log("here");
+			btn_attach_save.stop();
+		}
+	}
+	catch (err)
+	{
+		$.fn.log_error(arguments.callee.caller, err.message);
+	}
+};
+// Attach Form
 $.fn.delete_work_history = function (data)
 {
 	try
@@ -544,6 +726,7 @@ $.fn.populate_detail_form = function (data)
 		$.fn.show_hide_form('EDIT', true);
 		$.fn.reset_form('his_form');
 		$.fn.reset_form('leave_form');
+		$.fn.intialize_fileupload("doc_upload", "doc_upload_files");
 		// $.fn.reset_form('asset_form');
 		// $.fn.reset_form('track_form');
 
@@ -1011,8 +1194,8 @@ $.fn.get_initial_data = function ()
 						$.fn.populate_dd('dd_contract_type', return_data.data.employment_type);
 						$.fn.populate_dd('dd_marital_status', return_data.data.marital_status);
 						$.fn.populate_dd('dd_faq', return_data.data.faq);
-						// $.fn.populate_dd('dd_attach_category', return_data.data.doc_ctg);
-						// $.fn.populate_dd('dd_exit_category', return_data.data.exit_ctg);
+						$.fn.populate_dd('dd_attach_category', return_data.data.doc_ctg);
+						$.fn.populate_dd('dd_exit_category', return_data.data.exit_ctg);
 						$.fn.populate_dd('dd_timezone', return_data.data.timezone);
 					}
 				}, true
@@ -2303,6 +2486,7 @@ $.fn.prepare_form = function()
 {	
 	try
 	{	
+		$.fn.intialize_fileupload("doc_upload", "doc_upload_files");
 		//check for flatpickr
 		var flatpickerLoaded = $('script[src="./assets/libs/flatpickr/flatpickr.min.js"]').length;
 
@@ -2414,6 +2598,7 @@ $.fn.prepare_form = function()
 		{
 			$.fn.navigate_form(user_id);
 		}
+		
 	}
 	catch(err)
 	{
@@ -2426,6 +2611,20 @@ $.fn.bind_command_events = function()
 {	
 	try
 	{	
+		$('#btn_exit_attach_save').click(function (e)
+		{
+			e.preventDefault();
+			btn_exit_attach_save = Ladda.create(this);
+			btn_exit_attach_save.start();
+			$.fn.exit_save_edit_form();
+		});
+		$('#btn_attach_save').click(function (e)
+		{
+			e.preventDefault();
+			btn_attach_save = Ladda.create(this);
+			btn_attach_save.start();
+			$.fn.attach_save_edit_form();
+		});
 		$('#btn_rec_save').click(function (e)
 		{
 			e.preventDefault();

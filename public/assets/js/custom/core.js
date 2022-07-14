@@ -424,7 +424,9 @@ $.fn.generate_parameter = function (method, data, additional_param)
 		{
 			token: $.jStorage.get('token'),
 			method: method,
-			data: data
+			data: data,
+			module_id: MODULE_ACCESS.module_id,
+			ajax: true
 		};
 
 		if (additional_param)
@@ -1223,7 +1225,7 @@ $.fn.get_page_name = function (route_name) {
 		case 'users':
 			return 81;
 			break;
-		case 'users/report':
+		case 'users/users-history-report':
 			return 82;
 			break;
 		case 'users/track':
