@@ -1,17 +1,117 @@
-$.fn.reset_search_form = function(form)
+var RECORD_INDEX 	= 0;
+var btn_search;
+
+$.fn.populate_list = function(data)
 {
 	try
 	{
-		$('#dd_search_employee')	.val('').change();
+		if (data)
+		{
+			var row			= '';
+			var data_val 	= '';
+			var employee	= 0;
+			var count		= 1;
+
+			for(var i = 0; i < data.length; i++)
+			{
+				data_val = escape(JSON.stringify(data[i]));
+                let start_date = moment(data[i].work_start_date, 'DD-MM-YYYY');
+                let end_date   = moment(data[i].work_end_date, 'DD-MM-YYYY');
+                let join_date  = moment(data[i].join_date);
+
+				row += `<tr>`;
+				if(employee	!= data[i].employee_id)
+				{
+					count = 1;
+				row += `<td>${data[i].name}</td>`;
+				}
+				else
+				{
+					row += `<td>&nbsp;</td>`;
+				}
+
+				row += `<td>${data[i].client_name}</td>;
+						<td>${data[i].department}</td>;
+						<td>${start_date.format('D-MMM-YYYY')}</td>`;
+				if(data[i].work_end_date != null)
+				{
+					row += `<td>${end_date.format('D-MMM-YYYY')}</td>`;
+				}
+				else
+				{
+					row += `<td>-</td>`;
+				}
+				if(data[i].join_date != null)
+				{
+					row += `<td>${join_date.format('D-MMM-YYYY')}</td>`;
+				}
+				else
+				{
+					row += `<td>-</td>`;
+				}
+				if(data[i].salary != 0)
+				{
+					row += `<td>${data[i].salary}</td>`;
+				}
+				else
+				{
+					row += `<td>-</td>`;
+				}
+				row += `</tr>`;
+
+				employee = data[i].employee_id;
+				count++;
+			}
+			$('#tbl_list tbody').append(row);
+		}
+	}
+	catch(err)
+	{
+		$.fn.log_error(arguments.callee.caller,err.message);
+	}
+
+};
+$.fn.get_list = function()
+{
+	try
+	{
+		var data	=
+		{
+			employee_id		: $('#dd_employee').val(),
+			client_id		: $('#dd_client').val(),
+			dept_id			: $('#dd_dept').val(),
+			emp_id			: SESSIONS_DATA.emp_id
+	 	};
+
+	 	$.fn.fetch_data
+		(
+			$.fn.generate_parameter('get_employee_report',data),
+			function(return_data)
+			{
+				if(return_data)
+				{
+					$('#tbl_list > tbody').empty();
+					if(return_data.code == 0)
+					{
+						$('#div_report_view').show();
+					}
+					else
+					{
+						$('#div_report_view').hide();
+					}
+					$.fn.populate_list(return_data.data);
+				}
+			},true, btn_search
+		);
 	}
 	catch(err)
 	{
 		$.fn.log_error(arguments.callee.caller,err.message);
 	}
 };
-function get_attendance_tracker_employee(rowData = false) {
+function get_dept(rowData = false) {
 	try {
-	  let row = "<option value=''>All</option>";
+	  let row = "<option value='ALL'>All</option>";
 	  if (rowData) {
 		for (var i = 0; i < rowData.length; i++) {
 		  let jsval = escape(JSON.stringify(rowData[i]));
@@ -19,8 +119,44 @@ function get_attendance_tracker_employee(rowData = false) {
 							   ${rowData[i].desc}
 						   </option>`;
 		}
-		$("#dd_search_employee").html(row);
-		$("#dd_search_employee").select2();
+		$("#dd_dept").html(row);
+		$("#dd_dept").select2();
+	  }
+	} catch (err) {
+	  // console.log(err.message);
+	  $.fn.log_error(arguments.callee.caller,err.message);
+	}
+  }
+function get_outsourced_clients(rowData = false) {
+	try {
+	  let row = "<option value='ALL'>All</option>";
+	  if (rowData) {
+		for (var i = 0; i < rowData.length; i++) {
+		  let jsval = escape(JSON.stringify(rowData[i]));
+		  row += `<option data-val="${jsval}" value=${rowData[i].id}>
+							   ${rowData[i].desc}
+						   </option>`;
+		}
+		$("#dd_client").html(row);
+		$("#dd_client").select2();
+	  }
+	} catch (err) {
+	  // console.log(err.message);
+	  $.fn.log_error(arguments.callee.caller,err.message);
+	}
+  }
+function get_emp(rowData = false) {
+	try {
+	  let row = "<option value='ALL'>All</option>";
+	  if (rowData) {
+		for (var i = 0; i < rowData.length; i++) {
+		  let jsval = escape(JSON.stringify(rowData[i]));
+		  row += `<option data-val="${jsval}" value=${rowData[i].id}>
+							   ${rowData[i].desc}
+						   </option>`;
+		}
+		$("#dd_employee").html(row);
+		$("#dd_employee").select2();
 	  }
 	} catch (err) {
 	  // console.log(err.message);
@@ -48,153 +184,30 @@ $.fn.get_everything_at_once_altrawise = function (data, details = false) {
     $.fn.log_error(arguments.callee.caller,err.message);
   }
 };
-$.fn.data_table_features = function()
-{
-	try
-	{
-		if (!$.fn.dataTable.isDataTable( '#tbl_list' ) )
-		{
-			table = $('#tbl_list').DataTable
-			({
-				"searching"	: false,
-				"paging"	: false,
-				"info"		: false,
-				"order"		: []
-			});
-		}
-	}
-	catch(err)
-	{
-		$.fn.log_error(arguments.callee.caller,err.message);
-	}
-};
-$.fn.populate_list_form = function(data)
-{
-	try
-	{
-		if (data.length > 0) // check if there is any data, precaution
-		{
-			$('#tbl_list > tbody').empty();
-
-			let row			= '';
-			let data_val 	= '';
-			
-
-			for(var i = 0; i < data.length; i++)
-			{	
-				let type_of_day = '';
-				if(data[i].is_public_holiday != '')
-				{
-					type_of_day = `<span class="badge bg-soft-danger text-danger"><i class="fa fa-home text-danger"> &nbsp;Public Holiday </i></span>`;
-				}
-				else if(data[i].leave_type != '')
-				{
-					type_of_day = `<i class="fa fa-home text-danger"> &nbsp;${data[i].leave_type} </i>`;
-				}
-				else if(data[i].day_name == 'Saturday' || data[i].day_name == 'Sunday')
-				{
-					type_of_day = `<span class="badge bg-soft-danger text-danger"><i class="fa fa-home text-danger"> &nbsp;${data[i].day_name} </i></span>`;
-				}
-				else
-				{	
-					type_of_day = `<span class="badge bg-soft-success text-success"><i class="fa fa-briefcase text-success"> &nbsp;Working Day </i></span>`;
-				}
-
-				row += `<tr>
-							<td></td>
-							<td class="ename">${data[i].name}</td>
-							<td class="date">${data[i].attendance_date}</td>
-							<td class="tday">${type_of_day}</td>
-							<td>${data[i].actual_start_time}</td>
-							<td>${data[i].actual_end_time}</td>
-							<td>${data[i].total_idle_time}</td>
-							<td>${data[i].total_working_hours}</td>
-							<td><a href="../users/users_track.php?user_id=${data[i].emp_id}&date=${data[i].tracker_date}" target="_blank" class="btn btn-info"><i class="fa fa-image"> &nbsp;</i>View</a></td>
-						</tr>`;
-			}
-			$('#tbl_list tbody').append(row);
-			
-		}
-	}
-	catch(err)
-	{
-		console.log(err.message);
-	}
-};
-$.fn.data_table_destroy = function()
-{
-	try
-	{
-		if ($.fn.dataTable.isDataTable('#tbl_list') )
-		{
-			$('#tbl_list').DataTable().destroy();
-		}
-	}
-	catch(err)
-	{
-		$.fn.log_error(arguments.callee.caller,err.message);
-	}
-};
-$.fn.get_list = function()
-{
-	try
-	{
-		var data	=
-		{
-			employee_id			: $('#dd_search_employee').val(),
-			employee_name		: $('#dd_search_employee option:selected').text(),
-			from_date			: $('#from_search_date').val(),
-			to_date				: $('#to_search_date').val()
-	 	};
-
-	 	$.fn.fetch_data
-		(
-			$.fn.generate_parameter('get_attendance_tracker_v2',data),	
-			function(return_data)
-			{
-				if(return_data)
-				{	
-					$.fn.data_table_destroy('tbl_list');
-					$.fn.populate_list_form(return_data.data);
-					$.fn.data_table_features('tbl_list');
-				}
-			},true
-		);
-		
-	}
-	catch(err)
-	{
-		$.fn.log_error(arguments.callee.caller,err.message);
-	}
-};
 $.fn.bind_command_events = function()
  {	
 	 try
 	 {
-		$('#btn_search_reset').click( function(e)
+		$('#btn_search').click(function (e)
 		{
 			e.preventDefault();
-			$.fn.reset_search_form();
-			$.fn.get_list();
+			RECORD_INDEX = 0;
+			btn_search = Ladda.create(this);
+	 		btn_search.start();
+            $.fn.get_list();
 		});
-
-		$('#btn_search').click( function(e)
+		$('#showSearchDiv').click(function (e)
 		{
 			e.preventDefault();
-			$.fn.get_list();
-		});
-		$('#showSearchDiv').on('click', function (e)
-        {
-            e.preventDefault();
-            $('#searchDiv').show();
+			$("#searchDiv").show();
 			$("#showSearchDiv").hide();
-        });
-		$('#closeSearch').on('click', function (e)
-        {
-            e.preventDefault();
-            $('#searchDiv').hide();
+		});
+		$('#closeSearch').click(function (e)
+		{
+			e.preventDefault();
+			$("#searchDiv").hide();
 			$("#showSearchDiv").show();
-        });
+		});
 	 }
 	 catch(err)
 	 {
@@ -206,36 +219,15 @@ $.fn.bind_command_events = function()
  {	
 	 try
 	 {
-		$("#searchDiv").hide();
 		let params = {
 			emp_id:SESSIONS_DATA.emp_id
 		}
 		let data = [
-			{ func: "get_attendance_tracker_employee", params: params },
+			{ func: "get_emp", params: params },
+			{ func: "get_outsourced_clients", params: params },
+			{ func: "get_dept", params: params },
 		];
 		$.fn.get_everything_at_once_altrawise(data);
-		var startdate = moment();
-		startdate = startdate.subtract(1, "month");
-		$('#from_search_date').val(startdate.format("YYYY-MM-DD"));
-		$('#to_search_date').val(moment(new Date()).format("YYYY-MM-DD"));
-		$("#doc_search_date").trigger("change");
-		$("#doc_search_date").flatpickr({
-			mode:"range",
-			altFormat: "d-M-Y",
-			dateFormat: "d-M-Y",
-			defaultDate: [startdate.format("DD-MMM-YYYY"),moment(new Date()).format("DD-MMM-YYYY")],
-			onChange:function(selectedDates){
-				var _this=this;
-				var dateArr=selectedDates.map(function(date){return _this.formatDate(date,'Y-m-d');});
-				$('#from_search_date').val(dateArr[0]);
-				$('#to_search_date').val(dateArr[1]);
-			},
-		});
-		
-		$('#from_date').val('2021-06-17');
-		$('#to_date').val('2022-06-17');
-		$("#dd_employee").select2();
-		$.fn.get_list();
 	 }
 	 catch(err)
 	 {
