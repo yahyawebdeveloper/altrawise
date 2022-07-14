@@ -1,0 +1,216 @@
+
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="page-title"><i class="fa fa-home"></i>&nbsp;Dashboard</h4>
+        </div>
+    </div>
+</div>     
+<!-- end page title --> 
+
+<div class="row">
+    <div class="col-md-6 col-xl-3">
+        <div class="widget-rounded-circle card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="avatar-lg rounded-circle bg-primary border-primary border shadow">
+                            <i class="fe-calendar font-22 avatar-title text-white"></i>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-end">
+                            <h3 class="text-dark mt-1"><span data-plugin="counterup">1</span></h3>
+                            <p class="text-muted mb-1">Total Open Appointments</p>
+                        </div>
+                    </div>
+                </div> <!-- end row-->
+            </div>
+        </div> <!-- end widget-rounded-circle-->
+    </div> <!-- end col-->
+
+    <div class="col-md-6 col-xl-3">
+        <div class="widget-rounded-circle card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="avatar-lg rounded-circle bg-success border-success border shadow">
+                            <i class="fe-cloud font-22 avatar-title text-white"></i>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-end">
+                            <h3 class="text-dark mt-1"><span data-plugin="counterup">127</span></h3>
+                            <p class="text-muted mb-1 ">Pending Claims (Current Month)</p>
+                        </div>
+                    </div>
+                </div> <!-- end row-->
+            </div>
+        </div> <!-- end widget-rounded-circle-->
+    </div> <!-- end col-->
+
+    <div class="col-md-6 col-xl-3">
+        <div class="widget-rounded-circle card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="avatar-lg rounded-circle bg-info border-info border shadow">
+                            <i class="fe-bar-chart-line- font-22 avatar-title text-white"></i>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-end">
+                            <h3 class="text-dark mt-1"><span data-plugin="counterup">1</span></h3>
+                            <p class="text-muted mb-1 ">Pending Claims (Current Month)</p>
+                        </div>
+                    </div>
+                </div> <!-- end row-->
+            </div>
+        </div> <!-- end widget-rounded-circle-->
+    </div> <!-- end col-->
+
+    <div class="col-md-6 col-xl-3">
+        <div class="widget-rounded-circle card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="avatar-lg rounded-circle bg-warning border-warning border shadow">
+                            <i class="fe-eye font-22 avatar-title text-white"></i>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-end">
+                            <h3 class="text-dark mt-1"><span data-plugin="counterup">3</span></h3>
+                            <p class="text-muted mb-1">Leave Pending Approvals</p>
+                        </div>
+                    </div>
+                </div> <!-- end row-->
+            </div>
+        </div> <!-- end widget-rounded-circle-->
+    </div> <!-- end col-->
+</div>
+<!-- end row-->
+
+<!--- Page End -->
+
+<div class="modal" id="display_appointment">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Appointment Details</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-condensed">
+          <tbody>
+            <tr>
+              <td>Subject</td>
+              <td id="display-subject">Subject</td>
+            </tr>
+            <tr>
+              <td>Client</td>
+              <td id="display-client_name">Client</td>
+            </tr>
+            <tr>
+              <td>Employees</td>
+              <td id="display-people_name" style="white-space:pre">Employees</td>
+            </tr>
+            <tr>
+              <td>Created By</td>
+              <td id="display-created_by_name">Created By</td>
+            </tr>
+            <tr>
+              <td>Appointment From</td>
+              <td id="display-date_time">Appointment From</td>
+            </tr>
+            <tr>
+              <td>Appointment To</td>
+              <td id="display-date_time_to">Appointment To</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal" id="display_leave">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Leave Details</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-condensed">
+          <tbody>
+            <tr>
+              <td>Start Date</td>
+              <td id="display-start_date">Start Date</td>
+            </tr>
+            <tr>
+              <td>End Date</td>
+              <td id="display-end_date">End Date</td>
+            </tr>
+            <tr>
+              <td>Leave Type</td>
+              <td id="display-leave_type">Leave Type</td>
+            </tr>
+            <tr>
+              <td>Number of Days</td>
+              <td id="display-no_of_days">Number of Days</td>
+            </tr>
+            <tr>
+              <td>Applied Date</td>
+              <td id="display-applied_date">Applied Date</td>
+            </tr>
+            <tr>
+              <td>Employee Name</td>
+              <td id="display-employee_name">Employee Name</td>
+            </tr>
+            <tr>
+              <td>Reason</td>
+              <td id="display-reason">Reason</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal" id="display_tasks">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Task List</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+          <thead>
+            <tr>
+                <th>Task No</th>
+                <th>Task Title</th>
+                <th>Task Type</th>
+                <th>Priority</th>
+                <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

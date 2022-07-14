@@ -78,7 +78,7 @@ $.fn.populate_list_form = function(data)
 
 			let row			= '';
 			let data_val 	= '';
-			
+			var ename		= '<i>Employee unavailable</i>';
 
 			for(var i = 0; i < data.length; i++)
 			{	
@@ -99,17 +99,18 @@ $.fn.populate_list_form = function(data)
 				{	
 					type_of_day = `<span class="badge bg-soft-success text-success"><i class="fa fa-briefcase text-success"> &nbsp;Working Day </i></span>`;
 				}
-
+				ename = (data[i].emp_id != null ) ? data[i].name : ename;
+				
 				row += `<tr>
 							<td></td>
-							<td class="ename">${data[i].name}</td>
+							<td class="ename">${ename}</td>
 							<td class="date">${data[i].attendance_date}</td>
 							<td class="tday">${type_of_day}</td>
 							<td>${data[i].actual_start_time}</td>
 							<td>${data[i].actual_end_time}</td>
 							<td>${data[i].total_idle_time}</td>
 							<td>${data[i].total_working_hours}</td>
-							<td><a href="../users/users_track.php?user_id=${data[i].emp_id}&date=${data[i].tracker_date}" target="_blank" class="btn btn-info"><i class="fa fa-image"> &nbsp;</i>View</a></td>
+							<td><a href="users/users-track/${data[i].emp_id}/${data[i].tracker_date}" target="_blank"   class="btn btn-info" ><i class="fa fa-image"> &nbsp;</i>View</a></td>
 						</tr>`;
 			}
 			$('#tbl_list tbody').append(row);

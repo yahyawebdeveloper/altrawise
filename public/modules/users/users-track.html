@@ -1,0 +1,106 @@
+<link href="./assets/libs/flatpickr/plugins/monthSelect/style.css" rel="stylesheet" type="text/css" />
+<link href="./assets/libs/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css" />
+<div class="row mt-3 mb-1" >
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="page-title" style="float:left">EMPLOYEE - TRACK</h4>
+			<div class="mt-3" style="float:right">
+				<button type="button" data-color="green" id="showSearchDiv" style="display:none" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-magnify"></i> Search</button>
+			</div>
+        </div>
+    </div>
+</div>
+<!-- SEARCH DIV -->
+<div class="col-xl-12 mb-4"  id="searchDiv">
+	<div class="card mb-0">
+		<div class="col-xl-12" style="text-align:right">
+			 <!-- <h4 class="page-title customized">Search</h4>
+			<button type="button" id="closeSearch" class="btn waves-effect waves-light" ><b>X</b></button> -->
+			<div class="modal-header bg-light">
+				<h4 class="modal-title" ><i class="mdi mdi-magnify" aria-hidden="true"></i> Search</h4>
+				<button type="button" id="closeSearch" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+			</div>
+		</div>
+		<div class="card-body">
+			<!-- SEARCH ROW 1 -->
+				<div class="col-xl-12">
+					<div class="col-xl-6 searchCol">
+						<div class="row">
+						   <div class="col-md-4">
+							   <label for="simpleinput" class="col-form-label">Employee</label>
+						   </div>
+						   <div class="col-md-8">
+							   <select class="form-control" id="dd_employee" data-toggle="select2" data-width="100%">
+								</select>
+						   </div>
+					   </div>
+				   </div>
+					<div class="col-xl-6 searchCol">
+						<div class="row">
+						   <div class="col-md-4">
+							   <label for="simpleinput" class="col-form-label">Date</label>
+						   </div>
+						   <div class="col-md-8">
+							   <input type="text" id="doc_search_date" class="form-control flatpickr-input" placeholder="03-10-2021 to 02-10-2021" readonly="readonly" required>
+							   <input type="hidden" id="from_date">
+							   <input type="hidden" id="to_date">
+						   </div>
+					   </div>
+				   </div>
+									   
+				</div>
+			<!-- SEARCH ROW 1 -->
+			<!-- SEARCH ROW 2 -->
+				<div class="col-xl-12 searchCol" style="text-align:right;overflow:auto;">
+					<div>
+						<button type="button" id="btn_search_reset" class="btn btn-light waves-effect waves-light" ><i class="mdi mdi-refresh"></i> Reset</button>
+						<button type="submit" id="btn_search" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-magnify"></i> Search</button>
+					</div>
+				</div>
+			<!-- SEARCH ROW 2 -->
+		</div>
+	</div>
+</div>
+<!-- SEARCH DIV -->
+<div id="div_report_view">
+					<div class="col-md-12">
+						<div class="panel panel-grape">
+						
+							<div class="row">
+	
+	                            <div class="col-md-12">
+	                                <div class="pull-right" style="float:right">
+	                                    <div class="btn-toolbar form-group clearfix">
+	                                        
+	                                        <div class="btn-group">
+	                                            <button class="btn btn-default list-view active" id="btn_go_grid"><i class="fa fa-th"></i></button>
+	                                            <button class="btn btn-default list-view" id="btn_go_list"><i class="fa fa-th-list"></i></button>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+						
+						
+						  	<div class="panel-body">
+	                            <ul class="gallery list-unstyled popup-gallery" id="div_gallery"></ul>
+						  </div>
+						</div>
+					</div>
+				</div>
+<script src="./assets/js/moment.js/2.18.1/moment.min.js"></script>
+<script src="./assets/libs/flatpickr/flatpickr.min.js"></script>
+<script src="./assets/libs/flatpickr/plugins/monthSelect/index.js"></script>
+<script src="./assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="./assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+<script src="./assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="./assets/libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="./assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="./assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+<script src="./assets/libs/datatables.net-select/js/dataTables.select.min.js"></script>
+<script src="./assets/libs/magnific-popup/jquery.magnific-popup.min.js"></script>
+<script src="./assets/libs/mixitup/jquery.mixitup.min.js"></script>

@@ -239,7 +239,7 @@ $.fn.populate_list_form = function (data, is_scroll) {
                 event.stopPropagation();
 
                 let timesheet_id = $(this).data('id');
-                window.open(`../../../services/modules/excel_format.php?module=timesheet&id=742`, '_blank');
+                window.open( appConfig.SERVER_URL + `services/modules/excel_format.php?module=timesheet&id=742`, '_blank');
             });
 
             $('.load-more').show();

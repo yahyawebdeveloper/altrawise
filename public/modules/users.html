@@ -7,6 +7,7 @@
 <link href="assets/libs/dropify/css/dropify.min.css" rel="stylesheet" type="text/css" />
 <link href="assets/libs/mohithg-switchery/switchery.min.css" rel="stylesheet" type="text/css" />
 <link href="assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/jquery-fileupload/css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
 <!-- <link href="assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" /> -->
 <!-- <link href="assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" /> -->
 <!-- third party css end -->
@@ -202,6 +203,16 @@
                         <li class="nav-item" id="tab_work_history">
                             <a href="#tab_wh" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
                                 Work History
+                            </a>
+                        </li>
+                        <li class="nav-item" id="tab_documents">
+                            <a href="#tab_docs" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                Documents
+                            </a>
+                        </li>
+                        <li class="nav-item" id="tab_exit_checklist">
+                            <a href="#tab_ec" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                Exit Checklist
                             </a>
                         </li>
                     </ul>
@@ -1331,6 +1342,166 @@
                             </div>
                         </div>
                         <!--Work History-->
+                        <!--Documents-->
+                        <div id="tab_docs" class="tab-pane">
+                            <form class="form-horizontal" data-validate="parsley" id="attachment_form">
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Attachments -->
+                                        <div class="row">
+                                            <label for="doc_fileupload" class="col-4 col-form-label">Attachments</label>
+                                            <div class="col-7 errorContainer fileinput-button">
+                                                <button type="button" id="btn_doc_upload" class="btn btn-sm btn-success"><i class="mdi mdi-upload"></i>Browse File</button>
+                                                <input id="attach_fileupload" type="file" name="qqfile">
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Visible to owner -->
+                                        <div class="row">
+                                            <label for="chk_file_visible" style="padding-left:0" class="col-4 col-form-label">Visible to owner</label>
+                                            <div class="col-7 errorContainer mt-1" style="padding-left:0">
+                                                <input type="checkbox" id="chk_file_visible" name="chk_file_visible" class="js-switch" data-color="#64b0f2" data-size="small">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        &nbsp;
+                                    </div>
+                                    <div class="col-lg-10" id="attach_files">
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-lg-6">
+                                            <!-- Remarks -->
+                                            <div class="row">
+                                                <label for="txt_attach_remarks" class="col-4 col-form-label">Remarks</label>
+                                                <div class="col-7 errorContainer">
+                                                    <input type="text" class="form-control" id="txt_attach_remarks">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <!-- Category -->
+                                            <div class="row">
+                                                <label for="dd_attach_category" class="col-4 col-form-label">Category</label>
+                                                <div class="col-7 errorContainer">
+                                                    <select id="dd_attach_category" style="width:100%" class="populate">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="form-group align-right me-4 pe-1">
+                                            <button type="button" class="btn btn-success waves-effect waves-light" id="btn_attach_save">
+                                                <i class="fa fa-save"></i> Upload & Save
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </form>
+                            <hr>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Visible to Owner</th>
+                                        <th>Checklist</th>
+                                        <th>Filename</th>
+                                        <th>Remarks</th>
+                                        <th>Created By</th>
+                                        <th>Created Date</th>
+                                        <th>Active Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbl_exit">
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--Documents-->
+                        <!--Exit Checklist-->
+                        <div id="tab_ec" class="tab-pane">
+                            <form class="form-horizontal" data-validate="parsley" id="exit_form">
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <!-- Attachments -->
+                                        <div class="row">
+                                            <label for="doc_fileupload" class="col-4 col-form-label">Attachments</label>
+                                            <div class="col-7 errorContainer fileinput-button">
+                                                <button type="button" id="btn_doc_upload" class="btn btn-sm btn-success"><i class="mdi mdi-upload"></i>Browse File</button>
+                                                <input id="attach_fileupload" type="file" name="qqfile">
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- Visible to owner -->
+                                        <div class="row">
+                                            <label for="chk_file_visible" style="padding-left:0" class="col-4 col-form-label">Visible to owner</label>
+                                            <div class="col-7 errorContainer mt-1" style="padding-left:0">
+                                                <input type="checkbox" id="chk_exit_file_visible" name="chk_exit_file_visible" class="js-switch" data-color="#64b0f2" data-size="small">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        &nbsp;
+                                    </div>
+                                    <div class="col-lg-10" id="attach_files">
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-lg-6">
+                                            <!-- Remarks -->
+                                            <div class="row">
+                                                <label for="txt_exit_attach_remarks" class="col-4 col-form-label">Remarks</label>
+                                                <div class="col-7 errorContainer">
+                                                    <input type="text" class="form-control" id="txt_exit_attach_remarks">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <!-- Checklist -->
+                                            <div class="row">
+                                                <label for="dd_exit_category" class="col-4 col-form-label">Checklist</label>
+                                                <div class="col-7 errorContainer">
+                                                    <select id="dd_exit_category" style="width:100%" class="populate">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="form-group align-right me-4 pe-1">
+                                            <button type="button" class="btn btn-success waves-effect waves-light" id="btn_exit_attach_save">
+                                                <i class="fa fa-save"></i> Upload & Save
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </form>
+                            <hr>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Visible to Owner</th>
+                                        <th>Checklist</th>
+                                        <th>Filename</th>
+                                        <th>Remarks</th>
+                                        <th>Created By</th>
+                                        <th>Created Date</th>
+                                        <th>Active Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbl_exit">
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--Exit Checklist-->
                     </div>
                     <div class="form-group align-right" id="actions_div">
                         <button id="btn_save" type="button" class="btn btn-success waves-effect waves-light mt-1 mb-1 ladda-button" data-color="green" data-style="expand-left"><i class="fa fa-check me-1"></i> Save</button>

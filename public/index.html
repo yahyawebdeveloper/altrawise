@@ -206,6 +206,21 @@
                                     <span> Dashboard </span>
                                 </a>
                             </li>
+                            <!-- Admin Dashboard -->
+                            <li class="menuitem-active">
+                                <a href="dashboard/admin" data-bs-toggle="collapse" id="mn_admin_dashboard" data-navigo>
+                                    <i class="fas fa-home"></i>
+                                    <span> Admin Dashboard </span>
+                                </a>
+                            </li>
+
+                             <!-- User Dashboard -->
+                             <li class="menuitem-active">
+                                <a href="dashboard/user" data-bs-toggle="collapse" id="mn_user_dashboard" data-navigo>
+                                    <i class="fas fa-home"></i>
+                                    <span> User Dashboard </span>
+                                </a>
+                            </li>
 
                             <!-- Documents -->
                             <li id="document_managment_li">
@@ -253,13 +268,37 @@
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <div class="collapse" id="sidebarProjects">
-                                    <ul class="nav-second-level">
+                                    <!-- <ul class="nav-second-level">
                                        
                                         <li>
                                             <a href="users" id="mn_users" data-navigo>Users Management</a>
                                         </li>
                                         
+                                    </ul> -->
+                                    <ul class="nav-second-level">
+                                       
+                                        <li>
+                                            <a href="#sidebarMultilevelLeave144"  data-bs-toggle="collapse" class="" >
+                                                
+                                                <i class="fas fa-users"></i> <span> Users</span> <span class="menu-arrow"></span>
+                                            </a>
+                                            <div class="collapse" id="sidebarMultilevelLeave144">
+                                                <ul class="nav-second-level">
+                                                    <li>
+                                                        <a href="users" id="mn_users" data-navigo>Users List</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="users/users-history-report" data-navigo>History Report</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="users/users-track" data-navigo>Users Track</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                       
                                     </ul>
+
                               
                                     <ul class="nav-second-level" id="timesheet_li">
                                        
@@ -601,7 +640,8 @@
         </script>
         <!-- END FILE UPLOAD -->
 
-
+        <!-- Config js -->
+        <script src="config/config.js"></script>
 
         <!-- Vendor js -->
         <script src="./assets/js/vendor.min.js"></script>

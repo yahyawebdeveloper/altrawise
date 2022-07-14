@@ -1,0 +1,368 @@
+<?php
+/**
+ *
+ *
+ * index.php
+ *
+ * @author: Jamal
+ * @version: 1.0 - created
+ */
+$current_path = '../../';
+include $current_path . 'header.php';
+include $current_path.'../services/modules/dashboard.php';
+
+$emp_id = $_SESSION['emp_id'];
+
+$params['emp_id'] = $emp_id;
+
+$result = json_decode(get_user_dashboard((object)$params));
+if($result->code == 0)
+{
+  $app_count            = if_property_exist($result->data->app_count, 'count', 0);
+  $tasks_count          = if_property_exist($result->data->tasks_count, 'count', 0);
+  $contracts_count      = if_property_exist($result->data->contracts_count, 'count', 0);
+  $communications_count = if_property_exist($result->data->communications_count, 'count', 0);
+
+  $topusers             = if_property_exist($result->data->topusers, 'totalduration', 0.00);
+
+  $mosttopusers         = $result->data->mosttopusers;
+  $faq_count       = if_property_exist($result->data->faq_count, 'count', 0);
+}
+
+?>
+<div id="page-content">
+  <div id='wrap'>
+    <div id="page-heading">
+      <h2><i class="fa fa-home"></i> Dashboard</h2>
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 col-xs-12 col-sm-6">
+              <a class="info-tiles tiles-toyo" href="<?php echo $current_path ?>modules/meetings/meetings.php">
+                <div class="tiles-heading">Open Appointments</div>
+                <div class="tiles-body-alt">
+                  <i class="fa fa-calendar"></i>
+                  <div class="text-center">
+                    <span class="text-top"></span>
+                    <?php echo $app_count; ?>
+                    <span class="text-smallcaps"></span>
+                  </div>
+                </div>
+                <div class="tiles-footer">go to appointments</div>
+              </a>
+            </div>
+
+            <div class="col-md-3 col-xs-12 col-sm-6">
+              <a class="info-tiles tiles-success" href="<?php echo $current_path ?>modules/task/task.php">
+                <div class="tiles-heading">Open Tasks</div>
+                <div class="tiles-body-alt">
+                  <i class="fa">&#xf274;</i>
+                  <div class="text-center">
+                    <span class="text-top"></span>
+                    <?php echo $tasks_count; ?>
+                    <span class="text-smallcaps"></span>
+                  </div>
+                </div>
+                <div class="tiles-footer">go to tasks</div>
+              </a>
+            </div>
+
+            <div class="col-md-3 col-xs-12 col-sm-6">
+              <a class="info-tiles tiles-orange" href="<?php echo $current_path ?>modules/contract/onboarding.php">
+                <div class="tiles-heading">Open Contracts</div>
+                <div class="tiles-body-alt">
+                  <i class="fa fa-cubes"></i>
+                  <div class="text-center">
+                    <?php echo $contracts_count; ?>
+                  </div>
+                </div>
+                <div class="tiles-footer">go to contracts</div>
+              </a>
+            </div>
+
+            <div class="col-md-3 col-xs-12 col-sm-6">
+              <a class="info-tiles tiles-alizarin" href="<?php echo $current_path ?>modules/comm/comm.php">
+                <div class="tiles-heading">Open Communications</div>
+                <div class="tiles-body-alt">
+                  <i class="fa fa-rss"></i>
+                  <div class="text-center">
+                    <?php echo $communications_count; ?>
+                  </div>
+                </div>
+                <div class="tiles-footer">go to communications</div>
+              </a>
+            </div>
+
+            <!-- <div class="col-md-3 col-xs-12 col-sm-6">
+              <a class="info-tiles tiles-primary" href="<?php echo $current_path ?>modules/faq/faq_approval.php">
+                <div class="tiles-heading">Pending FAQ Approvals</div>
+                <div class="tiles-body-alt">
+                  <i class="fa fa-globe"></i>
+                  <div class="text-center">
+                    <span class="text-top"></span>
+                    <?php echo $faq_count; ?>
+                    <span class="text-smallcaps"></span>
+                  </div>
+                </div>
+                <div class="tiles-footer">go to FAQ</div>
+              </a>
+            </div> -->
+
+            <div class="clearfix"></div>
+
+            <div class="col-md-6 col-xs-12 col-sm-6" style="cursor: pointer;">
+              <a class="info-tiles tiles-green has-footer" id="<?php echo $emp_id;?>" onclick="$.fn.populate_user_detail(<?php echo $emp_id;?>);">
+                <div class="tiles-heading">Top Users</div>
+                <div class="tiles-body-alt">
+                  <i class="fa fa-user"></i>
+                  <div class="text-center" style="margin-left: 10%;">
+                    <span class="text-top" style="font-size: 30px;">
+                      <?php 
+                        echo $topusers; 
+                      ?>
+                    </span>
+                    <?php 
+                      if($mosttopusers) 
+                      {
+                        $most_top_duration = $mosttopusers->duration ? $mosttopusers->duration : '0:00';
+                    ?>
+                    <span class="text-top" style="border-left: 1px solid white;margin-left: 3%;"></span>
+                    <span class="text-top" style="margin-left: 3%;font-size: 20px;">
+                      <?php 
+                        if($emp_id == $mosttopusers->id)
+                        { 
+                          echo "You are the top user"; 
+                        }
+                        else 
+                        { 
+                          echo $most_top_duration." "."(Top hours)"; 
+                        } 
+                      ?>
+                    </span>
+                    <?php }?>
+                  </div>
+                </div>
+                <div class="tiles-footer">more info</div>
+              </a>
+            </div>
+            
+            <div class="col-md-6" id="userdata" style="display: none">
+              <div class="table-responsive">
+                <table class="table" id="tbl_list">
+                  <thead>
+                    <tr>
+                      <th class="textcenterhead">Period</th>
+                      <th class="textcenterhead">Last 90 days</th>
+                    </tr>
+                    <tr>
+                      <th class="textcenterhead">Module Name</th>
+                      <th class="textcenterhead">Duration</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                  <tfoot>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="panel panel-inverse">
+            <div class="panel-heading">
+              <h4><i class="icon-highlight fa fa-calendar"></i> Calendar</h4>
+              <div class="options">
+                <a href="javascript:;"><i class="fa fa-cog"></i></a>
+                <a href="javascript:;"><i class="fa fa-wrench"></i></a>
+                <a href="javascript:;" class="panel-collapse"><i class="fa fa-chevron-down"></i></a>
+              </div>
+            </div>
+            <div class="panel-body" id="calendardemo">
+              <div class="row m-b-5">
+                <div class="col-sm-12 col-xs-12">
+                  <div class="dropdown pull-right" style="display: inline; margin-bottom: 4px;">
+                    <span class="label label-primary" style="font-size: 13px;">Appointments</span>
+                    <span class="label label-warning" style="font-size: 13px;">Leaves</span>
+                    <span class="label label-success" style="font-size: 13px;">Tasks</span>
+                    <span class="label label-danger" style="font-size: 13px;">Public Holiday</span>
+                    <button class="btn btn-default btn-sm dropdown-toggle filter_button" id="menu1" type="button" data-toggle="dropdown"><i class="fa fa-filter"></i></button>
+                    <ul class="dropdown-menu" style="padding: 5px;">
+                      <li class="" style="background-color: #f3f3f3;">
+                        <a href="#" class="small" data-value="option1" tabIndex="-1">
+                          <div class="checkbox" style="margin: 0 10px;">
+                            <input type="checkbox" id="selectall" name="appointment_filter[]" value="" checked>
+                            <label for="selectall" style="color: #333333;">Select All</label>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="appointment-bg">
+                        <a href="#" class="small" data-value="option1" tabIndex="-1">
+                          <div class="checkbox" style="margin: 0 10px;">
+                            <input type="checkbox" id="appointment" name="appointment_filter[]" value="1" checked>
+                            <label for="appointment" style="color: #ffffff;">Appointments</label>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="leave-bg">
+                        <a href="#" class="small" data-value="option1" tabIndex="-1">
+                          <div class="checkbox" style="margin: 0 10px;">
+                            <input type="checkbox" id="leave" name="appointment_filter[]" value="2" checked>
+                            <label for="leave" style="color: #ffffff;">Leaves</label>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="task-bg">
+                        <a href="#" class="small" data-value="option1" tabIndex="-1">
+                          <div class="checkbox" style="margin: 0 10px;">
+                            <input type="checkbox" id="task" name="appointment_filter[]" value="3" checked>
+                            <label for="task" style="color: #ffffff;">Tasks</label>
+                          </div>
+                        </a>
+                      </li>
+                      <li class="ph-bg">
+                        <a href="#" class="small" data-value="option1" tabIndex="-1">
+                          <div class="checkbox" style="margin: 0 10px;">
+                            <input type="checkbox" id="holiday" name="appointment_filter[]" value="4" checked>
+                            <label for="task" style="color: #ffffff;">Public Holiday</label>
+                          </div>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div id='calendar-drag'></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> <!-- container -->
+  </div>
+  <!--wrap -->
+</div> <!-- page-content -->
+
+<div class="modal" id="display_appointment">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Appointment Details</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-condensed">
+          <tbody>
+            <tr>
+              <td>Subject</td>
+              <td id="display-subject">Subject</td>
+            </tr>
+            <tr>
+              <td>Client</td>
+              <td id="display-client_name">Client</td>
+            </tr>
+            <tr>
+              <td>Employees</td>
+              <td id="display-people_name" style="white-space:pre">Employees</td>
+            </tr>
+            <tr>
+              <td>Created By</td>
+              <td id="display-created_by_name">Created By</td>
+            </tr>
+            <tr>
+              <td>Appointment From</td>
+              <td id="display-date_time">Appointment From</td>
+            </tr>
+            <tr>
+              <td>Appointment To</td>
+              <td id="display-date_time_to">Appointment To</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal" id="display_leave">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Leave Details</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-condensed">
+          <tbody>
+            <tr>
+              <td>Start Date</td>
+              <td id="display-start_date">Start Date</td>
+            </tr>
+            <tr>
+              <td>End Date</td>
+              <td id="display-end_date">End Date</td>
+            </tr>
+            <tr>
+              <td>Leave Type</td>
+              <td id="display-leave_type">Leave Type</td>
+            </tr>
+            <tr>
+              <td>Number of Days</td>
+              <td id="display-no_of_days">Number of Days</td>
+            </tr>
+            <tr>
+              <td>Applied Date</td>
+              <td id="display-applied_date">Applied Date</td>
+            </tr>
+            <tr>
+              <td>Employee Name</td>
+              <td id="display-employee_name">Employee Name</td>
+            </tr>
+            <tr>
+              <td>Reason</td>
+              <td id="display-reason">Reason</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal" id="display_tasks">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Task List</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+          <thead>
+            <tr>
+                <th>Task No</th>
+                <th>Task Title</th>
+                <th>Task Type</th>
+                <th>Priority</th>
+                <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<?php include $current_path . 'footer.php'; ?>

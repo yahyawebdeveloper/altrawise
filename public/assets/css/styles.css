@@ -482,3 +482,6 @@ div.tasklist{
 	margin-bottom:15px;
 	cursor:pointer;
 }
+.list-view.active{
+	background:#eee;
+}
