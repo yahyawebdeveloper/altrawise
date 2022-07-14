@@ -1228,7 +1228,7 @@ $.fn.get_page_name = function (route_name) {
 		case 'users/users-history-report':
 			return 82;
 			break;
-		case 'users/track':
+		case 'users/users-track':
 			return 83;
 			break;
 

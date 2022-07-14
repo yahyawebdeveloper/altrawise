@@ -253,9 +253,23 @@
 			 .on("/users", () => { //users route
 				 $.fn.load_form('./modules/users.html');
 			 }, { before: middleware })
-			  .on("/users/users-history-report", () => { //users route
+			  .on("/users/users-history-report", () => { //users-history route
 				 $.fn.load_form('./modules/users/users-history-report.html');
 			 }, { before: middleware })
+			 .on("/users/users-track", () => { //users-history route
+				 $.fn.load_form('./modules/users/users-track.html');
+			 }, { before: middleware })
+			 .on({
+				"/users/users-track/:user_id/:date" : {
+					as: "users/users-track",
+					uses: () => {
+						$.fn.load_form('./modules/users/users-track.html');
+					},
+					hooks : {
+						before : namedMiddleware
+					}
+				}
+			})
 			 // .on("/quotation", () => { //quotation route
 			 // 	$.fn.load_form('./modules/quote.html');
 			 // })

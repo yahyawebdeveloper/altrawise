@@ -100,7 +100,7 @@ $.fn.populate_list_form = function(data)
 					type_of_day = `<span class="badge bg-soft-success text-success"><i class="fa fa-briefcase text-success"> &nbsp;Working Day </i></span>`;
 				}
 				ename = (data[i].emp_id != null ) ? data[i].name : ename;
-				//users_track.php work pending...line no 113 target="_blank" href=../users/users_track.php?user_id=${data[i].emp_id}&date=${data[i].tracker_date}
+				
 				row += `<tr>
 							<td></td>
 							<td class="ename">${ename}</td>
@@ -110,7 +110,7 @@ $.fn.populate_list_form = function(data)
 							<td>${data[i].actual_end_time}</td>
 							<td>${data[i].total_idle_time}</td>
 							<td>${data[i].total_working_hours}</td>
-							<td><a href="javascript:void(0);"  class="btn btn-info" onclick="$.fn.show_right_error_noty('Not accessible right now. Work pending on Users Tracking');"><i class="fa fa-image"> &nbsp;</i>View</a></td>
+							<td><a href="users/users-track/${data[i].emp_id}/${data[i].tracker_date}" target="_blank"   class="btn btn-info" ><i class="fa fa-image"> &nbsp;</i>View</a></td>
 						</tr>`;
 			}
 			$('#tbl_list tbody').append(row);
