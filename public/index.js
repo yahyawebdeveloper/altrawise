@@ -313,6 +313,9 @@
 			 .on("/stake-holders", () => { //CRM route
 				 $.fn.load_form('./modules/crm-stack-holders-listing.html')
 			 }, { before: middleware })
+			  .on("/stake-holders-register", () => { //CRM Register route
+				 $.fn.load_form('./modules/CRM/register.html')
+			 }, { before: middleware })
 			 .on("/documents/outbound-documents", () => { //outbound documents route
 				 $.fn.load_form('./modules/documents/documents.html');
 			 }, { before: middleware })

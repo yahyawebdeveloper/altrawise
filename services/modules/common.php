@@ -86,13 +86,17 @@ function get_emp($params) {
     try {
             log_it(__FUNCTION__, $params);
             $emp_id                     = if_property_exist($params, 'emp_id',false);
+            $logged_in                     = if_property_exist($params, 'logged_in',false);
             if($emp_id === NULL)
             {
                 return handle_fail_response('Employee ID is mandatory');
             }
             $return_data    	= [];
             $temp				= [];
-            $emp	            = db_query('id,name','cms_employees','is_active = 1');
+            $where              = "";
+            if( $logged_in )
+                $where = " AND id = ".$emp_id;
+            $emp	            = db_query('id,name','cms_employees','is_active = 1'.$where);
             $rs_category     	= $emp;
             for($i = 0; $i < count($rs_category); $i++)
             {
