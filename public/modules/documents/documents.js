@@ -12,28 +12,32 @@ var UI_DATE_FORMAT = 'DD-MMM-YYYY';
 var ROUTE_DATA = '';
 var ROUTE_DATA_ACTION = '';
 var ROUTE_DATA_ID = '';
+var flatpickrdocument_date = "";
+var flatpickrdue_date = "";
 
 $.fn.data_table_features = function ()
 {
     try
     {
-        table = $('#tbl_list').DataTable({	
-            bAutoWidth: false, 
-            aoColumns : [
-                { sWidth: '12%' },
-                { sWidth: '10%' },
-                { sWidth: '15%' },
-                { sWidth: '15%' },
-                { sWidth: '10%' },
-                { sWidth: '10%' },
-                { sWidth: '12%' }
-            ],
-            "searching": false,
-            "paging": false,
-            "info": false,
-            //				 "ordering": false
-            "order": [],
-        });
+        if (!$.fn.dataTable.isDataTable('#tbl_list'))
+        {
+            table = $('#tbl_list').DataTable({
+                bAutoWidth: false, 
+                aoColumns : [
+                    { sWidth: '12%' },
+                    { sWidth: '10%' },
+                    { sWidth: '15%' },
+                    { sWidth: '15%' },
+                    { sWidth: '10%' },
+                    { sWidth: '10%' },
+                    { sWidth: '12%' }
+                ],
+                "searching": false,
+                "paging": false,
+                "info": false,
+                "order": []
+            });
+        }
     }
     catch (err)
     {
@@ -45,7 +49,10 @@ $.fn.data_table_destroy = function ()
 {
     try
     {
-        $('#tbl_list').DataTable().destroy();
+        if ($.fn.dataTable.isDataTable('#tbl_list'))
+        {
+            $('#tbl_list').DataTable().destroy();
+        }
     }
     catch (err)
     {
@@ -64,7 +71,7 @@ $.fn.get_list = function (is_scroll)
             created_by: $('#dd_created_by_search').val(),
             category_id: $('#dd_category_search').val(),
             company_id: $('#dd_company_search').val(),
-            status: $('#dd_status_search').val(),
+            status: $('#dd_status_search').val() ?? 'all',
             from_date: $('#from_search_date').val(),
             to_date: $('#to_search_date').val(),
             user_doc_no: $('#txt_user_doc_search').val(),
@@ -140,7 +147,7 @@ $.fn.populate_list_form = function (data, is_scroll)
 			}
 
             //update counts
-            // $('#total_records').html(data.total_records);
+             $('#total_records').html(data.total_records);
             // $('#badge_pending_ver').html(data.pending_verification);
             // $('#badge_pending_app').html(data.pending_approval);
 
@@ -240,8 +247,7 @@ $.fn.save_edit_form = function ()
             btn_save.stop();
             return;
         }
-        
-        if ($('#doc_upload_files .file-upload.new').length == 0)
+        if ($('#doc_upload_files .file-upload .link-view-file').length == 0 && $('#doc_upload_files .file-upload.new').length == 0)
 		{
 			$.fn.show_right_error_noty('Please select file to upload');
 			btn_save.stop();
@@ -402,7 +408,21 @@ $.fn.set_edit_form = function (data)
     $('#btn_send_email').show();
     $('#div_thread').show();
 };
-
+function GetDate(str) {	
+    	
+    var arr = str.split('-');	
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']	
+    var i = 1; 	
+    for (i; i <= months.length; i++) { 	
+        if (months[i] == arr[1])	
+        {                   	
+            break;                     	
+        } 	
+    }	
+                	
+    var formatddate = (i+1)  + '-' + arr[0] + '-' + arr[2]; 
+    return formatddate;	
+}
 
 $.fn.populate_detail_form = function (data)
 {
@@ -430,10 +450,18 @@ $.fn.populate_detail_form = function (data)
                         {
                             $('#dd_type').val(0).change();
                         }
-
-                        $('#doc_date').flatpickr().setDate(data.doc_date);
-                        $('#due_date').flatpickr().setDate(data.due_date);
-
+                        if (data.doc_date) {
+                            var retDate = GetDate(data.doc_date);
+                            var dateObject = new Date(retDate);
+                            var retDate = dateObject.toString();
+                            flatpickrdocument_date.setDate(dateObject);
+                        }
+                        if (data.due_date) {
+                            var retDate = GetDate(data.due_date);
+                            var dateObject = new Date(retDate);
+                            var retDate = dateObject.toString();
+                            flatpickrdue_date.setDate(dateObject);
+                        }
                         $('#dd_company').val(data.employer_id).change();
                         $('#txt_title').val(data.title);
                         $('#dd_category').val(data.ctg_id).change();
@@ -597,6 +625,9 @@ $.fn.reset_form = function (form)
             $('#dd_category_search').val('').change();
             $('#dd_company_search').val('').change();
             $('#dd_status_search').val('').change();
+            $('#from_search_date').val('');
+            $('#to_search_date').val('');
+            $('#dp_search_date').val('');
             $('#txt_user_doc_search').val('');
         }
         else if (form == 'form')
@@ -614,8 +645,10 @@ $.fn.reset_form = function (form)
             }
             $('#btn_send_email').hide();
 
-            $('#doc_date').val(moment().format('DD-MMM-YYYY'));
+            $('#doc_date').val('');
             $('#due_date').val('');
+            flatpickrdocument_date.clear();
+            flatpickrdue_date.clear();
             $('#txt_remark').val('');
             
             $.fn.load_editor('text_editor');
@@ -752,7 +785,7 @@ $.fn.get_documents_drop_down_values = function()
             {
                 if (return_data.code == 0)
                 {
-                     console.log(return_data);
+                    // console.log(return_data);
                     $.fn.populate_dd_values('dd_category', return_data.data.category);
                     $.fn.populate_dd_values('dd_company', return_data.data.company);
                     $.fn.populate_dd_values('dd_approval', return_data.data.approval);
@@ -1084,7 +1117,10 @@ $.fn.get_user_doc_comments_list = function ()
 				{
 		    		$.fn.populate_comments_list(return_data.data);
 				}
-		    }, false, '', true, true
+                else{
+                    return false;
+                }
+		    }
 		);
 	}
 	catch (e) 
@@ -1154,6 +1190,14 @@ $.fn.populate_comment_row = function (row_data, is_list = false)
         if(is_list)
         {
         	$('#div_reply').append(row);
+            for (let i = 0; i < row_data.attachment.length; i++)
+            { 
+                row_data.attachment[i]['name'] = row_data.attachment[i]['filename'];
+                row_data.attachment[i]['uuid'] = row_data.attachment[i]['id'];
+                row_data.attachment[i]['deleteFileParams'] =  JSON.stringify(row_data.attachment[i]);
+                delete row_data.attachment[i]['filename'];
+                delete row_data.attachment[i]['id'];
+            }
         	$.fn.populate_fileupload(row_data,'comment-'+COMMENT_ID, true);
         }
         else
@@ -1390,19 +1434,18 @@ $.fn.prepare_form = function ()
 {
     try
     {
-        $('#due_date').flatpickr({ 
+        flatpickrdue_date = $("#due_date").flatpickr({
             altInput: true,
             altFormat: "d-M-Y",
-            dateFormat: "d-m-Y",
-        });
-
-        $('#doc_date').flatpickr({ 
+            dateFormat: "Y-m-d",
+            enableTime: false,
+          });
+          flatpickrdocument_date = $("#doc_date").flatpickr({
             altInput: true,
             altFormat: "d-M-Y",
-            dateFormat: "d-m-Y",
-            defaultDate: "today"
-        });
-
+            dateFormat: "Y-m-d",
+            enableTime: false,
+          });
         // $('.populate').select2({ tags: true, tokenSeparators: [",", " "] });
         $('.populate').select2();
 
@@ -1419,7 +1462,7 @@ $.fn.prepare_form = function ()
             dateFormat: "d-m-Y",
             onChange:function(selectedDates){
                 var _this=this;
-                var dateArr=selectedDates.map(function(date){return _this.formatDate(date,'d-m-Y');});
+                var dateArr=selectedDates.map(function(date){return _this.formatDate(date,'Y-m-d');});
                 $('#from_search_date').val(dateArr[0]);
                 $('#to_search_date').val(dateArr[1]);
             },
@@ -1548,7 +1591,7 @@ $.fn.bind_command_events = function ()
             e.preventDefault();
             $.fn.reset_form('list');
             RECORD_INDEX = 0;
-            $.fn.get_list(false);
+            $.fn.get_list(true);
         });
 
         $('#btn_search_action').click(function (e)
@@ -1578,9 +1621,6 @@ $.fn.bind_command_events = function ()
             $.fn.show_hide_form('BACK');
             RECORD_INDEX = 0;
             $.fn.get_list(false);
-            ROUTE_DATA = '';
-            ROUTE.navigate("documents/outbound-documents");
-            ROUTE.resolve();
         });
 
         $('#btn_load_more').click(function (e)

@@ -1029,7 +1029,7 @@ $.fn.prepare_form = function ()
         $("#dp_search_date").flatpickr({
             mode:"range",
             altFormat: "d-M-Y",
-            dateFormat: "Y-m-d",
+            dateFormat: "d-m-Y",
             onChange:function(selectedDates){
                 var _this=this;
                 var dateArr=selectedDates.map(function(date){return _this.formatDate(date,'Y-m-d');});

@@ -541,4 +541,36 @@ function get_contract_search_dropdown($params) {
     }
     
 } 
+
+
+
+
+
+
+function get_data_dashboard($params) {
+    try
+    {  
+        require_once constant('MODULES_DIR') . '/dashboard.php';
+        $paramss['emp_id'] = if_property_exist($params, 'emp_id',false);
+        $result = json_decode(get_user_dashboard((object)$paramss));
+        if($result->code == 0)
+        {
+        $user_dashboard_data['app_count'] = if_property_exist($result->data->app_count, 'count', 0);
+        $user_dashboard_data['tasks_count'] = if_property_exist($result->data->tasks_count, 'count', 0);
+        $user_dashboard_data['contracts_count'] = if_property_exist($result->data->contracts_count, 'count', 0);
+        $user_dashboard_data['communications_count'] = if_property_exist($result->data->communications_count, 'count', 0);
+
+        $user_dashboard_data['topusers'] = if_property_exist($result->data->topusers, 'totalduration', 0.00);
+        $user_dashboard_data['mosttopusers'] = $result->data->mosttopusers;
+        $user_dashboard_data['faq_count'] = if_property_exist($result->data->faq_count, 'count', 0);
+        }   
+       return handle_success_response('Success', $user_dashboard_data);
+    }
+    catch (Exception $e)
+    {
+        handle_exception($e);
+    }
+}
+
+
 ?>

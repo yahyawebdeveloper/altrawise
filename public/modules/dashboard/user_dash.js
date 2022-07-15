@@ -33,12 +33,12 @@ $.fn.populate_user_detail = function(emp_id)
 						var res = data[i].page.split(".");
 						row +=`<tr class="">
 									<td>${res[0]}</td>
-									<td>${data[i].duration}</td>
+									<td class="text-center">${data[i].duration}</td>
 								</tr>`;
 					}
 					row += `<tr class="texthead">
-								<td>Total Duration</td>
-	                            <td>${data[0]['totalduration']}</td>
+								<td class="fw-bold">Total Duration</td>
+	                            <td  class="fw-bold text-center">${data[0]['totalduration']}</td>
                             </tr>`;
 					
 					$('#tbl_list tbody').append(row);
@@ -92,7 +92,7 @@ $.fn.get_list = function()
 	    	filter_val += $(this).val() + ",";
 	  	});
 
-	  	let calendar = $('#calendar-drag').fullCalendar
+	  /* 	let calendar = $('#calendar-drag').fullCalendar
 	  	({
 		    header			: 
 		    {
@@ -194,7 +194,7 @@ $.fn.get_list = function()
 		    	week	: 'Week',
 		    	day		: 'Day'
 		    }
-	  	});
+	  	}); */
 	}
 	catch(err)
 	{
@@ -202,12 +202,60 @@ $.fn.get_list = function()
 	}
 };
 
+$.fn.get_data_dashboard = function()
+{
+    try
+    {  
+		let lead_access = $.fn.get_accessibility(192); 
+		let emp_id = SESSIONS_DATA.emp_id;
+        let data    =
+        {   
+            emp_id   : emp_id,
+            view_all : MODULE_ACCESS.viewall,
+            lead_access_view_all : lead_access.viewall,
+            lead_access_view     : lead_access.view
+        };
+    
+        $.fn.fetch_data
+        ( 
+            $.fn.generate_parameter('get_data_dashboard', data),
+            function(return_data)
+            {
+                if (return_data.code == 0)
+                { 
+					$("#app_count_id").text(return_data.data.app_count);
+					$("#tasks_count_id").text(return_data.data.tasks_count);
+                    $("#contracts_count_id").text(return_data.data.contracts_count);
+                    $("#communications_count_id").text(return_data.data.communications_count);
+					$("#topusers_id").text(return_data.data.topusers);
+					if(return_data.data.mosttopusers){
+						let most_top_duration = return_data.data.mosttopusers.duration ? return_data.data.mosttopusers.duration : '0:00';
+						if(emp_id == return_data.data.mosttopusers.id)
+                        { 
+							$("#mosttopusers_id").text("You are the top user"); 
+                        }
+                        else 
+                        { 
+							$("#mosttopusers_id").text(most_top_duration+" "+"(Top hours)"); 
+                        } 
+					}
+                   // $("#faq_count_id").text(return_data.data.faq_count);
+                }
+            },true
+        );
+    }
+    catch(err)
+    {
+        $.fn.log_error(arguments.callee.caller,err.message);
+    }
+};
+
 
 $.fn.prepare_form = function()
 {
 	try
 	{
-		
+		$.fn.get_data_dashboard();
 	}
 	catch(err)
 	{
@@ -223,6 +271,18 @@ $.fn.bind_command_events = function()
 	    {
 	        $(this).parents('.view-detail').fadeOut('slow');
 	    });
+
+		$('#btn_close').click(function()
+		{
+			$('#userdata').hide();
+		});
+		
+		$('#top_user_data_check').click(function()
+		{
+			let emp_id = SESSIONS_DATA.emp_id;
+			$.fn.populate_user_detail(emp_id);
+		});
+
 
 	 //    $('body').on('click', '.dropdown-menu', function(e)
 	 //    {
@@ -244,7 +304,7 @@ $.fn.bind_command_events = function()
 		      }
 		    }
 
-		    $('#calendar-drag').fullCalendar('destroy');
+		   // $('#calendar-drag').fullCalendar('destroy');
 		    $.fn.get_list();
 		});
 	}
