@@ -935,10 +935,21 @@ $.fn.populate_employment_detail = function(element_id)
 		{
 			$('#dd_approvals')   .val(json_field.approvals.split(",")).change();
 		}
+
 		if(attachment)
 		{
 			let attachment_data = [];
 			attachment_data.attachment = attachment;
+
+			for (let i = 0; i < attachment_data.attachment.length; i++)
+			{ 
+				attachment_data.attachment[i]['name'] = attachment_data.attachment[i]['filename'];
+				attachment_data.attachment[i]['uuid'] = attachment_data.attachment[i]['id'];
+				attachment_data.attachment[i]['deleteFileParams'] =  JSON.stringify(attachment_data.attachment[i]);
+				delete attachment_data.attachment[i]['filename'];
+				delete attachment_data.attachment[i]['id'];
+			}
+
 			$.fn.populate_fileupload(attachment_data,'files_po_file', true);
 		}
 		$.fn.show_hide_approval(status_id, json_field, attachment);
@@ -3406,6 +3417,7 @@ $.fn.add_edit_remark = function()
 			$.fn.write_data
 			(
 				$.fn.generate_parameter('contract_add_edit_remark', data),
+				
 				function(return_data)
 				{
 					if(return_data.code == '0')
@@ -4277,7 +4289,7 @@ $.fn.bind_command_events = function()
 				emp_id          : SESSIONS_DATA.emp_id
 			};
 
-			if($(`#files_po_file .file-upload.new`).length > 0)
+			if($('#files_po_file .file-upload.new').length > 0)
 			{   
 				$.fn.upload_file(`files_po_file`,'contract_id',1,
 				attachment_data,function(total_files, total_success,filename,attach_return_data)

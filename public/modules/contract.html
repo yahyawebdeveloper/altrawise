@@ -1794,7 +1794,7 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="pull-right">
-                                                <button type="button" id="send_for_approval" class="btn btn-primary">Send for Approval</button>
+                                                <button type="button" id="send_for_approval" class="btn btn-primary" style="float:right;">Send for Approval</button>
                                             </div>
                                         </div>
                                     </div>
@@ -1815,15 +1815,29 @@
                                     </div>
                                     <br>
 
-
-                                    <div class="row justify-content-end">
-                                        <div class="col-lg-3 me-4 pe-3">
-                                            <div class="mt-3">
-                                                <input type="file" class="dropify fileupload" name="qqfile" id="fileupload_po_file" data-show-remove="false" data-allowed-file-extensions="jpg jpeg png pdf" />
+                                    
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <button type="button" id="btn_po_upload" class="btn btn-success btn-start fileinput-button" style="float:right;">Save to Upload</button>
                                             </div>
-                                            <div id="files"></div>
+                                            
+                                            <div class="col-7 errorContainer">
+                                                <span class="btn btn-success waves-effect waves-light fileinput-button">
+                                                    <span>Browse File</span>
+                                                    <input id="fileupload_po_file" type="file" name="qqfile">
+                                                </span>
+                                            </div>
+
                                         </div>
-                                    </div> <!-- end row -->
+                                    </div>
+
+
+                                    <div id="files_div" style="padding-right: 36px;">
+                                        <div class="row mt-2">
+                                            <div id="files_po_file" class="col-lg-10" style="padding:1%;"></div>
+                                        </div>
+                                    </div>
 
                                 </div>
                                 
