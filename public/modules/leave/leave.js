@@ -126,7 +126,7 @@ $.fn.get_leave_details = function ()
             emp_id: SESSIONS_DATA.emp_id,
             year: currentyear
         };
-        console.log(data);
+        
         $.fn.fetch_data
             (
                 $.fn.generate_parameter('get_leave_details', data),
@@ -148,7 +148,7 @@ $.fn.get_leave_details = function ()
 
 
 $.fn.populate_leave_details = function (data)
-{console.log(data);
+{
     try
     {
         var row = '';
@@ -284,8 +284,7 @@ $.fn.save_edit_form = function ()
             leave_data.push(leave_param);
             leave_days = $('#dd_leave_time_off').val();
         }
-        console.log(leave_type_id);
-      
+        
         if (leave_data.length == 0)
         {
             $.fn.show_right_error_noty('Please select at least one leave');
@@ -514,7 +513,7 @@ $.fn.populate_list_form = function (data, is_scroll)
                 }
 
                 row += `<td><div id="leave_file_${data[i].id}" style="width: max-content;"></div></td>
-                        <td><button type="button" class="btn btn-info waves-effect waves-light" id="btn_leave_record" data-value=\'' + data_val + '\' onclick="$.fn.view_leave_by_day(unescape($(this).attr(\'data-value\')))">View</button></td>
+                        <td><button type="button" class="btn btn-info waves-effect waves-light btn-xs" id="btn_leave_record" data-value=\'' + data_val + '\' onclick="$.fn.view_leave_by_day(unescape($(this).attr(\'data-value\')))">View</button></td>
                         </tr>`;
                 $('#tbl_list tbody').append(row);
 
@@ -787,6 +786,8 @@ $.fn.change_balance_leave = function (action)
             day_option.push(1.0);
             all_leave_days = parseFloat(all_leave_days) + 1.0;
             $("#half_option_" + $(this).attr('data-value') + "").hide();
+            $("#half_" + $(this).attr('data-value') + "").hide();
+          
         }
         if (!$(this).is(':checked'))
         {
@@ -794,6 +795,7 @@ $.fn.change_balance_leave = function (action)
             day_option.push(0.5);
             all_leave_days = parseFloat(all_leave_days) + 0.5;
             $("#half_option_" + $(this).attr('data-value') + "").show();
+            $("#half_" + $(this).attr('data-value') + "").show();
         }
 
         count++;
@@ -904,7 +906,7 @@ $.fn.view_days = function ()
                     if (holidays.indexOf(temp_date) != -1)
                     {
                         holiday_status = true;
-                        holiday_str += '<h5><span class="text-info"><b>' + moment(curr_date).format(UI_DATE_FORMAT) + ' - ' + holiday_description[holidays.indexOf(temp_date)] + '</b></span></h5>';
+                        holiday_str += '<h5><span class="text-info"><b>' + moment(curr_date).format('MMM-YYYY') + ' - ' + holiday_description[holidays.indexOf(temp_date)] + '</b></span></h5>';
                     }
 
                     var day_name = moment(curr_date).format('YYYY-MM-DD');
@@ -938,8 +940,9 @@ $.fn.view_days = function ()
                         row += '<td width="10%" class="chkday"><input type="checkbox" class="form-check-input" name="chk_day" value="' + moment(curr_date).format('YYYY-MM-DD') + '" onchange="$.fn.change_balance_leave(\'one\')"></td>';
                         row += '<td width="25%">' + moment(curr_date).format('DD-MM-YYYY') + '</td>';
                         row += '<td width="25%">' + day_name + '</td>';
-                        row += '<td><div class="form-check form-switch checkfull"><input type="checkbox" id="chk_full_' + i + '" data-value="' + i + '" name="chk_full"  class="form-check-input" data-color="#99d683"  checked onchange="$.fn.change_balance_leave(\'one\')"></div></td>';
-                        row += '<td><div id="half_option_' + i + '" data-value="' + i + '" style="display: none;" class="form-check form-switch checkhalf"><input type="checkbox" id="chk_half_opt_' + i + '" name="chk_half_opt" class="form-check-input" data-toggle="toggle" checked onchange="$.fn.change_balance_leave(\'one\')"></div></td>';
+                        row += '<td><label class="toggle"><div class="form-check form-switch checkfull"><input type="checkbox" id="chk_full_' + i + '" data-value="' + i + '" name="chk_full"  class="form-check-input" data-color="#99d683"  checked onchange="$.fn.change_balance_leave(\'one\')"><span class="slider"></span><span class="labels" data-on="FULL" data-off="HALF"></span></div></label></td>';
+                       // row +='<td><div class="form-check form-switch checkfull"><label class="toggle"><input type="checkbox" id="chk_full_' + i + '" data-value="' + i + '" name="chk_full" ><span class="slider"></span><span class="labels" data-on="FULL" data-off="HALF" checked onchange="$.fn.change_balance_leave(\'one\')"></span></label></div></td>'
+                        row += '<td><label class="toggle" id="half_' + i + '" data-value="' + i + ' style="display: none;"><div class="form-check form-switch checkfull" id="half_option_' + i + '" data-value="' + i + '" style="display: none;" class="form-check form-switch checkhalf"><input type="checkbox" id="chk_half_opt_' + i + '" name="chk_half_opt" class="form-check-input" data-toggle="toggle" checked onchange="$.fn.change_balance_leave(\'one\')"><span class="slider"></span><span class="labels" data-on="FIRST" data-off="SECOND"></span></div></label></td>';
                         //row 	+= '<td><div class="control-label"><div class="toggle"></div></div><input type="checkbox" id="chk_full" name="chk_full" checked></td>';
                         row += '</tr>';
                         
@@ -960,8 +963,7 @@ $.fn.view_days = function ()
                 }
 
                 for (var j = 0; count > j; j++)
-                {  
-                  
+                { 
                   /*  $('#chk_full_' + j + '').bootstrapToggle({
                         on: 'FULL',
                         off: 'HALF',
@@ -987,7 +989,7 @@ $.fn.view_days = function ()
         }
     }
     catch (err)
-    {
+    { 
         $.fn.log_error(arguments.callee.caller, err.message);
     }
 };
@@ -1082,7 +1084,7 @@ $.fn.get_list = function (is_scroll)
             data.start_index = RECORD_INDEX;
         }
 
-        $.fn.fetch_data(
+     /*    $.fn.fetch_data(
             $.fn.generate_parameter('get_leave_list', data),
             function (return_data)
             {
@@ -1098,6 +1100,48 @@ $.fn.get_list = function (is_scroll)
                     $.fn.data_table_features();
                 }
             }, true
+        ); */
+        $.fn.fetch_data(
+            $.fn.generate_parameter('get_leave_list', data),
+            function(return_data) {
+                if (return_data.data.list) {
+                    var len = return_data.data.list.length;
+                    if (return_data.data.rec_index)
+                    {
+                        RECORD_INDEX = return_data.data.rec_index;
+                    }
+                    if (return_data.code == 0 && len != 0)
+                    {
+                        $.fn.data_table_destroy();
+                        $.fn.populate_list_form(return_data.data.list, is_scroll);
+                        $.fn.data_table_features();
+                        $('#btn_load_more').show();
+                    }
+                    else if (return_data.code == 1 || len == 0)
+                    {
+                        if (!is_scroll)
+                        {
+                            $('#btn_load_more').hide();
+                            $.fn.data_table_destroy();
+                            $('#tbl_list tbody').empty().append
+                                (
+                                    `<tr>
+                                        <td colspan="8">
+                                            <div class="list-placeholder">No records found!</div>
+                                        </td>
+                                    </tr>`
+                                );
+                            $.fn.show_right_error_noty('No records found');
+                        }
+                        else if (is_scroll)
+                        {
+                            $('#btn_load_more').hide();
+                            $.fn.show_right_success_noty('No more records to be loaded');
+                        }
+                    }
+                }
+            },
+            true
         );
     }
     catch (err)
@@ -1173,7 +1217,11 @@ $.fn.prepare_form = function ()
             new Switchery($(this)[0], $(this).data());
         });
         $.fn.get_leave_dropdown_data();
-        $.fn.get_leave_details();
+        if(SESSIONS_DATA.is_admin !=1)
+        { $.fn.get_leave_details();}
+        if(SESSIONS_DATA.is_admin ==1)
+        { $('.totalleave').hide();}
+       
         $.fn.get_list(false);
         $.fn.set_validation_form();
 

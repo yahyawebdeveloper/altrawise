@@ -2328,6 +2328,12 @@ if(isset($_SERVER['REQUEST_METHOD']))
 			echo get_comm_report_requestor($param->data);
 			return;
 		}
+		else if ($param->method === 'get_data_dashboard') 
+		{
+			require_once constant('MODULES_DIR') . '/common.php';
+			echo get_data_dashboard($param->data);
+			return;
+		}
 		// Attendance
 require_once  'transporter.php';
 		

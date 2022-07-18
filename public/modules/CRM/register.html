@@ -1,0 +1,163 @@
+<link href="./assets/libs/jquery-fileupload/css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
+<div class="row mt-3 mb-1" >
+    <div class="col-12">
+        <div class="page-title-box">
+            <div style="float:left"><h4 class="page-title mt-1" style="float:left">Stake Holders</h4></div>
+			<div class="mt-3" style="float:right">
+				<button type="button" data-color="green" id="showSearchDiv" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-magnify"></i> Search</button>
+				<button type="button" class="btn btn-warning waves-effect waves-light fileinput-button"
+					id="btn_upload_crm">
+					<i class="mdi mdi-upload"></i> Upload
+					<input id="fileupload_crm" type="file" name="qqfile">
+				</button>
+				<div id="files_schedule" class="d-none"></div>
+				<a href="http://msphitect.ddns.net:8282/cms/public/download.php?key=&type=task_template"
+					class="btn btn-blue waves-effect waves-light"><i class="mdi mdi-download"></i> Download Template</a>
+				<button type="button" id="btn_new" class="btn btn-danger waves-effect waves-light"><i
+						class="mdi mdi-plus-circle me-1"></i> New</button>
+			</div>
+        </div>
+    </div>
+</div>
+<!-- SEARCH DIV -->
+<div class="col-xl-12 mb-4"  id="searchDiv" style="display:none;">
+	<div class="card mb-0">
+		<div class="col-xl-12" style="text-align:right">
+			 <!-- <h4 class="page-title customized">Search</h4>
+			<button type="button" id="closeSearch" class="btn waves-effect waves-light" ><b>X</b></button> -->
+			<div class="modal-header bg-light">
+				<h4 class="modal-title" ><i class="mdi mdi-magnify" aria-hidden="true"></i> Search</h4>
+				<button type="button" id="closeSearch" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+			</div>
+		</div>
+		<div class="card-body">
+			<!-- SEARCH ROW 1 -->
+				<div class="col-xl-12">
+					<div class="col-xl-6 searchCol">
+						<div class="row">
+						   <div class="col-md-4">
+							   <label for="simpleinput" class="col-form-label">Created By</label>
+						   </div>
+						   <div class="col-md-8">
+							   <select class="form-control populate" id="dd_search_created_by" data-toggle="select2" data-width="100%">
+								</select>
+						   </div>
+					   </div>
+				   </div>
+					<div class="col-xl-6 searchCol">
+						<div class="row">
+						   <div class="col-md-4">
+							   <label for="simpleinput" class="col-form-label">Type</label>
+						   </div>
+						   <div class="col-md-8">
+							   <select class="form-control populate" id="dd_search_type" data-toggle="select2" data-width="100%">
+								</select>
+						   </div>
+					   </div>
+				   </div>				   
+				</div>
+			<!-- SEARCH ROW 1 -->
+			<!-- SEARCH ROW 2 -->
+				<div class="col-xl-12 searchCol" style="text-align:right;overflow:auto;">
+					<div>
+						<button type="button" id="btn_search_reset" class="btn btn-light waves-effect waves-light" ><i class="mdi mdi-refresh"></i> Reset</button>
+						<button type="submit" id="btn_search" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-magnify"></i> Search</button>
+					</div>
+				</div>
+			<!-- SEARCH ROW 2 -->
+		</div>
+	</div>
+</div>
+<!-- SEARCH DIV -->
+<div id="tblList" class="row">
+    <div class="col-12">
+		<div class="modal-header bg-light">
+			<div>
+				<h4 style="float:left" class="modal-title" >Register</h4>
+				<span id="total_records" style="float:left;margin-left:5px;" class="badge rounded-pill bg-warning small-pill mt-1">0</span></div>
+			</div>
+        <div class="card" id="list_div">
+            <div class="card-body">
+				<div class="alert alert-info alert-dismissible fade show" id="note" style="display:none;" role="alert">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <strong>Note:</strong>The stake holders would be active and accessed, once these requests approved by admin
+                </div>
+				<div style="margin-left: 10px;margin-top: 10px;" id="checked" style="display:none;">
+					<label><input type="checkbox" class="form-check-input midsize-checkbox m-0" id="approve_all"></label>
+					&nbsp;&nbsp;&nbsp;
+					<button class="btn-success btn" id="btn_approve_all">Approve Checked</button>
+					&nbsp;&nbsp;&nbsp;
+					<button class="btn-danger btn" id="btn_reject_all">Reject Checked</button>
+				</div>
+				<div class="table-responsive">
+					<table class="table" id="tbl_list">
+						<thead>
+							<tr>
+								<th data-orderable="false"></th>
+								<th>Type</th>
+								<th>Name</th>
+								<th>Identical Names</th>
+								<th>Status</th>
+								<th>Offering</th>
+								<th>Created By</th>
+								<th>Created Date</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="col-xl-12" id="new_div" style="display:none;">
+			<div class="col-sm-12">
+				<div class="panel panel-primary">
+					<div class="card mb-0">
+						<div class="col-xl-12">
+							<div class="modal-header bg-light">
+								<h4 class="modal-title" ><i class="mdi mdi-clipboard-plus" aria-hidden="true"></i> <span id="h4_primary_no">Stake Holder ID : -</span></h4>
+								<button type="button" id="closeTaskWindow" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+							</div>
+						</div>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-12">
+								<form class="form-horizontal" data-validate="parsley" id="detail_form">
+									
+									<!-- ROW 1 START -->
+									<div class="row mt-3">
+										<div class="col-md-6">
+											<div class="row">
+												<div class="col-md-4">
+													<label for="simpleinput" class="col-form-label">Type</label>
+												</div>
+												<div class="col-md-8 errorContainer">
+													<select id="dd_type" style="width:100%;" class="form-control multi populate" required multiple="multiple"></select>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="row">
+												<div class="col-md-4">
+													<label for="simpleinput" class="col-form-label">Name</label>
+												</div>
+												<div class="col-md-8">
+													<input id="txt_client_id" type="hidden">
+													<input id="txt_client_name" type="text" class="form-control" required>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- ROW 1 END -->
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>		
+	</div>
+</div>

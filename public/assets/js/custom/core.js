@@ -1228,7 +1228,7 @@ $.fn.get_page_name = function (route_name) {
 		case 'users/users-history-report':
 			return 82;
 			break;
-		case 'users/track':
+		case 'users/users-track':
 			return 83;
 			break;
 
@@ -1300,7 +1300,7 @@ $.fn.get_page_name = function (route_name) {
 		case 'stake_holders_module':
 			return 15;
 			break;
-		case 'stake-holders/register':
+		case 'stake-holders-register':
 			return 151;
 			break;
 		case 'stake-holders':

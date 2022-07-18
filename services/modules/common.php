@@ -5,8 +5,111 @@ use setasign\Fpdi\Fpdi as FpdiFpdi;
 use setasign\Fpdi\Tcpdf\Fpdi as TcpdfFpdi;
 use setasign\Fpdi\Tfpdf\FpdfTpl as TfpdfFpdfTpl;
 use setasign\Fpdi\Tfpdf\Fpdi;
+function get_users_tracker_employee($params) {
 
+    try {
+            log_it(__FUNCTION__, $params);
+            $emp_id                     = if_property_exist($params, 'emp_id',false);
+            if($emp_id === NULL)
+            {
+                return handle_fail_response('Employee ID is mandatory');
+            }
+            $return_data    	= [];
+            $temp				= [];
+            $emp	            = db_query("id,name","cms_employees","is_active = 1 and (JSON_EXTRACT(cms_employees.json_field, '$.permission.enable_screen_track') = 1 or JSON_EXTRACT(cms_employees.json_field, '$.screen_track.screenshot_enable') = '1' )");
+           
+            $rs_category     	= $emp;
+            for($i = 0; $i < count($rs_category); $i++)
+            {
+                $temp['id']   = $rs_category[$i]['id'];
+                $temp['desc'] = $rs_category[$i]['name'];
+                $return_data[] = $temp;
+            }
+            return json_encode( array("code"=>0,"msg"=>"Success","data"=>$return_data) );
+    } catch(Exception $e) {
+        handle_exception($e);
+    }
+    
+}
+function get_dept($params) {
 
+    try {
+            log_it(__FUNCTION__, $params);
+            $emp_id                     = if_property_exist($params, 'emp_id',false);
+            if($emp_id === NULL)
+            {
+                return handle_fail_response('Employee ID is mandatory');
+            }
+            $return_data    	= [];
+            $temp				= [];
+            $dept	            = db_query('id,descr','cms_master_list',"category_id = 1 AND is_active = 1");
+            $rs_category     	= $dept;
+            for($i = 0; $i < count($rs_category); $i++)
+            {
+                $temp['id']   = $rs_category[$i]['id'];
+                $temp['desc'] = $rs_category[$i]['descr'];
+                $return_data[] = $temp;
+            }
+            return json_encode( array("code"=>0,"msg"=>"Success","data"=>$return_data) );
+    } catch(Exception $e) {
+        handle_exception($e);
+    }
+    
+} 
+function get_outsourced_clients($params) {
+
+    try {
+            log_it(__FUNCTION__, $params);
+            $emp_id                     = if_property_exist($params, 'emp_id',false);
+            if($emp_id === NULL)
+            {
+                return handle_fail_response('Employee ID is mandatory');
+            }
+            $return_data    	= [];
+            $temp				= [];
+            $clients	        = db_query('id,descr','cms_master_list',"category_id = 18 AND is_active = 1");
+            $rs_category     	= $clients;
+            for($i = 0; $i < count($rs_category); $i++)
+            {
+                $temp['id']   = $rs_category[$i]['id'];
+                $temp['desc'] = $rs_category[$i]['descr'];
+                $return_data[] = $temp;
+            }
+            return json_encode( array("code"=>0,"msg"=>"Success","data"=>$return_data) );
+    } catch(Exception $e) {
+        handle_exception($e);
+    }
+    
+} 
+function get_emp($params) {
+
+    try {
+            log_it(__FUNCTION__, $params);
+            $emp_id                     = if_property_exist($params, 'emp_id',false);
+            $logged_in                     = if_property_exist($params, 'logged_in',false);
+            if($emp_id === NULL)
+            {
+                return handle_fail_response('Employee ID is mandatory');
+            }
+            $return_data    	= [];
+            $temp				= [];
+            $where              = "";
+            if( $logged_in )
+                $where = " AND id = ".$emp_id;
+            $emp	            = db_query('id,name','cms_employees','is_active = 1'.$where);
+            $rs_category     	= $emp;
+            for($i = 0; $i < count($rs_category); $i++)
+            {
+                $temp['id']   = $rs_category[$i]['id'];
+                $temp['desc'] = $rs_category[$i]['name'];
+                $return_data[] = $temp;
+            }
+            return json_encode( array("code"=>0,"msg"=>"Success","data"=>$return_data) );
+    } catch(Exception $e) {
+        handle_exception($e);
+    }
+    
+} 
 /* function get_documents_drop_down_values_other() {
     try
     {   
@@ -438,4 +541,36 @@ function get_contract_search_dropdown($params) {
     }
     
 } 
+
+
+
+
+
+
+function get_data_dashboard($params) {
+    try
+    {  
+        require_once constant('MODULES_DIR') . '/dashboard.php';
+        $paramss['emp_id'] = if_property_exist($params, 'emp_id',false);
+        $result = json_decode(get_user_dashboard((object)$paramss));
+        if($result->code == 0)
+        {
+        $user_dashboard_data['app_count'] = if_property_exist($result->data->app_count, 'count', 0);
+        $user_dashboard_data['tasks_count'] = if_property_exist($result->data->tasks_count, 'count', 0);
+        $user_dashboard_data['contracts_count'] = if_property_exist($result->data->contracts_count, 'count', 0);
+        $user_dashboard_data['communications_count'] = if_property_exist($result->data->communications_count, 'count', 0);
+
+        $user_dashboard_data['topusers'] = if_property_exist($result->data->topusers, 'totalduration', 0.00);
+        $user_dashboard_data['mosttopusers'] = $result->data->mosttopusers;
+        $user_dashboard_data['faq_count'] = if_property_exist($result->data->faq_count, 'count', 0);
+        }   
+       return handle_success_response('Success', $user_dashboard_data);
+    }
+    catch (Exception $e)
+    {
+        handle_exception($e);
+    }
+}
+
+
 ?>

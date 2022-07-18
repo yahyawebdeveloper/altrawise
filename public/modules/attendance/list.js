@@ -911,12 +911,12 @@ $.fn.get_list = function (is_scroll)
 		{
 			data.start_index = RECORD_INDEX;
 		}
-
-		$.fn.fetch_data_for_table_v2
+		//Intentionally commented to show test data...change the `tbl_list1` on line 918 to `tbl_list`
+		/* $.fn.fetch_data_for_table_v2
 			(
 				$.fn.generate_parameter('get_attendance_users_list', data),
 				$.fn.populate_list_form, is_scroll, 'tbl_list1', false, false, false, true
-			);
+			); */
 	}
 	catch (err)
 	{

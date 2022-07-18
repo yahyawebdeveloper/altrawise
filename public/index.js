@@ -211,6 +211,7 @@
 				 route_url = "dashboard";
 			 }
 			 
+			 
 			 //get module access based on route url
 			 let module_access = $.fn.get_accessibility($.fn.get_page_name(route_url));
 			 
@@ -247,15 +248,35 @@
 			 .on("/", () => { //dashboard route
 				 $.fn.load_form('./modules/dashboard.html');
 			 }, { before: middleware })
+			 .on("/dashboard/admin", () => { //admin dashboard route
+				$.fn.load_form('./modules/dashboard/admin_dash.html');
+			}, { before: middleware })
+			.on("/dashboard/user", () => { //user dashboard route
+				$.fn.load_form('./modules/dashboard/user_dash.html');
+			}, { before: middleware })
 			 .on("/signout", () => { //signout route
 				 $.fn.user_logout();
 			 })
 			 .on("/users", () => { //users route
 				 $.fn.load_form('./modules/users.html');
 			 }, { before: middleware })
-			  .on("/users/users-history-report", () => { //users route
+			  .on("/users/users-history-report", () => { //users-history route
 				 $.fn.load_form('./modules/users/users-history-report.html');
 			 }, { before: middleware })
+			 .on("/users/users-track", () => { //users-history route
+				 $.fn.load_form('./modules/users/users-track.html');
+			 }, { before: middleware })
+			 .on({
+				"/users/users-track/:user_id/:date" : {
+					as: "users/users-track",
+					uses: () => {
+						$.fn.load_form('./modules/users/users-track.html');
+					},
+					hooks : {
+						before : namedMiddleware
+					}
+				}
+			})
 			 // .on("/quotation", () => { //quotation route
 			 // 	$.fn.load_form('./modules/quote.html');
 			 // })
@@ -291,6 +312,9 @@
 			 }, { before: middleware })
 			 .on("/stake-holders", () => { //CRM route
 				 $.fn.load_form('./modules/crm-stack-holders-listing.html')
+			 }, { before: middleware })
+			  .on("/stake-holders-register", () => { //CRM Register route
+				 $.fn.load_form('./modules/CRM/register.html')
 			 }, { before: middleware })
 			 .on("/documents/outbound-documents", () => { //outbound documents route
 				 $.fn.load_form('./modules/documents/documents.html');

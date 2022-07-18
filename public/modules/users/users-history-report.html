@@ -1,25 +1,18 @@
-<link href="./assets/libs/flatpickr/plugins/monthSelect/style.css" rel="stylesheet" type="text/css" />
-<style>
-	th,td.ename,td.date,td.tday{
-		white-space: nowrap;
-	}
-</style>
+
 <div class="row mt-3 mb-1" >
     <div class="col-12">
         <div class="page-title-box">
             <h4 class="page-title" style="float:left">EMPLOYEE - REPORT</h4>
 			<div class="mt-3" style="float:right">
-				<button type="button" data-color="green" id="showSearchDiv" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-magnify"></i> Search</button>
+				<button type="button" data-color="green" style="display:none;" id="showSearchDiv" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-magnify"></i> Search</button>
 			</div>
         </div>
     </div>
 </div>
 <!-- SEARCH DIV -->
-<div class="col-xl-12 mb-4"  id="searchDiv">
+<div class="col-xl-12 mb-4"  id="searchDiv" >
 	<div class="card mb-0">
 		<div class="col-xl-12" style="text-align:right">
-			 <!-- <h4 class="page-title customized">Search</h4>
-			<button type="button" id="closeSearch" class="btn waves-effect waves-light" ><b>X</b></button> -->
 			<div class="modal-header bg-light">
 				<h4 class="modal-title" ><i class="mdi mdi-magnify" aria-hidden="true"></i> Search</h4>
 				<button type="button" id="closeSearch" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
@@ -31,28 +24,45 @@
 					<div class="col-xl-6 searchCol">
 						<div class="row">
 						   <div class="col-md-4">
-							   <label for="simpleinput" class="col-form-label">Date</label>
+							   <label for="simpleinput" class="col-form-label">Employee</label>
 						   </div>
 						   <div class="col-md-8">
-							   <input type="text" id="doc_search_date" class="form-control flatpickr-input" placeholder="03-10-2021 to 02-10-2021" readonly="readonly" required>
-							   <input type="hidden" id="from_search_date">
-							   <input type="hidden" id="to_search_date">
+							   <select class="form-control populate" id="dd_employee" data-width="100%">
+							   </select>
 						   </div>
 					   </div>
 				   </div>
 					<div class="col-xl-6 searchCol">
 						<div class="row">
 						   <div class="col-md-4">
-							   <label for="simpleinput" class="col-form-label">Employee</label>
+							   <label for="simpleinput" class="col-form-label">Tied to client</label>
 						   </div>
 						   <div class="col-md-8">
-							   <select class="form-control" id="dd_search_employee" data-toggle="select2" data-width="100%">
-								</select>
+							   <select class="form-control populate" id="dd_client" data-width="100%">
+							   </select>
 						   </div>
 					   </div>
 				   </div>				   
 				</div>
 			<!-- SEARCH ROW 1 -->
+			<!-- SEARCH ROW 1.1 -->
+				<div class="col-xl-12">
+					<div class="col-xl-6 searchCol">
+						<div class="row">
+						   <div class="col-md-4">
+							   <label for="simpleinput" class="col-form-label">Department</label>
+						   </div>
+						   <div class="col-md-8">
+							   <select class="form-control populate" id="dd_dept" data-width="100%">
+							   </select>
+						   </div>
+					   </div>
+				   </div>
+					<div class="col-xl-6 searchCol">
+						&nbsp;
+				   </div>				   
+				</div>
+			<!-- SEARCH ROW 1.1 -->
 			<!-- SEARCH ROW 2 -->
 				<div class="col-xl-12 searchCol" style="text-align:right;overflow:auto;">
 					<div>
@@ -65,28 +75,36 @@
 	</div>
 </div>
 <!-- SEARCH DIV -->
-<div class="row">
+<div class="row" id="div_report_view" style="display:none;">
     <div class="col-xl-12">
 		
 		<div class="card mb-0">
 			<div class="card-body">
-				<h4 id="lbl_sync_time"></h4>
+				<div class="col-xl-12" style="text-align:right;">
+						<div class="dropdown float-end">
+                        <a href="#" class="dropdown-toggle card-drop arrow-none" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="mdi mdi-dots-horizontal m-0 text-muted h3"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+							<a href="javascript:void(0)" class="dropdown-item" style="text-align:left"  onclick="exportTable2CSV('Employee Report','tbl_list')">Excel File (*.xlsx)</a>
+							<a href="javascript:void(0)" class="dropdown-item" style="text-align:left" onclick="exportTable2PDF('Employee Report','tbl_list','l')">PDF File (*.pdf)</a>
+                        </div>
+                    </div>
+					</div>
 				 <div class="table-responsive">
 					<table class="table table-centered table-striped w-100" id="tbl_list">
 						<thead class="">
 							<tr>
-								<th></th>
-								<th>Employee Name</th>
-								<th>Date</th>
-								<th>Type of Day</th>
-								<th>Time In</th>
-								<th>Time Out</th>
-								<th>Idle Time</th>
-								<th>Hours Worked</th>
-								<th>Screen Track</th>
+								<th width="20%">Name</th>
+								<th width="13%">Client</th>
+								<th width="13%">Department</th>
+								<th width="13%">Start Date</th>
+								<th width="13%">End Date</th>
+								<th width="13%">Join Date</th>
+								<th width="13%">Salary</th>
 							</tr>
 						</thead>
-						<tbody id="tbody_list">
+						<tbody>
 							
 						</tbody>
 					</table>
@@ -101,8 +119,7 @@
 	</div>	
 </div>
 <script src="./assets/js/moment.js/2.18.1/moment.min.js"></script>
-<script src="./assets/libs/flatpickr/flatpickr.min.js"></script>
-<script src="./assets/libs/flatpickr/plugins/monthSelect/index.js"></script>
+
 <script src="./assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="./assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
 <script src="./assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>

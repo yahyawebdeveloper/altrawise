@@ -27,8 +27,7 @@ $.fn.data_table_features = function ()
 					"searching": false,
 					"paging": false,
 					"info": false,
-					"ordering": false
-					//				"order"		: [[ 2, "desc" ]]
+					"order"		: [[ 2, "desc" ]]
 				});
 		}
 	}
@@ -214,8 +213,8 @@ $.fn.populate_list_form = function (data, is_scroll)
 					}
 					row += '</td>';
 				}
-				row += `<td width="10%"><div id="leave_file_${data[i].id}" style="width: 200px;word-break: break-word;border:none;background-color:none;"></div></td>`;
-				row += '<td width="15%"><div class="button-group">';
+				row += `<td width="10%"><div id="leave_file_${data[i].id}" style="width: 180px;word-break: break-word;border:none;background-color:none;"></div></td>`;
+				row += '<td width="15%" style="width:100%;"><div class="button-group">';
 				
 				if (data[i].verified == 0)
 				{
@@ -1315,6 +1314,7 @@ $.fn.bind_command_events = function ()
 			btn_approve = Ladda.create(this);
 			btn_approve.start();
 			$.fn.edit_approve_status();
+			
 		});
 
 		$('#btn_add_remark').click(function (e)
