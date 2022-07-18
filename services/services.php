@@ -43,12 +43,13 @@ if(isset($_SERVER['REQUEST_METHOD']))
 		    echo reset_password($param->data);
 		    return;
 		} */
-	/* 	else if($param->method === 'get_modules')
+	 	else if($param->method === 'get_modules')
 		{
 		    require_once constant('MODULES_DIR')  . '/modules.php';
 		    echo get_modules($param->data);
 		    return;
 		}
+		/*
 		else if($param->method === 'get_sbd')
         {
         	require_once constant('MODULES_DIR') 	. '/task.php';

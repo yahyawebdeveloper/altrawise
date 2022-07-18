@@ -18,6 +18,7 @@ var CODE_TRIGGERED = false;
 var p_status = '';
 var pid = "";
 var flatpickerEndTime, flatpickerEndTime = '';
+
 // Exit Checklist Form
 $.fn.exit_save_edit_form = function ()
 {
@@ -64,7 +65,37 @@ $.fn.exit_save_edit_form = function ()
 		$.fn.log_error(arguments.callee.caller, err.message);
 	}
 };
-// Exit Checklist Form
+
+$.fn.make_is_visible_to_owner_files = function (obj) {
+	try
+	{
+		let json_data = JSON.parse(unescape($(obj).closest('tr').attr('data-value')));
+
+		var data =
+		{
+			id: json_data.id,
+			is_visible: $(obj).is(':checked') ? "1" : "0"
+		}
+
+		$.fn.write_data
+			(
+				$.fn.generate_parameter('update_employee_attachment_visible_status', data),
+				function (return_data)
+				{
+					if (return_data.data)
+					{
+					}
+				}, false, false
+			);
+
+	}
+	catch (err)
+	{
+		//		console.log(err.message);
+		$.fn.log_error(arguments.callee.caller, err.message);
+	}
+};
+
 // Attach Form
 $.fn.populate_attachment_list_form = function (data, type)
 {
@@ -89,8 +120,12 @@ $.fn.populate_attachment_list_form = function (data, type)
 
 						let check = `<input type="checkbox" name="chk_file_visible" ${is_checked} onchange="$.fn.make_is_visible_to_owner_files(this)">`;
 						row += `<tr data-value="${escape(JSON.stringify(data[i]))}">
-								<td><a class="tooltips" href="javascript:void(0)" onclick="$.fn.open_page('${data[i].id}','${CURRENT_PATH}download.php')"
-									data-trigger="hover" data-original-title="View File "><i class="fa fa-picture-o"/></a></td>
+								<td>
+								
+									<button type="button" class="btn btn-outline-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="View File" onclick="$.fn.open_page('${data[i].id}','${CURRENT_PATH}download.php')">
+										<i class="fas fa-download"></i>
+									</button>
+								</td>
 								<td>${check}</td>
 								<td>${json_field.category}</td>
 								<td>${data[i].filename}</td>
@@ -146,6 +181,7 @@ $.fn.populate_attachment_list_form = function (data, type)
 		$.fn.log_error(arguments.callee.caller, err.message);
 	}
 };
+
 // Attach Form
 $.fn.attach_save_edit_form = function ()
 {
@@ -189,7 +225,7 @@ $.fn.attach_save_edit_form = function ()
 
 		}
 		else{
-			console.log("here");
+			// console.log("here");
 			btn_attach_save.stop();
 		}
 	}
@@ -286,50 +322,48 @@ function GetDate(str) {
   var formatddate = i + 1 + "/" + arr[0] + "/" + arr[2];
   return formatddate;
 }
-$.fn.populate_his_detail_form = function (data)
-{
+
+// work history
+$.fn.populate_his_detail_form = function (data) {
 	try
 	{
 		var data = JSON.parse(data);
 		$('#btn_rec_save').html('<i class="fa fa-edit"></i> Update');
-		$.fn.fetch_data
-			(
-				$.fn.generate_parameter('get_employees_his_details', { id: data.id }),
-				function (return_data)
-				{
-					if (return_data.data)
-					{
-						var data = return_data.data[0];
-						EMP_HIS_ID = data.id;
-						console.log(data);
-						$('#his_dd_dept').val(data.dept_id).change();
-						$('#his_dd_client').val(data.client_id).change();
-						
-						let date1 = GetDate(data.work_start_date);
-						date1 = new Date(date1);
-						$('#his_start_date').flatpickr({dateFormat: "d-M-Y",}).setDate(date1);
-						
-						 date1 = GetDate(data.work_end_date);
-						date1 = new Date(date1);
-						$('#his_end_date').flatpickr({dateFormat: "d-M-Y",}).setDate(date1);
-						
-						 date1 = GetDate(data.join_date);
-						date1 = new Date(date1);
-						$('#his_join_date').flatpickr({dateFormat: "d-M-Y",}).setDate(date1);
-						
-						$('#his_txt_salary').val(data.salary);
-						
-						 date1 = GetDate(data.increment_date);
-						date1 = new Date(date1);
-						$('#his_increment_date').flatpickr({dateFormat: "d-M-Y",}).setDate(date1);
-						$('#his_txt_increment_amount').val(data.increment_amount);
-						
-						 date1 = GetDate(data.next_increment_date);
-						date1 = new Date(date1);
-						$('#his_next_increment_date').flatpickr({dateFormat: "d-M-Y",}).setDate(date1);
-					}
-				}, true
-			);
+		$.fn.fetch_data(
+			$.fn.generate_parameter('get_employees_his_details', { id: data.id }),
+			function (return_data) {
+				if (return_data.data) {
+					var data = return_data.data[0];
+					EMP_HIS_ID = data.id;
+					console.log(data);
+					$('#his_dd_dept').val(data.dept_id).change();
+					$('#his_dd_client').val(data.client_id).change();
+					
+					// let s_date = GetDate(data.work_start_date);
+					// s_date = new Date(s_date);
+					$('#his_start_date').flatpickr({dateFormat: "d-M-Y",}).setDate(data.work_start_date);
+					
+					// let e_date = GetDate(data.work_end_date);
+					// e_date = new Date(e_date);
+					$('#his_end_date').flatpickr({dateFormat: "d-M-Y",}).setDate(data.work_end_date);
+					
+					// let j_date = GetDate(data.join_date);
+					// j_date = new Date(j_date);
+					$('#his_join_date').flatpickr({dateFormat: "d-M-Y",}).setDate(data.join_date);
+					
+					$('#his_txt_salary').val(data.salary);
+					
+					// let date1 = GetDate(data.increment_date);
+					// date1 = new Date(date1);
+					$('#his_increment_date').flatpickr({dateFormat: "d-M-Y",}).setDate(data.increment_date);
+					$('#his_txt_increment_amount').val(data.increment_amount);
+					
+					// let i_date = GetDate(data.next_increment_date);
+					// i_date = new Date(i_date);
+					$('#his_next_increment_date').flatpickr({dateFormat: "d-M-Y",}).setDate(data.next_increment_date);
+				}
+			}, true
+		);
 
 
 	}
@@ -338,12 +372,129 @@ $.fn.populate_his_detail_form = function (data)
 		$.fn.log_error(arguments.callee.caller, err.message);
 	}
 };
+
+// Asset form`
+$.fn.get_asset_list = function (id) {
+	var data =
+	{
+		employee_id: id,
+		type_id: '',
+		start_index: 0,
+		limit: LIST_PAGE_LIMIT,
+		emp_id: SESSIONS_DATA.emp_id
+	};
+
+	$.fn.fetch_data
+		(
+			$.fn.generate_parameter('get_asset_list', data),
+			function (return_data)
+			{
+				if (return_data)
+				{
+					$.fn.populate_asset_list_form(return_data.data.list, true);
+				}
+			}, true
+		);
+};
+
+$.fn.delete_asset = function (data) {
+	try {
+		data = JSON.parse(data);
+
+		var data = {
+			id: data.id,
+			employee_id: data.employee_id,
+			type_id: '',
+			start_index: 0,
+			limit: LIST_PAGE_LIMIT,
+			emp_id: SESSIONS_DATA.emp_id
+		};
+
+		bootbox.confirm
+			({
+				title: "Delete Confirmation",
+				message: "Please confirm before you delete.",
+				buttons:
+				{
+					cancel:
+					{
+						label: '<i class="fa fa-times"></i> Cancel'
+					},
+					confirm:
+					{
+						label: '<i class="fa fa-check"></i> Confirm'
+					}
+				},
+				callback: function (result)
+				{
+					if (result == true)
+					{
+						$.fn.write_data
+							(
+								$.fn.generate_parameter('delete_asset', data),
+								function (return_data)
+								{
+									if (return_data)
+									{
+										$('#tbl_asset > tbody').empty();
+										$.fn.populate_asset_list_form(return_data.data.list, true);
+										$.fn.show_right_success_noty('Data has been deleted successfully');
+									}
+
+								}, false
+							);
+					}
+				}
+			});
+	}
+	catch (err)
+	{
+		$.fn.log_error(arguments.callee.caller, err.message);
+	}
+};
+
+$.fn.populate_asset_list_form = function (data, is_scroll) {
+	try {
+		if (data)
+		{
+			if (is_scroll == false)
+			{
+				$('#tbl_asset > tbody').empty();
+			}
+
+			var row = '';
+			var data_val = '';
+			for (var i = 0; i < data.length; i++)
+			{
+				data_val = escape(JSON.stringify(data[i]));
+				row += '<tr>' +
+					'<td>' + data[i].type_name + '</td>';
+				data[i].client_name != null ? row += '<td>' + data[i].client_name + '</td>' : row += '<td>-</td>';
+				data[i].owner_name != null ? row += '<td>' + data[i].owner_name + '</td>' : row += '<td>MSP</td>';
+				data[i].brand_name != null && data[i].brand_name != '' ? row += '<td>' + data[i].brand_name + '</td>' : row += '<td>-</td>';
+				data[i].expiry_date != null ? row += '<td>' + moment(data[i].expiry_date).format('D-MMM-YYYY') + '</td>' : row += '<td>-</td>';
+				data[i].taken_date != null ? row += '<td>' + moment(data[i].taken_date).format('D-MMM-YYYY') + '</td>' : row += '<td>-</td>';
+				data[i].return_date != null ? row += '<td>' + moment(data[i].return_date).format('D-MMM-YYYY') + '</td>' : row += '<td>-</td>';
+				row += '</tr>';
+
+			}
+			$('#tbl_asset tbody').html(row);
+			$('.back-to-top-badge').removeClass('back-to-top-badge-visible');
+		}
+
+	}
+	catch (err) {
+		$.fn.log_error(arguments.callee.caller, err.message);
+	}
+};
+// Asset form`
+
 // Work History Form
 $.fn.populate_history_list_form = function (data, is_scroll)
 {
 	try
 	{
-		console.log(data);
+		// console.log(data);
 		if (data) // check if there is any data, precaution
 		{
 			if (is_scroll == false)
@@ -402,20 +553,16 @@ $.fn.populate_history_list_form = function (data, is_scroll)
 		$.fn.log_error(arguments.callee.caller, err.message);
 	}
 };
+
 // Work History Form
-$.fn.save_edit_wh_form = function ()
-{
-	try
-	{
-		if ($('#rec_detail_form').parsley().validate() == false)
-		{
+$.fn.save_edit_wh_form = function () {
+	try {
+		if ($('#rec_detail_form').parsley().validate() == false) {
 			btn_rec_save.stop();
 			return;
 		}
 
-
-		var data =
-		{
+		var data = {
 			id: EMP_HIS_ID,
 			dept_id: $('#his_dd_dept').val(),
 			client_id: $('#his_dd_client').val(),
@@ -430,27 +577,52 @@ $.fn.save_edit_wh_form = function ()
 			emp_session_id: SESSIONS_DATA.emp_id
 		};
 
-		$.fn.write_data
-			(
-				$.fn.generate_parameter('add_edit_employees_history', data),
-				function (return_data)
-				{
-					if (return_data.data)
-					{
-						$.fn.reset_form('his_form');
-						$.fn.populate_history_list_form(return_data.data.list, true);
-						$.fn.show_right_success_noty('Data has been recorded successfully');
-					}
+		$.fn.write_data(
+			$.fn.generate_parameter('add_edit_employees_history', data),
+			function (return_data) {
+				if (return_data.data) {
+					$.fn.reset_form('his_form');
+					$.fn.populate_history_list_form(return_data.data.list, true);
+					$.fn.show_right_success_noty('Data has been recorded successfully');
+				}
 
-				}, false, btn_rec_save
-			);
+			}, false, btn_rec_save
+		);
 	}
 	catch (err)
 	{
-		console.log(err);
+		// console.log(err);
 		$.fn.log_error(arguments.callee.caller, err.message);
 	}
 };
+
+$.fn.checkOnBench = function (value) {
+	$('#rec_detail_form').parsley().destroy();
+	if (value == 185) {
+		$('#div_non_bench_1').hide();
+		$('#div_non_bench_2').hide();
+		$('#his_end_date').attr('required', false);
+		$('#his_join_date').attr('required', false);
+		$('#his_txt_salary').attr('required', false);
+	}
+	else {
+		$('#div_non_bench_1').show();
+		$('#div_non_bench_2').show();
+		$('#his_end_date').attr('required', true);
+		$('#his_join_date').attr('required', true);
+		$('#his_txt_salary').attr('required', true);
+	}
+
+	$('#rec_detail_form').parsley({
+		classHandler: function(parsleyField) {              
+			return parsleyField.$element.closest(".errorContainer");
+		},
+		errorsContainer: function(parsleyField) {              
+			return parsleyField.$element.closest(".errorContainer");
+		},
+	});
+};
+
 // Work History Form
 $(window).on('beforeunload', function ()
 {
@@ -538,20 +710,14 @@ $.fn.reset_form = function(form)
 			$('#btn_rec_save').html('<i class="fa fa-save"></i> Save');
 
 			$('#rec_detail_form').parsley('destroy');
-			$('#rec_detail_form').parsley
-				({
-					successClass: 'has-success',
-					errorClass: 'has-error',
-					errors:
-					{
-						classHandler: function (el)
-						{
-							return $(el).closest('.form-group');
-						},
-						errorsWrapper: '<ul class=\"help-block list-unstyled\"></ul>',
-						errorElem: '<li></li>'
-					}
-				});
+			$('#rec_detail_form').parsley({
+				classHandler: function(parsleyField) {              
+					return parsleyField.$element.closest(".errorContainer");
+				},
+				errorsContainer: function(parsleyField) {              
+					return parsleyField.$element.closest(".errorContainer");
+				},
+			});
 		}
 		else if(form == 'form')
 		{
@@ -667,7 +833,7 @@ $.fn.reset_form = function(form)
 				$(checkbox).prop('checked', false);
 			});
 
-			// $('#tbl_attachment,#tbl_exit').empty();
+			$('#tbl_attachment,#tbl_exit').empty();
 
 			$('#detail_form').parsley().destroy();
 			$('#detail_form').parsley(
@@ -931,10 +1097,10 @@ $.fn.populate_detail_form = function (data)
 						}
 						console.log(return_data.data);
 						$.fn.populate_history_list_form(return_data.data.work_list, true);
-					// 	$.fn.populate_leave_list_form(return_data.data.leave_list, true);
-					// 	$.fn.populate_asset_list_form(return_data.data.asset_list, true);
-					// 	$.fn.populate_attachment_list_form(return_data.data.documents, 1);
-					// 	$.fn.populate_attachment_list_form(return_data.data.exit_checklist, 2);
+						$.fn.populate_leave_list_form(return_data.data.leave_list, true);
+						$.fn.populate_asset_list_form(return_data.data.asset_list, true);
+						$.fn.populate_attachment_list_form(return_data.data.documents, 1);
+						$.fn.populate_attachment_list_form(return_data.data.exit_checklist, 2);
 						$.fn.set_user_access(json_field.access);
 						$.fn.check_office_email();
 						CODE_TRIGGERED = false;
@@ -950,7 +1116,6 @@ $.fn.populate_detail_form = function (data)
 	}
 	
 };
-
 
 $.fn.get_list = function(is_scroll)
 {
@@ -1135,16 +1300,16 @@ $.fn.show_hide_form = function (form_status, reset_form)
 		drEvent.init();
 
 		$('#h4_primary_no').text('NEW');
-		// $('#tab_assets,#tab_leaves,#tab_wh,#tab_attach,#tab_exit,#tab_track,#permission-tab').hide();
-		$('#permission-tab, #tab_leaves').hide();
+		$('#tab_assets, #tab_leaves, #tab_wh, #tab_attach, #tab_exit, #tab_track, #permission-tab').hide();
+		// $('#permission-tab, #tab_leaves').hide();
 		$('#btn_save').html('<i class="fa fa-check"> </i> Save');
 	}
 	else if (form_status == 'EDIT')
 	{
 		$('#list_div, #btn_new').hide(400);
 		$('#new_div').show(400);
-		// $('#tab_assets,#tab_leaves,#tab_wh,#tab_attach,#tab_exit,#tab_track,#permission-tab').show();
-		$('#permission-tab,#tab_leaves').show();
+		$('#tab_assets, #tab_leaves, #tab_wh, #tab_attach, #tab_exit, #tab_track, #permission-tab').show();
+		// $('#permission-tab,#tab_leaves').show();
 		$('#btn_save').html('<i class="fa fa-edit"></i> Update');
 	}
 	else if (form_status == 'BACK')
@@ -1175,7 +1340,7 @@ $.fn.get_initial_data = function ()
 				{
 					if (return_data.data)
 					{
-						console.log(return_data.data);
+						// console.log(return_data.data);
 						$.fn.populate_dd('dd_home_country', return_data.data.countries);
 						$.fn.populate_dd('dd_nationality', return_data.data.countries);
 						$.fn.populate_dd('applicable_year', return_data.data.years);
@@ -1346,6 +1511,7 @@ $.fn.reset_upload_form = function ()
 {
 	$('#files').html('');
 };
+
 // File upload
 
 // Permission Tab
@@ -2025,6 +2191,7 @@ $.fn.generateP = function ()
 	pid = pass;
 	return pass;
 }
+
 // Permission Tab
 
 // Leave Tab
@@ -2368,7 +2535,7 @@ $.fn.save_edit_form = function()
 			$.fn.generate_parameter('add_edit_employees', form_data),
 			function (return_data)
 			{
-				console.log(return_data);
+				// console.log(return_data);
 				if (return_data.data)
 				{
 					EMP_ID = return_data.data;
@@ -2492,7 +2659,7 @@ $.fn.prepare_form = function()
 
 		//if not loaded, load again
 		if (flatpickerLoaded === 0) {
-			console.log('flatpicker loaded again');
+			// console.log('flatpicker loaded again');
 			$.getScript('./assets/libs/flatpickr/flatpickr.min.js');
 		}
 
@@ -2557,16 +2724,14 @@ $.fn.prepare_form = function()
 		);
 		
 		//validation - Work history form
-		$('#rec_detail_form').parsley(
-			{
+		$('#rec_detail_form').parsley({
 				classHandler: function(parsleyField) {              
 					return parsleyField.$element.closest(".errorContainer");
 				},
 				errorsContainer: function(parsleyField) {              
 					return parsleyField.$element.closest(".errorContainer");
 				},
-			}
-		);
+		});
 		
 		//switchery
 		let elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
@@ -2779,18 +2944,21 @@ $.fn.bind_command_events = function()
 		$('a[data-bs-toggle="tab"]').on('show.bs.tab', function (e) 
 		{
 			let target = $(e.target).attr("href") // activated tab
-			// if (target == '#tab_a' || target == '#tab_l' || target == '#tab_w' || target == '#tab_att' || target == '#tab_e')
-			if ( target == '#tab_l')
-			{
+			if (target == '#tab_a' || target == '#tab_l' || target == '#tab_w' || target == '#tab_att' || target == '#tab_e') {
 				$('#actions_div').hide();
-			}
-			else
-			{
+			}else {
 				$('#actions_div').show();
 			}
 		});
 
+		$('#his_dd_client').on('change', function (e) {
+			e.preventDefault();
+			$.fn.checkOnBench($(this).val());
+		});
+
 		$.fn.init_attach_file(); //Profile picture
+		// $.fn.intialize_fileupload('exit_attach_fileupload', 'exit_attach_files');
+		$.fn.intialize_fileupload('attach_fileupload', 'attach_files');
 	}
 	catch(err)
 	{
@@ -2807,7 +2975,7 @@ $.fn.form_load = function()
 	}
 	catch(err)
 	{
-		console.log(err.message);
+		// console.log(err.message);
 		$.fn.log_error(arguments.callee.caller,err.message);
 	}
 };

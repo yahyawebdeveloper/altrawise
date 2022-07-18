@@ -195,28 +195,39 @@
                                 Permission
                             </a>
                         </li>
+                        <li class="nav-item" id="tab_assets">
+                            <a href="#tab_a" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                Assets
+                            </a>
+                        </li>
                         <li class="nav-item" id="tab_leaves">
                             <a href="#tab_l" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
                                 Leaves
                             </a>
                         </li>
-                        <li class="nav-item" id="tab_work_history">
-                            <a href="#tab_wh" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                        <li class="nav-item" id="tab_wh">
+                            <a href="#tab_w" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
                                 Work History
                             </a>
                         </li>
-                        <li class="nav-item" id="tab_documents">
-                            <a href="#tab_docs" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                        <li class="nav-item" id="tab_attach">
+                            <a href="#tab_att" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
                                 Documents
                             </a>
                         </li>
-                        <li class="nav-item" id="tab_exit_checklist">
-                            <a href="#tab_ec" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                        <li class="nav-item" id="tab_exit">
+                            <a href="#tab_e" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
                                 Exit Checklist
+                            </a>
+                        </li>
+                        <li class="nav-item" id="tab_track">
+                            <a href="#tab_t" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                Employee Track
                             </a>
                         </li>
                     </ul>
                     <div class="tab-content">
+                        <!--Details-->
                         <div class="tab-pane active" id="tab-detail">
                             <form class="form-horizontal" data-validate="parsley" id="detail_form">
 
@@ -598,6 +609,9 @@
                                 </div>
                             </form>   
                         </div>
+                        <!--Details-->
+
+                        <!--Additional Details-->
                         <div class="tab-pane" id="tab-additional">
                             <form class="form-horizontal" data-validate="parsley" id="additional_form">
                                 
@@ -983,6 +997,9 @@
 
                             </form>
                         </div>
+                        <!--Additional Details-->
+
+                        <!--Permissions-->
                         <div class="tab-pane" id="tab_p">
                             <form class="form-horizontal" data-validate="parsley" id="permission_form">
                                 <div class="row mt-2">
@@ -1106,6 +1123,30 @@
 
                             </p>
                         </div>
+                        <!--Permissions-->
+
+                        <!--Assets-->
+                        <div class="tab-pane" id="tab_a">
+                            <div class="table-responsive">
+                                <table class="table" id="tbl_asset">
+                                    <thead>
+                                        <tr>
+                                            <th>Type</th>
+                                            <th>Client</th>
+                                            <th>Owner</th>
+                                            <th>Brand</th>
+                                            <th>Expiry Date</th>
+                                            <th>Taken Date</th>
+                                            <th>Return Date</th>
+                                        </tr>
+                                    </thead> 
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!--Assets-->
 
                         <!--Leaves-->
                         <div id="tab_l" class="tab-pane">
@@ -1210,8 +1251,9 @@
                             </div>
                         </div>
                         <!--Leaves-->
+
                         <!--Work History-->
-                        <div id="tab_wh" class="tab-pane">
+                        <div class="tab-pane" id="tab_w">
                             <form class="form-horizontal" data-validate="parsley" id="rec_detail_form">
                                 <div class="row mt-2">
                                     <div class="col-lg-6">
@@ -1241,9 +1283,12 @@
                                         <div class="row">
                                             <label for="his_start_date" class="col-4 col-form-label">Start Date</label>
                                             <div class="col-7 errorContainer">
-                                                <input type="text" id="his_start_date" class="form-control flatpickr-input" placeholder="Required" required="required">
-                                                
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control flatpickr-input" id="his_start_date" placeholder="Required" required="required">
+                                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                </div>
                                             </div>
+                                            
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -1251,8 +1296,10 @@
                                         <div class="row">
                                             <label for="his_end_date" class="col-4 col-form-label">End Date</label>
                                             <div class="col-7 errorContainer">
-                                                <input type="text" id="his_end_date" class="form-control flatpickr-input" placeholder="Required" required="required">
-                                               
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control flatpickr-input" id="his_end_date" placeholder="Required" required="required">
+                                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -1263,8 +1310,10 @@
                                         <div class="row">
                                             <label for="his_join_date" class="col-4 col-form-label">Join Date</label>
                                             <div class="col-7 errorContainer">
-                                                <input type="text" id="his_join_date" placeholder="Required" class="form-control flatpickr-input"  required="required">
-                                                
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control flatpickr-input" id="his_join_date" placeholder="Required" required="required">
+                                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -1284,8 +1333,10 @@
                                         <div class="row">
                                             <label for="his_increment_date" class="col-4 col-form-label">Increment Date</label>
                                             <div class="col-7 errorContainer">
-                                                <input type="text" id="his_increment_date"  class="form-control flatpickr-input" >
-                                              
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control flatpickr-input" id="his_increment_date">
+                                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -1294,7 +1345,7 @@
                                         <div class="row">
                                             <label for="his_salary" class="col-4 col-form-label">Increment Amount</label>
                                             <div class="col-7 errorContainer">
-                                                <input type="number" id="his_txt_increment_amount" class="form-control">
+                                                <input type="number" id="his_txt_increment_amount" class="form-control" max="99999" min="1">
                                             </div>
                                         </div>
                                     </div>
@@ -1305,8 +1356,10 @@
                                         <div class="row">
                                             <label for="his_next_increment_date" class="col-4 col-form-label">Next Increment Date</label>
                                             <div class="col-7 errorContainer">
-                                                <input type="text" id="his_next_increment_date"  class="form-control flatpickr-input" >
-                                                
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control flatpickr-input" id="his_next_increment_date">
+                                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -1335,15 +1388,16 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-
+                        
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
                         <!--Work History-->
+
                         <!--Documents-->
-                        <div id="tab_docs" class="tab-pane">
+                        <div id="tab_att" class="tab-pane">
                             <form class="form-horizontal" data-validate="parsley" id="attachment_form">
                                 <div class="row mt-2">
                                     <div class="col-lg-6">
@@ -1354,7 +1408,6 @@
                                                 <button type="button" id="btn_doc_upload" class="btn btn-sm btn-success"><i class="mdi mdi-upload"></i>Browse File</button>
                                                 <input id="attach_fileupload" type="file" name="qqfile">
                                             </div>
-                                            
                                         </div>
                                         
                                     </div>
@@ -1367,11 +1420,17 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-2">
+                                    <!-- <div class="col-lg-2">
                                         &nbsp;
                                     </div>
                                     <div class="col-lg-10" id="attach_files">
+                                    </div> -->
+                                    <div class="files_div">
+                                        <div class="row mt-2">
+                                            <div id="attach_files" class="col-lg-10 offset-lg-2"></div>
+                                        </div>
                                     </div>
+
                                     <div class="row mt-2">
                                         <div class="col-lg-6">
                                             <!-- Remarks -->
@@ -1417,13 +1476,14 @@
                                         <th>Active Status</th>
                                     </tr>
                                 </thead>
-                                <tbody id="tbl_exit">
+                                <tbody id="tbl_attachment">
                                 </tbody>
                             </table>
                         </div>
                         <!--Documents-->
+
                         <!--Exit Checklist-->
-                        <div id="tab_ec" class="tab-pane">
+                        <div id="tab_e" class="tab-pane">
                             <form class="form-horizontal" data-validate="parsley" id="exit_form">
                                 <div class="row mt-2">
                                     <div class="col-lg-6">
@@ -1432,7 +1492,7 @@
                                             <label for="doc_fileupload" class="col-4 col-form-label">Attachments</label>
                                             <div class="col-7 errorContainer fileinput-button">
                                                 <button type="button" id="btn_doc_upload" class="btn btn-sm btn-success"><i class="mdi mdi-upload"></i>Browse File</button>
-                                                <input id="attach_fileupload" type="file" name="qqfile">
+                                                <input id="exit_attach_fileupload" type="file" name="qqfile">
                                             </div>
                                             
                                         </div>
@@ -1447,11 +1507,17 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-2">
+                                    <!-- <div class="col-lg-2">
                                         &nbsp;
                                     </div>
                                     <div class="col-lg-10" id="attach_files">
+                                    </div> -->
+                                    <div class="files_div">
+                                        <div class="row mt-2">
+                                            <div id="exit_attach_files" class="col-lg-10 offset-lg-2"></div>
+                                        </div>
                                     </div>
+
                                     <div class="row mt-2">
                                         <div class="col-lg-6">
                                             <!-- Remarks -->
@@ -1502,6 +1568,99 @@
                             </table>
                         </div>
                         <!--Exit Checklist-->
+
+                        <!--Exit Checklist-->
+                        <div id="tab_t" class="tab-pane">
+                            <form class="form-horizontal" data-validate="parsley" id="track_form">
+                                <div class="row mb-2">
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <label for="chk_enable_screen_track" class="col-4 col-form-label">Screen Track</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="checkbox" id="chk_enable_screen_track" name="chk_enable_screen_track" checked class="js-switch" data-color="#99d683" />
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <label for="txt_interval" class="col-4 col-form-label">Interval(Mins)</label>
+                                            <div class="col-7 errorContainer">
+                                                <input type="number" id="txt_interval" class="form-control" data-parsley-type="number" max="1000" min="1" value="0">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-2">
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <label for="st_start_date" class="col-4 col-form-label">Start Date</label>
+                                            <div class="col-7 errorContainer">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control flatpickr-input" id="st_start_date">
+                                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <label for="st_end_date" class="col-4 col-form-label">End Date</label>
+                                            <div class="col-7 errorContainer">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control flatpickr-input" id="st_end_date">
+                                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="form-group">
+                                    <label for="st_start_time" class="control-label col-sm-2">Start Time</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" id="st_start_time" value="9:00 AM" class="form-control tp-time ui-timepicker-input" style="box-sizing: border-box !important;" autocomplete="off">
+                                    </div>
+                                    <label for="st_end_time" class="control-label col-sm-2">End Time</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" id="st_end_time" value="6:00 PM" class="form-control tp-time ui-timepicker-input" style="box-sizing: border-box !important;" autocomplete="off">
+                                    </div>
+                                </div>
+                            
+                                <div class="form-group">
+                                    <label for="dp_date" class="control-label col-sm-2">Enable Days</label>
+                                    <div class="col-sm-10">
+                                        
+                            
+                                    </div>
+                                </div>
+                            
+                                <div class="form-group">
+                                    <label for="dp_date" class="control-label col-sm-2">Exclude</label>
+                                    <div class="col-sm-10">
+                                        <input type="checkbox" id="chk_exclude_ph" name="chk_exlcude_ph">
+                                        <span style="margin-right: 10px;">Public Holidays</span>
+                                        <input type="checkbox" id="chk_exclude_leaves" name="chk_exclude_leaves">
+                                        All Leaves
+                                    </div>
+                                </div>
+                            
+                                <div class="col-sm-12">
+                                    <p class="pull-right">
+                                    <div class="btn-toolbar" style="text-align:right">
+                                        <a href="javascript::void(0)" class="btn btn-warning btn-outline waves-effect waves-light ladda-button" data-style="expand-left" data-spinner-color="#000000" id="btn_config_download" name="btn_config_download">
+                                            <i class="fa fa-cloud-download"></i> Download Config
+                                        </a>
+                                    </div>
+                                    </p>
+                                </div> -->
+                                
+                            </form>
+                        </div>
+                        <!--Exit Checklist-->
+
                     </div>
                     <div class="form-group align-right" id="actions_div">
                         <button id="btn_save" type="button" class="btn btn-success waves-effect waves-light mt-1 mb-1 ladda-button" data-color="green" data-style="expand-left"><i class="fa fa-check me-1"></i> Save</button>
@@ -1537,6 +1696,7 @@
 <!-- <script src="./assets/libs/flatpickr/flatpickr.min.js"></script> -->
 <!-- <script src="assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script> -->
 <script src="assets/libs/parsleyjs/parsley.min.js"></script>
+<script src="./assets/js/moment.js/2.18.1/moment.min.js"></script>
 <!-- third party js ends -->
 
 <script src="assets/js/jspdf/plugins/jspdf.debug.js"></script>
