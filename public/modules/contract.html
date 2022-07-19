@@ -140,9 +140,9 @@
             </div> <!-- end card-->
         </div> <!-- end col -->
 
-        <!-- Modal Remark List Start -->
+    <!-- Modal Remark List Start -->
 	<!-- <div class="modal fade" id="remarkListModal"style="overflow:hidden;" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> -->
-        <div id="remarkListModal" class="modal fade" role="dialog" style="overflow:hidden;">
+    <div id="remarkListModal" class="modal fade" role="dialog" style="overflow:hidden;">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header bg-light">
@@ -194,6 +194,45 @@
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
+
+    <!-- ///////////////////////////////////////// -->
+
+
+    <!-- Modal Remark List Start -->
+	<div id="remarkModal" class="modal fade" role="dialog" style="overflow:hidden;">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-light">
+                        <h4 class="modal-title" id="assigneeModalLabel">Confirmation</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                    </div>
+                    <div class="modal-body p-2">
+
+                        <input type="hidden" name="ct_no" id="ct_no">
+                        <input type="hidden" name="chk_level" id="chk_level">
+                        <input type="hidden" id="approve_or_cancel">
+
+                        <div class="col-12">
+                            Please confirm the selection and add the remark below.
+                        </div>
+    
+                        <div class="mb-2">
+                            <label for="voucher_remark" class="form-label">Remark:</label>
+                            <div class="errorContainer">
+                                <textarea name="ct_remark" id="ct_remark" class="form-control" required="required"></textarea>
+                            </div>
+                        </div>
+    
+                        <div class="text-end">
+                            <button type="button" id="btn_approve_cancel" class="btn btn-light waves-effect waves-light m-1" data-bs-dismiss="modal"><i class="fa fa-times me-1"></i> Cancel</button>
+                            <button type="button" id="btn_approve" class="btn btn-success waves-effect waves-light mt-1 mb-1 ladda-button" data-color="green" data-style="expand-left"><i class="fa fa-check me-1"></i> Confirm</button>
+                        </div>
+                        
+                        
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
 
     </div>
     <!-- end row -->
@@ -1794,22 +1833,23 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="pull-right">
-                                                <button type="button" id="send_for_approval" class="btn btn-primary" style="float:right;">Send for Approval</button>
+                                                <button type="button" id="send_for_approval" class="btn btn-primary" style="float:right;margin-bottom: 1%;">Send for Approval</button>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-sm-2 col-sm-offset-7">
+                                        <!-- <div class="col-sm-2 col-sm-offset-7">
                                             <div id="approval_stages_div" class="pull-right">
                                             
                                             </div>
-                                        </div>
-                                        <div class="col-sm-6">
+                                        </div> -->
+                                        <div class="col-sm-12">
                                             <div class="pull-right"> 
-                                                <button type="button" id="chk_is_approve" class="btn btn-primary">Approve</button>
-                                                <button type="button" id="cancel_approval" class="btn btn-danger">Cancel Approval</button>
-                                                <button type="button" id="revoke_approval" class="btn btn-success">Revoke Approval</button>
+                                                <button type="button" id="chk_is_approve" class="btn btn-primary" style="float: right;margin-left:1%;">Approve</button>
+                                                <button type="button" id="cancel_approval" class="btn btn-danger" style="float: right;margin-left:1%;">Cancel Approval</button>
+                                                <button type="button" id="revoke_approval" class="btn btn-success" style="float: right;margin-left:1%;">Revoke Approval</button>
+                                                <div id="approval_stages_div" class="pull-right" style="float: right;"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -1820,14 +1860,19 @@
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <button type="button" id="btn_po_upload" class="btn btn-success btn-start fileinput-button" style="float:right;">Save to Upload</button>
+                                                <span class="btn btn-success waves-effect waves-light fileinput-button" style="float: right;margin-right: 1%;">
+                                                    <span>Browse File</span>
+                                                    <input id="fileupload_po_file" type="file" name="qqfile">
+                                                </span>
+                                                
                                             </div>
                                             
-                                            <div class="col-7 errorContainer">
+                                            <!-- <div class="col-7 errorContainer">
                                                 <span class="btn btn-success waves-effect waves-light fileinput-button">
                                                     <span>Browse File</span>
                                                     <input id="fileupload_po_file" type="file" name="qqfile">
                                                 </span>
-                                            </div>
+                                            </div> -->
 
                                         </div>
                                     </div>

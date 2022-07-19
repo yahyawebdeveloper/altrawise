@@ -122,11 +122,6 @@ $.fn.get_list = function (is_scroll)
             }
         );
 
-        // $.fn.fetch_data_for_table_v2
-        //     (
-        //         $.fn.generate_parameter('get_service_request_list', data),
-        //         $.fn.populate_list_form, is_scroll, 'tbl_list'
-        //     );
     }
     catch (err)
     {
@@ -202,30 +197,24 @@ $.fn.populate_list_form = function (data, is_scroll)
                 {
                     if (json_approval.verify.verified == 1)
                     {
-                        // status = '<i class="fa fa-pencil-square-o" aria-hidden="true">Verified</i><br/>';
                         status = '<div class="pt-1"><i class="fas fa-pen-square" aria-hidden="true">&nbsp;Verified</i><br/></div>';
                     }
                     else
                     {
                         if (MODULE_ACCESS.verify == 1 && data[i].status_id == SEND_VERIFY_STATUS)
                         {
-                            // verify = '<button type="button" class="btn btn-info-alt btn-sm btn-label ladda-button tooltips" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Verify" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,1)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs">Verify</span></button>';
-
                             verify = '<div class="button-list pt-1"><button type="button" class="btn btn-xs btn-outline-info waves-effect waves-light" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Verify" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,1)"><span class="btn-label"><i class="fas fa-pen-square" aria-hidden="true"></i></span><span class="hidden-xs">Verify</span></button></div>';
 
                         }
                     }
                     if (json_approval.approve.approved == 1)
                     {
-                        // status += '<i class="fa fa-check-square-o" aria-hidden="true">Approved</i>';
                         status += '<i class="fas fa-check-square" aria-hidden="true">&nbsp;Approved</i>';
                     }
                     else
                     {
                         if (MODULE_ACCESS.approve == 1)
                         {
-                            // approve = '<button type="button" class="btn btn-success-alt btn-sm btn-label ladda-button tooltips" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Approve" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,2)"><i class="fa fa-check-square-o" aria-hidden="true"></i><span class="hidden-xs">Approve</span></button>';
-
                             approve = '<div class="button-list pt-1"><button type="button" class="btn btn-xs btn-outline-info waves-effect waves-light" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Approve" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,2)"><span class="btn-label"><i class="far fa-check-square" aria-hidden="true"></i></span><span class="hidden-xs">Approve</span></button></div>';
                         }
                     }
@@ -236,15 +225,11 @@ $.fn.populate_list_form = function (data, is_scroll)
                     {
                         if (data[i].status_id == SEND_VERIFY_STATUS)
                         {
-                            // verify = '<button type="button" class="btn btn-info-alt btn-sm btn-label ladda-button tooltips" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Verify" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,1)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span class="hidden-xs">Verify</span></button>';
-
                             verify = '<div class="button-list pt-1"><button type="button" class="btn btn-xs btn-outline-info waves-effect waves-light" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Verify" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,1)"><span class="btn-label"><i class="fas fa-pen-square" aria-hidden="true"></i></span><span class="hidden-xs">Verify</span></button></div>';
                         }
                     }
                     else if (MODULE_ACCESS.approve == 1)
                     {
-                        // approve = '<button type="button" class="btn btn-success-alt btn-sm btn-label ladda-button tooltips" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Approve" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,2)"><i class="fa fa-check-square-o" aria-hidden="true"></i><span class="hidden-xs">Approve</span></button>';
-
                         approve = '<div class="button-list pt-1"><button type="button" class="btn btn-xs btn-outline-info waves-effect waves-light" data-toggle="tooltip" data-placement="left" data-style="expand-left" data-spinner-color="#000000" title="Approve" onclick="$.fn.verify_approval(unescape( $(this).closest(\'tr\').data(\'value\')),this,2)"><span class="btn-label"><i class="far fa-check-square" aria-hidden="true"></i></span><span class="hidden-xs">Approve</span></button></div>';
                     }
                 }
@@ -511,13 +496,13 @@ $.fn.populate_detail_form = function (data)
                             $('#dd_payment_status').val(data.status_id).change();
                             
                             for (let i = 0; i < return_data.data.attachment.length; i++)
-                                    { 
-                                        return_data.data.attachment[i]['name'] = return_data.data.attachment[i]['filename'];
-                                        return_data.data.attachment[i]['uuid'] = return_data.data.attachment[i]['id'];
-                                        return_data.data.attachment[i]['deleteFileParams'] =  JSON.stringify(return_data.data.attachment[i]);
-                                        delete return_data.data.attachment[i]['filename'];
-                                        delete return_data.data.attachment[i]['id'];
-                                    }
+                            { 
+                                return_data.data.attachment[i]['name'] = return_data.data.attachment[i]['filename'];
+                                return_data.data.attachment[i]['uuid'] = return_data.data.attachment[i]['id'];
+                                return_data.data.attachment[i]['deleteFileParams'] =  JSON.stringify(return_data.data.attachment[i]);
+                                delete return_data.data.attachment[i]['filename'];
+                                delete return_data.data.attachment[i]['id'];
+                            }
                             $.fn.populate_fileupload(return_data.data, 'doc_payment_files');
                         }
                         else if (data.category_id == LOAN)

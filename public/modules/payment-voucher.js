@@ -26,27 +26,6 @@ $.fn.data_table_features = function ()
     }
 };
 
-// $.fn.data_table_features = function(table_id)
-// {
-//     try
-//     {
-//         if (!$.fn.dataTable.isDataTable('#'+table_id) )
-//         {
-//             table = $('#'+table_id).DataTable
-//             ({
-//                 "searching" : false,
-//                 "paging"    : false,
-//                 "info"      : false,
-//                 "order"     : [[ 0, "asc" ]]
-//             });
-//         }
-//     }
-//     catch(err)
-//     {
-//         $.fn.log_error(arguments.callee.caller,err.message);
-//     }
-// };
-
 $.fn.data_table_destroy = function(table_id)
 {
     try
@@ -99,7 +78,6 @@ $.fn.get_list = function(is_scroll, pending_data = false)
         $.fn.fetch_data(
             $.fn.generate_parameter('get_payment_voucher_list', data),
             function(return_data) { 
-                console.log(return_data.data);
                  if (return_data.data.list) {
                     var len = return_data.data.list.length;
                     if (return_data.data.rec_index)
@@ -138,12 +116,6 @@ $.fn.get_list = function(is_scroll, pending_data = false)
                 } 
             }
         );
-        
-        // $.fn.fetch_data_for_table_v2
-        // (
-        //     $.fn.generate_parameter('get_payment_voucher_list',data),
-        //     $.fn.populate_list_form,is_scroll,'tbl_list'
-        // );
     }
     catch(err)
     {
@@ -229,16 +201,12 @@ $.fn.populate_list_form = function(data,is_scroll)
 
                 row += '<td width="10%">';
 
-                // row += '<a class="tooltips" data-toggle="tooltip" data-placement="left" title="View Comments" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.view_remark(unescape($(this).attr(\'data-value\')))"><i class="fa fa-external-link"></i></a>';
-
                 row += `<button type="button" class="btn btn-outline-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="View Comments" data-value="${data_val}" onclick="$.fn.view_remark(decodeURIComponent('${data_val}'))">
                             <i class="far fa-comment-alt"></i>
                         </button>&nbsp;`;
 
                 if(true)
                 {
-                    // row += '&nbsp;&nbsp;<a class="tooltips" data-toggle="tooltip" data-placement="left" title="View Details" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.populate_detail_form(unescape($(this).attr(\'data-value\')))"><i class="fa fa-sign-in"></i></a>';
-
                     row += `<button type="button" class="btn btn-outline-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="View Details" data-value="${data_val}" onclick="$.fn.populate_detail_form(decodeURIComponent('${data_val}'))">
                             <i class="fas fa-sign-in-alt"></i>
                         </button>`;
@@ -246,8 +214,6 @@ $.fn.populate_list_form = function(data,is_scroll)
                 }
                 if(MODULE_ACCESS.delete == 1)
                 {
-                    // row += '&nbsp;&nbsp;<a class="tooltips" data-toggle="tooltip" data-placement="left" title="Delete" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.delete_payment_voucher(unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\'))"><i class="fa fa-trash-o"/></a>';
-
                     row += `&nbsp;
                     <div class="button-list pt-1"><button type="button" class="btn btn-outline-danger btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-value="${data_val}" onclick="$.fn.delete_payment_voucher(decodeURIComponent('${data_val}'), $(this).closest(\'tr\').prop(\'id\'))">
                             <i class="far fa-trash-alt"></i>
@@ -433,13 +399,13 @@ $.fn.populate_payment_details = function (obj)
         $('#dd_client')             .val(data.client_id).change();
         $('#txt_amount')            .val(data.amount);
         for (let i = 0; i < data.attachment.length; i++)
-					{ 
-						data.attachment[i]['name'] = data.attachment[i]['filename'];
-						data.attachment[i]['uuid'] = data.attachment[i]['id'];
-						data.attachment[i]['deleteFileParams'] =  JSON.stringify(data.attachment[i]);
-						delete data.attachment[i]['filename'];
-						delete data.attachment[i]['id'];
-					}
+        { 
+            data.attachment[i]['name'] = data.attachment[i]['filename'];
+            data.attachment[i]['uuid'] = data.attachment[i]['id'];
+            data.attachment[i]['deleteFileParams'] =  JSON.stringify(data.attachment[i]);
+            delete data.attachment[i]['filename'];
+            delete data.attachment[i]['id'];
+        }
         $.fn.populate_fileupload(data,'attachment_files',true);
 
     } 
@@ -469,9 +435,6 @@ $.fn.populate_payments_list = function (data)
                 let edit_row = '';
                 if(true)
                 {
-                    // edit_row = `<a class="btn_edit_payment" data-value='${escape(JSON.stringify(data[i]))}' onclick="$.fn.populate_payment_details(unescape($(this).attr('data-value')));">
-                    //                 <i class="fa fa-pencil" aria-hidden="true"></i>
-                    //             </a>`;
 
                     edit_row = `<button type="button" class="btn btn-outline-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" data-value="${escape(JSON.stringify(data[i]))}" onclick="$.fn.populate_payment_details(decodeURIComponent('${escape(JSON.stringify(data[i]))}'))">
                             <i class="fas fa-edit"></i>
@@ -524,12 +487,6 @@ $.fn.save_edit_form = function()
             btn_save.stop();
             return;
         }
-
-        // if($('#detail_form').parsley( 'validate' ) == false)
-        // {
-        //     btn_save.stop();
-        //     return;
-        // }
         
         // VOUCHER_NO = '';
         
@@ -1080,7 +1037,6 @@ $.fn.populate_currency = function(element_id, dd_data)
         for (let item of dd_data)
         {
             $('#'+element_id).append(`<li><a class="currency-btn" style="cursor:pointer;" data-value="${item.id}">${item.descr}</a></li>`);
-            // $('#'+element_id).append(`<li class="currency-btn option" data-value="${item.id}">${item.descr}</li>`);
         }
         
     }
@@ -1102,21 +1058,6 @@ $.fn.set_validation_form = function()
             },
         }
     );
-
-    // $('#detail_form').parsley
-    // ({
-    //     successClass	: 'has-success',
-    //     errorClass		: 'has-error',
-    //     errors			:
-    //     {
-    //         classHandler: function(el)
-    //         {
-    //             return $(el).closest('.error-container');
-    //         },
-    //         errorsWrapper	: '<ul class=\"help-block list-unstyled\"></ul>',
-    //         errorElem		: '<li></li>'
-    //     }
-    // });
 
     $('#payment_form').parsley
     ({
@@ -1355,14 +1296,6 @@ $.fn.view_remark = function(data)
                         '<td>' + remarks[i].created_by      + '</td>' +
                         '<td>' + remarks[i].created_date    + '</td>';
                 row += '</tr>';
-                        
-
-                // row += '<tr>'+
-                //             '<td><a class="tooltips" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.delete_remark(unescape($(this).attr(\'data-value\')))" data-trigger="hover" data-original-title="Delete data "><i class="fa fa-trash-o"/></a></td>' +
-                //             '<td>' + remarks[i].remarks         + '</td>' +
-                //             '<td>' + remarks[i].created_by      + '</td>' +
-                //             '<td>' + remarks[i].created_date    + '</td>';
-                // row += '</tr>';
 
             }
             $('#tbl_remark_list tbody').html(row);
@@ -1854,7 +1787,6 @@ $.fn.bind_command_events = function()
 
         $('#btn_search').click( function(e)
         {
-            // alert('11111');
             e.preventDefault();
             RECORD_INDEX = 0;
             $.fn.get_list(false);
@@ -1920,11 +1852,6 @@ $.fn.bind_command_events = function()
 			$('#btn_search_action').show();
 		});
 
-        // $('#dropdownMenu1').click(function(){
-		// 	// $(this).addClass('open');
-        //     $('.currency_list').show();
-		// });
-
         $("#dropdownMenu1,.currency_list").mouseover(function(){
             $('.currency_list').show();
         });
@@ -1937,7 +1864,6 @@ $.fn.bind_command_events = function()
         $(".dropdown-menu li a").click(function(){
             $('.currency_list').hide();
             $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret" id="btn_currency_text"></span><i class="fa fa-caret-down"></i>');
-            // $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
             $(this).parents(".dropdown").find('#btn_currency_text').val($(this).data('value'));
           });
 

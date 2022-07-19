@@ -1361,12 +1361,6 @@ $.fn.get_list = function(is_scroll)
                 } 
             }
         );
-	 	
-	 	// $.fn.fetch_data_for_table
-		// (
-		// 	$.fn.generate_parameter('get_contract_list',data),
-		// 	$.fn.populate_list_form,is_scroll,'tbl_list'
-		// );
 	}
 	catch(err)
 	{
@@ -3311,7 +3305,8 @@ $.fn.view_remark = function(contract_no)
 		$("#dd_send_to").select2({
 			dropdownParent: $('#remarkListModal .modal-content')
 		});
-
+		
+		$("#dd_send_to").val('').trigger('change');
 		$('#remarkListModal').modal('show');
     }
     catch(err)
@@ -3353,7 +3348,7 @@ $.fn.add_edit_remark = function()
     {	
 	   let action = $('#approve_or_cancel').val();	
        if(action == 'approve' || action == 'cancel')
-	   {
+	   	{
     	   let result_ref_exist = '';
     	   if(action == 'approve' && $('#chk_level').val() == 'CEO')
 		   {
@@ -3381,7 +3376,7 @@ $.fn.add_edit_remark = function()
 	    			   return;
 				   }
     		   }
-		   }
+		   	}
     	   
 			var remarks = ($('#ct_remark').val()).trim();
 			var contract_no = $('#ct_no').val();
@@ -3396,8 +3391,7 @@ $.fn.add_edit_remark = function()
 				notify_emp_id		: $('#dd_send_to').val()
 			};
 	   }
-	   if(action == '')
-	   {
+	   if(action == '') {
 			var remarks = ($('#contract_remark').val()).trim();
 			var contract_no = $('#contract_no').val();
 		   	var data	=
@@ -3410,10 +3404,9 @@ $.fn.add_edit_remark = function()
 				user_name			: SESSIONS_DATA.name,
 				notify_emp_id		: $('#dd_send_to').val()
 			};
-	   }
+	   	}
 
-	   if(remarks != '')
-	   {
+	   if(remarks != '') {
 			$.fn.write_data
 			(
 				$.fn.generate_parameter('contract_add_edit_remark', data),
@@ -3438,10 +3431,7 @@ $.fn.add_edit_remark = function()
 	
 				},false, btn_save_remarks
 			);
-			
-		}
-		else
-		{
+		} else {
 			$.fn.show_right_error_noty('Remarks is mandatory');
 			btn_save_remarks.stop();
 		}
