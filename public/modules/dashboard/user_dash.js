@@ -102,26 +102,31 @@ $.fn.get_list = function()
 				end: '1659810600',
 				start: '1656181800'
 			};
-			let event_value = {};
+			let event_value = [];
+			
 			$.fn.write_data
             ( 
                 $.fn.generate_parameter('get_user_events','', datas),
                 function (return_data){
 					if (return_data.data){
-						$.each(return_data.data, function (i, dataa) {
-							for(var i = 0, l = return_data.data.length; i < l; i++) {
-								event_value['id'] = return_data.data[i].id;
-								event_value['title'] = return_data.data[i].title;
-								event_value['start'] = return_data.data[i].start;
-								event_value['end'] = return_data.data[i].end;
-								event_value['type'] = return_data.data[i].type;
-								event_value['backgroundColor'] = return_data.data[i].backgroundColor;
+						
+							for(var i = 0, l = return_data.data.length; i < l; i++) 
+							{
+								var event = {  
+									"id" : return_data.data[i].id, 
+									"title" :  return_data.data[i].title,                               
+									"start" : return_data.data[i].start,
+									"end" : return_data.data[i].end,
+									"type" : return_data.data[i].type,
+									"backgroundColor" : return_data.data[i].backgroundColor  
+								 };
+								event_value.push(event);
 							}
-						});
+						
+						$.fn.load_calender_fun(event_value);
 					} 
                 },false
             );
-			$.fn.load_calender_fun(event_value);
 	}
 	catch(err)
 	{
@@ -287,9 +292,7 @@ $.fn.load_calender_fun = function(event_arr){
 				}
 			});
 
-			//console.log([event_arr]);
-			var t = [event_arr];
-			var a = this;
+			var t = event_arr, a = this;
 
 			a.$calendarObj = new FullCalendar.Calendar(a.$calendar[0], {
 				slotDuration: "00:15:00",
