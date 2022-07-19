@@ -86,115 +86,42 @@ $.fn.get_list = function()
 	try
 	{
 		//get filter values in variable
-		let filter_val = '';
+		/* let filter_val = '';
 	  	$.each($("input[name='appointment_filter[]']:checked"), function() 
 	  	{
 	    	filter_val += $(this).val() + ",";
-	  	});
-
-	  /* 	let calendar = $('#calendar-drag').fullCalendar
-	  	({
-		    header			: 
-		    {
-		    	left		: 'prev,next today',
-		    	center		: 'title',
-		    	right		: 'month,agendaWeek,agendaDay'
-		    },
-		    selectable		: true,
-		    selectHelper	: true,
-		    editable		: true,
-		    eventSources	: 
-		    [{
-		    	url			: CURRENT_PATH + controller_URL,
-		    	method		: 'POST',
-		    	dataType	: "json",
-		    	contentType	: "application/json",
-		    	data		: $.fn.generate_parameter('get_user_events', '',{filter_val: filter_val,emp_id: SESSIONS_DATA.emp_id, company_id:SESSIONS_DATA.company_id})
-		    }],
-		    eventClick: function(calEvent, jsEvent, view) 
-		    {
-		      try 
-		      {
-		      	if (calEvent.type == 'task') 
-			    {
-			    	let due_date = moment(calEvent.start).format('YYYY-MM-DD');
-			    	$.fn.fetch_data
-			        (
-				        $.fn.generate_parameter('get_tasks_for_dashboard', {
-				        														due_date: due_date,
-				        														is_admin: SESSIONS_DATA.is_admin,
-				        														emp_id 	: SESSIONS_DATA.emp_id, 
-				        												   }),
-				        function(return_data) 
-				        {	
-				        	$('#display_tasks table > tbody').empty();
-							if (return_data.data.length > 0)
-    						{	let row	= '';
-    							data 	= return_data.data;
-    							for(var i = 0; i < data.length; i++)
-        						{
-        							row += `<tr>
-					                    <td>${data[i].task_no}</td>
-					                    <td>${data[i].title}</td>
-					                    <td>${data[i].task_type_desc}</td>
-					                    <td>${data[i].task_priority_desc}</td>
-					                    <td>
-					                    	<a href="javascript:void(0);" onclick="$.fn.got_to_task('${data[i].task_no}')"><i class="fa fa-sign-in"></i></a>
-					                    </td>
-				                    </tr>`;
-        						}
-    							
-    							$('#display_tasks table > tbody').append(row);
-    						}
-    						$('#display_tasks').modal('show');
-				        }
-			        );
-			    }
-			    else if(calEvent.type != 'holiday')
-			    {
-			    	$.fn.fetch_data
-			        (
-			            $.fn.generate_parameter('get_user_event_detail', {id: calEvent.id, type: calEvent.type }),
-			            function(return_data) 
-			            {
-				            let data = return_data.data;
-				            for (let propName in data) 
-				            {
-				              if (propName == 'people_name') 
-				              {
-				                $('#display-' + propName).html(data[propName].split(',').join('\n'));
-				              } 
-				              else
-				              {
-				                $('#display-' + propName).html(data[propName]);
-				              }
-				            }
-
-				            if (calEvent.type == 'appointment') 
-				            {
-				              $('#display_appointment').modal('show');
-				            } 
-				            else if (calEvent.type == 'leave') 
-				            {
-				              $('#display_leave').modal('show');
-				            }
-			            }
-			        );
-			    }
-		      }
-		      catch (err) 
-		      {
-		        $.fn.log_error(arguments.callee.caller, err.message);
-		      }
-		    },
-		    buttonText	: 
-		    {
-		    	today	: 'Today',
-		    	month	: 'Month',
-		    	week	: 'Week',
-		    	day		: 'Day'
-		    }
 	  	}); */
+		let company_id = SESSIONS_DATA.company_id;
+		let emp_id = SESSIONS_DATA.emp_id;
+  
+			var datas =
+			{
+				filter_val: '1,2,3,4',
+				emp_id: emp_id,
+				company_id:company_id,
+				end: '1659810600',
+				start: '1656181800'
+			};
+			let event_value = {};
+			$.fn.write_data
+            ( 
+                $.fn.generate_parameter('get_user_events','', datas),
+                function (return_data){
+					if (return_data.data){
+						$.each(return_data.data, function (i, dataa) {
+							for(var i = 0, l = return_data.data.length; i < l; i++) {
+								event_value['id'] = return_data.data[i].id;
+								event_value['title'] = return_data.data[i].title;
+								event_value['start'] = return_data.data[i].start;
+								event_value['end'] = return_data.data[i].end;
+								event_value['type'] = return_data.data[i].type;
+								event_value['backgroundColor'] = return_data.data[i].backgroundColor;
+							}
+						});
+					} 
+                },false
+            );
+			$.fn.load_calender_fun(event_value);
 	}
 	catch(err)
 	{
@@ -304,7 +231,7 @@ $.fn.bind_command_events = function()
 		      }
 		    }
 
-		   // $('#calendar-drag').fullCalendar('destroy');
+		   // $('#calendar').fullCalendar('destroy');
 		    $.fn.get_list();
 		});
 	}
@@ -327,8 +254,110 @@ $.fn.form_load = function()
 	}
 };
 
-$(document).ready(function()
-{
+$.fn.load_calender_fun = function(event_arr){
+	!function(l) {
+		"use strict";
+		function e() {
+			this.$body = l("body"), this.$modal = l("#event-modal"), this.$calendar = l("#calendar"), 
+			this.$formEvent = l("#form-event"), this.$btnNewEvent = l("#btn-new-event"), this.$btnDeleteEvent = l("#btn-delete-event"), 
+			this.$btnSaveEvent = l("#btn-save-event"), this.$modalTitle = l("#modal-title"), 
+			this.$calendarObj = null, this.$selectedEvent = null, this.$newEventData = null;
+		}
+		e.prototype.onEventClick = function(e) {
+			this.$formEvent[0].reset(), this.$formEvent.removeClass("was-validated"), this.$newEventData = null, 
+			this.$btnDeleteEvent.show(), this.$modalTitle.text("Edit Event"), this.$modal.show(), 
+			this.$selectedEvent = e.event, l("#event-title").val(this.$selectedEvent.title), 
+			l("#event-category").val(this.$selectedEvent.classNames[0]);
+		}, e.prototype.onSelect = function(e) {
+			this.$formEvent[0].reset(), this.$formEvent.removeClass("was-validated"), this.$selectedEvent = null, 
+			this.$newEventData = e, this.$btnDeleteEvent.hide(), this.$modalTitle.text("Add New Event"), 
+			this.$modal.show(), this.$calendarObj.unselect();
+		}, e.prototype.init = function() {
+			this.$modal = new bootstrap.Modal(document.getElementById("event-modal"), {
+				keyboard: !1
+			});
+			var e = new Date(l.now());
+			new FullCalendar.Draggable(document.getElementById("external-events"), {
+				itemSelector: ".external-event",
+				eventData: function(e) {
+					return {
+						title: e.innerText,
+						className: l(e).data("class")
+					};
+				}
+			});
+
+			//console.log([event_arr]);
+			var t = [event_arr];
+			var a = this;
+
+			a.$calendarObj = new FullCalendar.Calendar(a.$calendar[0], {
+				slotDuration: "00:15:00",
+				slotMinTime: "08:00:00",
+				slotMaxTime: "19:00:00",
+				themeSystem: "bootstrap",
+				bootstrapFontAwesome: !1,
+				buttonText: {
+					today: "Today",
+					month: "Month",
+					week: "Week",
+					day: "Day",
+					list: "List",
+					prev: "Prev",
+					next: "Next"
+				},
+				initialView: "dayGridMonth",
+				handleWindowResize: !0,
+				height: l(window).height() - 200,
+				headerToolbar: {
+					left: "prev,next today",
+					center: "title",
+					right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth"
+				},
+				initialEvents: t,
+				editable: !0,
+				droppable: !0,
+				selectable: !0,
+				dateClick: function(e) {
+					a.onSelect(e);
+				},
+				eventClick: function(e) {
+					a.onEventClick(e);
+				}
+			}), a.$calendarObj.render(), a.$btnNewEvent.on("click", function(e) {
+				a.onSelect({
+					date: new Date(),
+					allDay: !0
+				});
+			}), a.$formEvent.on("submit", function(e) {
+				e.preventDefault();
+				var t = a.$formEvent[0];
+				if (t.checkValidity()) {
+					if (a.$selectedEvent) a.$selectedEvent.setProp("title", l("#event-title").val()), 
+					a.$selectedEvent.setProp("classNames", [ l("#event-category").val() ]); else {
+						var n = {
+							title: l("#event-title").val(),
+							start: a.$newEventData.date,
+							allDay: a.$newEventData.allDay,
+							className: l("#event-category").val()
+						};
+						a.$calendarObj.addEvent(n);
+					}
+					a.$modal.hide();
+				} else e.stopPropagation(), t.classList.add("was-validated");
+			}), l(a.$btnDeleteEvent.on("click", function(e) {
+				a.$selectedEvent && (a.$selectedEvent.remove(), a.$selectedEvent = null, a.$modal.hide());
+			}));
+		}, l.CalendarApp = new e(), l.CalendarApp.Constructor = e;
+	}(window.jQuery), function() {
+		"use strict";
+		window.jQuery.CalendarApp.init();
+	}();
+}
+
+
+$(document).ready(function(){
 	$.fn.get_list();
 	$.fn.form_load();
 });
+

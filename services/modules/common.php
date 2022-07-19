@@ -542,11 +542,6 @@ function get_contract_search_dropdown($params) {
     
 } 
 
-
-
-
-
-
 function get_data_dashboard($params) {
     try
     {  
