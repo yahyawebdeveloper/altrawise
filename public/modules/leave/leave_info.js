@@ -1068,7 +1068,7 @@ $.fn.get_list = function (is_scroll, limit = LIST_PAGE_LIMIT)
 							$('#tbl_list tbody').empty().append
 								(
 									`<tr>
-										<td colspan="8">
+										<td colspan="9">
 											<div class="list-placeholder">No records found!</div>
 										</td>
 									</tr>`
