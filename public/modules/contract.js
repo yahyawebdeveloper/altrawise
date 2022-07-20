@@ -859,8 +859,11 @@ $.fn.populate_employment_list_form = function(data)
 
 				if (i == 0) {
 					styleCss = '';
+					styleWidth = '177%';
 				} else {
-					styleCss = '0px 1px 0px 40px';
+					// styleCss = '0px 1px 0px 82px';
+					styleCss = '9%';
+					styleWidth = '177%';
 				}
 
 				let json_field 	= data[i].json_field;
@@ -868,8 +871,8 @@ $.fn.populate_employment_list_form = function(data)
 				data_val 		= JSON.stringify(data[i].json_field);
 				data_att 		= JSON.stringify(data[i].attachment);
 				duration        += parseInt(json_field.duration_of_employment);
-				row += `<div class="col-md-2 emp-block-container" id="emp-container-${data[i].id}" style="float: left !important;padding:${styleCss}">
-						<div class="emp-block" style="cursor: pointer;box-shadow: 2px 2px 4px 2px rgb(0 0 0 / 10%);width:140%;padding:6px;margin-bottom:7%;">
+				row += `<div class="col-md-2 emp-block-container" id="emp-container-${data[i].id}" style="float: left !important;margin-left:${styleCss}">
+						<div class="emp-block" style="cursor: pointer;box-shadow: 2px 2px 4px 2px rgb(0 0 0 / 10%);width:${styleWidth};padding:6px;margin-bottom:7%;">
 							<div class="emp-heading">
 								<input type='hidden' value='${data[i].id}' class='txt_employment_id'>
 								<input type='hidden' value='${data_val}' class='emp_data'>
@@ -900,9 +903,14 @@ $.fn.populate_employment_detail = function(element_id)
 {
     try
     {	
+		
 		$('#approval_div').show();
 		$('.emp-block').removeClass('active');
-		element_id.addClass('active');
+		
+		
+		//element_id.addClass('active');
+		$('.emp-block').css("background-color", "");
+		element_id.css("background-color", "#4fc6e1");
 		// element_id.find('.remove-employment').hide();
 
 		$('#btn_employment_add').html('<i class="fa fa-edit fa-fw" aria-hidden="true"></i><span class="hidden-xs">Update</span>');
@@ -1019,7 +1027,7 @@ $.fn.populate_client_list_form = function(data)
 				client_name = data[i].client_name;
 				let json_field 	= $.fn.get_json_string(data[i].json_field);
 				client_contract += `<option value="${data[i].id}">${client_name}</option>`; 
-				row += `<div class="col-md-2 client-block-container" id="client-container-${data[i].id}" style="box-shadow: 2px 2px 4px 2px rgb(0 0 0 / 10%);width:25%;padding:6px;">
+				row += `<div class="col-md-2 client-block-container" id="client-container-${data[i].id}" style="box-shadow: 2px 2px 4px 2px rgb(0 0 0 / 10%);width:25%;padding:6px;cursor:pointer;margin-left:1%;">
 						<div class="client-block">
 							<div class="client-heading">
 								<input type='hidden' value='${data[i].id}' class='txt_client_id'>
@@ -1052,6 +1060,9 @@ $.fn.populate_client_detail = function(element_id)
     {	
 		$('.client-block').removeClass('active');
 		element_id.addClass('active');
+
+		$('.client-block-container').css("background-color", "");
+		element_id.css("background-color", "#4fc6e1");
 
 		$('#btn_client_add').html('<i class="fa fa-edit fa-fw" aria-hidden="true"></i><span class="hidden-xs">Update</span>');
 
@@ -4181,6 +4192,7 @@ $.fn.bind_command_events = function()
 
 		$('#btn_employment_reset').click( function(e)
 		{
+			$('.emp-block').css("background-color", "");
 			e.preventDefault();
 			$.fn.reset_form('employment_form');
 			if(CONTRACT_DETAILS)
@@ -4190,7 +4202,8 @@ $.fn.bind_command_events = function()
 		});
 		
 		//client tab
-		$(document).on('click', '.client-block', function(e) 
+		// $(document).on('click', '.client-block', function(e) 
+		$(document).on('click', '.client-block-container', function(e) 
         {   
             e.preventDefault();
             $.fn.populate_client_detail($(this));
@@ -4210,6 +4223,7 @@ $.fn.bind_command_events = function()
 
 		$('#btn_client_reset').click( function(e)
 		{
+			$('.client-block-container').css("background-color", "");
 			e.preventDefault();
 			$.fn.reset_form('client_form');
 		});
