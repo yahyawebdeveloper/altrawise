@@ -1310,7 +1310,7 @@ $.fn.get_page_name = function (route_name) {
 			break;
 
 		//assets module
-		case "assets":
+		case "assets/asset":
 			return 16;
 			break;
 

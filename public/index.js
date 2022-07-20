@@ -342,7 +342,7 @@
 			 .on("/payment-voucher", () => { //payment voucher route
 				 $.fn.load_form('./modules/payment-voucher.html')
 			 }, { before: middleware })
-			 .on("/assets", () => { //assets route
+			 .on("/assets/asset", () => { //assets route
 				$.fn.load_form('./modules/assets/asset.html')
 			}, { before: middleware })
 			.on("/service-request", () => { //service request route
