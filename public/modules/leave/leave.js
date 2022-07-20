@@ -360,7 +360,7 @@ $.fn.upload_medical_certificate = function (files_total)
     try
     {
         if ($('#files_cert .file-upload.new').length > 0)
-        {alert('fff')
+        {
             //FILE_UPLOAD_PATH = `${MODULE_ACCESS.module_id}/${LEAVE_ID}/`;
             FILE_UPLOAD_PATH = `../files/111/${LEAVE_ID}/`;
 
