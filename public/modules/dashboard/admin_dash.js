@@ -99,42 +99,46 @@ $.fn.get_list = async function()
 	    	filter_val += $(this).val() + ",";
 		}); */
 		let company_id = SESSIONS_DATA.company_id;
-		let emp_id = SESSIONS_DATA.emp_id;
-  
+  		let emp_id = SESSIONS_DATA.emp_id;
+		
+		let myDate = new Date(); 
+		let end_date = Math.round(myDate.getTime()/1000.0);
 		var datas =
 		{
 			filter_val: '1,2,3,4',
 			emp_id: emp_id,
 			company_id:company_id,
-			end: '1659810600',
-			start: '1656181800'
+			start: '1500550716',
+			end:end_date
 		};
-		let event_value = {};
+	
+		let event_value_arr = [];
 		$.fn.write_data
 		( 
-			$.fn.generate_parameter('get_user_events','', datas),
+			$.fn.generate_parameter('get_admin_events','', datas),
 			function (return_data){
 				if (return_data.data){
-					$.each(return_data.data, function (i, dataa) {
 						for(var i = 0, l = return_data.data.length; i < l; i++) {
+							let event_value = {};
 							event_value['id'] = return_data.data[i].id;
 							event_value['title'] = return_data.data[i].title;
 							event_value['start'] = return_data.data[i].start;
 							event_value['end'] = return_data.data[i].end;
 							event_value['type'] = return_data.data[i].type;
 							event_value['backgroundColor'] = return_data.data[i].backgroundColor;
+							event_value_arr.push(event_value);
 						}
-					});
 				} 
+				$.fn.load_calender_fun(event_value_arr);
 			},false
 		);
-		$.fn.load_calender_fun(event_value);
+		
 
 		
 	}
 	catch(err)
-	{    console.log(err);
-		//$.fn.log_error(arguments.callee.caller,err.message);
+	{   
+		$.fn.log_error(arguments.callee.caller,err.message);
 	}
 };
 
@@ -166,6 +170,7 @@ $.fn.populate_alluser_detail = function(emp_id)
                             </tr>`;
 					
 					$('#tbl_list tbody').append(row);
+					$('#demo').hide();
 					$('#userdata').show();
 				}
 
@@ -351,32 +356,104 @@ $.fn.get_leave_list = function()
 	}
 };
 
+$.fn.get_data_admin_dashboard = function()
+{
+    try
+    {  
+		let lead_access = $.fn.get_accessibility(191); 
+		let emp_id = SESSIONS_DATA.emp_id;
+        let data    =
+        {   
+            emp_id   : emp_id,
+            view_all : MODULE_ACCESS.viewall,
+            lead_access_view_all : lead_access.viewall,
+            lead_access_view     : lead_access.view
+        };
+    
+        $.fn.fetch_data
+        ( 
+            $.fn.generate_parameter('get_data_admin_dashboard', data),
+            function(return_data)
+            {
+                if (return_data.code == 0)
+                { 
+					$("#total_open_app_count_id").text(return_data.data.app_count);
+					$("#pending_claim_count_id").text(return_data.data.doc_count);
+                    $("#total_assests_count_id").text(return_data.data.asset_count);
+                    $("#leave_pending_app_count_id").text(return_data.data.leave_count);
+					$("#topusers_id").text(return_data.data.topusers);
+
+					if(return_data.data.mosttopusers){
+						let most_top_duration = return_data.data.mosttopusers.duration ? return_data.data.mosttopusers.duration : '0:00';
+						if(emp_id == return_data.data.mosttopusers.id)
+                        { 
+							$("#mosttopusers_id").text("You are the top user"); 
+                        }
+                        else 
+                        { 
+							$("#mosttopusers_id").text(most_top_duration+" "+"(Top hours)"); 
+                        } 
+					}
+                }
+            },true
+        );
+    }
+    catch(err)
+    {
+        $.fn.log_error(arguments.callee.caller,err.message);
+    }
+};
+
+$.fn.get_data_admin_dashboard_details = function()
+{
+    try
+    {  
+		let lead_access = $.fn.get_accessibility(191); 
+		let emp_id = SESSIONS_DATA.emp_id;
+        let data    =
+        {   
+            emp_id   : emp_id,
+            view_all : MODULE_ACCESS.viewall,
+            lead_access_view_all : lead_access.viewall,
+            lead_access_view     : lead_access.view
+        };
+    
+        $.fn.fetch_data
+        ( 
+            $.fn.generate_parameter('get_data_admin_dashboard_details', data),
+            function(return_data)
+            {
+                if (return_data.code == 0)
+                { 
+					$('#tbl_list_demo > tbody').empty();
+					let total_duration = return_data.data.total_duration;
+					let allusersdetails = return_data.data.allusersdetails;
+
+					let row		= '';
+					for(let i = 0; i < allusersdetails.length; i++)
+					{
+						row +=`<tr class='textcenter'>
+								<td><a id="${allusersdetails[i].id}" href='javascript:void(0);' onclick='$.fn.populate_alluser_detail(${allusersdetails[i].id});'>${allusersdetails[i].username}
+								</a></td><td class="text-center">${allusersdetails[i].duration}</td>
+								</tr>`;
+					}
+					row +=`<tr class=""><td><b>Total Duration</b></td><td class="text-center"><b>${total_duration}</b></td></tr>`;
+					$('#tbl_list_demo').append(row);
+                }
+            },true
+        );
+    }
+    catch(err)
+    {
+        $.fn.log_error(arguments.callee.caller,err.message);
+    }
+};
+
 $.fn.prepare_form = function()
 {
 	try
 	{
-		/*$('#daterangepicker').daterangepicker
-	    (
-	        {
-	          ranges: 
-	          {
-	             'Today'		: [moment(), moment()],
-	             'Yesterday'	: [moment().subtract('days', 1), moment().subtract('days', 1)],
-	             'Last 7 Days'	: [moment().subtract('days', 6), moment()],
-	             'Last 30 Days'	: [moment().subtract('days', 29), moment()],
-	             'This Month'	: [moment().startOf('month'), moment().endOf('month')],
-	             'Last Month'	: [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
-	          },
-	          opens		: 'left',
-	          startDate	: moment().subtract('days', 29),
-	          endDate	: moment()
-	        },
-	        function(start, end) 
-	        {
-	            $('#daterangepicker span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-	        }
-	    );*/
-		
+		$.fn.get_data_admin_dashboard();
 	}
 	catch(err)
 	{
@@ -412,11 +489,14 @@ $.fn.bind_command_events = function()
 		{
 			$('#demo').hide();
 		});
-
-		$('#top_user_data_check_dynamic').click(function()
+		
+		$('#top_user_data_check').click(function(e)
 		{
+			e.preventDefault();
+			$('#demo').show();
+			$('#userdata').hide();
 			let emp_id = SESSIONS_DATA.emp_id;
-			$.fn.populate_alluser_detail(emp_id);
+			$.fn.get_data_admin_dashboard_details(emp_id);
 		});
 
 		$('#btn_appointment_more').click( function(e)
@@ -486,9 +566,8 @@ $.fn.bind_command_events = function()
 $.fn.form_load = async function()
 {
 	try
-	{   console.log(1)
+	{   
 	    await $.fn.prepare_form();
-		console.log(3)
 	    $.fn.bind_command_events();
 	}
 	catch(err)
@@ -511,10 +590,6 @@ $.fn.load_calender_fun = function(event_arr){
 			this.$btnDeleteEvent.show(), this.$modalTitle.text("Edit Event"), this.$modal.show(), 
 			this.$selectedEvent = e.event, l("#event-title").val(this.$selectedEvent.title), 
 			l("#event-category").val(this.$selectedEvent.classNames[0]);
-		}, e.prototype.onSelect = function(e) {
-			this.$formEvent[0].reset(), this.$formEvent.removeClass("was-validated"), this.$selectedEvent = null, 
-			this.$newEventData = e, this.$btnDeleteEvent.hide(), this.$modalTitle.text("Add New Event"), 
-			this.$modal.show(), this.$calendarObj.unselect();
 		}, e.prototype.init = function() {
 			this.$modal = new bootstrap.Modal(document.getElementById("event-modal"), {
 				keyboard: !1
@@ -530,8 +605,7 @@ $.fn.load_calender_fun = function(event_arr){
 				}
 			});
 
-			//console.log([event_arr]);
-			var t = [event_arr];
+			var t = event_arr;
 			var a = this;
 			
 			a.$calendarObj = new FullCalendar.Calendar(a.$calendar[0], {
@@ -603,6 +677,5 @@ $.fn.load_calender_fun = function(event_arr){
 $(document).ready(function()
 {	
 	$.fn.get_list();
-	
 	$.fn.form_load();
 });

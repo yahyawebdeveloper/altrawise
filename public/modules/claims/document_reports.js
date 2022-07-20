@@ -121,7 +121,7 @@ $.fn.populate_list_form = function (data, is_scroll)
 				let btn_attachment = '';
 				if (data[i].attachment.length > 0)
 				{
-					let func = `$.fn.open_page('${data[i].attachment[0].id}','${CURRENT_PATH}download.php')`;
+					let func = `$.fn.open_page('${data[i].attachment[0].id}','${appConfig.SERVER_URL}public/download.php')`;
 					btn_attachment = `<a href="javascript:void(0)" class="link-view-file btn btn-xs btn-info waves-effect waves-light" onclick="${func}"><i class="fas fa-image"/></a>`;
 				}
 				

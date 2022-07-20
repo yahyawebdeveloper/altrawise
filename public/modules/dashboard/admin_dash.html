@@ -82,7 +82,7 @@
   <div class="col-md-12" id="div_appointment_details" style="display: none">
     <div class="card card-body">
       <div class="table-responsive">
-        <span class="close"><b>Employees</b><button type="button" id="btn_close_app_details" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button></span>
+        <span class="close"><b>Employees</b><button type="button" id="btn_close_app_details" class="btn-close float-end" aria-label="Close"></button></span>
         <table class="table table-centered table-striped w-100 dataTable no-footer" id="tbl_appt_dashboard">
           <thead>
             <tr>
@@ -110,7 +110,7 @@
   <div class="col-md-12" id="div_asset_details" style="display: none">
     <div class="card card-body">
       <div class="table-responsive">
-        <span class="close"><b>Assets Summary</b><button type="button" id="btn_close_asset_detail" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button></span>
+        <span class="close"><b>Assets Summary</b><button type="button" id="btn_close_asset_detail" class="btn-close float-end" aria-label="Close"></button></span>
         <table class="table table-centered table-striped w-100 dataTable no-footer" id="tbl_asset_dashboard">
           <thead>
             <tr>
@@ -134,7 +134,7 @@
   <div class="col-md-12" id="div_asset_details_expiry" style="display: none">
     <div class="card card-body">
       <div class="table-responsive">
-        <span class="close"><b>Assets Details</b><button type="button" id="btn_close_asset_exp_detail" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button></span>
+        <span class="close"><b>Assets Details</b><button type="button" id="btn_close_asset_exp_detail" class="btn-close float-end" aria-label="Close"></button></span>
         <table class="table table-centered table-striped w-100 dataTable no-footer" id="tbl_asset_dashboard_detail">
           <thead>
             <tr>
@@ -204,7 +204,7 @@
   <div class="col-md-12" id="div_leave_details" style="display: none">
     <div class="card card-body">
       <div class="table-responsive">
-        <span class="close"><b>Leave Details</b><button type="button" id="btn_close_leave_details" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button></span>
+        <span class="close"><b>Leave Details</b><button type="button" id="btn_close_leave_details" class="btn-close float-end" aria-label="Close"></button></span>
         <table class="table table-centered table-striped w-100 dataTable no-footer" id="tbl_leave_dashboard">
           <thead>
             <tr>
@@ -229,14 +229,11 @@
     </div>
   </div>
 
-
-
-  <div class="col-md-1"></div>
-    <div class="col-md-10 " id="demo" style="display: none">
+    <div class="col-md-12" id="demo" style="display: none">
       <div class="card card-body">
         <div class="table-responsive">
-          <span class="close"><button type="button" id="btn_close_details" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button></span>
-          <table class="table table-centered table-striped w-100 dataTable no-footer" id="tbl_list">
+          <span class="close"><button type="button" id="btn_close_details" class="btn-close float-end"  aria-label="Close"></button></span>
+          <table class="table table-centered table-striped w-100 dataTable no-footer" id="tbl_list_demo">
             <thead>
               <tr>
                 <th class="textcenterhead text-center" colspan="2">Period | Last 90 days</th>
@@ -246,7 +243,7 @@
                 <th class="textcenterhead text-center">Time Spend</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="">
             </tbody>
             <tfoot>
             </tfoot>
@@ -254,14 +251,12 @@
         </div>
       </div>
     </div>
-  <div class="col-md-1"></div>
 
 
-  <div class="col-md-2"></div>
-    <div class="col-md-10 " id="userdata" style="display: none">
+    <div class="col-md-12" id="userdata" style="display: none">
       <div class="card card-body">
         <div class="table-responsive">
-          <span class="close"><button type="button" id="btn_close" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button></span>
+          <span class="close"><button type="button" id="btn_close" class="btn-close float-end"  aria-label="Close"></button></span>
           <table class="table table-centered table-striped w-100 dataTable no-footer" id="tbl_list">
             <thead>
               <tr>
@@ -280,7 +275,6 @@
         </div>
       </div>
     </div>
-  <div class="col-md-1"></div>
 </div>
 <!-- //////////////////////////////////////////////////////////////////////////////////// -->
 
@@ -338,12 +332,12 @@
                               </div>
                           </div>
                           <div class="row mt-2">
-                              <div class="col-md-6 col-4">
+                              <!-- <div class="col-md-6 col-4">
                                   <button type="button" class="btn btn-danger" id="btn-delete-event">Delete</button>
-                              </div>
-                              <div class="col-md-6 col-8 text-end">
+                              </div> -->
+                              <div class="col-md-12 col-8 text-end">
                                   <button type="button" class="btn btn-light me-1" data-bs-dismiss="modal">Close</button>
-                                  <button type="submit" class="btn btn-success" id="btn-save-event">Save</button>
+                                  <!-- <button type="submit" class="btn btn-success" id="btn-save-event">Save</button> -->
                               </div>
                           </div>
                       </form>

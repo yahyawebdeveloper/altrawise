@@ -122,7 +122,7 @@ $.fn.populate_attachment_list_form = function (data, type)
 						row += `<tr data-value="${escape(JSON.stringify(data[i]))}">
 								<td>
 								
-									<button type="button" class="btn btn-outline-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="View File" onclick="$.fn.open_page('${data[i].id}','${CURRENT_PATH}download.php')">
+									<button type="button" class="btn btn-outline-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="View File" onclick="$.fn.open_page('${data[i].id}','${appConfig.SERVER_URL}public/download.php')">
 										<i class="fas fa-download"></i>
 									</button>
 								</td>

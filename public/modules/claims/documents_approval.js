@@ -38,7 +38,7 @@ $.fn.display_claim_details = function (data,chat_id,chat_name)
 			{   
                 for(var j = 0; j < row.attachment.length; j++)
                 {
-				    let func 		= `$.fn.open_page('${row.attachment[j].id}','${CURRENT_PATH}download.php')`;
+				    let func 		= `$.fn.open_page('${row.attachment[j].id}','${appConfig.SERVER_URL}download.php')`;
 				    btn_attachment += `<a href="javascript:void(0)" class="link-view-file btn btn-outline-info btn-xs waves-effect waves-light" onclick="${func}"><i class="fas fa-image"/></a>`;
 			    }
             }
@@ -255,7 +255,7 @@ $.fn.display_claim_details_summary = function (data)
 			{   
                 for(var j = 0; j < row.attachment.length; j++)
                 {
-				    let func 		= `$.fn.open_page('${row.attachment[j].id}','${CURRENT_PATH}download.php')`;
+				    let func 		= `$.fn.open_page('${row.attachment[j].id}','${appConfig.SERVER_URL}public/download.php')`;
 				    btn_attachment += `<a href="javascript:void(0)" class="link-view-file" onclick="${func}"><i class="fa fa-picture-o"/></a>`;
 			    }
             }

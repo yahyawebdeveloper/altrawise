@@ -2334,6 +2334,18 @@ if(isset($_SERVER['REQUEST_METHOD']))
 			echo get_data_dashboard($param->data);
 			return;
 		}
+		else if ($param->method === 'get_data_admin_dashboard') 
+		{
+			require_once constant('MODULES_DIR') . '/common.php';
+			echo get_data_admin_dashboard($param->data);
+			return;
+		}
+		else if ($param->method === 'get_data_admin_dashboard_details') 
+		{
+			require_once constant('MODULES_DIR') . '/common.php';
+			echo get_data_admin_dashboard_details($param->data);
+			return;
+		}
 		// Attendance
 require_once  'transporter.php';
 		

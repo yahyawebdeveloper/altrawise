@@ -137,7 +137,7 @@ $.fn.populate_detail_form = function(data)
 
 			$('.link-view-file').unbind().on('click', function (event) {
 				event.preventDefault();
-				$.fn.open_page($(this).data('id'), window.location.origin + `${directory_path}public/download.php`);
+				$.fn.open_page($(this).data('id'), window.location.origin + `${appConfig.SERVER_URL}public/download.php`);
 			});
 		}
 

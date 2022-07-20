@@ -92,41 +92,39 @@ $.fn.get_list = function()
 	    	filter_val += $(this).val() + ",";
 	  	}); */
 		let company_id = SESSIONS_DATA.company_id;
+
 		let emp_id = SESSIONS_DATA.emp_id;
-  
+		let myDate = new Date(); 
+		let end_date = Math.round(myDate.getTime()/1000.0);
 			var datas =
 			{
 				filter_val: '1,2,3,4',
 				emp_id: emp_id,
 				company_id:company_id,
-				end: '1659810600',
-				start: '1656181800'
+				start: '1500550716',
+				end:end_date
 			};
-			let event_value = [];
-			
+			console.log(end_date);
+			let event_value_arr = [];
 			$.fn.write_data
-            ( 
-                $.fn.generate_parameter('get_user_events','', datas),
-                function (return_data){
+			( 
+				$.fn.generate_parameter('get_user_events','', datas),
+				function (return_data){
 					if (return_data.data){
-						
-							for(var i = 0, l = return_data.data.length; i < l; i++) 
-							{
-								var event = {  
-									"id" : return_data.data[i].id, 
-									"title" :  return_data.data[i].title,                               
-									"start" : return_data.data[i].start,
-									"end" : return_data.data[i].end,
-									"type" : return_data.data[i].type,
-									"backgroundColor" : return_data.data[i].backgroundColor  
-								 };
-								event_value.push(event);
+							for(var i = 0, l = return_data.data.length; i < l; i++) {
+								let event_value = {};
+								event_value['id'] = return_data.data[i].id;
+								event_value['title'] = return_data.data[i].title;
+								event_value['start'] = return_data.data[i].start;
+								event_value['end'] = return_data.data[i].end;
+								event_value['type'] = return_data.data[i].type;
+								event_value['backgroundColor'] = return_data.data[i].backgroundColor;
+								event_value_arr.push(event_value);
 							}
-						
-						$.fn.load_calender_fun(event_value);
 					} 
-                },false
-            );
+					$.fn.load_calender_fun(event_value_arr);
+				},false
+			);
 	}
 	catch(err)
 	{
@@ -273,10 +271,6 @@ $.fn.load_calender_fun = function(event_arr){
 			this.$btnDeleteEvent.show(), this.$modalTitle.text("Edit Event"), this.$modal.show(), 
 			this.$selectedEvent = e.event, l("#event-title").val(this.$selectedEvent.title), 
 			l("#event-category").val(this.$selectedEvent.classNames[0]);
-		}, e.prototype.onSelect = function(e) {
-			this.$formEvent[0].reset(), this.$formEvent.removeClass("was-validated"), this.$selectedEvent = null, 
-			this.$newEventData = e, this.$btnDeleteEvent.hide(), this.$modalTitle.text("Add New Event"), 
-			this.$modal.show(), this.$calendarObj.unselect();
 		}, e.prototype.init = function() {
 			this.$modal = new bootstrap.Modal(document.getElementById("event-modal"), {
 				keyboard: !1
@@ -292,8 +286,9 @@ $.fn.load_calender_fun = function(event_arr){
 				}
 			});
 
-			var t = event_arr, a = this;
-
+			var t = event_arr;
+			var a = this;
+			
 			a.$calendarObj = new FullCalendar.Calendar(a.$calendar[0], {
 				slotDuration: "00:15:00",
 				slotMinTime: "08:00:00",
@@ -310,6 +305,7 @@ $.fn.load_calender_fun = function(event_arr){
 					next: "Next"
 				},
 				initialView: "dayGridMonth",
+				contentHeight:"auto",
 				handleWindowResize: !0,
 				height: l(window).height() - 200,
 				headerToolbar: {

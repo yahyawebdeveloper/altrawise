@@ -142,7 +142,8 @@ $.fn.populate_list_form = function (data, is_scroll)
 										  </a> `;
 						}
 
-						let func = `$.fn.open_page('`+data[i].attachment[j].id+`','`+CURRENT_PATH+`download.php')`;
+						//let func = `$.fn.open_page('`+data[i].attachment[j].id+`','`+CURRENT_PATH+`download.php')`;
+						let func = `$.fn.open_page('`+data[i].attachment[j].id+`','`+appConfig.SERVER_URL+`public/download.php')`;
 						btn_attachment += btn_delete+`<a href="javascript:void(0)" title="View file" class="link-view-file btn btn-xs btn-info waves-effect waves-light" onclick="${func}"><i class="fas fa-image"/></a>`;
 					}
 				}
@@ -200,8 +201,8 @@ $.fn.populate_list_form = function (data, is_scroll)
 	}
 	catch (err)
 	{
-		//console.log(err.message);
-			$.fn.log_error(arguments.callee.caller,err.message);
+		console.log(err.message);
+			//$.fn.log_error(arguments.callee.caller,err.message);
 	}
 };
 

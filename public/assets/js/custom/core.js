@@ -4,7 +4,8 @@ if (!window.location.origin)
 var directory_path = "/altrawise/";
 var controller_URL = '../services/services.php';
 var services_URL = window.location.origin + `${directory_path}services/services.php`;
-var upload_file_path = window.location.origin + `${directory_path}services/upload_fu/endpoint.php`;
+var upload_file_path = `http://msphitect.ddns.net:8282/cms/services/upload_fu/endpoint-cors.php`;
+//var upload_file_path = window.location.origin + `${directory_path}services/upload_fu/endpoint.php`;
 var redirect_mainpage = window.location.origin + `${directory_path}public/index.html`;
 var CURRENT_PATH = './';
 var loading_image = "<img src='" + CURRENT_PATH + "assets/js/custom/busy.gif'/>";
@@ -359,7 +360,8 @@ $.fn.populate_fileupload = function (data, file_container, clear = false)
 				$('.link-view-file').unbind().on('click', function (event)
 				{
 					event.preventDefault();
-					$.fn.open_page($(this).data('id'), window.location.origin + `${directory_path}public/download.php`);
+					//$.fn.open_page($(this).data('id'), window.location.origin + `${directory_path}public/download.php`);
+					$.fn.open_page($(this).data('id'), `${appConfig.SERVER_URL}public/download.php`);
 				});
 			}
 		}

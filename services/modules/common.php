@@ -567,5 +567,53 @@ function get_data_dashboard($params) {
     }
 }
 
+function get_data_admin_dashboard($params) {
+    try
+    {  
+        require_once constant('MODULES_DIR') . '/dashboard.php';
+        $paramss['emp_id'] = if_property_exist($params, 'emp_id',false);
+
+        $allusersdetails = array();
+        $result = json_decode(get_admin_dashboard((object)$params));
+        if($result->code == 0)
+        {
+            $admin_dashboard_data['app_count'] = if_property_exist($result->data->app_count, 'count', 0);
+            $admin_dashboard_data['doc_count'] = if_property_exist($result->data->doc_count, 'count', 0);
+            $admin_dashboard_data['asset_count'] = if_property_exist($result->data->asset_count, 'count', 0);
+            $admin_dashboard_data['leave_count'] = if_property_exist($result->data->leave_count, 'count', 0);
+            $admin_dashboard_data['topusers'] = if_property_exist($result->data->topusers, 'totalduration', 0.00);
+            $admin_dashboard_data['total_duration'] = if_property_exist($result->data->total_duration, 'totalduration', 0.00);
+            $admin_dashboard_data['mosttopusers'] = $result->data->mosttopusers;
+            $admin_dashboard_data['allusersdetails'] = $result->data->allusersdetails;
+            $admin_dashboard_data['faq_count'] = if_property_exist($result->data->faq_count, 'count', 0);
+        }
+       return handle_success_response('Success', $admin_dashboard_data);
+    }
+    catch (Exception $e)
+    {
+        handle_exception($e);
+    }
+}
+
+function get_data_admin_dashboard_details($params) {
+    try
+    {  
+        require_once constant('MODULES_DIR') . '/dashboard.php';
+        $paramss['emp_id'] = if_property_exist($params, 'emp_id',false);
+
+        $allusersdetails = array();
+        $result = json_decode(get_admin_dashboard((object)$params));
+        if($result->code == 0)
+        {
+            $admin_dashboard_data['total_duration'] = if_property_exist($result->data->total_duration, 'totalduration', 0.00);
+            $admin_dashboard_data['allusersdetails'] = $result->data->allusersdetails;
+        }
+       return handle_success_response('Success', $admin_dashboard_data);
+    }
+    catch (Exception $e)
+    {
+        handle_exception($e);
+    }
+}
 
 ?>

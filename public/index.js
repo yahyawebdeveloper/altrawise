@@ -118,6 +118,14 @@
 				 // $('#hr_li').hide();
 				 $('#crm_li').hide();
 			 }
+
+			 let asset_check = $('#mn_assets').attr('href');
+			 let asset_access = $.fn.get_accessibility($.fn.get_page_name(asset_check));
+			 console.log(asset_access);
+			 if(asset_access == 0 || asset_access.view == 0) {
+				 $('#crm_li').hide();
+			 }
+
  
 			 //Operations
 			 let my_task = $('#mn_mytask').attr('href');
@@ -334,7 +342,10 @@
 			 .on("/payment-voucher", () => { //payment voucher route
 				 $.fn.load_form('./modules/payment-voucher.html')
 			 }, { before: middleware })
-			 .on("/service-request", () => { //service request route
+			 .on("/assets", () => { //assets route
+				$.fn.load_form('./modules/assets/asset.html')
+			}, { before: middleware })
+			.on("/service-request", () => { //service request route
 				$.fn.load_form('./modules/service-request.html')
 			}, { before: middleware })
 			.on("/contract", () => {
