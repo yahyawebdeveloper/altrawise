@@ -502,11 +502,11 @@ $.fn.populate_list_form = function (data, is_scroll)
                     row += `<td><span class="badge bg-soft-info text-info">Verified</span>`;
                     if (data[i].sum_approved > 0)
                     {
-                        row += `<br /><i class="fa fa-check-circle badge bg-soft-success text-success">${data[i].sum_approved} Approved</i>`;
+                        row += `<br /><i class="fas fa-check-square badge bg-soft-success text-success">${data[i].sum_approved} Approved</i>`;
                     }
                     else if (data[i].sum_rejected > 0)
                     {
-                        row += `<br /><i class="fa fa-minus-circle badge bg-soft-danger text-danger">${data[i].sum_rejected} Rejected</i>`;
+                        row += `<br /><i class="fa fa-minus-square badge bg-soft-danger text-danger">${data[i].sum_rejected} Rejected</i>`;
                     }
                     else
                     {

@@ -170,7 +170,7 @@ $.fn.populate_list_form = function (data, is_scroll)
 					row += '<td>';
 					if (data[i].all_approved == 0)
 					{
-						row += '<div class="badge bg-soft-info text-info"><i class="fa fa-check-circle" aria-hidden="true">&nbsp;Verified</i><br/></div>';
+						row += '<div class="badge bg-soft-info text-info"><i class="fa fa-check-square" aria-hidden="true">&nbsp;Verified</i><br/></div>';
 						row += '&nbsp;<button class="btn btn-xs btn-outline-warning waves-effect waves-light" data-value=\'' + data_val + '\' onclick="$.fn.do_approve( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_approve">Approve</button>';
 					}
 					if (data[i].all_approved == 1)
@@ -179,22 +179,22 @@ $.fn.populate_list_form = function (data, is_scroll)
 						{
 							if (parseFloat(data[i].rejected) == parseFloat(data[i].no_of_days))
 							{
-								row += '<i class="fa fa-times-circle badge bg-soft-danger text-danger"> Rejected</i><br/>';
+								row += '<i class="fa fa-times-square badge bg-soft-danger text-danger"> Rejected</i><br/>';
 							}
 							else
 							{
-								row += '<i class="fa fa-times-circle badge bg-soft-danger text-danger"> Partial Rejected</i><br/>';
+								row += '<i class="fa fa-times-square badge bg-soft-danger text-danger"> Partial Rejected</i><br/>';
 							}
 
 							if (parseFloat(data[i].rejected) != parseFloat(data[i].no_of_days))
 							{
-								row += '<i class="fa fa-check-circle badge bg-soft-success text-success" aria-hidden="true">&nbsp;Approved</i>';
+								row += '<i class="fa fa-check-square badge bg-soft-success text-success" aria-hidden="true">&nbsp;Approved</i>';
 							}
 
 						}
 						else
 						{
-							row += '<i class="fa fa-check-circle badge bg-soft-success text-success" aria-hidden="true">&nbsp;Approved</i>';
+							row += '<i class="fa fa-check-square badge bg-soft-success text-success" aria-hidden="true">&nbsp;Approved</i>';
 						}
 					}
 					else
@@ -203,11 +203,11 @@ $.fn.populate_list_form = function (data, is_scroll)
 						{
 							if (parseFloat(data[i].rejected) == parseFloat(data[i].no_of_days))
 							{
-								row += '<i class="fa fa-times-circle badge bg-soft-danger text-danger"> Rejected</i><br/>';
+								row += '<i class="fa fa-times-square badge bg-soft-danger text-danger"> Rejected</i><br/>';
 							}
 							else
 							{
-								row += '<i class="fa fa-times-circle badge bg-soft-danger text-danger"> Partial Rejected</i><br/>';
+								row += '<i class="fa fa-times-square badge bg-soft-danger text-danger"> Partial Rejected</i><br/>';
 							}
 						}
 					}
