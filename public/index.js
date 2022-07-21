@@ -25,7 +25,7 @@
 		 if(SESSIONS_DATA) {
 			 //set logo
 			
-			 $('.logo img').each(function(e) {
+			 $('.logo1 img1').each(function(e) {
 				 $(this).attr('src', $.jStorage.get('session_data').logo_path);
 			 });
  

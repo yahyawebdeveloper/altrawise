@@ -96,6 +96,7 @@ $.fn.do_login = function ()
 							else
 							{
 								let r_data = data.data;
+								
 								var session_info =
 								{
 									token: r_data.token,
@@ -111,6 +112,7 @@ $.fn.do_login = function ()
 									profile_pic_path: r_data.profile_pic_path,
 									company_id: r_data.company_id,
 								};
+								
 								$.fn.set_session_values(session_info);
 								window.location.href = redirect_mainpage;
 		
