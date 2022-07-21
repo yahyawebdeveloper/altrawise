@@ -2374,8 +2374,8 @@ $.fn.populate_file_blocks = function(data)
 				attachment_block += `<div class="">`;
 			} */
 			//attachment_block += `<div class="row">`;
-	        attachment_block += `<div class="col-sm-6 doc_upload mb-1" id="${data[i]['name']}">
-					                    <div class="dropzone needsclick dz-clickable ${data[i]['is_mandatory'] == 1 ? 'dropzone-mandatory' : 'dropzone-optional'}">
+	        attachment_block += `<div class="col-sm-6 dropzone doc_upload mb-1" id="${data[i]['name']}">
+					                    <div class=" needsclick dz-clickable ${data[i]['is_mandatory'] == 1 ? 'dropzone-mandatory' : 'dropzone-optional'}">
 					                      <div class="dz-message needsclick">
 					                        <div class="row">
 						                        <div class="col-sm-6">
