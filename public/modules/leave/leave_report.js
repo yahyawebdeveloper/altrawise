@@ -242,6 +242,7 @@ $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
     try
     {
 		$('#dd_employee').empty();
+		$('#dd_employee').append(`<option value="ALL">ALL</option>`);
 		 for (let item of dd_data.emp)
         {
             $('#dd_employee').append(`<option 
@@ -251,6 +252,7 @@ $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
                                                );
         }
 		$('#dd_leave_type').empty();
+		$('#dd_leave_type').append(`<option value="ALL">ALL</option>`);
         for (let item of dd_data.leave_type)
         {
             $('#dd_leave_type').append(`<option 
@@ -292,8 +294,8 @@ $.fn.prepare_form = function()
     	});
 
 		$('#leave_date span').html(moment().startOf('year').format('MMMM D, YYYY') + ' - ' + moment().endOf('year').format('MMMM D, YYYY'));
-		$('#from_date').val(moment().startOf('year').format('YYYY-MM-DD'));
-		$('#to_date').val(moment().endOf('year').format('YYYY-MM-DD'));
+		$('#from_date').val(moment().startOf('year').format('DD-MM-YYYY'));
+		$('#to_date').val(moment().endOf('year').format('DD-MM-YYYY'));
 
 	/*	$('#leave_date').daterangepicker
 	    (
@@ -401,7 +403,7 @@ $.fn.bind_command_events = function()
 		$("#doc_date").flatpickr({
             mode:"range",
             altFormat: "d-M-Y",
-            dateFormat: "Y-m-d",
+            dateFormat: "d-m-Y",
             onChange:function(selectedDates){
                 var _this=this;
                 var dateArr=selectedDates.map(function(date){return _this.formatDate(date,'Y-m-d');});

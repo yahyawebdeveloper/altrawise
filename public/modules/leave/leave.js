@@ -476,16 +476,19 @@ $.fn.populate_list_form = function (data, is_scroll)
                         half_day_opt = '(Second Half)';
                     }
                 }
-
+               
                 row = '';
                 row = `<tr><td>`;
                 if (data[i].verified == 0)
                 {
-                    row += `<a class="tooltips" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.delete_form(unescape($(this).attr(\'data-value\')))" data-trigger="hover" data-original-title="Delete data "><i class="fa fa-trash-o"/></a>`;
+                   
+                    row += `<a href="javascript:void(0)" class="tooltips delete btn btn-xs btn-danger waves-effect waves-light"  data-id="`+data[i].id+`" onclick="$.fn.delete_form(unescape($(this).attr(\'data-value\')))" data-trigger="hover" title="Delete Leave" data-value="`+data_val+`">
+                    <i class="fas fa-trash-alt" aria-hidden="true" title="Delete Data"></i>
+                  </a>`;
                 }
-                row += `</td><td width="10%">${start_date.format('D-MMM-YYYY')}</td>
-                    <td width="10%">${end_date.format('D-MMM-YYYY')}</td>
-                    <td width="10%">${applied_date.format('D-MMM-YYYY')}</td>
+                row += `</td><td width="10%">${start_date.format('DD-MMM-YYYY')}</td>
+                    <td width="10%">${end_date.format('DD-MMM-YYYY')}</td>
+                    <td width="10%">${applied_date.format('DD-MMM-YYYY')}</td>
                     <td>${data[i].type + half_day_opt}</td>
                     <td>${data[i].no_of_days + (data[i].type_id == TIME_OFF_ID ? ' Hour(s)' : '') }</td>
                     <td>${data[i].reason}</td>`;
@@ -513,7 +516,7 @@ $.fn.populate_list_form = function (data, is_scroll)
                 }
 
                 row += `<td><div id="leave_file_${data[i].id}" style="width: max-content;"></div></td>
-                        <td><button type="button" class="btn btn-info waves-effect waves-light btn-xs" id="btn_leave_record" data-value=\'' + data_val + '\' onclick="$.fn.view_leave_by_day(unescape($(this).attr(\'data-value\')))">View</button></td>
+                        <td><button type="button" class="btn btn-info waves-effect waves-light btn-xs" id="btn_leave_record" data-value="`+data_val+`" onclick="$.fn.view_leave_by_day(unescape($(this).attr(\'data-value\')))">View</button></td>
                         </tr>`;
                 $('#tbl_list tbody').append(row);
 
@@ -586,7 +589,7 @@ $.fn.view_leave_by_day = function (data)
                 }, true, false, false, true
             );
 
-        $('#leaveRecordModal').modal();
+        $('#leaveRecordModal').modal('show');
     }
     catch (err)
     {
@@ -851,7 +854,7 @@ $.fn.change_balance_leave = function (action)
 
 $.fn.set_validation_form = function ()
 {
-    $('#dleave_form').parsley(
+    $('#leave_form').parsley(
         {
             classHandler: function(parsleyField) {              
                 return parsleyField.$element.closest(".errorContainer");
@@ -901,7 +904,7 @@ $.fn.view_days = function ()
                 var holiday_str = '';
                 for (var i = 0; no_of_days > i; i++)
                 {
-                    var temp_date = moment(curr_date).format('YYYY-MM-DD');
+                    var temp_date = moment(curr_date).format('DD-MM-YYYY');
                     var holiday_status = false;
                     if (holidays.indexOf(temp_date) != -1)
                     {
@@ -909,7 +912,7 @@ $.fn.view_days = function ()
                         holiday_str += '<h5><span class="text-info"><b>' + moment(curr_date).format('MMM-YYYY') + ' - ' + holiday_description[holidays.indexOf(temp_date)] + '</b></span></h5>';
                     }
 
-                    var day_name = moment(curr_date).format('YYYY-MM-DD');
+                    var day_name = moment(curr_date).format('DD-MM-YYYY');
                     var view_row = true;
                     if (!allow_weekend && (day_name.trim() == 'Saturday' || day_name.trim() == 'Sunday'))
                     {

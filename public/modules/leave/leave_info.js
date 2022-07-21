@@ -570,7 +570,7 @@ $.fn.view_leave_record = function (data, table_row_id)
 	{
 		ROW_DATA = JSON.parse(data);
 		//console.log(ROW_DATA);
-		console.log(moment(ROW_DATA.start_date, 'YYYY-MM-DD').year());
+		console.log(moment(ROW_DATA.start_date, 'DD-MM-YYYY').year());
 		TABLE_ROW_ID = table_row_id;
 
 
@@ -581,7 +581,7 @@ $.fn.view_leave_record = function (data, table_row_id)
 		{
 			em_type_id: EM_LEAVE_ID,
 			emp_id: ROW_DATA.emp_id,
-			year: moment(ROW_DATA.start_date, 'YYYY-MM-DD').year()
+			year: moment(ROW_DATA.start_date, 'DD-MM-YYYY').year()
 		};
 		$.fn.fetch_data
 			(
@@ -1267,7 +1267,8 @@ $.fn.bind_command_events = function ()
 			$('#btn_search').show();
 		});
 		$('#btn_search_action').click(function (e)
-        {
+        {   
+			
             e.preventDefault();
             RECORD_INDEX = 0;
             $.fn.get_list(false);
@@ -1328,7 +1329,7 @@ $.fn.bind_command_events = function ()
 		$("#doc_date").flatpickr({
             mode:"range",
             altFormat: "d-M-Y",
-            dateFormat: "Y-m-d",
+            dateFormat: "d-m-Y",
             onChange:function(selectedDates){
                 var _this=this;
                 var dateArr=selectedDates.map(function(date){return _this.formatDate(date,'Y-m-d');});
