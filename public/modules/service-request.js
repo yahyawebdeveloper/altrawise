@@ -272,7 +272,6 @@ $.fn.save_edit_form = function ()
 
 
         var attachment = [];
-
         
         if (data.category_id == RAISE_INVOICE) {
             if ($('#invoice_form').parsley().validate() == false) {
@@ -385,25 +384,38 @@ $.fn.save_edit_form = function ()
                             emp_id: SESSIONS_DATA.emp_id
                         };
 
+
                         if ($(`#${id_doc}_files .file-upload.new`).length > 0)
-                        {
+                        {   
                             $.fn.upload_file(`${id_doc}_files`, 'service_no', SERVICE_NO,
-                                attachment_data, function (total_files, total_success, filename, attach_return_data)
+                            attachment_data,function(total_files, total_success,filename,attach_return_data)
                             {
-                                if (total_files == total_success)
+                                if(total_files == total_success)
                                 {   
-                                    for (let i = 0; i < attach_return_data.attachment.length; i++)
-                                    { 
-                                        attach_return_data.attachment[i]['name'] = attach_return_data.attachment[i]['filename'];
-                                        attach_return_data.attachment[i]['uuid'] = attach_return_data.attachment[i]['id'];
-                                        attach_return_data.attachment[i]['deleteFileParams'] =  JSON.stringify(attach_return_data.attachment[i]);
-                                        delete attach_return_data.attachment[i]['filename'];
-                                        delete attach_return_data.attachment[i]['id'];
-                                    }
-                                    $.fn.populate_fileupload(attach_return_data, `${id_doc}_files`, true);
+                                    $.fn.populate_fileupload(attach_return_data,`${id_doc}_files`,true);
                                 }
-                            }, false, btn_save);
+                            },false,btn_save);
                         }
+                        
+                        // if ($(`#${id_doc}_files .file-upload.new`).length > 0)
+                        // {
+                        //     $.fn.upload_file(`${id_doc}_files`, 'service_no', SERVICE_NO,
+                        //         attachment_data, function (total_files, total_success, filename, attach_return_data)
+                        //     {
+                        //         if (total_files == total_success)
+                        //         {   
+                        //             for (let i = 0; i < attach_return_data.attachment.length; i++)
+                        //             { 
+                        //                 attach_return_data.attachment[i]['name'] = attach_return_data.attachment[i]['filename'];
+                        //                 attach_return_data.attachment[i]['uuid'] = attach_return_data.attachment[i]['id'];
+                        //                 attach_return_data.attachment[i]['deleteFileParams'] =  JSON.stringify(attach_return_data.attachment[i]);
+                        //                 delete attach_return_data.attachment[i]['filename'];
+                        //                 delete attach_return_data.attachment[i]['id'];
+                        //             }
+                        //             $.fn.populate_fileupload(attach_return_data, `${id_doc}_files`, true);
+                        //         }
+                        //     }, false, btn_save);
+                        // }
                         if (return_data.data.status_id == SEND_VERIFY_STATUS)
                         {
                             $.fn.send_email_verifier_approver_service_request(return_data.data);
@@ -411,9 +423,11 @@ $.fn.save_edit_form = function ()
                         $('#h4_primary_no').text('Service Request Number : ' + return_data.data.service_no);
                         $.fn.show_right_success_noty('Data has been recorded successfully');
                     }
+                    
+                    
                 }, false, btn_save
             );
-
+            
     }
     catch (err)
     {

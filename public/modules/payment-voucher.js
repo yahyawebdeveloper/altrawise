@@ -250,7 +250,7 @@ $.fn.save_edit_payment_form = function()
             attachment.push($(this)[0].innerText.trim());
         });
 
-        if($('#btn_currency_text').data('value') == undefined)
+        if($('#btn_currency_text').html() == undefined)
         {
             $.fn.show_right_error_noty('Please select currency');
             btn_save_payment.stop();
@@ -344,6 +344,7 @@ $.fn.get_payments_list = function ()
 {
     try 
     {
+        
         let data =
         {
             voucher_no : VOUCHER_NO
@@ -436,8 +437,8 @@ $.fn.populate_payments_list = function (data)
                 if(true)
                 {
 
-                    edit_row = `<button type="button" class="btn btn-outline-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" data-value="${escape(JSON.stringify(data[i]))}" onclick="$.fn.populate_payment_details(decodeURIComponent('${escape(JSON.stringify(data[i]))}'))">
-                            <i class="fas fa-edit"></i>
+                    edit_row = `<button type="button" class="btn btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" data-value="${escape(JSON.stringify(data[i]))}" onclick="$.fn.populate_payment_details(decodeURIComponent('${escape(JSON.stringify(data[i]))}'))">
+                            <i class="mdi mdi-square-edit-outline" style="font-size: 17px;"></i>
                         </button>`;
                 }
                 row =  `<tr>
@@ -454,9 +455,19 @@ $.fn.populate_payments_list = function (data)
                         </tr>`
 
                 $("#table_payments_list").append(row);
-               
+
+                for (let j = 0; j < data[i].attachment.length; j++)
+                { 
+                    data[i].attachment[j]['name'] = data[i].attachment[j]['filename'];
+                    data[i].attachment[j]['uuid'] = data[i].attachment[j]['id'];
+                    data[i].attachment[j]['deleteFileParams'] =  JSON.stringify(data[i].attachment[j]);
+                    delete data[i].attachment[j]['filename'];
+                    delete data[i].attachment[j]['id'];
+                }
+                
                 $.fn.populate_fileupload(data[i],'payment-'+payment_id, true);
                 $("#table_payments_list").find('#payment-'+payment_id+' .col-sm-4').toggleClass('col-sm-4 col-sm-12');
+                $("#table_payments_list").find('#payment-'+payment_id+' .file-upload').css("margin-bottom", '2%');
             }
             
         }
@@ -1665,7 +1676,7 @@ $.fn.bind_command_events = function()
             $('.currency_list').hide();
             currencyVal = $(this).attr('data-value');
             $('#currencyValue').html(currencyVal);
-            $(this).parents(".dropdown").find('#btn_currency_text').html($(this).text() + ' <span class="caret" id="btn_currency_text"></span>');
+            $(this).parents(".dropdown").find('#btn_currency_text').html($(this).text() );
             // $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
             // $(this).parents(".dropdown").find('#btn_currency_text').val($(this).data('value'));
             // $('#btn_currency_text').val($(this).data('value'));
