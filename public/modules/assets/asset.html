@@ -1,421 +1,419 @@
-<div id="dynamicContent" style="display: none;">
-<div class="form-group condition-row">
-    <label class="col-sm-1 control-label">Fields</label>
-    <div class="col-sm-3 error-container">
-        <select style="width:100%" class="select2Plugin search-field" name="search_field" data-required="true">
-        </select>
+<!-- third party css -->
+<link href="./assets/libs/jquery-fileupload/css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
+<!-- third party css end -->
+
+<!-- List Block -->
+<div class="row" id="view-list">
+    <!-- start page title -->
+    <div class=" mt-3 mb-1">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <a href="javascript:void(0);" id="btn_new" class="btn btn-danger mb-2">New Asset</a>
+                </div>
+                <h4 class="page-title">
+                    <i class="fas fa-laptop"></i> Assets&nbsp;
+                     <span id="total_records" class="badge rounded-pill bg-warning small-pill">0</span></h4>
+                </h4>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="panel panel-grape">
+               <!--<div class="panel-heading">
+                  <h4>Search</h4>
+                  <div class="options">
+                     <a href="javascript:;" class="panel-collapse"><i class="fa fa-chevron-down"></i></a>
+                  </div>
+                </div>-->
+                <div class="panel-body">
+                    <form class="form-horizontal" data-validate="parsley" id="detail_form">
+
+                    </form>
+                    <div class="form-group align-right"  style=" margin-right: 1%;">	
+                        <button id="btn_reset" type="button" class="btn btn-light waves-effect waves-light m-1"><i class="fe-refresh-cw me-1"></i> Reset</button>	
+                        <button id="btn_search" name="btn_search" type="button" class="btn btn-success waves-effect waves-light mt-1 mb-1"><i class="fe-search me-1"></i> Search</button>	
+                        <button class="btn btn-primary waves-effect waves-light m-1" id="add-condition"><i class="fas fa-plus"></i> Add Row</button>	
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>     
+    <!-- end page title -->
+
+
+    <div id="dynamicContent" style="display: none;" class="row">
+        <div class="form-group condition-row">
+            <label class="col-sm-1 control-label">Fields</label>
+            <div class="col-sm-3 errorContainer">
+                <select style="width:100%" class="select2Plugin search-field" name="search_field" required>
+                </select>
+            </div>
+        
+            <label  class="col-sm-1 control-label">Condition</label>
+            <div class="col-sm-1 conditionContainer">
+                <select style="width:100%" class="select2Plugin search-condition" name="search_condition">
+                </select>
+            </div>
+        
+            <label  class="col-sm-1 control-label">Value</label>
+            <div class="col-sm-3 errorContainer">
+                <input class="form-control  search-value" required name="search_value" >
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-2" style=" margin-left: -2%;">	
+                <!-- Remove -->		
+                    <button type="button" class="btn btn-danger waves-effect waves-light delete-condition"  >	
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>	
+                        <span class="hidden-xs">Remove</span>	
+                    </button>	
+            </div>   
+        </div>
     </div>
 
-    <label  class="col-sm-1 control-label">Condition</label>
-    <div class="col-sm-1 conditionContainer">
-        <select style="width:100%" class="form-control search-condition" name="search_condition">
-        </select>
+    <div id="tblList" class="">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="dropdown float-end">
+                        <a href="#" class="dropdown-toggle card-drop arrow-none" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="mdi mdi-dots-horizontal m-0 text-muted h3"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <p class="dropdown-item"  onclick="exportTable2CSV('Assets','tbl_list')" style="cursor: pointer;">Export as Excel</p>
+                            <p class="dropdown-item"  onclick="exportTable2PDF('Assets','tbl_list','p')" style="cursor: pointer;">Export as PDF</p>
+                        </div>
+                    </div>
+                    <div class="table-responsive  mt-0">
+                        <table class="table table-centered table-striped w-100"  id="tbl_list">
+                            <thead>
+                                <tr>
+                                    <th>Assigned To</th>
+                                    <th>Type</th>
+                                    <th>Client</th>
+                                    <th>Owner</th>
+                                    <th>Brand</th>
+                                    <th>Expiry Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>    
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div> <!-- end card-->
+        </div> <!-- end col -->
     </div>
-
-    <label  class="col-sm-1 control-label">Value</label>
-    <div class="col-sm-3 error-container">
-        <input class="form-control search-value" data-required="true" name="search_value">
-    </div>
-
-    <div class="col-sm-2">
-        <button type="button" class="btn btn-danger delete-condition">
-            <i class="fa fa-trash-o" aria-hidden="true"></i>
-            <span class="hidden-xs">Remove</span>
-        </button>
-    </div>
-    </div>
+    <!-- end row -->
 </div>
 
-<div id="page-content">
-    <div id='wrap'>
-        <div id="page-heading">
-           
-        </div>
-		<div class="container">
-            <h2><i class="fa fa-laptop"></i> Assets</h2>
-			<div class="row" id="list_div" >
-            <div class="col-md-12">
-                    <div class="panel panel-grape">
-					    <div class="panel-heading">
-						  <h4>Search</h4>
-						  <div class="options">
-							 <a href="javascript:;" class="panel-collapse"><i class="fa fa-chevron-down"></i></a>
-						  </div>
-					    </div>
-    					<div class="panel-body">
-                            <form class="form-horizontal" data-validate="parsley" id="detail_form">
 
-                            </form>
-                            <p class="pull-right" style="margin-left: 62px;">
-                                <div class="btn-toolbar" style="text-align:right">
-                                    <a href="#" style="margin-right: 5px;" class="btn btn-default" id="btn_reset"><i class="fa fa-times"></i> Reset</a>
-                                    <button style="margin-right: 15px;" class="btn-primary btn" id="btn_search" name="btn_search"><i class="fa fa-search"></i> Search</button>
-                                    <button class="btn-primary-alt btn" id="add-condition"><i class="fa fa-plus"></i> Add Row</button>
-                                </div>
-                            </p>
-                        </div>
-					</div>
+<!-- New Div -->
+<div class="row" id="new_div" style="display: none">
+    <div class="col-sm-12">
+        
+        <div class="panel panel-primary">
+           <div class="panel-heading">
+              <h4 id="h4_primary_no">Asset No : -</h4>
+              <div class="options">
+                    <a href="#" id="btn_back" class="btn-panel-opts" title="Back to list">
+                        <i class="fa fa-arrow-circle-left fa-lg fa-fw" aria-hidden="true"></i>
+                           <span class="hidden-xs">Back to list</span>
+                      </a>
+              </div>
+           </div>
+          
+           <div class="panel-body">
+              <form class="form-horizontal" data-validate="parsley" id="asset_form">
+
+                <label class="col-sm-2 control-label">Status</label>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <select id="dd_status" style="width:100%" class="populate">
+                            
+                        </select>
+                    </div>
+                </div>
+              
+                <label for="dd_asset_type" class="col-sm-2 control-label">Asset Type <span class="mandatory">*</span></label>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <select id="dd_asset_type" style="width:100%" class="populate" required="required">
+                            
+                        </select>
+                    </div>
+                  </div>
+                
+                <div class="clearfix"></div>
+                
+                <label for="dd_asset_owner" class="col-sm-2 control-label">Asset Owner <span class="mandatory">*</span></label>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <select id="dd_asset_owner" style="width:100%" class="populate" required="required">
+                            
+                        </select>
+                    </div>
+                  </div>
+                
+                <label for="dd_client" class="col-sm-2 control-label">Stake Holders</label>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <select id="dd_client" style="width:100%" class="populate">
+                            
+                        </select>
+                    </div>
+                  </div>
+                
+                <div class="clearfix"></div>
+                
+                <label for="purchase_date" class="col-sm-2 control-label">Purchase Date</label>
+                <div class="col-sm-4">
+                    <div class="form-group input-group date">
+                        <input type="text" id="purchase_date" class="form-control" data-date-format="DD-MM-YYYY"  data-format="dd-MM-yyyy" placeholder="e.g dd-mm-yyyy">
+                        <span class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </span>
+                    </div>  
                 </div>
                 
-				<div class="col-sm-12">
-					<div class="panel panel-grape">
-						<div class="panel-heading">
-							<h4>Asset List</h4>
-                            &nbsp;&nbsp;<span id="total_records" class="badge badge-warning">0</span>
-							<div class="options">
-								<a href="#" class="btn-panel-opts" title="Add New Asset" id="btn_new">
-                               		<i class="fa fa-plus fa-fw" aria-hidden="true"></i>
-	                                <span class="hidden-xs">New Asset</span>
-	                           	</a>
-							</div>
-					  </div>
+                <label for="txt_quantity" class="col-sm-2 control-label">Quantity</label>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                         <input type="digit" class="form-control marginBottom10px" id="txt_quantity" data-parsley-type="digits" placeholder="">	
+                    </div>
+                </div>
+                
+                <div class="clearfix"></div>
+                
+                <label for="txt_product_value" class="col-sm-2 control-label">Product Value(RM)</label>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control marginBottom10px" id="txt_product_value" placeholder="">
+                    </div>
+                </div>
+                
+                <label for="txt_brand" class="col-sm-2 control-label">Brand Name</label>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control marginBottom10px" id="txt_brand" placeholder="">
+                    </div>
+                </div>
+                
+                <div class="clearfix"></div>
+                
+                <label for="txt_serial_no" class="col-sm-2 control-label">Serial No./Product Key</label>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control marginBottom10px" id="txt_serial_no" placeholder="">
+                    </div>
+                </div>
 
-					  <div class="panel-body">
-                            <!--Start PDF icon-->
-                            <div class="pull-right">                                                
-                                <div class="options">
-                                    <div class="btn-toolbar">              
-                                        <div class="btn-group hidden-xs">
-                                            <a href='#' class="btn btn-default dropdown-toggle" data-toggle='dropdown'><i class="fa fa-cloud-download"></i><span class="hidden-xs hidden-sm hidden-md"> Export as</span> <span class="caret"></span></a>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="#" onclick="exportTable2CSV('Asset','tbl_list')">Excel File (*.xlsx)</a></li>
-                                                <li><a href="#" onclick="exportTable2PDF('Asset','tbl_list','p')">PDF File (*.pdf)</a></li>
-                                            </ul>
+                <label for="txt_asset_name" class="col-sm-2 control-label">Asset Name</label>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control marginBottom10px" id="txt_asset_name" >
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+                
+                <label id="lbl_upload" class="col-sm-2 control-label">Attachments</label>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                    <span class="btn btn-success fileinput-button" id="btn_add_image">
+                        <span>Browse File</span>
+                        <input id="doc_upload" type="file" name="files[]" data-extension="<?php echo(constant('FILEUPLOAD_ALLOWED_TYPE'));?>">
+                    </span>
+                    <br/>
+                </div>
+                    <!-- span id="document" style="margin-top: 8px"></span> -->
+                </div>
+                <div class="clearfix"></div>
+                <div class="form-group">
+                    <div id="files" class="col-sm-10 col-sm-offset-2"></div>
+                </div>
+                
+              </form>
+            
+              <p class="pull-right">
+                <div class="btn-toolbar" style="text-align:right">
+                    <a href="#" class="btn btn-default" id="btn_cancel"><i class="fa fa-times"></i> Cancel</a>
+                    <a href="#" class="btn btn-primary-alt ladda-button" data-style="expand-left" data-spinner-color="#000000" id="btn_save"><i class="fa fa-check"></i> Save</a>
+                </div>
+              </p>
+            </div>
+
+            <div class="panel-body" id="div_sub_details" style="display: none;">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="domtabs">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="tab-container tab-danger">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><a href="#warranty" data-toggle="tab">Warranty</a></li>
+                                        <li><a href="#assign" data-toggle="tab">Assign Asset</a></li>
+                                    </ul>
+
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="warranty">
+                                            <div class="row">
+                                                <form class="form-horizontal">
+                                                    <br>
+                                                    <div class="col-sm-4">
+                                                        <label for="txt_contractor" class="control-label"> Contractor </label>
+                                                        <input id="txt_contractor" type="text" class="form-control">
+                                                    </div>
+
+                                                    <div class="col-sm-4">
+                                                        <label for="dd_expiry_type" class="control-label">Expiry Type </label>
+                                                        <select id="dd_expiry_type" style="width:100%" class="populate">
+                                                            
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-sm-4">
+                                                        <label for="expiry_date" class="control-label">Expiry Date</label>
+
+                                                        <div class="input-group date">
+                                                            <input type="text" id="expiry_date" class="form-control" data-date-format="DD-MM-YYYY"  data-format="dd-MM-yyyy" placeholder="e.g dd-mm-yyyy">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </span>
+                                                        </div>  
+                                                    </div>
+
+                                                <div class="clearfix"></div>
+
+                                                    <div class="col-sm-12">
+                                                        <label class="control-label">Remarks</label>
+                                                        <textarea id="txt_warranty_remarks" class="form-control" rows="3" placeholder="Notes / Remarks"></textarea>
+                                                    </div>
+
+                                                    <div class="clearfix"></div>
+                                                    <br>
+                                                    <div class="col-sm-12">
+                                                        <div class="btn-toolbar" style="text-align:right">
+                                                            <button id="btn_warranty_save" data-mode="add" type="button" class="btn btn-primary ladda-button" data-style="expand-left" data-spinner-color="#000000">Save</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <br />
-                            <br />
-                            <!--End PDF icon-->
-						<div class="table-responsive">
-							<table class="table" id="tbl_list">
-								<thead>
-									<tr>
-										<th>Assigned To</th>
-										<th>Type</th>
-										<th>Client</th>
-                                        <th>Owner</th>
-										<th>Brand</th>
-                                        <th>Expiry Date</th>
-                                        <th>Action</th>
-									</tr>
-								</thead>
-								<tbody>
-									
-								</tbody>
-							</table>
-							<div id="div_load_more" class="load-more" style="display: none;">
-                                <a class="btn btn-info btn-xs" id="btn_load_more"><span class="fa fa-arrow-down fa-fw"></span>Load More<span class="fa fa-arrow-down fa-fw"></span></a>
-                            </div>
-						</div>
-					  </div>
-					</div>
-				</div>
-			</div>
-			
-			<!-- New div -->
-			<div class="row" id="new_div" style="display: none">
-				<div class="col-sm-12">
-				    
-					<div class="panel panel-primary">
-					   <div class="panel-heading">
-						  <h4 id="h4_primary_no">Asset No : -</h4>
-						  <div class="options">
-								<a href="#" id="btn_back" class="btn-panel-opts" title="Back to list">
-	                            	<i class="fa fa-arrow-circle-left fa-lg fa-fw" aria-hidden="true"></i>
-	                               	<span class="hidden-xs">Back to list</span>
-                          		</a>
-						  </div>
-					   </div>
-					  
-					   <div class="panel-body">
-						  <form class="form-horizontal" data-validate="parsley" id="asset_form">
-
-                            <label class="col-sm-2 control-label">Status</label>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <select id="dd_status" style="width:100%" class="populate">
-                                        
-                                    </select>
-                                </div>
-                            </div>
-                          
-                            <label for="dd_asset_type" class="col-sm-2 control-label">Asset Type <span class="mandatory">*</span></label>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <select id="dd_asset_type" style="width:100%" class="populate" required="required">
-                                        
-                                    </select>
-                                </div>
-                          	</div>
-                            
-                            <div class="clearfix"></div>
-                            
-                            <label for="dd_asset_owner" class="col-sm-2 control-label">Asset Owner <span class="mandatory">*</span></label>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <select id="dd_asset_owner" style="width:100%" class="populate" required="required">
-                                        
-                                    </select>
-                                </div>
-                          	</div>
-                            
-                            <label for="dd_client" class="col-sm-2 control-label">Stake Holders</label>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <select id="dd_client" style="width:100%" class="populate">
-                                        
-                                    </select>
-                                </div>
-                          	</div>
-                            
-                            <div class="clearfix"></div>
-                            
-                            <label for="purchase_date" class="col-sm-2 control-label">Purchase Date</label>
-                            <div class="col-sm-4">
-                                <div class="form-group input-group date">
-                                    <input type="text" id="purchase_date" class="form-control" data-date-format="DD-MM-YYYY"  data-format="dd-MM-yyyy" placeholder="e.g dd-mm-yyyy">
-                                    <span class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </span>
-                                </div>  
-                            </div>
-                            
-                            <label for="txt_quantity" class="col-sm-2 control-label">Quantity</label>
-                            <div class="col-sm-4">
-                            	<div class="form-group">
-                            		 <input type="digit" class="form-control marginBottom10px" id="txt_quantity" data-parsley-type="digits" placeholder="">	
-                                </div>
-                            </div>
-                            
-                            <div class="clearfix"></div>
-                            
-                            <label for="txt_product_value" class="col-sm-2 control-label">Product Value(RM)</label>
-                            <div class="col-sm-4">
-                            	<div class="form-group">
-                            		<input type="text" class="form-control marginBottom10px" id="txt_product_value" placeholder="">
-                                </div>
-                            </div>
-                            
-                            <label for="txt_brand" class="col-sm-2 control-label">Brand Name</label>
-                            <div class="col-sm-4">
-                            	<div class="form-group">
-                            		<input type="text" class="form-control marginBottom10px" id="txt_brand" placeholder="">
-                                </div>
-                            </div>
-                            
-                            <div class="clearfix"></div>
-                            
-                            <label for="txt_serial_no" class="col-sm-2 control-label">Serial No./Product Key</label>
-                            <div class="col-sm-4">
-                            	<div class="form-group">
-                            		<input type="text" class="form-control marginBottom10px" id="txt_serial_no" placeholder="">
-                            	</div>
-                            </div>
-
-                            <label for="txt_asset_name" class="col-sm-2 control-label">Asset Name</label>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <input type="text" class="form-control marginBottom10px" id="txt_asset_name" >
-                                </div>
-                            </div>
-
-                            <div class="clearfix"></div>
-                            
-                            <label id="lbl_upload" class="col-sm-2 control-label">Attachments</label>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                <span class="btn btn-success fileinput-button" id="btn_add_image">
-                                    <span>Browse File</span>
-                                    <input id="doc_upload" type="file" name="files[]" data-extension="<?php echo(constant('FILEUPLOAD_ALLOWED_TYPE'));?>">
-                                </span>
-                                <br/>
-                            </div>
-                                <!-- span id="document" style="margin-top: 8px"></span> -->
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="form-group">
-                                <div id="files" class="col-sm-10 col-sm-offset-2"></div>
-                            </div>
-                            
-                          </form>
-						
-						  <p class="pull-right">
-							<div class="btn-toolbar" style="text-align:right">
-								<a href="#" class="btn btn-default" id="btn_cancel"><i class="fa fa-times"></i> Cancel</a>
-                                <a href="#" class="btn btn-primary-alt ladda-button" data-style="expand-left" data-spinner-color="#000000" id="btn_save"><i class="fa fa-check"></i> Save</a>
-							</div>
-						  </p>
-                        </div>
-
-                        <div class="panel-body" id="div_sub_details" style="display: none;">
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="domtabs">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="tab-container tab-danger">
-                                                <ul class="nav nav-tabs">
-                                                    <li class="active"><a href="#warranty" data-toggle="tab">Warranty</a></li>
-                                                    <li><a href="#assign" data-toggle="tab">Assign Asset</a></li>
-                                                </ul>
-
-                                                <div class="tab-content">
-    <div class="tab-pane active" id="warranty">
-        <div class="row">
-            <form class="form-horizontal">
-                <br>
-                <div class="col-sm-4">
-                    <label for="txt_contractor" class="control-label"> Contractor </label>
-                    <input id="txt_contractor" type="text" class="form-control">
-                </div>
-
-                <div class="col-sm-4">
-                    <label for="dd_expiry_type" class="control-label">Expiry Type </label>
-                    <select id="dd_expiry_type" style="width:100%" class="populate">
-                         
-                    </select>
-                </div>
-
-                <div class="col-sm-4">
-                    <label for="expiry_date" class="control-label">Expiry Date</label>
-
-                    <div class="input-group date">
-                        <input type="text" id="expiry_date" class="form-control" data-date-format="DD-MM-YYYY"  data-format="dd-MM-yyyy" placeholder="e.g dd-mm-yyyy">
-                        <span class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                        </span>
-                    </div>  
-                </div>
-
-               <div class="clearfix"></div>
-
-                <div class="col-sm-12">
-                    <label class="control-label">Remarks</label>
-                    <textarea id="txt_warranty_remarks" class="form-control" rows="3" placeholder="Notes / Remarks"></textarea>
-                </div>
-
-                <div class="clearfix"></div>
-                <br>
-                <div class="col-sm-12">
-                    <div class="btn-toolbar" style="text-align:right">
-                        <button id="btn_warranty_save" data-mode="add" type="button" class="btn btn-primary ladda-button" data-style="expand-left" data-spinner-color="#000000">Save</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
 
 
-    <div class="tab-pane" id="assign">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="pull-right">
-                    <button id="btn_new_access" type="button" class="btn btn-success" 
-                        onclick="$.fn.assign_form()">
-                        <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
-                        <span class="hidden-xs">Assign</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="row" id="new_assign_div" style="display: none;">
-            <form class="form-horizontal" id="assign_form">
-                <br>
-                <input id="txt_assign_id" type="hidden" >
-                <div class="col-sm-4 error-container">
-                    <label for="txt_contractor" class="control-label"> Assign To </label>
-                    <select id="dd_employee" style="width:100%" class="populate" required="required">
-                         
-                    </select>
-                </div>
+                                        <div class="tab-pane" id="assign">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="pull-right">
+                                                        <button id="btn_new_access" type="button" class="btn btn-success" 
+                                                            onclick="$.fn.assign_form()">
+                                                            <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+                                                            <span class="hidden-xs">Assign</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="new_assign_div" style="display: none;">
+                                                <form class="form-horizontal" id="assign_form">
+                                                    <br>
+                                                    <input id="txt_assign_id" type="hidden" >
+                                                    <div class="col-sm-4 error-container">
+                                                        <label for="txt_contractor" class="control-label"> Assign To </label>
+                                                        <select id="dd_employee" style="width:100%" class="populate" required="required">
+                                                            
+                                                        </select>
+                                                    </div>
 
-                <div class="col-sm-4 error-container">
-                    <label class="control-label">Taken Date </label>
-                    <div class="input-group date">
-                        <input required type="text" id="taken_date" class="form-control" data-date-format="DD-MM-YYYY"  data-format="dd-MM-yyyy" placeholder="e.g dd-mm-yyyy">
-                        <span class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                        </span>
-                    </div>
-                </div>
+                                                    <div class="col-sm-4 error-container">
+                                                        <label class="control-label">Taken Date </label>
+                                                        <div class="input-group date">
+                                                            <input required type="text" id="taken_date" class="form-control" data-date-format="DD-MM-YYYY"  data-format="dd-MM-yyyy" placeholder="e.g dd-mm-yyyy">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
 
-                <div class="col-sm-4">
-                    <label class="control-label">Return Date</label>
+                                                    <div class="col-sm-4">
+                                                        <label class="control-label">Return Date</label>
 
-                    <div class="input-group date">
-                        <input type="text" id="return_date" class="form-control" data-date-format="DD-MM-YYYY"  data-format="dd-MM-yyyy" placeholder="e.g dd-mm-yyyy">
-                        <span class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                        </span>
-                    </div>  
-                </div>
+                                                        <div class="input-group date">
+                                                            <input type="text" id="return_date" class="form-control" data-date-format="DD-MM-YYYY"  data-format="dd-MM-yyyy" placeholder="e.g dd-mm-yyyy">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </span>
+                                                        </div>  
+                                                    </div>
 
-               <div class="clearfix"></div>
+                                                <div class="clearfix"></div>
 
-                <div class="col-sm-4 error-container">
-                    <label for="txt_contractor" class="control-label"> Asset Status </label>
-                    <select id="dd_assign_status" style="width:100%" class="populate" required="required">
-                        
-                    </select>
-                    <span style="font-style: italic;">Note: Making active, will makes all the records inactive</span>
-                </div>
+                                                    <div class="col-sm-4 error-container">
+                                                        <label for="txt_contractor" class="control-label"> Asset Status </label>
+                                                        <select id="dd_assign_status" style="width:100%" class="populate" required="required">
+                                                            
+                                                        </select>
+                                                        <span style="font-style: italic;">Note: Making active, will makes all the records inactive</span>
+                                                    </div>
 
-                <div class="col-sm-4">
-                    <label class="control-label"> Remarks </label>
-                    <input id="txt_assign_remarks" type="text" class="form-control">
-                </div>
+                                                    <div class="col-sm-4">
+                                                        <label class="control-label"> Remarks </label>
+                                                        <input id="txt_assign_remarks" type="text" class="form-control">
+                                                    </div>
 
-                <div class="clearfix"></div>
-                <br>
-                <div class="col-sm-12">
-                    <div class="btn-toolbar" style="text-align:right">
-                        <button id="btn_assign_cancel" type="button" class="btn btn-default">Cancel</button>
-                        <button id="btn_assign_save" data-mode="add" type="button" class="btn btn-primary ladda-button" data-style="expand-left" data-spinner-color="#000000">Save</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <br/>
-        <div class="row">
-        <div class="col-sm-12">
-            <div class="panel-body">
-                <table class="table table-hover">
-                    <thead class="border-top-2px">
-                        <tr>
-                            <th></th>
-                            <th>Assign To</th>
-                            <th>Taken Daten</th>
-                            <th>Return Date</th>
-                            <th>Status</th>
-                            <th>Remarks</th>
-                        </tr>
-                    </thead>
-                    <tbody id="table_assign_list">
-                        
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    </div>
-
-
-</div>
+                                                    <div class="clearfix"></div>
+                                                    <br>
+                                                    <div class="col-sm-12">
+                                                        <div class="btn-toolbar" style="text-align:right">
+                                                            <button id="btn_assign_cancel" type="button" class="btn btn-default">Cancel</button>
+                                                            <button id="btn_assign_save" data-mode="add" type="button" class="btn btn-primary ladda-button" data-style="expand-left" data-spinner-color="#000000">Save</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <br/>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="panel-body">
+                                                        <table class="table table-hover">
+                                                            <thead class="border-top-2px">
+                                                                <tr>
+                                                                    <th></th>
+                                                                    <th>Assign To</th>
+                                                                    <th>Taken Daten</th>
+                                                                    <th>Return Date</th>
+                                                                    <th>Status</th>
+                                                                    <th>Remarks</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="table_assign_list">
+                                                                
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-					</div>
-					
-				</div>
-				
-			</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
+<!-- New Div -->
 
 
-			
-        </div> <!-- container -->
-    </div> <!--wrap -->
-</div> <!-- page-content -->
+<!-- third party js -->
+<script src="./assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="./assets/libs/flatpickr/flatpickr.min.js"></script>
+<script src="./assets/js/moment.js/2.18.1/moment.min.js"></script>
+<script src="./assets/js/jspdf/plugins/jspdf.debug.js"></script>
+<script src="./assets/js/jspdf/plugins/jspdf.min.js"></script>
+<script src="./assets/js/jspdf/plugins/jspdf.plugin.autotable.js"></script>
+<script src="./assets/js/jspdf/exportpdf.js"></script>
+<!-- third party js ends -->

@@ -2346,6 +2346,12 @@ if(isset($_SERVER['REQUEST_METHOD']))
 			echo get_data_admin_dashboard_details($param->data);
 			return;
 		}
+		else if ($param->method === 'get_document_search_assest_check') 
+		{
+			require_once constant('MODULES_DIR') . '/common.php';
+			echo get_document_search_assest_check();
+			return;
+		}
 		// Attendance
 require_once  'transporter.php';
 		

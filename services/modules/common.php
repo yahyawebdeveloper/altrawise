@@ -616,4 +616,41 @@ function get_data_admin_dashboard_details($params) {
     }
 }
 
+function get_document_search_assest_check() {
+    try
+    {   
+        $drop_down['columns'] = array(
+            array('id' => 'status','descr' => 'Status'),
+            array('id' => 'asset_type','descr' => 'Asset Type'),
+            array('id' => 'asset_owner','descr' => 'Asset Owner'),
+            array('id' => 'stake_holders','descr' => 'Stake Holders'),
+            array('id' => 'purchase_date','descr' => 'Purchase Date'),
+            array('id' => 'brand_name','descr' => 'Brand Name'),
+            array('id' => 'serial_no','descr' => 'Serial No'),
+            array('id' => 'asset_name','descr' => 'Asset Name'),
+            array('id' => 'expiry_type','descr' => 'Expiry Type'),
+            array('id' => 'expiry_date','descr' => 'Expiry Date'),
+            array('id' => 'assigned_to','descr' => 'Assigned To'),
+            array('id' => 'taken_date','descr' => 'Taken Date'),
+            array('id' => 'return_date','descr' => 'Return Date'),
+            array('id' => 'asset_status','descr' => 'Asset Status')
+        );
+
+        $drop_down['conditions'] = array(
+            array('id' => '=','descr' => '='),
+            array('id' => '<=','descr' => '<='),
+            array('id' => '>=','descr' => '>='),
+            array('id' => '<','descr' => '<'),
+            array('id' => '>','descr' => '>'),
+            array('id' => 'like','descr' => 'like')
+        );
+
+        return handle_success_response('Success', $drop_down);
+    }
+    catch (Exception $e)
+    {
+        handle_exception($e);
+    }
+}
+
 ?>
