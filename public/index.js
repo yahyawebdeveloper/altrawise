@@ -24,6 +24,7 @@
 		 
 		 if(SESSIONS_DATA) {
 			 //set logo
+			
 			 $('.logo img').each(function(e) {
 				 $(this).attr('src', $.jStorage.get('session_data').logo_path);
 			 });
@@ -181,6 +182,17 @@
 			 if(onboarding_access == 0 || onboarding_access.view == 0) {
 				 $('#operation_li').hide();
 			 }
+			 
+			//admindashboard
+			if(SESSIONS_DATA.is_admin==0)
+			{
+				$('#admin_dash_li').hide();
+				$('#admin_user_dash_li').hide();
+			}
+			if(SESSIONS_DATA.is_admin==1)
+			{
+				$('#user_dash_li').hide();
+			}
 		 }
 		 
  
@@ -213,13 +225,16 @@
  
 		 const middleware = (done, match) => {
 			 let route_url = match.url;
-			 
+			 console.log(route_url);
 			 //if root index - dashboard
+			
 			 if(route_url == "") { //for dashboard module - default route url is empty
-				 route_url = "dashboard";
+				if(SESSIONS_DATA.is_admin==1)
+				{route_url = "dashboard/admin";}
+				else
+				{route_url = "dashboard/user";}
 			 }
-			 
-			 
+			
 			 //get module access based on route url
 			 let module_access = $.fn.get_accessibility($.fn.get_page_name(route_url));
 			 
@@ -233,6 +248,7 @@
 			 }
 			 
 			 done(true); //if have access - proceed
+			
 		 };
  
 		 const namedMiddleware = (done, match) => {
@@ -251,17 +267,20 @@
 			 done(true); //if have access - proceed
 		 };
  
-		 
+		
 		 router
-			 .on("/", () => { //dashboard route
-				 $.fn.load_form('./modules/dashboard.html');
-			 }, { before: middleware })
-			 .on("/dashboard/admin", () => { //admin dashboard route
+		
+			 .on("/", () => { //admin dashboard route
+				if(SESSIONS_DATA.is_admin==1){
 				$.fn.load_form('./modules/dashboard/admin_dash.html');
+				}else
+				{$.fn.load_form('./modules/dashboard/user_dash.html');}
 			}, { before: middleware })
+			
 			.on("/dashboard/user", () => { //user dashboard route
 				$.fn.load_form('./modules/dashboard/user_dash.html');
 			}, { before: middleware })
+		    
 			 .on("/signout", () => { //signout route
 				 $.fn.user_logout();
 			 })
