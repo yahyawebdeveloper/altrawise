@@ -122,7 +122,7 @@
 
 			 let asset_check = $('#mn_assets').attr('href');
 			 let asset_access = $.fn.get_accessibility($.fn.get_page_name(asset_check));
-			 console.log(asset_access);
+			 
 			 if(asset_access == 0 || asset_access.view == 0) {
 				 $('#crm_li').hide();
 			 }
@@ -225,7 +225,7 @@
  
 		 const middleware = (done, match) => {
 			 let route_url = match.url;
-			 console.log(route_url);
+			
 			 //if root index - dashboard
 			
 			 if(route_url == "") { //for dashboard module - default route url is empty
