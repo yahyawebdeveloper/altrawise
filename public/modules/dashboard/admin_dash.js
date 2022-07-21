@@ -125,7 +125,22 @@ $.fn.get_list = async function()
 							event_value['start'] = return_data.data[i].start;
 							event_value['end'] = return_data.data[i].end;
 							event_value['type'] = return_data.data[i].type;
-							event_value['backgroundColor'] = return_data.data[i].backgroundColor;
+							if(return_data.data[i].type == "holiday"){
+								className='bg-success';
+							}
+							else if(return_data.data[i].type == "task"){
+								className='bg-info';
+							}
+							else if(return_data.data[i].type == "leave"){
+								className='bg-danger';
+							}
+							else if(return_data.data[i].type == "appointment"){
+								className='bg-warning';
+							}
+							else{
+								className='bg-primary';
+							}
+							event_value['className'] = className;
 							event_value_arr.push(event_value);
 						}
 				} 

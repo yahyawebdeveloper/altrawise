@@ -110,15 +110,31 @@ $.fn.get_list = function()
 			( 
 				$.fn.generate_parameter('get_user_events','', datas),
 				function (return_data){
-					if (return_data.data){
+					if (return_data.data){console.log(return_data.data);
 							for(var i = 0, l = return_data.data.length; i < l; i++) {
+								
 								let event_value = {};
 								event_value['id'] = return_data.data[i].id;
 								event_value['title'] = return_data.data[i].title;
 								event_value['start'] = return_data.data[i].start;
 								event_value['end'] = return_data.data[i].end;
 								event_value['type'] = return_data.data[i].type;
-								event_value['backgroundColor'] = return_data.data[i].backgroundColor;
+								if(return_data.data[i].type == "holiday"){
+									className='bg-success';
+								}
+								else if(return_data.data[i].type == "task"){
+									className='bg-info';
+								}
+								else if(return_data.data[i].type == "leave"){
+									className='bg-danger';
+								}
+								else if(return_data.data[i].type == "appointment"){
+									className='bg-warning';
+								}
+								else{
+									className='bg-primary';
+								}
+								event_value['className'] = className;
 								event_value_arr.push(event_value);
 							}
 					} 

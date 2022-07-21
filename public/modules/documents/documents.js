@@ -198,7 +198,7 @@ $.fn.populate_list_form = function (data, is_scroll)
                     row += '<td><div class="button-group">';
                     if (MODULE_ACCESS.edit == 1)
                     {
-                        row += `<button type="button" class="btn btn-outline-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-value="${data_val}" onclick="$.fn.populate_detail_form(decodeURIComponent('${data_val}'))">
+                        row += `<button type="button" class="btn btn-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-value="${data_val}" onclick="$.fn.populate_detail_form(decodeURIComponent('${data_val}'))">
                             <i class="fas fa-sign-in-alt"></i>
                         </button>`;
 
@@ -206,7 +206,7 @@ $.fn.populate_list_form = function (data, is_scroll)
                     if (MODULE_ACCESS.delete == 1)
                     {
                         row += `&nbsp;
-                        <button type="button" class="btn btn-outline-danger btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-value="${data_val}" onclick="$.fn.delete_user_document(decodeURIComponent('${data_val}'))">
+                        <button type="button" class="btn btn-danger btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-value="${data_val}" onclick="$.fn.delete_user_document(decodeURIComponent('${data_val}'))">
                             <i class="far fa-trash-alt"></i>
                         </button>`;
                     }
@@ -215,7 +215,7 @@ $.fn.populate_list_form = function (data, is_scroll)
                     {
                         row += `</div>
                         <div class="button-list pt-1">
-                        <button type="button" class="btn btn-xs btn-outline-info waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Archive" data-value="${data_val}" onclick="$.fn.archive_user_document(decodeURIComponent('${data_val}'))">
+                        <button type="button" class="btn btn-xs btn-info waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Archive" data-value="${data_val}" onclick="$.fn.archive_user_document(decodeURIComponent('${data_val}'))">
                         <span class="btn-label"><i class="fas fa-upload"></i></span>Archive
                         </button>`;
 
