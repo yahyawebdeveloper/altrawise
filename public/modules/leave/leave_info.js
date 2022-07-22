@@ -583,7 +583,7 @@ $.fn.view_leave_record = function (data, table_row_id)
 			emp_id: ROW_DATA.emp_id,
 			year: moment(ROW_DATA.start_date, 'YYYY-MM-DD').year()
 		};
-		console.log(param);
+		
 		$.fn.fetch_data
 			(
 				$.fn.generate_parameter('get_leave_details', param),
