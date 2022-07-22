@@ -450,11 +450,12 @@ $.fn.get_comm_list = function ()
             $.fn.generate_parameter('get_comm_list', data),
             function(return_data)
             {
-                if(return_data.data)
+                console.log(return_data);
+                if(return_data.data && parseInt(return_data.code) == 0)
                 {
                     $.fn.populate_comm_list(return_data.data);
                 }
-            }, false, '', true, true
+            }, false, '', true, showErrorMsg = false
         );
     }
     catch (e) 
@@ -1071,7 +1072,7 @@ $.fn.get_contacts_list = function ()
                 {
                     $.fn.populate_contacts_list(return_data.data);
                 }
-            },false,false,false,true
+            },false,false,false,showErrorMsg = false
         );
     } 
     catch (err) 
