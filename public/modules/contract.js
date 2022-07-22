@@ -4088,11 +4088,11 @@ $.fn.bind_command_events = function()
 			{	
 				let attach_li = '';
 				$.each(ATTACHMENTS.offer_letter, function( doc_name, attachment ) 
-				{	
+				{	console.log(attachment);
 					attach_li += `<li class="item-primary">
 										<label>
-											<input type="checkbox" class="chk_offer_attach" data-filename="${attachment.filename}" data-id="${attachment.id}" id="chk_${attachment.id}">
-											<span class="task-description">${attachment.filename}</span>
+											<input type="checkbox" class="chk_offer_attach" data-filename="${attachment.name}" data-id="${attachment.id}" id="chk_${attachment.id}">
+											<span class="task-description">${attachment.name}</span>
 										</label>
 									</li>`;
 				});
