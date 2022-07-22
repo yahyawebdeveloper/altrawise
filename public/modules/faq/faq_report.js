@@ -148,14 +148,14 @@ $.fn.populate_faq_list_report = function(data)
 						row += '<td width="12%"><div class="button-group">';
 						if(SESSIONS_DATA.is_admin = 1)
 			         	{
-							row += `<button type="button" class="btn btn-outline-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-value="${data_val}" onclick="$.fn.populate_detail_form(decodeURIComponent('${data_val}'))">
-								<i class="fas fa-pencil-alt"></i>
+							row += `<button type="button" class="btn btn--success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-value="${data_val}" onclick="$.fn.populate_detail_form(decodeURIComponent('${data_val}'))">
+								<i class="mdi mdi-square-edit-outline"></i>
 							</button>&nbsp;`;
 						}
 						if(SESSIONS_DATA.is_admin = 1)
 			         	{
 							row += `&nbsp;
-							<button type="button" class="btn btn-outline-danger btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-value="${data_val}" onclick="$.fn.delete_form(decodeURIComponent('${data_val}'))">
+							<button type="button" class="btn btn-danger btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-value="${data_val}" onclick="$.fn.delete_form(decodeURIComponent('${data_val}'))">
 								<i class="far fa-trash-alt"></i>
 							</button>`;
 						}

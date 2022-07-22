@@ -507,7 +507,7 @@ $.fn.handle_return_error_msg = function (data)
 	}
 };
 
-$.fn.fetch_data = function (param, call_back, show_block_ui, btn_ladda, call_type)
+$.fn.fetch_data = function (param, call_back, show_block_ui, btn_ladda, call_type, showErrorMsg = true)
 {
 	try
 	{
@@ -528,7 +528,9 @@ $.fn.fetch_data = function (param, call_back, show_block_ui, btn_ladda, call_typ
 				{
 					if ($.fn.is_success(data.code) == false)
 					{
-						$.fn.handle_return_error_msg(data);
+						console.log(data,showErrorMsg)
+						if(showErrorMsg)
+							$.fn.handle_return_error_msg(data);
 					}
 					call_back(data);
 				},

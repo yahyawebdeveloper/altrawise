@@ -167,24 +167,17 @@ $.fn.populate_list_form = function (data, is_scroll)
                     '<td>' + data[i].status_name + '</td>';
 
                 row += '<td width="15%">';
-               
-                row += `<button type="button" class="btn btn-outline-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="View Comments" data-value="${data_val}" onclick="$.fn.view_remark(decodeURIComponent('${data_val}'))">
-                            <i class="far fa-comment-alt"></i>
-                        </button>&nbsp;`;
+
+                row += '<a class="btn btn-xs btn-primary waves-effect waves-light" data-toggle="tooltip" data-placement="left" title="View Comments" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.view_remark(unescape($(this).attr(\'data-value\')))"><i class="fas fa-external-link-alt"></i></a>';
                 
                 if (MODULE_ACCESS.edit == 1) {
 
-                    row += `<button type="button" class="btn btn-outline-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="View Details" data-value="${data_val}" onclick="$.fn.populate_detail_form(decodeURIComponent('${data_val}'))">
-                            <i class="fas fa-sign-in-alt"></i>
-                        </button>`;
+                    row += '&nbsp;&nbsp;<a class="btn btn-xs btn-success waves-effect waves-light" data-toggle="tooltip" data-placement="left" title="View Details" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.populate_detail_form(unescape($(this).attr(\'data-value\')))"><i class="fas fa-sign-in-alt"></i></a>';
                 
                 }
                 if (MODULE_ACCESS.delete == 1) {
-                    
-                    row += `&nbsp;
-                    <button type="button" class="btn btn-outline-danger btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-value="${data_val}" onclick="$.fn.delete_service_request(decodeURIComponent('${data_val}'), $(this).closest(\'tr\').prop(\'id\'))">
-                            <i class="far fa-trash-alt"></i>
-                        </button>`;
+
+                    row += '&nbsp;&nbsp;<a class="btn btn-xs btn-danger waves-effect waves-light" data-toggle="tooltip" data-placement="left" title="View Details" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.delete_service_request(unescape($(this).attr(\'data-value\')))"><i class="fas fa-trash-alt"></i></a>';
 
                 }
 
@@ -197,7 +190,7 @@ $.fn.populate_list_form = function (data, is_scroll)
                 {
                     if (json_approval.verify.verified == 1)
                     {
-                        status = '<div class="pt-1"><i class="fas fa-pen-square" aria-hidden="true">&nbsp;Verified</i><br/></div>';
+                        status = '<div class="mt-1 badge bg-soft-info text-info"><i class="fas fa-pen-square" aria-hidden="true">&nbsp;Verified</i><br/></div>';
                     }
                     else
                     {
@@ -209,7 +202,7 @@ $.fn.populate_list_form = function (data, is_scroll)
                     }
                     if (json_approval.approve.approved == 1)
                     {
-                        status += '<i class="fas fa-check-square" aria-hidden="true">&nbsp;Approved</i>';
+                        status += '<br><div class="badge bg-soft-success text-success"><i class="fas fa-check-square" aria-hidden="true">&nbsp;Approved</i></div>';
                     }
                     else
                     {
@@ -1431,8 +1424,6 @@ $.fn.upload_file_bk = function (param)
                     .success(function (result, textStatus)
                     {
                         total_succeed += 1;
-                        //                        console.log(result);
-                        // if (callback) callback(result.files[0].name);
                     })
                     .complete(function (result, textStatus)
                     {
@@ -1444,7 +1435,6 @@ $.fn.upload_file_bk = function (param)
                                 $.fn.send_email_verifier_approver_service_request(param);
                             }
                         }
-                        //                        console.log(result);
                     })
                     .error(function (result, textStatus)
                     {

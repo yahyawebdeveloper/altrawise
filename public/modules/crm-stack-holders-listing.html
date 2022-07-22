@@ -14,7 +14,7 @@
 			<div style="float:left;line-height:77px;"><span id="total_records" class="badge rounded-pill bg-warning small-pill">0</span></div>
 			<div class="mt-3" style="float:right">
 				<button type="button" id="showSearchDiv" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-magnify"></i> Search</button>
-				<button type="button" id="btn_new" class="btn btn-danger waves-effect waves-light" ><i class="mdi mdi-plus-circle me-1"></i> New</button>
+				<button type="button" id="btn_new" class="btn btn-danger waves-effect waves-light" ><i class="mdi mdi-plus-circle me-1"></i> Add</button>
 			</div>
         </div>
     </div>
@@ -55,17 +55,21 @@
 				<div class="col-xl-12">
 					<div class="col-xl-6 searchCol">
 						 <div class="row">
-							<div class="col-md-12">
-								<label for="simpleinput" class="form-label">Name</label>
-								<input type="text" id="txt_search_client_name" placeholder="Required" required="required" class="form-control">
+							<div class="col-md-4">
+								<label for="simpleinput" class="col-form-label">Name</label>
+							</div> 
+							<div class="col-md-8">
+								<input type="text" id="txt_search_client_name" class="form-control">
 							</div>
 						</div>
 					</div>
 					<div class="col-xl-6 searchCol">
 						 <div class="row">
-							<div class="col-md-12">
-								<label for="simpleinput" class="form-label">Account Managers</label>
-								<select id="dd_search_assigned_to" style="width:100%" class="form-control" multiple="multiple">
+							<div class="col-md-4">
+								<label for="simpleinput" class="col-form-label">Account Managers</label>
+							</div>
+							<div class="col-md-8">
+								<select id="dd_search_assigned_to" style="width:100%" class="form-control populate">
 								</select>
 							</div>
 						</div>
@@ -76,19 +80,22 @@
 				<div class="col-xl-12">
 					<div class="col-xl-6 searchCol">
 						 <div class="row">
-							<div class="col-md-12">
-								<label for="simpleinput" class="form-label">Type</label>
-								<select class="form-control" id="dd_search_type" data-toggle="select2" data-width="100%">
+							<div class="col-md-4">
+								<label for="simpleinput" class="col-form-label">Type</label>
+							</div>
+							<div class="col-md-8">
+								<select class="form-control populate" id="dd_search_type" data-toggle="select2" data-width="100%">
 								</select>
 							</div>
 						</div>
 					</div>
 					<div class="col-xl-6 searchCol">
 						 <div class="row">
-							<div class="col-md-12">
-								<label for="simpleinput" class="form-label">Source</label>
-								<select class="form-control" id="dd_search_source" data-toggle="select2" data-width="100%">
-									
+							<div class="col-md-4">
+								<label for="simpleinput" class="col-form-label">Source</label>
+							</div>
+							<div class="col-md-8">
+								<select class="form-control populate" id="dd_search_source" data-toggle="select2" data-width="100%">
 								</select>
 							</div>
 						</div>
@@ -99,28 +106,81 @@
 				<div class="col-xl-12">
 					<div class="col-xl-6 searchCol">
 						 <div class="row">
-							<div class="col-md-12">
-								<label for="simpleinput" class="form-label">Status</label>
-								<select class="form-control country" id="dd_search_status" data-toggle="select2" data-width="100%">
+							<div class="col-md-4">
+								<label for="simpleinput" class="col-form-label">Status</label>
+							</div>
+							<div class="col-md-8">
+								<select class="form-control country populate" id="dd_search_status" data-toggle="select2" data-width="100%">
 								</select>
 							</div>
 						</div>
 					</div>
 					<div class="col-xl-6 searchCol">
 						 <div class="row">
-							<div class="col-md-12">
-								<label for="simpleinput" class="form-label">Offerings</label>
-								<select class="form-control country" id="dd_search_offerings" data-toggle="select2" data-width="100%">
+							<div class="col-md-4">
+								<label for="simpleinput" class="col-form-label">Offerings</label>
+							</div>
+							<div class="col-md-8">
+								<select class="form-control country populate" id="dd_search_offerings" data-toggle="select2" data-width="100%">
 								</select>
 							</div>
 						</div>
 					</div>
 				</div>
 			<!-- SEARCH ROW 3 -->
+			<!-- SEARCH ROW 3.1 -->
+				<div class="col-xl-12">
+					<div class="col-xl-6 searchCol">
+						<div class="row">
+							<div class="col-md-4">
+								<label for="simpleinput" class="form-label mt-1 mb-0">Last Communicated</label>
+							</div>
+							<div class="col-1">
+									<input type="checkbox" class="form-check-input midsize-checkbox mt-1 mb-0" id="chk_is_date" checked>
+							</div>
+							<div class="col-7">
+								<input type="text" id="doc_search_date" class="form-control flatpickr-input" placeholder="03-10-2021 to 02-10-2021" readonly="readonly" required>
+							   <input type="hidden" id="from_date">
+							   <input type="hidden" id="to_date">
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-6 searchCol">
+						<div class="row">
+							<div class="col-md-4">
+								<label for="simpleinput" class="form-label mt-1 mb-0">Contacts</label>
+							</div>
+							<div class="col-1">
+									<input type="checkbox" class="form-check-input midsize-checkbox mt-1 mb-0" id="chk_is_contacts">
+							</div>
+							<div class="col-7 mt-1">
+								Display stake holders with contacts
+							</div>
+						</div>
+					</div>
+				</div>
+			<!-- SEARCH ROW 3.1 -->
+			<!-- SEARCH ROW 3.1 -->
+				<div class="col-xl-12" style="float:left">
+					<div class="col-xl-6 searchCol">
+						<div class="row">
+							<div class="col-md-4">
+								<label for="simpleinput" class="form-label mt-1 mb-0">Type of communication</label>
+							</div>
+							<div class="col-8">
+								<select class="form-control country populate" id="dd_search_comm_type" data-toggle="select2" data-width="100%">
+								</select>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			<!-- SEARCH ROW 3.1 -->
+			
 
 			<!-- SEARCH ROW 4 -->
-				<div class="col-xl-12" style="text-align:right;overflow:auto;">
-					<div class="mt-3">
+				<div class="col-xl-12">
+					<div class="col-xl-6 searchCol" style="text-align:right;float:right">
 						<button type="button" id="btn_reset" class="btn btn-light waves-effect waves-light" ><i class="mdi mdi-refresh"></i> Reset</button>
 						<button type="submit" id="btn_search" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-magnify"></i> Search</button>
 					</div>
@@ -189,7 +249,9 @@
 											<div class="row mb-3">
 												<div class="col-md-6" >
 													<label for="simpleinput" class="form-label">Type</label>
-													<select id="dd_type" style="width:100%;" class="form-control multi" required multiple="multiple"></select>
+													<div class="errorContainer">
+														<select id="dd_type" style="width:100%;" class="form-control multi populate" required multiple="multiple"></select>
+													</div>
 												</div>
 												<div class="col-md-6" >
 													<label for="simpleinput" class="form-label">Name</label>
@@ -222,18 +284,18 @@
 											<div class="row mb-3">
 												<div class="col-md-6" >
 													<label for="simpleinput" class="form-label">Industry</label>
-													<select id="dd_industry" style="width:100%" class="form-control not-multi" required></select>
+													<select id="dd_industry" style="width:100%" class="form-control populate not-multi" required></select>
 												</div>
 												<div class="col-md-6" >
 													<label for="simpleinput" class="form-label">Sources</label>
-													<select id="dd_source" style="width:100%" class="form-control not-multi" required></select>
+													<select id="dd_source" style="width:100%" class="form-control populate not-multi" required></select>
 												</div>
 											</div>
 											
 											<div class="row mb-3">
 												<div class="col-md-6" >
 													<label for="simpleinput" class="form-label">Status</label>
-													<select id="dd_client_status" style="width:100%" class="form-control not-multi" required></select>
+													<select id="dd_client_status" style="width:100%" class="form-control populate not-multi" required></select>
 												</div>
 												<div class="col-md-6" >
 													<label for="simpleinput" class="form-label">Registration No</label>
@@ -244,7 +306,7 @@
 											<div class="row mb-3">
 												<div class="col-md-6" >
 													<label for="simpleinput" class="form-label">Bank</label>
-													<select id="dd_bank" style="width:100%" class="form-control not-multi"></select>
+													<select id="dd_bank" style="width:100%" class="form-control populate not-multi"></select>
 												</div>
 												<div class="col-md-6" >
 													<label for="simpleinput" class="form-label">Account No</label>
@@ -255,7 +317,7 @@
 											<div class="row mb-3">
 												<div class="col-md-6" >
 													<label for="simpleinput" class="form-label">Account Managers</label>
-													<select id="dd_assign_client" class="form-control multi" style="width:100%;" multiple="multiple"></select>
+													<select id="dd_assign_client" class="form-control populate multi" style="width:100%;" multiple="multiple"></select>
 												</div>
 											</div>
 											
@@ -281,7 +343,7 @@
 															<tbody>
 																<tr id="base_row">
 																	<td width="30%">
-																	<select id="dd_additional" style="width:100%" class="form-control">
+																	<select id="dd_additional" style="width:100%" class="form-control populate">
 																	</select>
 																	<ul id="dd_additional_error" class="help-block list-unstyled" style="display: none;"><li class="required" style="display: list-item;">This value is required.</li></ul>
 																	</td>
@@ -369,7 +431,7 @@
 																	</div>
 																	<div class="col-md-4" >
 																		<label for="simpleinput" class="form-label">Email</label>
-																		<input id="txt_email" type="text" name="email_id" class="form-control" required data-remote="validate_contact_email" data-remote-message="Email ID already exists">
+																		<input id="txt_email" type="email" name="email_id" class="form-control" required data-remote="validate_contact_email" data-remote-message="Email ID already exists">
 																	</div>
 																	<div class="col-md-4" >
 																		<label for="simpleinput" class="form-label">Password</label>
@@ -388,7 +450,7 @@
 																	</div>
 																	<div class="col-md-4" >
 																		<label for="simpleinput" class="form-label">Status</label>
-																		<select id="dd_contact_status" style="width:100%" class="form-control">
+																		<select id="dd_contact_status" style="width:100%" class="form-control populate">
 																		</select>
 																	</div>
 																</div>
@@ -396,7 +458,7 @@
 																<div class="row mb-3">
 																	<div class="col-md-4" >
 																		<label for="simpleinput" class="form-label">User Status</label>
-																		<select id="dd_user_status" style="width:100%" class="form-control">
+																		<select id="dd_user_status" style="width:100%" class="form-control populate">
 																			<option value="1">ACTIVE</option>
 																			<option value="0">IN-ACTIVE</option>
 																		</select>
@@ -420,7 +482,7 @@
 																	</div>
 																	<div class="col-md-12">
 																		<label for="simpleinput" class="form-label">Offerings</label>
-																		<select id="dd_offerings" multiple="multiple" class="form-control" style="width:100%;">
+																		<select id="dd_offerings" multiple="multiple" class="form-control populate" style="width:100%;">
 																		</select>
 																	</div>
 																</div>
@@ -460,12 +522,12 @@
 														<div class="row mb-3">
 															<div class="col-md-6" >
 																<label for="simpleinput" class="form-label">Contacted</label>
-																<select id="dd_com_contact" style="width:100%" class="form-control" required>                     
+																<select id="dd_com_contact" style="width:100%" class="form-control populate" required>                     
 																</select>
 															</div>
 															<div class="col-md-6" >
 																<label for="simpleinput" class="form-label">Contact Medium</label>
-																<select id="dd_com_medium" style="width:100%" class="form-control" required>
+																<select id="dd_com_medium" style="width:100%" class="form-control populate" required>
 																</select>
 															</div>
 														</div>
@@ -502,12 +564,12 @@
 															</div>
 															<div class="col-md-4" >
 																<label for="simpleinput" class="form-label">Created By</label>
-																<select id="dd_employees" style="width:100%" class="form-control">
+																<select id="dd_employees" style="width:100%" class="form-control populate">
 																</select>	
 															</div>
 															<div class="col-md-4" >
 																<label for="simpleinput" class="form-label">Transfer To</label>
-																<select id="dd_assign_to" style="width:100%" class="form-control" required="required">
+																<select id="dd_assign_to" style="width:100%" class="form-control populate" required="required">
 																</select>
 															</div>
 															<div class="col-md-2" style="text-align:right;" >
@@ -573,17 +635,17 @@
 																<form class="form-horizontal row mt-3" data-validate="parsley" id="principal_form">
 																	<div class="col-md-3" >
 																		<label for="simpleinput" class="form-label">Principal a/c</label>
-																		<select id="dd_principal_accounts" style="width:100%" class="form-control" required>
+																		<select id="dd_principal_accounts" style="width:100%" class="form-control populate" required>
 																		</select>
 																	</div>
 																	<div class="col-md-3" >
 																		<label for="simpleinput" class="form-label">Offering</label>
-																		<select id="dd_offerings_principal" style="width:100%" class="form-control" required>
+																		<select id="dd_offerings_principal" style="width:100%" class="form-control populate" required>
 																		</select>
 																	</div>
 																	<div class="col-md-3" >
 																		<label for="simpleinput" class="form-label">A/c Manager</label>
-																		<select id="dd_managers_principal" style="width:100%" class="form-control" required>
+																		<select id="dd_managers_principal" style="width:100%" class="form-control populate" required>
 																		</select>
 																	</div>
 																	<div class="col-md-3" style="text-align:right;" >

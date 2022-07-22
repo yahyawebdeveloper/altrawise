@@ -614,24 +614,24 @@ $.fn.populate_list_leave_by_day = function (data)
 
                 if (data[i].approved == 1)
                 {
-                    row += '<td><span class="text-success"><b>APPROVED</b></span></td>';
+                    row += '<td><i class="fas fa-check-square badge bg-soft-success text-success">APPROVED</i></td>';
                     if (data[i].paid == 1)
                     {
-                        row += '<td><span class="text-success"><b>PAID</b></span></td>';
+                        row += '<td><span class="badge bg-soft-info text-info">PAID</i></td>';
                     }
                     else
                     {
-                        row += '<td><span class="text-danger"><b>UNPAID</b></span></td>';
+                        row += '<td><i class="fa fa-minus-square badge bg-soft-danger text-danger">UNPAID</i></td>';
                     }
                 }
                 else if (data[i].rejected == 1)
                 {
-                    row += '<td><span class="text-danger"><b>REJECT</b></span></td>';
+                    row += '<td><i class="fa fa-minus-square badge bg-soft-danger text-danger">REJECT</i></td>';
                     row += '<td>UNPAID</td>';
                 }
                 else
                 {
-                    row += '<td><span class="text-info"><b>PENDING</b></span></td>';
+                    row += '<td><span class="badge bg-soft-warning text-warning">PENDING</span></td>';
                     row += '<td>-</td>';
                 }
                 row += '</tr>';

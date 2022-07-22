@@ -185,7 +185,7 @@
 						</div>
 	
 						<div class="text-end">
-							<button type="button" class="btn btn-light waves-effect waves-light m-1" data-bs-dismiss="modal"><i class="fa fa-times me-1"></i> Cancel</button>
+							<button type="button" class="btn btn-light waves-effect waves-light" data-bs-dismiss="modal"><i class="fa fa-times me-1"></i> Cancel</button>
 							<button type="button" id="btn_add_remark" class="btn btn-success waves-effect waves-light mt-1 mb-1 ladda-button" data-color="green" data-style="expand-left"><i class="fa fa-check me-1"></i> Save</button>
 						</div>
 					</form>
@@ -196,43 +196,10 @@
 	</div><!-- /.modal -->
 
     <!-- ///////////////////////////////////////// -->
-
-
+    
     <!-- Modal Remark List Start -->
-	<div id="remarkModal" class="modal fade" role="dialog" style="overflow:hidden;">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header bg-light">
-                        <h4 class="modal-title" id="assigneeModalLabel">Confirmation</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-                    </div>
-                    <div class="modal-body p-2">
 
-                        <input type="hidden" name="ct_no" id="ct_no">
-                        <input type="hidden" name="chk_level" id="chk_level">
-                        <input type="hidden" id="approve_or_cancel">
-
-                        <div class="col-12">
-                            Please confirm the selection and add the remark below.
-                        </div>
-    
-                        <div class="mb-2">
-                            <label for="voucher_remark" class="form-label">Remark:</label>
-                            <div class="errorContainer">
-                                <textarea name="ct_remark" id="ct_remark" class="form-control" required="required"></textarea>
-                            </div>
-                        </div>
-    
-                        <div class="text-end">
-                            <button type="button" id="btn_approve_cancel" class="btn btn-light waves-effect waves-light m-1" data-bs-dismiss="modal"><i class="fa fa-times me-1"></i> Cancel</button>
-                            <button type="button" id="btn_approve" class="btn btn-success waves-effect waves-light mt-1 mb-1 ladda-button" data-color="green" data-style="expand-left"><i class="fa fa-check me-1"></i> Confirm</button>
-                        </div>
-                        
-                        
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+       
 
     </div>
     <!-- end row -->
@@ -2330,13 +2297,14 @@
                         </div>
 
                         <!-- Modal for offer letter Start-->
+   
                         <div class="modal fade" id="offer_letter_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
+                            <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="myModalLabel">Send Offer Letter</h4>
-                                    </div>
+                                        <div class="modal-header" >
+                                          <h4 class="modal-title" style="float:left" id="myModalLabel">Send Offer Letter</h4>
+                                            <button type="button" style="float:right" class="bootbox-close-button close"  data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
                                     <div class="modal-body">
                                         <input type="hidden" name="offer_contract_no" id="offer_contract_no">
                                         <ul class="panel-tasks" id="offer_files">
@@ -2346,7 +2314,7 @@
                                     </div>
                                    
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-bs-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                                        <button type="button" class="btn btn-light waves-effect waves-light" data-bs-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
                                         <button type="button" class="btn btn-success" data-style="expand-left" data-spinner-color="#000000"  id="btn_send_offer">Send</button>
                                         <!--<button type="button" class="btn btn-primary" id="btn_verify">Confirm</button>-->
                                     </div>
@@ -2382,6 +2350,46 @@
                         </div>
                         <!-- Modal approval revoke End-->
 
+                     <!-- Modal remark cancel approval start-->    
+
+                    <div class="modal fade" id="remarkModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                   
+                             <div class="modal-header" >
+                                 <h4 class="modal-title" style="float:left" id="myModalLabel">Confirmation</h4>
+                                 <button type="button" style="float:right" class="bootbox-close-button close"  data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                        <div class="modal-body">
+    
+                            <input type="hidden" name="ct_no" id="ct_no">
+                            <input type="hidden" name="chk_level" id="chk_level">
+                            <input type="hidden" id="approve_or_cancel">
+    
+                            <div class="col-12">
+                                Please confirm the selection and add the remark below.
+                            </div>
+        
+                            <div class="mb-2">
+                                <label for="voucher_remark" class="form-label">Remark:</label>
+                                <div class="errorContainer">
+                                    <textarea name="ct_remark" id="ct_remark" class="form-control" required="required"></textarea>
+                                </div>
+                            </div>
+        
+                            <div class="text-end">
+                                <button type="button" id="btn_approve_cancel" class="btn btn-light waves-effect waves-light m-1" data-bs-dismiss="modal"><i class="fa fa-times me-1"></i> Cancel</button>
+                                <button type="button" id="btn_approve" class="btn btn-success waves-effect waves-light mt-1 mb-1 ladda-button" data-color="green" data-style="expand-left"><i class="fa fa-check me-1"></i> Confirm</button>
+                            </div>
+                            
+                            
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
+             <!-- Modal remark cancel approval end-->    
+
                         <!-- Enquiry -->
                         <div id="tab-enquiry" class="tab-pane">
                             <div class="form-group" id="assign_div">
@@ -2392,7 +2400,7 @@
                                 </div>
                                 <div class="col-sm-1"></div>
                                 <div class="col-sm-3">
-                                    <a href="#" class="btn btn-primary  waves-effect waves-light" id="btn_cancel"><i class="fa fa-times"></i> Cancel</a>
+                                    <a href="#" class="btn btn-light waves-effect waves-light" id="btn_cancel"><i class="fa fa-times"></i> Cancel</a>
                                     <a href="#" class="btn btn-success  waves-effect waves-light " data-style="expand-left" data-spinner-color="#000000" id="btn_assign_save"><i class="fa fa-check"></i> Save</a>
                                 </div>
                             </div>

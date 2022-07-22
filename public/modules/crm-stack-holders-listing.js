@@ -450,11 +450,12 @@ $.fn.get_comm_list = function ()
             $.fn.generate_parameter('get_comm_list', data),
             function(return_data)
             {
-                if(return_data.data)
+                console.log(return_data);
+                if(return_data.data && parseInt(return_data.code) == 0)
                 {
                     $.fn.populate_comm_list(return_data.data);
                 }
-            }, false, '', true, true
+            }, false, '', true, showErrorMsg = false
         );
     }
     catch (e) 
@@ -685,6 +686,7 @@ $.fn.get_list = function(is_scroll)
 {
     try
     {
+        
         let data    =
         {
             date_from       : $('#from_date').val(),
@@ -704,7 +706,7 @@ $.fn.get_list = function(is_scroll)
             view_all        : MODULE_ACCESS.viewall,
             emp_id          : SESSIONS_DATA.emp_id
         };
-
+        console.log(data);
         if(is_scroll)
         {
             data.start_index =  RECORD_INDEX;
@@ -1070,7 +1072,7 @@ $.fn.get_contacts_list = function ()
                 {
                     $.fn.populate_contacts_list(return_data.data);
                 }
-            },false,false,false,true
+            },false,false,false,showErrorMsg = false
         );
     } 
     catch (err) 
@@ -1621,6 +1623,15 @@ $.fn.show_hide_form = function(form_status,reset_form)
 		$("#btn_new")			.show();
 		$("#showSearchDiv")		.show();
     }
+    else if(form_status == 'SEARCH')
+    {
+        $("#searchDiv")         .hide();
+        $('#list_div')          .show(400);
+        $('#new_div')           .hide(400);
+		$("#btn_new")			.show();
+		$("#showSearchDiv")		.show();
+        $("#tblList")           .show();
+    }
 };
 $.fn.bind_command_events = function()
 {
@@ -1668,6 +1679,7 @@ $.fn.bind_command_events = function()
             e.preventDefault();
             RECORD_INDEX = 0;
             $.fn.get_list(false);
+            $.fn.show_hide_form('SEARCH')
         });
         
         $('#btn_reset').click( function(e)
@@ -1864,17 +1876,13 @@ $.fn.prepare_form = function()
 		$("select.form-control.multi").select2({ multiple: true });
 		$('#detail_form').parsley
         ({
-            successClass    : 'has-success',
-            errorClass      : 'has-error',
-            errors          :
-            {
-                classHandler: function(el)
-                {
-                    return $(el).closest('.form-group');
-                },
-                errorsWrapper   : '<ul class=\"help-block list-unstyled\"></ul>',
-                errorElem       : '<li></li>'
-            }
+            classHandler: function (parsleyField) {
+                console.log(parsleyField.$element.closest(".errorContainer"));
+                return parsleyField.$element.closest(".errorContainer");
+            },
+            errorsContainer: function (parsleyField) {
+                return parsleyField.$element.closest(".errorContainer");
+            },
         });
         $('#contacts_form').parsley
         ({
@@ -1891,7 +1899,7 @@ $.fn.prepare_form = function()
             }
         });
 		$.fn.get_client_drop_down_values();
-		$.fn.get_list(false);
+		
 		let search_params   = new URLSearchParams(window.location.search);
         let client_id       = search_params.get('id');
         if(client_id  != null)
@@ -1900,6 +1908,26 @@ $.fn.prepare_form = function()
         }
 		$.fn.intialize_fileupload('fileupload_comm', 'files_comm');
 		$.fn.intialize_fileupload('fileupload','files');
+        $('.populate').select2();
+        
+        var startdate = moment();
+		startdate = startdate.subtract(1, "years");
+		$('#from_date').val(startdate.format("YYYY-MM-DD"));
+		$('#to_date').val(moment(new Date()).format("YYYY-MM-DD"));
+		$("#doc_search_date").trigger("change");
+		$("#doc_search_date").flatpickr({
+			mode:"range",
+			altFormat: "d-M-Y",
+			dateFormat: "d-m-Y",
+			defaultDate: [startdate.format("DD-MM-YYYY"),moment(new Date()).format("DD-MM-YYYY")],
+			onChange:function(selectedDates){
+				var _this=this;
+				var dateArr=selectedDates.map(function(date){return _this.formatDate(date,'Y-m-d');});
+				$('#from_date').val(dateArr[0]);
+				$('#to_date').val(dateArr[1]);
+			},
+		});
+        $.fn.get_list(false);
     }
     catch(err)
     {
