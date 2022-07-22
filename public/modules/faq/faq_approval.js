@@ -72,7 +72,7 @@ $.fn.get_faq_approval_list = function()
 									<td>${data[i].question_category}</td>
 									<td>${data[i].category}</td>
 									<td><b>${data[i].question}</b><br/>${data[i].answer}<div id="faq_list_${i}"></div></td>
-									<td><button class="btn-success btn" data-value=${data_val} onclick="$.fn.do_approve( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_approve">Approve</button></td>
+									<td><button class="btn-success btn-xs" data-value=${data_val} onclick="$.fn.do_approve( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_approve">Approve</button></td>
 								</tr>`;
 					}
 					$('#tbl_approver_list > tbody').html(row);

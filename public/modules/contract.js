@@ -1032,7 +1032,7 @@ $.fn.populate_client_list_form = function(data)
 							<div class="client-heading">
 								<input type='hidden' value='${data[i].id}' class='txt_client_id'>
 								<input type='hidden' value='${data_val}' class='client_data'>
-								<div class="pull-right remove-client" style="float:right;"><i class="mdi mdi-delete customized" aria-hidden="true" title="Delete file"></i></div>
+								<div class="pull-right remove-client"><button class="btn btn-danger btn-xs" style="float: right; !important;"><i class="far fa-trash-alt"></i></button></div>
 								<div class="client-title pull-left">${client_name}</div>
 								
 							</div>
@@ -1815,7 +1815,7 @@ $.fn.view_reference_remark = function(obj)
 //		$('#reference_row_id')		.val($(obj));
 		REF_ROW 					= $(obj);
 		
-		$('#reference_remark_modal').modal();
+		$('#reference_remark_modal').modal('show');
     }
     catch(err)
     {
@@ -3179,7 +3179,7 @@ $.fn.do_approve = function(approval_status)
 		$('#ct_no')				.val(CONTRACT_ID);
 		$('#approve_or_cancel')	.val(approval_status);
 		$('#chk_level')       	.val($('#txt_employment_id').val());
-		$('#remarkModal')   	.modal();
+		$('#remarkModal').modal('show');
 		
     }
     catch(err)
