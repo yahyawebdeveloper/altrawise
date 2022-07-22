@@ -490,8 +490,8 @@ function get_attendance_tracker_employee($params) {
                          , 'cms_employees
                             inner join cms_employee_usage_log on cms_employees.id = cms_employee_usage_log.created_by'
                          , 'cms_employees.is_active = 1 and cms_employees.name IS NOT NULL GROUP BY cms_employees.id ORDER BY cms_employees.name ASC');
-            $rs_category     		= $emp;
-            if( isset($rs_category) && count(rs_category) > 0 ){
+            $rs_category     = $emp;
+            if( ($rs_category)  ){
                 for($i = 0; $i < count($rs_category); $i++)
                 {
                     $temp['id']   = $rs_category[$i]['id'];
