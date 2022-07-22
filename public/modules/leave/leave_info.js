@@ -161,7 +161,7 @@ $.fn.populate_list_form = function (data, is_scroll)
 				if (data[i].verified == 0)
 				{
 					row += '<td>';
-					row += '<button class="btn btn-xs btn-outline-info waves-effect waves-light" data-value=\'' + data_val + '\' onclick="$.fn.do_verify( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_verify">Verify</button>';
+					row += '<button class="btn btn-xs btn-info waves-effect waves-light" data-value=\'' + data_val + '\' onclick="$.fn.do_verify( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_verify">Verify</button>';
 					//row += '<div class="button-list pt-1"><button type="button" class="btn btn-xs btn-outline-info waves-effect waves-light"  title="Verify" onclick="$.fn.do_verify( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )"><span class="hidden-xs">Verify</span></button></div>';
 					row += '</td>';
 				}
@@ -171,7 +171,7 @@ $.fn.populate_list_form = function (data, is_scroll)
 					if (data[i].all_approved == 0)
 					{
 						row += '<div class="badge bg-soft-info text-info"><i class="fa fa-check-square" aria-hidden="true">&nbsp;Verified</i><br/></div>';
-						row += '&nbsp;<button class="btn btn-xs btn-outline-warning waves-effect waves-light" data-value=\'' + data_val + '\' onclick="$.fn.do_approve( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_approve">Approve</button>';
+						row += '&nbsp;<button class="btn btn-xs btn-warning waves-effect waves-light" data-value=\'' + data_val + '\' onclick="$.fn.do_approve( unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" name="btn_approve">Approve</button>';
 					}
 					if (data[i].all_approved == 1)
 					{

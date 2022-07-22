@@ -160,7 +160,7 @@ $.fn.pouplate_list = function(data)
 				if(count == data[i].day_count)
 				{
 					row += `<tr onclick="$('.${data[i].employee_id}').show()" style="cursor: pointer">`;
-					row += `<td class="text-center" ><b>${data[i].name}</b></td>`; //- ${current_date.getFullYear()}
+					row += `<td class="text-left" ><b>${data[i].name}</b></td>`; //- ${current_date.getFullYear()}
 					row += '<td class="text-center">Entitle: ' + parseFloat(data[i].annual_leave_entitle).toFixed(1) + ' B/F: ' + data[i].brought_forward +  '</td>';
 					row += '<td class="text-center">AL Taken: ' + parseFloat(data[i].annual_leave_taken).toFixed(1)	+ '</td>';
 					row += '<td class="text-center">AL Balance: ' + ((parseFloat(data[i].annual_leave_entitle)+parseFloat(data[i].brought_forward))-parseFloat(data[i].annual_leave_taken)).toFixed(1)	+ '</td>';
