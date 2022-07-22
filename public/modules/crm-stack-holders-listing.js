@@ -690,7 +690,7 @@ $.fn.get_list = function(is_scroll)
             date_from       : $('#from_date').val(),
             date_to         : $('#to_date').val(),    
             client_name     : $('#txt_search_client_name').val(),
-            assigned_to     : $('#dd_search_assigned_to').val(),
+            assigned_to     : ( $('#dd_search_assigned_to').val().length == 0 ) ? null : $('#dd_search_assigned_to').val(),
             type_id         : $('#dd_search_type').val(),
             comm_type_id    : $('#dd_search_comm_type').val(),
             offering_id     : $('#dd_search_offerings').val(),
@@ -704,7 +704,7 @@ $.fn.get_list = function(is_scroll)
             view_all        : MODULE_ACCESS.viewall,
             emp_id          : SESSIONS_DATA.emp_id
         };
-
+        console.log(data);
         if(is_scroll)
         {
             data.start_index =  RECORD_INDEX;
