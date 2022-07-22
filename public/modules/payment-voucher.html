@@ -101,11 +101,11 @@
     <div class="row mt-3 mb-1">
         <div class="col-12">
             <div class="page-title-box">
-                <h4 class="page-title" style="float:left">Payment Voucher</h4>
+                <h4 class="page-title" style="float:left">Payment Voucher&nbsp;&nbsp;<span id="total_records" class="badge rounded-pill bg-warning small-pill">0</span></h4>
                 <div class="mt-3" style="float:right">
                     <button type="button" id="btn_search_action" class="btn btn-success" ><i class="fe-search me-1"></i> Search</button>
-                    <button type="button" id="btn_list_pending_app" class="btn btn-warning waves-effect waves-light" ><span class="badge badge-danger" style="margin-right: 5px;" aria-hidden="true" id="badge_pending_app">0</span>Pending Approval</button>
-                    <button type="button" id="btn_list_pending_ver" class="btn btn-info waves-effect waves-light" ><span class="badge badge-warning" aria-hidden="true" id="badge_pending_ver">0</span> Pending Verification</button>
+                    <button type="button" id="btn_list_pending_app" class="btn btn-primary waves-effect waves-light" ><span class="badge rounded-pill bg-warning small-pill" style="margin-right: 5px;" aria-hidden="true" id="badge_pending_app">0</span>Pending Approval</button>
+                    <button type="button" id="btn_list_pending_ver" class="btn btn-secondary waves-effect waves-light" ><span class="badge rounded-pill bg-warning small-pill" aria-hidden="true" id="badge_pending_ver">0</span> Pending Verification</button>
                     <button type="button" id="btn_new" class="btn btn-danger" ><i class="mdi mdi-plus-circle me-1"></i> Add</button>
                 </div>
             </div>
@@ -124,11 +124,6 @@
                 </div>
                 <div class="card-body">
                     
-                    <!-- <div class="float-end">
-                        <a id="btn_close_search" href="javascript:void(0)">
-                            <i class="mdi mdi-close-box m-0 text-muted h3"></i>
-                        </a>
-                    </div> -->
                     <div class="clearfix"></div>
                     
                     <form class="form-horizontal">
@@ -154,25 +149,6 @@
 
                         </div>
 
-                        <!-- <div class="row mt-2">
-                            <div class="col-lg-6">
-                                <div class="row">
-                                    <label for="txt_search_voucher_no" class="col-4 col-form-label">Voucher No</label>
-                                    <div class="col-7 errorContainer">
-                                        <input type="text" class="form-control" id="txt_search_voucher_no">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="row">
-                                    <label for="txt_search_title" class="col-4 col-form-label">Title</label>
-                                    <div class="col-7 errorContainer">
-                                        <input type="text" class="form-control" id="txt_search_title">
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-
                         <div class="row">
                             <div class="col-xl-6 searchCol">
                                 <div class="row">
@@ -195,27 +171,6 @@
                             </div>
 
                         </div>
-
-                        <!-- <div class="row mt-2">
-                            <div class="col-lg-6">
-                                <div class="row">
-                                    <label for="dd_search_company" class="col-4 col-form-label">Company</label>
-                                    <div class="col-7 errorContainer">
-                                        <select id="dd_search_company" class="form-control populate" data-width="100%">
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="row">
-                                    <label for="dd_search_paid_to_type" class="col-4 col-form-label">Paid To</label>
-                                    <div class="col-7 errorContainer">
-                                        <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_search_paid_to_type">
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
 
                         <div class="row">
                             <div class="col-xl-6 searchCol">
@@ -240,27 +195,6 @@
 
                         </div>
 
-                        <!-- <div class="row mt-2">
-                            <div class="col-lg-6">
-                                <div class="row">
-                                    <label for="dd_search_created_by" class="col-4 col-form-label">Created By</label>
-                                    <div class="col-7 errorContainer">
-                                        <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_search_created_by">
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="row">
-                                    <label for="dd_search_status" class="col-4 col-form-label">Status</label>
-                                    <div class="col-7 errorContainer">
-                                        <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_search_status">
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-
                         <div class="row">
                             <div class="col-xl-6 searchCol">
                                 <div class="row">
@@ -273,20 +207,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- <div class="row mt-2">
-                            <div class="col-lg-6">
-                                <div class="row">
-                                    <label for="dd_category_search" class="col-4 col-form-label">Voucher Date</label>
-                                    <div class="col-7 errorContainer">
-                                        <input type="text" id="dp_date" class="form-control flatpickr-input" placeholder="2018-10-03 to 2018-10-10" readonly="readonly">
-                                    </div>
-                                    <input type="hidden" id="from_date">
-                                    <input type="hidden" id="to_date">
-
-                                </div>
-                            </div>
-                        </div> -->
 
                         <div class="form-group align-right">
                             <button id="btn_reset" type="button" class="btn btn-light waves-effect waves-light m-1"><i class="fe-refresh-cw me-1"></i> Reset</button>
@@ -411,7 +331,6 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="header-title mb-4" id="h4_primary_no">System PV No : -</h4>
-
                     
                     <div class="">
                         <div class="border p-3">
@@ -536,6 +455,11 @@
                                     </div>
                                 </div>
 
+                                <div class=" col-md-12 mt-3" style="text-align:right;" id="actions_div">
+                                    <button id="btn_cancel" type="button" class="btn btn-light waves-effect waves-light m-1"><i class="fa fa-times me-1"></i> Cancel</button>
+                                    <button id="btn_save" type="button" style="margin-right: 4%;" class="btn btn-success waves-effect waves-light mt-1 mb-1 ladda-button" data-color="green" data-style="expand-left"><i class="fa fa-check me-1"></i> Save</button>
+                                </div>
+
                                 <div class="clearfix"></div>
                                 
                                 <div class="col-sm-4" id="div_approval_trail" style="display: none;">
@@ -560,14 +484,8 @@
                         
                     </div>
                     
-                    <div class=" col-md-12 mt-3" style="text-align:right;" id="actions_div">
-                        <button id="btn_cancel" type="button" class="btn btn-light waves-effect waves-light m-1"><i class="fa fa-times me-1"></i> Cancel</button>
-                        <button id="btn_save" type="button" style="margin-right: 4%;" class="btn btn-success waves-effect waves-light mt-1 mb-1 ladda-button" data-color="green" data-style="expand-left"><i class="fa fa-check me-1"></i> Save</button>
-                    </div>
-                    <hr>
                     <!-- start payment_container -->
                     <div id="payment_container" style="display: none;">
-
 
                         <div class="row mt-3 mb-1">
                             <div class="col-12">
@@ -582,7 +500,8 @@
                                         </button>
                                         <div class="row" id="div_send_verify" style="float: left;margin-right: 7px;margin-top: 8px;">
                                             <label for="chk_is_show_verifiers" class="col-4 col-form-label" style="width: auto;margin-top:-6px;">Send for Verification</label>
-                                            <input type="checkbox" id="chk_send_verify" name="chk_send_verify" class="js-switch" data-color="#64b0f2" data-size="small" checked/>
+                                            <input type="checkbox" id="chk_send_verify" class="js-switch" data-color="#64b0f2" data-size="small" checked />
+                                            <!-- <input type="checkbox" id="chk_send_verify" name="chk_send_verify" class="js-switch" data-color="#64b0f2" data-size="small" checked/> -->
                                         </div>
                                         <button id="btn_print" type="button" class="btn btn-inverse" ><i class="fa fa-print"></i></button>
                                         <button id="btn_new_payment" type="button" class="btn btn-success" onclick="$.fn.payment_form()"><i class="fa fa-plus fa-fw" aria-hidden="true"></i> <span class="hidden-xs">Payment</span></button>
@@ -591,47 +510,8 @@
                             </div>
                         </div>  
 
-
-                        <!-- <div class="panel-body">
-                            <div class="">
-                                <div class="col-sm-12">
-                                    <h4 class="col-sm-4" style="padding-left: 0px;">Payment Details</h4>
-                                    <div class="pull-right" style="float: right;">
-
-                                        <button id="btn_reject" type="button" class="btn btn-danger" data-style="expand-right" data-spinner-color="#000000">
-                                            <i class="fa fa-inbox" aria-hidden="true"></i>
-                                            <span class="ladda-label">Reject</span>
-                                        </button>
-
-                                        <button id="btn_verify" type="button" class="btn btn-warning-alt ladda-button" data-style="expand-right" data-spinner-color="#000000">
-                                            <i class="fa fa-inbox text-danger" aria-hidden="true"></i>
-                                            <span class="ladda-label">Verify It</span>
-                                        </button>
-                                        
-                                        <button id="btn_approve"  type="button" class="btn btn-success waves-effect waves-light mt-1 mb-1 ladda-button" data-color="green" data-style="expand-right">
-                                            <i class="fa fa-check text-success" aria-hidden="true" style="color: white !important;"></i>
-                                            <span class="ladda-label">Approve It</span>
-                                        </button>
-
-                                        <span id="div_send_verify">
-                                            <input type="checkbox" id="chk_send_verify" name="chk_send_verify" class="js-switch" data-color="#99d683" />
-                                            <label class="control-label" style="text-align:left">&nbsp;&nbsp;Send for Verification</label>
-                                        </span>
-
-                                        <button id="btn_print" type="button" class="btn btn-inverse" ><i class="fa fa-print"></i></button>
-
-                                        <button id="btn_new_payment" type="button" class="btn btn-success" 
-                                            onclick="$.fn.payment_form()">
-                                            <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
-                                            <span class="hidden-xs">Payment</span>
-                                        </button>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div> -->
                         <hr>
+
                         <div id="new_payment_div" style="display: none;">
                             <form id="payment_form" class="form-horizontal">
                                 <input id="txt_payment_id" type="hidden" >
@@ -683,7 +563,6 @@
                                     </div>
                                 </div>
 
-
                                 <div class="row mt-2">
                                     <div class="col-lg-6 amountDiv">
                                         <!-- Amount -->
@@ -702,7 +581,6 @@
                                                     </ul>
                                                     
                                                 </div>
-                                                  
 
                                                 <!-- <div class="input-group">
                                                     <div class="input-group-btn">
@@ -748,9 +626,7 @@
                                                     <span class="btn btn-success waves-effect waves-light fileinput-button" id="btn_add_image">
                                                         <span>Browse File</span>
                                                         <input id="fileupload" type="file" name="qqfile">
-                                                        <!-- <input id="fileupload" type="file" name="files[]" > -->
                                                     </span>
-                                                    <!-- <input type="hidden" id="hidden_filename"> -->
                                                 </div>
                                         </div>
                                     </div>
