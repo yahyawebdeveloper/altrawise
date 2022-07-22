@@ -210,8 +210,20 @@ $.fn.populate_faq_list_form = function(data,is_scroll)
 			}
 			$('#tbl_view_list > tbody').html(row);
 			$('#div_load_more').show();
+			
+
 			for(var i = 0; i < data.length; i++)
-			{
+			{   
+				for (let j = 0; j < data[i].attachment.length; j++)
+				{ 
+					data[i].attachment[j]['name'] = data[i].attachment[j]['filename'];
+					data[i].attachment[j]['uuid'] = data[i].attachment[j]['id'];
+					data[i].attachment[j]['deleteFileParams'] =  JSON.stringify(data[i].attachment[j]);
+					delete data[i].attachment[j]['filename'];
+					delete data[i].attachment[j]['id'];
+					
+				}
+				//$.fn.populate_fileupload(data[i], `faq_list_${data[i].id}`);
 				$.fn.populate_fileupload(data[i],'faq_list_'+i);
 			}
 			$('#total_faq_list').html(data.length);

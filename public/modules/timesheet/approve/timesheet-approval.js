@@ -168,10 +168,10 @@ $.fn.populate_list = function (data, is_scroll) {
                          </td> -- >
                          <td>
                              <div>
-                                 <span class="badge bg-soft-info text-dark p-1">Supervisor ${status[data_val.sup_approved]}</span>
+                                 <span class="badge bg-soft-light text-dark p-1">Supervisor ${status[data_val.sup_approved]}</span>
                              </div>
                              <div>
-                                 <span class="badge bg-soft-info text-dark p-1">Finance ${status[data_val.finance_accepted]}</span>
+                                 <span class="badge bg-soft-light text-dark p-1">Finance ${status[data_val.finance_accepted]}</span>
                              </div>
                          </td>
                          <td>

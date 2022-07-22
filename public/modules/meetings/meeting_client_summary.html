@@ -1,0 +1,111 @@
+
+<div id="page-content">
+    <div id="wrap">
+        <div id="page-heading"></div>
+
+        <div class="container">
+            <h2><i class="fa fa-tasks fa-fw" aria-hidden="true"></i>Meetings Summary</h2>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-grape">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Search Meetings</h4>
+                            <div class="options">
+  							 <a href="javascript:;" class="panel-collapse"><i class="fa fa-chevron-up"></i></a>
+  						  </div>
+                        </div>
+
+                        <div class="panel-body">
+                            <form class="form-horizontal" id="form_search_timesheet" data-validate="parsley">
+                                
+                                <div class="form-group">
+                                        
+                                        <label for="dd_employee" class="col-sm-1 control-label">Employee</label>
+                                        <div class="col-sm-5 sm-margin-btm-20 xs-margin-btm-10">
+                                            <select id="dd_employee" style="width:100%" class="populate" required="required">
+                                                <option value="">All</option>
+                                                <?php
+                                                for($i = 0; $i < count($emp); $i++)
+                                                {
+                                                ?>
+                                                    <option value="<?php echo($emp[$i]['id']) ?>"><?php echo($emp[$i]['name']) ?></option>
+                                                <?php
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+
+
+                                        <label for="dd_date" class="col-sm-1 control-label xs-margin-top-10">Date</label>
+                                        <div class="col-sm-5">
+                                            <button class="btn btn-default" id="dp_date">
+                                                <i class="fa fa-calendar-o fa-fw"></i>
+                                                <span class="hidden-xs hidden-sm"></span>
+                                                <b class="caret"></b>
+                                                <input type="hidden" id="from_date" value="">
+                                                <input type="hidden" id="to_date" value="">
+                                            </button>
+                                        </div>
+                                </div>
+
+                                <div class="btn-toolbar text-right">
+                                    <button type="button" class="btn btn-default" id="btn_reset"><i class="fa fa-times"></i> Reset</button>
+                                    <button type="button" class="btn btn-primary-alt ladda-button" id="btn_search" data-style="expand-right" data-spinner-color="grey">
+                                        <span class="ladda-label"><i class="fa fa-search fa-fw"></i>Search</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="table-responsive" id="list_appt_report">
+                            <table class="table table-striped">
+                                <thead>
+                                    <th>Employee Name</th>
+                                    <th>Person / Email</th>
+                                    <th>Meeting Occurance</th>
+                                    <th>Total Time Spend</th>
+                                    <th>Action</th>
+                                </thead>
+                                <tbody id="tbody_list"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="div_more_info_parent">
+<div class="form_div_hide" id="div_more_info_detail" style="width: 100%">
+    <div class="box_arrow_left"></div>
+    <div class="pinched" style="width: 100%">
+        <div class="shadow_top"></div>
+        
+            <div style="overflow:auto; padding: 0px 20px;">
+                <div class="row">
+                   <table class="table">
+                        <thead>
+                            <th>Dates</th>
+                            <th>Time</th>
+                            <th>Duration</th>
+                            <th>In Time</th>
+                            <th width="30px">In Location</th>
+                            <th>Out Time</th>
+                            <th width="30px">Out Location</th>
+                        </thead>
+                        <tbody id="tbody_details"></tbody>
+                    </table>    
+                </div>
+            </div>
+            
+        <div class="shadow_bottom"></div>
+    </div>
+</div>
+</div>
+
+
+
+
+<?php include $current_path . "footer.php" ?>

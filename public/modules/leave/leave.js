@@ -499,7 +499,7 @@ $.fn.populate_list_form = function (data, is_scroll)
                 }
                 else
                 {
-                    row += `<td><span class="badge bg-soft-info text-info">Verified</span>`;
+                    row += `<td><div class="badge bg-soft-info text-info"><i class="fa fa-check-square" aria-hidden="true">&nbsp;Verified</i><br/></div>`;
                     if (data[i].sum_approved > 0)
                     {
                         row += `<br /><i class="fas fa-check-square badge bg-soft-success text-success">${data[i].sum_approved} Approved</i>`;
