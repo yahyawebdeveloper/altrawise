@@ -199,25 +199,19 @@ $.fn.populate_list_form = function(data,is_scroll)
                     <td>${data[i].created_by}</td>
                     <td>${status}</td>`;
 
-                row += '<td width="10%">';
+                row += '<td width="15%">';
 
-                row += `<button type="button" class="btn btn-outline-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="View Comments" data-value="${data_val}" onclick="$.fn.view_remark(decodeURIComponent('${data_val}'))">
-                            <i class="far fa-comment-alt"></i>
-                        </button>&nbsp;`;
+                row += '<a class="btn btn-xs btn-primary waves-effect waves-light" data-toggle="tooltip" data-placement="left" title="View Comments" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.view_remark(unescape($(this).attr(\'data-value\')))"><i class="fas fa-external-link-alt"></i></a>';
 
                 if(true)
                 {
-                    row += `<button type="button" class="btn btn-outline-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="View Details" data-value="${data_val}" onclick="$.fn.populate_detail_form(decodeURIComponent('${data_val}'))">
-                            <i class="fas fa-sign-in-alt"></i>
-                        </button>`;
+                    row += '&nbsp;&nbsp;<a class="btn btn-xs btn-success waves-effect waves-light" data-toggle="tooltip" data-placement="left" title="View Details" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.populate_detail_form(unescape($(this).attr(\'data-value\')))"><i class="fas fa-sign-in-alt"></i></a>';
 
                 }
                 if(MODULE_ACCESS.delete == 1)
                 {
-                    row += `&nbsp;
-                    <div class="button-list pt-1"><button type="button" class="btn btn-outline-danger btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-value="${data_val}" onclick="$.fn.delete_payment_voucher(decodeURIComponent('${data_val}'), $(this).closest(\'tr\').prop(\'id\'))">
-                            <i class="far fa-trash-alt"></i>
-                        </button>`;
+                    row += '&nbsp;&nbsp;<a class="btn btn-xs btn-danger waves-effect waves-light" data-toggle="tooltip" data-placement="left" title="View Details" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.delete_payment_voucher(unescape($(this).attr(\'data-value\')))"><i class="fas fa-trash-alt"></i></a>';
+                    
                 }
 
                 row += '</div></td>';
@@ -559,7 +553,6 @@ $.fn.populate_detail_form = function(data)
         var data 	= JSON.parse(data);
         $.fn.show_hide_form	('EDIT');
         $('#h4_primary_no')		.text('System PV No : ' + data.voucher_no);
-
         $.fn.fetch_data
         (
             $.fn.generate_parameter('get_payment_voucher_details',{voucher_no : data.voucher_no, emp_id : SESSIONS_DATA.emp_id}),
@@ -690,6 +683,8 @@ $.fn.populate_detail_form = function(data)
                     }
 
                     $.fn.get_payments_list();
+                    
+                    $('.switchery-small').css('width','14px');
 
                     if(MODULE_ACCESS.verify == 1 && parseInt(data.is_to_verify) && data.verifier_id == null)
                     {
@@ -1680,7 +1675,6 @@ $.fn.bind_command_events = function()
             // $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
             // $(this).parents(".dropdown").find('#btn_currency_text').val($(this).data('value'));
             // $('#btn_currency_text').val($(this).data('value'));
-            // alert('1111');
             // $.fn.change_segment_btn(this,$('#btn_currency_text'));
         });
 
