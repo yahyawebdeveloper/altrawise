@@ -18,7 +18,7 @@ define("DB_USERNAME",			'yahya');
 define("DB_PASSWORD",			'[Yahya2020]');
 define("DB_HOSTNAME",			'msphitect.ddns.net');
 define("DB_PORT",				'3306');
-define("DB_NAME",				'msphitec_wta');
+define("DB_NAME",				'msphitec_hrms_staging');
 define('DBDRIVER',              'mysql');
 define("SLAVE_DB",              '[
                                       {
@@ -26,14 +26,14 @@ define("SLAVE_DB",              '[
                                         "username": "yahya",
                                         "password": "[Yahya2022]",
                                         "port"    : "3306",
-                                        "dbname"  : "msphitec_wta"
+                                        "dbname"  : "msphitec_hrms_staging"
                                       },
                                       {
                                         "host"    : "msphitect.ddns.net",
                                         "username": "yahya",
                                         "password": "[Yahya2022]",
                                         "port"    : "3306",
-                                        "dbname"  : "msphitec_wta"
+                                        "dbname"  : "msphitec_hrms_staging"
                                       }
                                     ]'
 );
