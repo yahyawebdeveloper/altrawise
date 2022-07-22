@@ -14,26 +14,26 @@ date_default_timezone_set('Asia/Kuala_Lumpur');
 
 
 //START DB CONSTANT
-define("DB_USERNAME",			'root');
-define("DB_PASSWORD",			'root');
-define("DB_HOSTNAME",			'localhost');
+define("DB_USERNAME",			'yahya');
+define("DB_PASSWORD",			'[Yahya2020]');
+define("DB_HOSTNAME",			'msphitect.ddns.net');
 define("DB_PORT",				'3306');
-define("DB_NAME",				'msp_staging_ui');
+define("DB_NAME",				'msphitec_wta');
 define('DBDRIVER',              'mysql');
 define("SLAVE_DB",              '[
                                       {
-                                        "host"    : "localhost",
-                                        "username": "root",
-                                        "password": "root",
+                                        "host"    : "msphitect.ddns.net",
+                                        "username": "yahya",
+                                        "password": "[Yahya2022]",
                                         "port"    : "3306",
-                                        "dbname"  : "msp_staging_ui"
+                                        "dbname"  : "msphitec_wta"
                                       },
                                       {
-                                        "host"    : "localhost",
-                                        "username": "root",
-                                        "password": "root",
+                                        "host"    : "msphitect.ddns.net",
+                                        "username": "yahya",
+                                        "password": "[Yahya2022]",
                                         "port"    : "3306",
-                                        "dbname"  : "msp_staging_ui"
+                                        "dbname"  : "msphitec_wta"
                                       }
                                     ]'
 );
