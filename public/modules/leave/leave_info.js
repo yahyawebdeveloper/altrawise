@@ -219,7 +219,7 @@ $.fn.populate_list_form = function (data, is_scroll)
 				if (data[i].verified == 0)
 				{
 					
-					row += `<button type="button" class="btn btn-outline-danger btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-value="${data_val}" onclick="$.fn.delete_form(decodeURIComponent('${data_val}'))">
+					row += `<button type="button" class="btn btn-danger btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-value="${data_val}" onclick="$.fn.delete_form(decodeURIComponent('${data_val}'))">
 								<i class="far fa-trash-alt"></i>
 							</button>`;
 				}
@@ -228,8 +228,8 @@ $.fn.populate_list_form = function (data, is_scroll)
 					row += '&nbsp;<a target="_blank" href="' + data[i].filepath + '" ><i class="fa fa-picture-o"/></a>';
 				}
 				
-				row += '&nbsp;<a class="btn btn-outline-primary btn-xs waves-effect waves-light" data-toggle="tooltip" data-placement="left" title="View Remarks" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.view_remark(unescape($(this).attr(\'data-value\')))"><i class="fas fa-external-link-alt"></i></a>';
-				row += '&nbsp;<a class="btn btn-outline-success btn-xs waves-effect waves-light" data-toggle="tooltip" data-placement="left" title="View Details" href="javascript:void(0)" data-value=\'' + data_val + '\'  onclick="$.fn.view_leave_record(unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" ><i class="fas fa-sign-in-alt"></i></a>';
+				row += '&nbsp;<a class="btn btn-primary btn-xs waves-effect waves-light" data-toggle="tooltip" data-placement="left" title="View Remarks" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.view_remark(unescape($(this).attr(\'data-value\')))"><i class="fas fa-external-link-alt"></i></a>';
+				row += '&nbsp;<a class="btn btn-success btn-xs waves-effect waves-light" data-toggle="tooltip" data-placement="left" title="View Details" href="javascript:void(0)" data-value=\'' + data_val + '\'  onclick="$.fn.view_leave_record(unescape($(this).attr(\'data-value\')), $(this).closest(\'tr\').prop(\'id\') )" ><i class="fas fa-sign-in-alt"></i></a>';
 				row += '</div></td>';
 
 				row += '</tr>';
