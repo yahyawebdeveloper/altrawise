@@ -2821,13 +2821,13 @@ $.fn.prepare_form = function()
 	{	
 		$.fn.intialize_fileupload("doc_upload", "doc_upload_files");
 		//check for flatpickr
-		var flatpickerLoaded = $('script[src="./assets/libs/flatpickr/flatpickr.min.js"]').length;
+		/* var flatpickerLoaded = $('script[src="./assets/libs/flatpickr/flatpickr.min.js"]').length;
 
 		//if not loaded, load again
 		if (flatpickerLoaded === 0) {
 			// console.log('flatpicker loaded again');
 			$.getScript('./assets/libs/flatpickr/flatpickr.min.js');
-		}
+		} */
 
 		//datepicker
 		$(`#dob_date,#start_date,#end_date,#txt_ep_applied_date,#txt_ep_expiry_date,#marriage_date,
