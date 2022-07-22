@@ -1430,7 +1430,7 @@ $.fn.populate_list_form = function(data,is_scroll)
 				row += '<td width="15%">';
 				// row += `<a class="tooltips" data-toggle="tooltip" data-placement="left" title="View Summary" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.view_contract_summary(${data[i].contract_no})"><i class="fa fa-list"></i></a>`;
 
-				row += `<button type="button" class="btn btn-outline-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="View Summary" data-value="${data_val}" onclick="$.fn.view_contract_summary(decodeURIComponent('${data[i].contract_no}'))">
+				row += `<button type="button" class="btn btn-xs btn-primary waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="View Summary" data-value="${data_val}" onclick="$.fn.view_contract_summary(decodeURIComponent('${data[i].contract_no}'))">
                             <i class="mdi mdi-border-all"></i>
                         </button>&nbsp;`;
 				
@@ -1441,13 +1441,13 @@ $.fn.populate_list_form = function(data,is_scroll)
 					
 				// row += `&nbsp;&nbsp;<a class="tooltips" data-toggle="tooltip" data-placement="left" title="View Comments" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.view_remark(${data[i].contract_no})"><i class="fa fa-external-link"></i></a>`;
 
-				row += `<button type="button" class="btn btn-outline-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="View Comments" data-value="${data_val}" onclick="$.fn.view_remark(decodeURIComponent('${data[i].contract_no}'))">
+				row += `<button type="button" class="btn btn-xs btn-success waves-effect waves-lightx" data-bs-toggle="tooltip" data-bs-placement="top" title="View Comments" data-value="${data_val}" onclick="$.fn.view_remark(decodeURIComponent('${data[i].contract_no}'))">
                             <i class="far fa-comment-alt"></i>
                         </button>&nbsp;`;
 
 				// row += `&nbsp;&nbsp;<a class="tooltips" data-toggle="tooltip" data-placement="left" title="View Details" href="javascript:void(0)" data-value=\'' + data_val + '\' onclick="$.fn.populate_detail_form(${data[i].contract_no})"><i class="fa fa-sign-in"></i></a>`;
 				
-				row += `<button type="button" class="btn btn-outline-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="View Details" data-value="${data_val}" onclick="$.fn.populate_detail_form(decodeURIComponent('${data[i].contract_no}'))">
+				row += `<button type="button" class="btn btn-xs btn-info waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="View Details" data-value="${data_val}" onclick="$.fn.populate_detail_form(decodeURIComponent('${data[i].contract_no}'))">
                             <i class="fas fa-sign-in-alt"></i>
                         </button>`;
 
