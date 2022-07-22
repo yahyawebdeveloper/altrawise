@@ -691,7 +691,7 @@ $.fn.get_list = function(is_scroll)
             date_from       : $('#from_date').val(),
             date_to         : $('#to_date').val(),    
             client_name     : $('#txt_search_client_name').val(),
-            assigned_to     : ( $('#dd_search_assigned_to').val().length == 0 || $('#dd_search_assigned_to').val()[0] == "" ) ? null : $('#dd_search_assigned_to').val(),
+            assigned_to     : $('#dd_search_assigned_to').val(),
             type_id         : $('#dd_search_type').val(),
             comm_type_id    : $('#dd_search_comm_type').val(),
             offering_id     : $('#dd_search_offerings').val(),
@@ -1622,6 +1622,15 @@ $.fn.show_hide_form = function(form_status,reset_form)
 		$("#btn_new")			.show();
 		$("#showSearchDiv")		.show();
     }
+    else if(form_status == 'SEARCH')
+    {
+        $("#searchDiv")         .hide();
+        $('#list_div')          .show(400);
+        $('#new_div')           .hide(400);
+		$("#btn_new")			.show();
+		$("#showSearchDiv")		.show();
+        $("#tblList")           .show();
+    }
 };
 $.fn.bind_command_events = function()
 {
@@ -1669,6 +1678,7 @@ $.fn.bind_command_events = function()
             e.preventDefault();
             RECORD_INDEX = 0;
             $.fn.get_list(false);
+            $.fn.show_hide_form('SEARCH')
         });
         
         $('#btn_reset').click( function(e)
@@ -1888,7 +1898,7 @@ $.fn.prepare_form = function()
             }
         });
 		$.fn.get_client_drop_down_values();
-		$.fn.get_list(false);
+		
 		let search_params   = new URLSearchParams(window.location.search);
         let client_id       = search_params.get('id');
         if(client_id  != null)
@@ -1898,6 +1908,25 @@ $.fn.prepare_form = function()
 		$.fn.intialize_fileupload('fileupload_comm', 'files_comm');
 		$.fn.intialize_fileupload('fileupload','files');
         $('.populate').select2();
+        
+        var startdate = moment();
+		startdate = startdate.subtract(1, "years");
+		$('#from_date').val(startdate.format("YYYY-MM-DD"));
+		$('#to_date').val(moment(new Date()).format("YYYY-MM-DD"));
+		$("#doc_search_date").trigger("change");
+		$("#doc_search_date").flatpickr({
+			mode:"range",
+			altFormat: "d-M-Y",
+			dateFormat: "d-m-Y",
+			defaultDate: [startdate.format("DD-MM-YYYY"),moment(new Date()).format("DD-MM-YYYY")],
+			onChange:function(selectedDates){
+				var _this=this;
+				var dateArr=selectedDates.map(function(date){return _this.formatDate(date,'Y-m-d');});
+				$('#from_date').val(dateArr[0]);
+				$('#to_date').val(dateArr[1]);
+			},
+		});
+        $.fn.get_list(false);
     }
     catch(err)
     {
