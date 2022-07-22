@@ -9,7 +9,7 @@ var RECORD_INDEX 	= 0;
 var upload_section 	= '';
 var btn_save = EMP_ID = EMP_HIS_ID = '';
 var btn_leave_save; EMP_LEAVE_ID = '';
-var btn_attach_save;
+var btn_attach_save; EMP_ASSET_ID = '';
 var btn_rec_save;
 var btn_exit_attach_save;
 var btn_test_email;
@@ -17,7 +17,7 @@ var BACKUP_SESSION = '';
 var CODE_TRIGGERED = false;
 var p_status = '';
 var pid = "";
-var flatpickerEndTime, flatpickerEndTime = '';
+var flatpickrStartTime, flatpickerEndTime, flatpickrScreenST, flatpickrScreenET = '';
 
 // Exit Checklist Form
 $.fn.exit_save_edit_form = function ()
@@ -26,15 +26,14 @@ $.fn.exit_save_edit_form = function ()
 	{
 		if ($('#exit_attach_files .file-upload.new').length > 0)
 		{
-			FILE_UPLOAD_PATH = `${MODULE_ACCESS.module_id}/${EMP_ID}/`;
+			FILE_UPLOAD_PATH = `../files/${MODULE_ACCESS.module_id}/${EMP_ID}/`;
+			
 			let ctg = $('#dd_exit_category option:selected').text();
-			if ($('#dd_exit_category').val() == 'Please Select')
-			{
+			if ($('#dd_exit_category').val() == '') {
 				ctg = '-NO CATEGORY-';
 			}
 
-			let attachment_data =
-			{
+			let attachment_data = {
 				id: '',
 				primary_id: EMP_ID,
 				secondary_id: 2,
@@ -51,11 +50,9 @@ $.fn.exit_save_edit_form = function ()
 			};
 
 			$.fn.upload_file('exit_attach_files', 'id', EMP_ID,
-				attachment_data, function (total_files, total_success, filename, attach_return_data)
-			{
-				if (total_files == total_success)
-				{
-					$.fn.populate_attachment_list_form(attach_return_data.attachment, 2);
+				attachment_data, function (total_files, total_success, filename, attach_return_data) {
+				if (total_files == total_success) {
+					$.fn.populate_added_attachment(attach_return_data, 2);
 				}
 			}, false, btn_exit_attach_save);
 		}
@@ -122,7 +119,7 @@ $.fn.populate_attachment_list_form = function (data, type)
 						row += `<tr data-value="${escape(JSON.stringify(data[i]))}">
 								<td>
 								
-									<button type="button" class="btn btn-outline-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="View File" onclick="$.fn.open_page('${data[i].id}','${appConfig.SERVER_URL}public/download.php')">
+									<button type="button" class="btn btn-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="View File" onclick="$.fn.open_page('${data[i].id}','${appConfig.SERVER_URL}public/download.php')">
 										<i class="fas fa-download"></i>
 									</button>
 								</td>
@@ -158,8 +155,11 @@ $.fn.populate_attachment_list_form = function (data, type)
 
 						let check = `<input type="checkbox" name="chk_exit_file_visible" ${is_checked} onchange="$.fn.make_is_visible_to_owner_files(this)">`;
 						row += `<tr data-value="${escape(JSON.stringify(data[i]))}">
-									<td><a class="tooltips" href="javascript:void(0)" onclick="$.fn.open_page('${data[i].id}','${CURRENT_PATH}download.php')"
-										data-trigger="hover" data-original-title="View File "><i class="fa fa-picture-o"/></a></td>
+									<td>
+										<button type="button" class="btn btn-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="View File" onclick="$.fn.open_page('${data[i].id}','${appConfig.SERVER_URL}public/download.php')">
+											<i class="fas fa-download"></i>
+										</button>
+									</td>
 									<td>${check}</td>
 									<td>${json_field.category}</td>
 									<td>${data[i].filename}</td>
@@ -189,23 +189,22 @@ $.fn.attach_save_edit_form = function ()
 	{
 		if ($('#attach_files .file-upload.new').length > 0)
 		{
-			FILE_UPLOAD_PATH = `${MODULE_ACCESS.module_id}/${EMP_ID}/`;
+			FILE_UPLOAD_PATH = `../files/${MODULE_ACCESS.module_id}/${EMP_ID}/`;
+			
 			let ctg = $('#dd_attach_category option:selected').text();
-			if ($('#dd_attach_category').val() == 'Please Select')
-			{
+			
+			if ($('#dd_attach_category').val() == '') {
 				ctg = '-NO CATEGORY-';
 			}
 
-			let attachment_data =
-			{
+			let attachment_data = {
 				id: '',
 				primary_id: EMP_ID,
 				secondary_id: 1,
 				module_id: MODULE_ACCESS.module_id,
 				filename: '',
 				filesize: "0",
-				json_field:
-				{
+				json_field: {
 					remarks: ($('#txt_attach_remarks').val().replace(/['"]/g, '')),
 					category: ctg,
 					is_visible: $('#chk_file_visible').is(':checked') ? 1 : 0
@@ -215,11 +214,10 @@ $.fn.attach_save_edit_form = function ()
 
 
 			$.fn.upload_file('attach_files', 'emp_id', EMP_ID,
-				attachment_data, function (total_files, total_success, filename, attach_return_data)
-			{
-				if (total_files == total_success)
-				{
-					$.fn.populate_attachment_list_form(attach_return_data.attachment, 1);
+				attachment_data, function (total_files, total_success, filename, attach_return_data) {
+				
+				if (total_files == total_success) {
+					$.fn.populate_added_attachment(attach_return_data, 1);
 				}
 			}, false, btn_attach_save);
 
@@ -234,6 +232,7 @@ $.fn.attach_save_edit_form = function ()
 		$.fn.log_error(arguments.callee.caller, err.message);
 	}
 };
+
 // Attach Form
 $.fn.delete_work_history = function (data)
 {
@@ -295,6 +294,125 @@ $.fn.delete_work_history = function (data)
 		$.fn.log_error(arguments.callee.caller, err.message);
 	}
 };
+
+$.fn.populate_added_attachment = function (data, type) {
+	try {
+		if(type == 1) {
+			if(data.attachment) {
+				var row = '';
+				let attach = data.attachment;
+				for (let i = 0; i < attach.length; i++) {
+					let json_field = $.fn.get_json_string(attach[i].json_field);
+					if (json_field !== false) {
+						let is_checked = '';
+						if (parseInt(json_field.is_visible) == 1) {
+							is_checked = `checked`;
+						}
+
+						let check = `<input type="checkbox" name="chk_file_visible" ${is_checked} onchange="$.fn.make_is_visible_to_owner_files(this)">`;
+						row += `<tr data-value="${escape(JSON.stringify(attach[i]))}">
+								<td>
+								
+									<button type="button" class="btn btn-outline-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="View File" onclick="$.fn.open_page('${attach[i].id}','${appConfig.SERVER_URL}public/download.php')">
+										<i class="fas fa-download"></i>
+									</button>
+								</td>
+								<td>${check}</td>
+								<td>${json_field.category}</td>
+								<td>${attach[i].name}</td>
+								<td>${json_field.remarks}</td>
+								<td>${attach[i].created_by}</td>
+								<td>${attach[i].created_date}</td>
+								<td>${attach[i].status}</td>
+							</tr>`;
+					}
+				}
+				$('#tbl_attachment').append(row);
+			}
+		} else if(type == 2) {
+			if (data.attachment) {
+				var row = '';
+				let attach = data.attachment;
+				
+				for (var i = 0; i < attach.length; i++) {
+					let json_field = $.fn.get_json_string(attach[i].json_field);
+					if (json_field)
+					{
+						let is_checked = '';
+						if (parseInt(json_field.is_visible) == 1) {
+							is_checked = `checked`;
+						}
+
+						let check = `<input type="checkbox" name="chk_exit_file_visible" ${is_checked} onchange="$.fn.make_is_visible_to_owner_files(this)">`;
+						row += `<tr data-value="${escape(JSON.stringify(attach[i]))}">
+									<td>
+										<button type="button" class="btn btn-outline-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="View File" onclick="$.fn.open_page('${attach[i].id}','${appConfig.SERVER_URL}public/download.php')">
+											<i class="fas fa-download"></i>
+										</button>
+									</td>
+									<td>${check}</td>
+									<td>${json_field.category}</td>
+									<td>${attach[i].name}</td>
+									<td>${json_field.remarks}</td>
+									<td>${attach[i].created_by}</td>
+									<td>${attach[i].created_date}</td>
+									<td>${attach[i].status}</td>
+								</tr>`;
+
+					}
+				}
+				$('#tbl_exit').append(row);
+			}
+		}
+	} catch (err) {
+		$.fn.log_error(arguments.callee.caller, err.message);
+	}
+}
+
+// Screen Track
+$.fn.get_screen_track_info = function ()
+{
+	try
+	{
+		// let start_date = '';
+		// let end_date = '';
+
+		// if ($('#st_start_date').val() != "")
+		// {
+		// 	start_date = moment($('#st_start_date').val(), 'DD-MMM-YYYY');
+		// 	start_date = start_date.format(SERVER_DATE_FORMAT);
+		// }
+		// if ($('#st_end_date').val() != "")
+		// {
+		// 	end_date = moment($('#st_end_date').val(), 'DD-MMM-YYYY');
+		// 	end_date = end_date.format(SERVER_DATE_FORMAT);
+		// }
+
+		let enable_days = {};
+		for (i = 0; i <= 6; i++)
+		{
+			enable_days[i] = $('#chk_enable_day_' + i).is(':checked') ? true : false;
+		}
+		var data =
+		{
+			screenshot_enable: $('#chk_enable_screen_track').is(':checked') ? 1 : 0,
+			screenshot_interval: $('#txt_interval').val(),
+			screenshot_start_date: $('#st_start_date').val() ? $('#st_start_date').val() : '',
+			screenshot_end_date: $('#st_end_date').val() ? $('#st_end_date').val() : '',
+			screenshot_start_time: $('#st_start_time').val(),
+			screenshot_end_time: $('#st_end_time').val(),
+			screenshot_enable_days: enable_days,
+			screenshot_exclude_ph: $('#chk_exclude_ph').is(':checked') ? true : false,
+			screenshot_exclude_leaves: $('#chk_exclude_leaves').is(':checked') ? true : false
+		};
+		return data;
+	}
+	catch (err)
+	{
+		$.fn.log_error(arguments.callee.caller, err.message);
+	}
+};
+// Screen Track
 
 function GetDate(str) {
   var arr = str.split("-");
@@ -525,10 +643,14 @@ $.fn.populate_history_list_form = function (data, is_scroll)
 
 				data_val = escape(JSON.stringify(data[i])); //.replace(/'/,"");
 				row += `<tr>
-					<td>
-						<a class="action-icon" href="javascript:void(0)" data-value='${data_val}' onclick="$.fn.delete_work_history(unescape($(this).attr('data-value')))" data-trigger="hover" data-original-title="Delete data "><i class="mdi mdi-trash-can-outline"/></i></a> 
+					<td> 
+						<button type="button" class="btn btn-danger btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-value="${data_val}" onclick="$.fn.delete_work_history(decodeURIComponent('${data_val}'))">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
 						
-						<a class="action-icon" href="javascript:void(0)" data-value='${data_val}' onclick="$.fn.populate_his_detail_form(unescape($(this).attr('data-value')))" data-trigger="hover" data-original-title="Edit data "><i class="mdi mdi-square-edit-outline"/></i></a>
+						<button type="button" class="btn btn-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-value="${data_val}" onclick="$.fn.populate_his_detail_form(decodeURIComponent('${data_val}'))">
+							<i class="mdi mdi-square-edit-outline"/></i>
+                        </button>
 					</td>
 						<td>${data[i].client_name}</td>
 						<td>${data[i].department}</td>
@@ -876,6 +998,39 @@ $.fn.reset_form = function(form)
 				}
 			);
 		}
+		else if (form == 'asset_form')
+		{
+			EMP_ASSET_ID = '';
+		}
+		else if (form == 'track_form')
+		{
+			$.fn.change_switchery($('#chk_screen_track'), false);
+			CODE_TRIGGERED = false;
+			$('#txt_interval').val(0);
+
+			$('#st_start_date').val('');
+			$('#st_end_date').val('');
+			$('#st_start_time').val('');
+			$('#st_end_time').val('');
+
+			for (i = 0; i <= 6; i++) {
+				$('#chk_enable_day_' + i).prop('checked', false);
+			}
+
+			$('#chk_exclude_ph').prop('checked', false);
+			$('#chk_exclude_leaves').prop('checked', false);
+
+			$('#track_form').parsley().destroy();
+			$('#track_form').parsley({
+				classHandler: function(parsleyField) {              
+					return parsleyField.$element.closest(".errorContainer");
+				},
+				errorsContainer: function(parsleyField) {              
+					return parsleyField.$element.closest(".errorContainer");
+				},
+			});
+
+		}
 
 	}
 	catch(err)
@@ -893,8 +1048,8 @@ $.fn.populate_detail_form = function (data)
 		$.fn.reset_form('his_form');
 		$.fn.reset_form('leave_form');
 		$.fn.intialize_fileupload("doc_upload", "doc_upload_files");
-		// $.fn.reset_form('asset_form');
-		// $.fn.reset_form('track_form');
+		$.fn.reset_form('asset_form');
+		$.fn.reset_form('track_form');
 
 		//fetch profile pic
 		let get_param = {id: '', module_id: MODULE_ACCESS.module_id, method: "get_files", primary_id: data.id, secondary_id: 13, token: $.jStorage.get('token') };
@@ -928,6 +1083,7 @@ $.fn.populate_detail_form = function (data)
 			$.fn.generate_parameter('get_employees_details', { id: data.id }),
 			function (return_data)
 			{
+				console.log(return_data);
 				if (return_data.data)
 				{
 					let data = return_data.data[0];
@@ -1065,21 +1221,23 @@ $.fn.populate_detail_form = function (data)
 							$.fn.change_switchery($('#chk_enable_backup'), (parseInt(json_field.permission.enable_backup) ? true : false));
 						}
 
-					// 	if (json_field.screen_track)
-					// 	{
-					// 		$.fn.change_switchery($('#chk_enable_screen_track'), (parseInt(json_field.screen_track.screenshot_enable) ? true : false));
-					// 		$('#txt_interval').val(json_field.screen_track.screenshot_interval);
-					// 		$('#st_start_date').val(json_field.screen_track.screenshot_start_date ? moment(json_field.screen_track.screenshot_start_date).format(UI_DATE_FORMAT) : '');
-					// 		$('#st_end_date').val(json_field.screen_track.screenshot_end_date ? moment(json_field.screen_track.screenshot_end_date).format(UI_DATE_FORMAT) : '');
-					// 		$('#st_start_time').val(json_field.screen_track.screenshot_start_time);
-					// 		$('#st_end_time').val(json_field.screen_track.screenshot_end_time);
-					// 		for (i = 0; i <= 6; i++)
-					// 		{
-					// 			$('#chk_enable_day_' + i).prop('checked', json_field.screen_track.screenshot_enable_days[i]);
-					// 		}
-					// 		$('#chk_exclude_ph').prop('checked', json_field.screen_track.screenshot_exclude_ph);
-					// 		$('#chk_exclude_leaves').prop('checked', json_field.screen_track.screenshot_exclude_leaves);
-					// 	}
+						if (json_field.screen_track)
+						{
+							$.fn.change_switchery($('#chk_enable_screen_track'), (parseInt(json_field.screen_track.screenshot_enable) ? true : false));
+							$('#txt_interval').val(json_field.screen_track.screenshot_interval);
+							// $('#st_start_date').val(json_field.screen_track.screenshot_start_date ? moment(json_field.screen_track.screenshot_start_date).format(UI_DATE_FORMAT) : '');
+							// $('#st_end_date').val(json_field.screen_track.screenshot_end_date ? moment(json_field.screen_track.screenshot_end_date).format(UI_DATE_FORMAT) : '');
+							$('#st_start_date').flatpickr({dateFormat: "d-M-Y"}).setDate(json_field.screen_track.screenshot_start_date, false, "Y-m-d");
+							$('#st_end_date').flatpickr({dateFormat: "d-M-Y"}).setDate(json_field.screen_track.screenshot_end_date, false, "Y-m-d");
+							flatpickrScreenST.setDate(json_field.screen_track.screenshot_start_time);
+							flatpickrScreenET.setDate(json_field.screen_track.screenshot_end_time);
+							for (i = 0; i <= 6; i++)
+							{
+								$('#chk_enable_day_' + i).prop('checked', json_field.screen_track.screenshot_enable_days[i]);
+							}
+							$('#chk_exclude_ph').prop('checked', json_field.screen_track.screenshot_exclude_ph);
+							$('#chk_exclude_leaves').prop('checked', json_field.screen_track.screenshot_exclude_leaves);
+						}
 
 					// 	if (json_field.backup)
 					// 	{
@@ -1242,7 +1400,11 @@ $.fn.populate_list_form = function(data,is_scroll)
 							}</td> 
 							
 							<td>${data[i].created_by}</td>
-							<td><a href="javascript:void(0);" data-value="${data_val}" data-trigger="hover" data-original-title="Edit data " onclick="$.fn.populate_detail_form(unescape('${data_val}'))" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a></td>
+							<td>
+								<button type="button" class="btn btn-success btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-value="${data_val}" onclick="$.fn.populate_detail_form(decodeURIComponent('${data_val}'))">
+									<i class="fas fa-sign-in-alt"></i>
+								</button>
+							</td>
 						</tr>`;	
 							
 			}
@@ -2236,7 +2398,11 @@ $.fn.populate_leave_list_form = function (data, is_scroll)
 			{
 				data_val = escape(JSON.stringify(data[i])); //.replace(/'/,"");
 				row += `<tr>
-					<td><a class="tooltips" href="javascript:void(0)" data-value="${data_val}" onclick="$.fn.delete_leave(unescape($(this).attr('data-value')))" data-trigger="hover" data-original-title="Delete data "><i class="mdi mdi-trash-can-outline"/></a></td>
+					<td>
+						<button type="button" class="btn btn-danger btn-xs waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-value="${data_val}" onclick="$.fn.delete_leave(decodeURIComponent('${data_val}'))">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+					</td>
 					<td>${data[i].name}</td>
 					<td>${data[i].leave_type}</td>
 					<td>${data[i].no_of_days}</td>
@@ -2506,7 +2672,7 @@ $.fn.save_edit_form = function()
 				},
 				// backup: BACKUP_SESSION,
 				access: $.fn.get_user_access(),
-				// screen_track: $.fn.get_screen_track_info(),
+				screen_track: $.fn.get_screen_track_info(),
 				permission:
 				{
 					enable_chat: $('#chk_enable_chat').is(':checked') ? 1 : 0,
@@ -2675,7 +2841,7 @@ $.fn.prepare_form = function()
 		});
 
 		//timepicker
-		flatpickrStartTime = $("#st_start_time,#shift_st_start_time").flatpickr({
+		flatpickrStartTime = $("#shift_st_start_time").flatpickr({
 			enableTime: true,
 			noCalendar: true,
 			dateFormat: "h:i K",
@@ -2685,7 +2851,7 @@ $.fn.prepare_form = function()
 
 		flatpickrStartTime.minuteElement.style.display = 'none';
 
-		flatpickerEndTime = $("#st_end_time,#shift_st_end_time").flatpickr({
+		flatpickerEndTime = $("#shift_st_end_time").flatpickr({
 			enableTime: true,
 			noCalendar: true,
 			dateFormat: "h:i K",
@@ -2694,6 +2860,26 @@ $.fn.prepare_form = function()
 		});
 
 		flatpickerEndTime.minuteElement.style.display = 'none';
+
+		flatpickrScreenST = $('#st_start_time').flatpickr({
+			enableTime: true,
+			noCalendar: true,
+			dateFormat: "h:i K",
+			minTime: "7:00",
+    		maxTime: "22:00",
+		});
+
+		flatpickrScreenST.minuteElement.style.display = 'none';
+
+		flatpickrScreenET = $('#st_end_time').flatpickr({
+			enableTime: true,
+			noCalendar: true,
+			dateFormat: "h:i K",
+			minTime: "7:00",
+    		maxTime: "22:00",
+		});
+
+		flatpickrScreenET.minuteElement.style.display = 'none';
 
 		$('.flatpickr-time-separator').hide();
 		$('.flatpickr-minute').parent().hide();
@@ -2767,7 +2953,7 @@ $.fn.prepare_form = function()
 	}
 	catch(err)
 	{
-		console.log(err.message);
+		// console.log(err.message);
 		$.fn.log_error(arguments.callee.caller,err.message);
 	}			
 };
@@ -2776,6 +2962,10 @@ $.fn.bind_command_events = function()
 {	
 	try
 	{	
+		$('#btn_config_download').click(function (e) {
+			window.open(`${appConfig.SERVER_URL}public/download.php?id=` + EMP_ID + '&type=config');
+		});
+
 		$('#btn_exit_attach_save').click(function (e)
 		{
 			e.preventDefault();
@@ -2783,6 +2973,7 @@ $.fn.bind_command_events = function()
 			btn_exit_attach_save.start();
 			$.fn.exit_save_edit_form();
 		});
+
 		$('#btn_attach_save').click(function (e)
 		{
 			e.preventDefault();
@@ -2790,6 +2981,7 @@ $.fn.bind_command_events = function()
 			btn_attach_save.start();
 			$.fn.attach_save_edit_form();
 		});
+
 		$('#btn_rec_save').click(function (e)
 		{
 			e.preventDefault();
@@ -2957,7 +3149,7 @@ $.fn.bind_command_events = function()
 		});
 
 		$.fn.init_attach_file(); //Profile picture
-		// $.fn.intialize_fileupload('exit_attach_fileupload', 'exit_attach_files');
+		$.fn.intialize_fileupload('exit_attach_fileupload', 'exit_attach_files');
 		$.fn.intialize_fileupload('attach_fileupload', 'attach_files');
 	}
 	catch(err)

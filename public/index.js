@@ -127,6 +127,17 @@
 				 $('#crm_li').hide();
 			 }
 
+			 let meeting_list = $('#mn_meeting_list').attr('href');
+			 let meeting_list_access = $.fn.get_accessibility($.fn.get_page_name(meeting_list));
+			 if(meeting_list_access == 0 || meeting_list_access.view == 0) {
+				 $('#crm_li').hide();
+			 }
+
+			 let meeting_summary_list = $('#mn_meeting_summary').attr('href');
+			 let meeting_summary_access = $.fn.get_accessibility($.fn.get_page_name(meeting_summary_list));
+			 if(meeting_summary_access == 0 || meeting_summary_access.view == 0) {
+				 $('#crm_li').hide();
+			 }
  
 			 //Operations
 			 let my_task = $('#mn_mytask').attr('href');
@@ -363,6 +374,12 @@
 			 }, { before: middleware })
 			 .on("/assets/asset", () => { //assets route
 				$.fn.load_form('./modules/assets/asset.html')
+			}, { before: middleware })
+			.on("/meetings", () => { //meeting route
+				$.fn.load_form('./modules/meetings/meetings.html')
+			}, { before: middleware })
+			.on("/meetings/summary", () => { //meeting route
+				$.fn.load_form('./modules/meetings/meeting_client_summary.html')
 			}, { before: middleware })
 			.on("/service-request", () => { //service request route
 				$.fn.load_form('./modules/service-request.html')

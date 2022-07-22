@@ -653,4 +653,64 @@ function get_document_search_assest_check() {
     }
 }
 
+function get_dropdown_meeting($params) {
+    try
+    {   
+        $view_all                   = if_property_exist($params, 'view_all',false);
+        $emp_id                     = if_property_exist($params, 'emp_id',false);
+        $lead_access_view_all       = if_property_exist($params, 'lead_access_view_all',false);
+        $lead_access_view           = if_property_exist($params, 'lead_access_view',false);
+
+        if (isset($lead_access_view) && $lead_access_view == 1) {
+            $drop_down['emp']    = db_query('id,name,office_email', 'cms_employees', 'is_active = 1');
+            $where  =  "cms_clients.is_active = 1";
+        } else {
+            $drop_down['emp']    = db_query('id,name,office_email', 'cms_employees', "id =" . $emp_id. " AND is_active = 1");
+            $where  =   "cms_clients.is_active = 1 AND FIND_IN_SET(" . $emp_id . ", cms_clients.assign_emp_id)";
+        }
+        $drop_down['client'] 	=  db_query(
+            'cms_clients.id,cms_clients.name',
+            'cms_clients
+                                        LEFT JOIN cms_master_list as tbl_type ON FIND_IN_SET(tbl_type.id, cms_clients.type_id) > 0
+                                        LEFT JOIN cms_master_category ON tbl_type.category_id = cms_master_category.id',
+            $where . " AND tbl_type.descr = 'Client' AND cms_master_category.id = 59"
+        );
+        
+        
+        $drop_down['category']	= db_query('id,descr', 'cms_master_list', "category_id = 24 AND is_active = 1");
+        $drop_down['meeting_mode']   = db_query('id,descr,json_field', 'cms_master_list', "category_id = 54 AND is_active = 1");
+        $drop_down['appt_status']	= db_query('id,descr', 'cms_master_list', "category_id = 28 AND is_active = 1");
+        
+        $sql 			= "SELECT id,CONCAT(name, ' - ', company_name) as name,email,company_name FROM (SELECT cms_appt_pic.id,cms_appt_pic.name,cms_appt_pic.email, cms_clients.name as company_name
+                            FROM cms_appt_pic INNER JOIN cms_clients ON cms_appt_pic.client = cms_clients.id
+                            WHERE cms_appt_pic.created_by = " . $emp_id . " AND cms_appt_pic.email<>''
+                            UNION ALL
+                            SELECT cms_employees.id, cms_employees.name, cms_employees.office_email as email,
+                            cms_master_employer.employer_name  as company_name
+                            FROM
+                            cms_employees INNER JOIN cms_master_employer ON FIND_IN_SET(cms_master_employer.id, JSON_UNQUOTE(JSON_EXTRACT(cms_employees.json_field, '$.employer')))
+                            WHERE cms_employees.is_active = 1 AND cms_employees.office_email<>'') as query";
+        $drop_down['to']  		= db_execute_custom_sql($sql);
+        $drop_down['template']	= db_query('template_content', 'cms_master_template', "id = 1");
+        $drop_down['expenses']  	= db_query('id,descr', 'cms_master_list', 'category_id = 23 AND is_active = 1');
+        $drop_down['claim']   	= db_query('field1', 'cms_master_list', 'id = 7 AND is_active = 1');
+        
+        
+        $companysql = "SELECT cms_clients_contacts.id,CONCAT(cms_clients_contacts.name, ' - ', cms_clients_contacts.email) as descr, cms_clients_contacts.email
+                                FROM cms_clients_contacts 
+                                LEFT JOIN cms_clients ON cms_clients.id = cms_clients_contacts.client
+                                LEFT JOIN cms_clients_comm ON cms_clients_contacts.client = cms_clients_comm.client_id
+                                WHERE cms_clients_contacts.email <> '' AND
+                                cms_clients.is_active = 1 AND FIND_IN_SET(" . $emp_id . ", cms_clients.assign_emp_id)
+                                GROUP BY cms_clients.id";
+        $drop_down['company'] = db_execute_custom_sql($companysql);
+
+        return handle_success_response('Success', $drop_down);
+    }
+    catch (Exception $e)
+    {
+        handle_exception($e);
+    }
+}
+
 ?>

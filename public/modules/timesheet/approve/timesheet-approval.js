@@ -175,7 +175,7 @@ $.fn.populate_list = function (data, is_scroll) {
                              </div>
                          </td>
                          <td>
-                            <a class="btn-view-task btn btn-outline-success btn-xs waves-effect waves-light" data-toggle="tooltip" data-placement="left" title="View Details" href="javascript:void(0)" data-id="${data_val.id}" data-approved="${escape(JSON.stringify(data_val))}"><i class="fas fa-sign-in-alt"></i></a>
+                            <a class="btn-view-task btn btn-success btn-xs waves-effect waves-light" data-toggle="tooltip" data-placement="left" title="View Details" href="javascript:void(0)" data-id="${data_val.id}" data-approved="${escape(JSON.stringify(data_val))}"><i class="fas fa-sign-in-alt"></i></a>
                          </td>
                      </tr>
                  `);
