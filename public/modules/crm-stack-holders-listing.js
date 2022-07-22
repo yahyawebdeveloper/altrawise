@@ -685,12 +685,13 @@ $.fn.get_list = function(is_scroll)
 {
     try
     {
+        
         let data    =
         {
             date_from       : $('#from_date').val(),
             date_to         : $('#to_date').val(),    
             client_name     : $('#txt_search_client_name').val(),
-            assigned_to     : ( $('#dd_search_assigned_to').val().length == 0 ) ? null : $('#dd_search_assigned_to').val(),
+            assigned_to     : ( $('#dd_search_assigned_to').val().length == 0 || $('#dd_search_assigned_to').val()[0] == "" ) ? null : $('#dd_search_assigned_to').val(),
             type_id         : $('#dd_search_type').val(),
             comm_type_id    : $('#dd_search_comm_type').val(),
             offering_id     : $('#dd_search_offerings').val(),
@@ -1864,17 +1865,13 @@ $.fn.prepare_form = function()
 		$("select.form-control.multi").select2({ multiple: true });
 		$('#detail_form').parsley
         ({
-            successClass    : 'has-success',
-            errorClass      : 'has-error',
-            errors          :
-            {
-                classHandler: function(el)
-                {
-                    return $(el).closest('.form-group');
-                },
-                errorsWrapper   : '<ul class=\"help-block list-unstyled\"></ul>',
-                errorElem       : '<li></li>'
-            }
+            classHandler: function (parsleyField) {
+                console.log(parsleyField.$element.closest(".errorContainer"));
+                return parsleyField.$element.closest(".errorContainer");
+            },
+            errorsContainer: function (parsleyField) {
+                return parsleyField.$element.closest(".errorContainer");
+            },
         });
         $('#contacts_form').parsley
         ({
@@ -1900,6 +1897,7 @@ $.fn.prepare_form = function()
         }
 		$.fn.intialize_fileupload('fileupload_comm', 'files_comm');
 		$.fn.intialize_fileupload('fileupload','files');
+        $('.populate').select2();
     }
     catch(err)
     {

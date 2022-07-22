@@ -65,7 +65,7 @@
 						 <div class="row">
 							<div class="col-md-12">
 								<label for="simpleinput" class="form-label">Account Managers</label>
-								<select id="dd_search_assigned_to" style="width:100%" class="form-control" multiple="multiple">
+								<select id="dd_search_assigned_to" style="width:100%" class="form-control populate" multiple="multiple">
 								</select>
 							</div>
 						</div>
@@ -78,7 +78,7 @@
 						 <div class="row">
 							<div class="col-md-12">
 								<label for="simpleinput" class="form-label">Type</label>
-								<select class="form-control" id="dd_search_type" data-toggle="select2" data-width="100%">
+								<select class="form-control populate" id="dd_search_type" data-toggle="select2" data-width="100%">
 								</select>
 							</div>
 						</div>
@@ -87,7 +87,7 @@
 						 <div class="row">
 							<div class="col-md-12">
 								<label for="simpleinput" class="form-label">Source</label>
-								<select class="form-control" id="dd_search_source" data-toggle="select2" data-width="100%">
+								<select class="form-control populate" id="dd_search_source" data-toggle="select2" data-width="100%">
 									
 								</select>
 							</div>
@@ -101,7 +101,7 @@
 						 <div class="row">
 							<div class="col-md-12">
 								<label for="simpleinput" class="form-label">Status</label>
-								<select class="form-control country" id="dd_search_status" data-toggle="select2" data-width="100%">
+								<select class="form-control country populate" id="dd_search_status" data-toggle="select2" data-width="100%">
 								</select>
 							</div>
 						</div>
@@ -110,7 +110,7 @@
 						 <div class="row">
 							<div class="col-md-12">
 								<label for="simpleinput" class="form-label">Offerings</label>
-								<select class="form-control country" id="dd_search_offerings" data-toggle="select2" data-width="100%">
+								<select class="form-control country populate" id="dd_search_offerings" data-toggle="select2" data-width="100%">
 								</select>
 							</div>
 						</div>
@@ -189,7 +189,9 @@
 											<div class="row mb-3">
 												<div class="col-md-6" >
 													<label for="simpleinput" class="form-label">Type</label>
-													<select id="dd_type" style="width:100%;" class="form-control multi" required multiple="multiple"></select>
+													<div class="errorContainer">
+														<select id="dd_type" style="width:100%;" class="form-control multi populate" required multiple="multiple"></select>
+													</div>
 												</div>
 												<div class="col-md-6" >
 													<label for="simpleinput" class="form-label">Name</label>
@@ -222,18 +224,18 @@
 											<div class="row mb-3">
 												<div class="col-md-6" >
 													<label for="simpleinput" class="form-label">Industry</label>
-													<select id="dd_industry" style="width:100%" class="form-control not-multi" required></select>
+													<select id="dd_industry" style="width:100%" class="form-control populate not-multi" required></select>
 												</div>
 												<div class="col-md-6" >
 													<label for="simpleinput" class="form-label">Sources</label>
-													<select id="dd_source" style="width:100%" class="form-control not-multi" required></select>
+													<select id="dd_source" style="width:100%" class="form-control populate not-multi" required></select>
 												</div>
 											</div>
 											
 											<div class="row mb-3">
 												<div class="col-md-6" >
 													<label for="simpleinput" class="form-label">Status</label>
-													<select id="dd_client_status" style="width:100%" class="form-control not-multi" required></select>
+													<select id="dd_client_status" style="width:100%" class="form-control populate not-multi" required></select>
 												</div>
 												<div class="col-md-6" >
 													<label for="simpleinput" class="form-label">Registration No</label>
@@ -244,7 +246,7 @@
 											<div class="row mb-3">
 												<div class="col-md-6" >
 													<label for="simpleinput" class="form-label">Bank</label>
-													<select id="dd_bank" style="width:100%" class="form-control not-multi"></select>
+													<select id="dd_bank" style="width:100%" class="form-control populate not-multi"></select>
 												</div>
 												<div class="col-md-6" >
 													<label for="simpleinput" class="form-label">Account No</label>
@@ -255,7 +257,7 @@
 											<div class="row mb-3">
 												<div class="col-md-6" >
 													<label for="simpleinput" class="form-label">Account Managers</label>
-													<select id="dd_assign_client" class="form-control multi" style="width:100%;" multiple="multiple"></select>
+													<select id="dd_assign_client" class="form-control populate multi" style="width:100%;" multiple="multiple"></select>
 												</div>
 											</div>
 											
@@ -281,7 +283,7 @@
 															<tbody>
 																<tr id="base_row">
 																	<td width="30%">
-																	<select id="dd_additional" style="width:100%" class="form-control">
+																	<select id="dd_additional" style="width:100%" class="form-control populate">
 																	</select>
 																	<ul id="dd_additional_error" class="help-block list-unstyled" style="display: none;"><li class="required" style="display: list-item;">This value is required.</li></ul>
 																	</td>
@@ -388,7 +390,7 @@
 																	</div>
 																	<div class="col-md-4" >
 																		<label for="simpleinput" class="form-label">Status</label>
-																		<select id="dd_contact_status" style="width:100%" class="form-control">
+																		<select id="dd_contact_status" style="width:100%" class="form-control populate">
 																		</select>
 																	</div>
 																</div>
@@ -396,7 +398,7 @@
 																<div class="row mb-3">
 																	<div class="col-md-4" >
 																		<label for="simpleinput" class="form-label">User Status</label>
-																		<select id="dd_user_status" style="width:100%" class="form-control">
+																		<select id="dd_user_status" style="width:100%" class="form-control populate">
 																			<option value="1">ACTIVE</option>
 																			<option value="0">IN-ACTIVE</option>
 																		</select>
@@ -420,7 +422,7 @@
 																	</div>
 																	<div class="col-md-12">
 																		<label for="simpleinput" class="form-label">Offerings</label>
-																		<select id="dd_offerings" multiple="multiple" class="form-control" style="width:100%;">
+																		<select id="dd_offerings" multiple="multiple" class="form-control populate" style="width:100%;">
 																		</select>
 																	</div>
 																</div>
@@ -460,12 +462,12 @@
 														<div class="row mb-3">
 															<div class="col-md-6" >
 																<label for="simpleinput" class="form-label">Contacted</label>
-																<select id="dd_com_contact" style="width:100%" class="form-control" required>                     
+																<select id="dd_com_contact" style="width:100%" class="form-control populate" required>                     
 																</select>
 															</div>
 															<div class="col-md-6" >
 																<label for="simpleinput" class="form-label">Contact Medium</label>
-																<select id="dd_com_medium" style="width:100%" class="form-control" required>
+																<select id="dd_com_medium" style="width:100%" class="form-control populate" required>
 																</select>
 															</div>
 														</div>
@@ -502,12 +504,12 @@
 															</div>
 															<div class="col-md-4" >
 																<label for="simpleinput" class="form-label">Created By</label>
-																<select id="dd_employees" style="width:100%" class="form-control">
+																<select id="dd_employees" style="width:100%" class="form-control populate">
 																</select>	
 															</div>
 															<div class="col-md-4" >
 																<label for="simpleinput" class="form-label">Transfer To</label>
-																<select id="dd_assign_to" style="width:100%" class="form-control" required="required">
+																<select id="dd_assign_to" style="width:100%" class="form-control populate" required="required">
 																</select>
 															</div>
 															<div class="col-md-2" style="text-align:right;" >
@@ -573,17 +575,17 @@
 																<form class="form-horizontal row mt-3" data-validate="parsley" id="principal_form">
 																	<div class="col-md-3" >
 																		<label for="simpleinput" class="form-label">Principal a/c</label>
-																		<select id="dd_principal_accounts" style="width:100%" class="form-control" required>
+																		<select id="dd_principal_accounts" style="width:100%" class="form-control populate" required>
 																		</select>
 																	</div>
 																	<div class="col-md-3" >
 																		<label for="simpleinput" class="form-label">Offering</label>
-																		<select id="dd_offerings_principal" style="width:100%" class="form-control" required>
+																		<select id="dd_offerings_principal" style="width:100%" class="form-control populate" required>
 																		</select>
 																	</div>
 																	<div class="col-md-3" >
 																		<label for="simpleinput" class="form-label">A/c Manager</label>
-																		<select id="dd_managers_principal" style="width:100%" class="form-control" required>
+																		<select id="dd_managers_principal" style="width:100%" class="form-control populate" required>
 																		</select>
 																	</div>
 																	<div class="col-md-3" style="text-align:right;" >
