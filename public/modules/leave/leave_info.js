@@ -570,7 +570,7 @@ $.fn.view_leave_record = function (data, table_row_id)
 	{
 		ROW_DATA = JSON.parse(data);
 		//console.log(ROW_DATA);
-		console.log(moment(ROW_DATA.start_date, 'DD-MM-YYYY').year());
+		console.log(moment(ROW_DATA.start_date, 'YYYY-MM-DD').year());
 		TABLE_ROW_ID = table_row_id;
 
 
@@ -581,8 +581,9 @@ $.fn.view_leave_record = function (data, table_row_id)
 		{
 			em_type_id: EM_LEAVE_ID,
 			emp_id: ROW_DATA.emp_id,
-			year: moment(ROW_DATA.start_date, 'DD-MM-YYYY').year()
+			year: moment(ROW_DATA.start_date, 'YYYY-MM-DD').year()
 		};
+		console.log(param);
 		$.fn.fetch_data
 			(
 				$.fn.generate_parameter('get_leave_details', param),
