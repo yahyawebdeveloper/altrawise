@@ -77,7 +77,16 @@ $.fn.get_faq_approval_list = function()
 					}
 					$('#tbl_approver_list > tbody').html(row);
 					for(var i = 0; i < data.length; i++)
-					{
+					{   
+						for (let j = 0; j < data[i].attachment.length; j++)
+						{ 
+							data[i].attachment[j]['name'] = data[i].attachment[j]['filename'];
+							data[i].attachment[j]['uuid'] = data[i].attachment[j]['id'];
+							data[i].attachment[j]['deleteFileParams'] =  JSON.stringify(data[i].attachment[j]);
+							delete data[i].attachment[j]['filename'];
+							delete data[i].attachment[j]['id'];
+							
+						}
 						$.fn.populate_fileupload(data[i],'faq_list_'+i);
 						
 					}
