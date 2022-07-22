@@ -2352,6 +2352,12 @@ if(isset($_SERVER['REQUEST_METHOD']))
 			echo get_document_search_assest_check();
 			return;
 		}
+		else if ($param->method === 'get_dropdown_meeting') 
+		{
+			require_once constant('MODULES_DIR') . '/common.php';
+			echo get_dropdown_meeting($param->data);
+			return;
+		}
 		// Attendance
 require_once  'transporter.php';
 		
