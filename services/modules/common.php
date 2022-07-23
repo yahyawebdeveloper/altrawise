@@ -6,6 +6,37 @@ use setasign\Fpdi\Tcpdf\Fpdi as TcpdfFpdi;
 use setasign\Fpdi\Tfpdf\FpdfTpl as TfpdfFpdfTpl;
 use setasign\Fpdi\Tfpdf\Fpdi;
 
+function get_assignee(){
+	$return_data    	= [];
+	$temp				= [];
+	$rs_assign        	= db_query("id,name,office_email",
+							   'cms_employees','is_active = 1', '', '', 'cms_employees.name');
+	for($i = 0; $i < count($rs_assign); $i++)
+    {
+		$temp['id']   = $rs_assign[$i]['id'];
+		$temp['desc'] = $rs_assign[$i]['name'];
+		$return_data[] = $temp;
+	}
+	return json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );
+	//echo json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );exit;
+}
+
+
+function get_company(){
+	$return_data    	= [];
+	$temp				= [];
+	$rs_company       	= db_query('id,employer_name','cms_master_employer','is_active = 1');
+	for($i = 0; $i < count($rs_company); $i++)
+    {
+		$temp['id']   = $rs_company[$i]['id'];
+		$temp['desc'] = $rs_company[$i]['employer_name'];
+		$return_data[] = $temp;
+	}
+
+	return json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data, "defaultValue"=>$rs_company[0]['id'] ) );
+	//echo json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data, "defaultValue"=>$rs_company[0]['id'] ) );exit;
+}
+
 function get_departments(){
 	$return_data    	= [];
 	$temp				= [];

@@ -92,7 +92,7 @@ if(isset($_SERVER['REQUEST_METHOD']))
 		}
 		else if($param->method === 'get_company')
         {
-        	require_once constant('MODULES_DIR') 	. '/task.php';
+        	require_once constant('MODULES_DIR') 	. '/common.php';
          	echo get_company();
 		}
 		else if($param->method === 'get_taskTypes')
@@ -125,16 +125,16 @@ if(isset($_SERVER['REQUEST_METHOD']))
          	require_once constant('MODULES_DIR') 	. '/task.php';
         	echo get_schedule_tasks_list($param->data);
         }
-		else if($param->method === 'get_assignee')
+		*/else if($param->method === 'get_assignee')
 		{
-         	require_once constant('MODULES_DIR') 	. '/task.php';
+         	require_once constant('MODULES_DIR') 	. '/common.php';
         	echo get_assignee($param->data);
         }
 		else if($param->method === 'get_emp')
 		{
-         	require_once constant('MODULES_DIR') 	. '/task.php';
+         	require_once constant('MODULES_DIR') 	. '/common.php';
         	echo get_emp($param->data);
-        }
+        }/*
 		else if($param->method === 'get_task_reply_list_new')
         {
         	require_once constant('MODULES_DIR') 	. '/task.php';

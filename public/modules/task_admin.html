@@ -49,7 +49,7 @@
 						 <div class="row">
 							<div class="col-md-12">
 								<label for="simpleinput" class="form-label">Priority</label>
-								<select class="form-control priority" id="search_priority" data-toggle="select2" data-width="100%">
+								<select class="form-control priority" id="dd_priority_search" data-toggle="select2" data-width="100%">
 								</select>
 							</div>
 						</div>
@@ -62,7 +62,7 @@
 						 <div class="row">
 							<div class="col-md-12">
 								<label for="simpleinput" class="form-label">Assign To</label>
-								<select class="form-control assignTo" id="search_assignee" data-toggle="select2" data-width="100%">
+								<select class="form-control assignTo" id="dd_assign_to_search" data-toggle="select2" data-width="100%">
 								</select>
 							</div>
 						</div>
@@ -71,7 +71,7 @@
 						 <div class="row">
 							<div class="col-md-12">
 								<label for="simpleinput" class="form-label">Created By</label>
-								<select class="form-control createdBy" id="search_emp" data-toggle="select2" data-width="100%">
+								<select class="form-control createdBy" id="dd_created_by_search" data-toggle="select2" data-width="100%">
 								</select>
 							</div>
 						</div>
@@ -84,8 +84,8 @@
 						 <div class="row">
 							<div class="col-md-12">
 								<label for="simpleinput" class="form-label">Department</label>
-								<select class="form-control"  id="searchDepartment" data-toggle="select2" data-width="100%">
-									<option>Select</option>
+								<select class="form-control"  id="dd_dept_search" data-toggle="select2" data-width="100%">
+									
 								</select>
 							</div>
 						</div>
@@ -94,8 +94,7 @@
 						 <div class="row">
 							<div class="col-md-12">
 								<label for="simpleinput" class="form-label">Status</label>
-								<select id="dd_status_search" class="form-control" data-width="100%" multiple="multiple">
-							
+								<select id="dd_status_search" style="width:100%" class="populate" >
 								</select>
 							</div>
 						</div>
@@ -117,7 +116,9 @@
 <!-- SEARCH DIV --> 
 <!-- end page title --> 
 
-<div class="" id="list_task"></div>
+<div class="row" id="list_task">
+	
+</div>
 <div style="text-align:center" class="m-1">
 <button id="div_load_more" type="button" class="btn btn-sm btn-info waves-effect waves-light rounded-pill ">
                                 <i class="fa fa-arrow-down"></i>&nbsp;&nbsp;Load More&nbsp;&nbsp;<i class="fa fa-arrow-up"></i>

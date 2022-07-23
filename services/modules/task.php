@@ -1511,60 +1511,10 @@ function get_search_priority(){
 	//return json_encode( array("code"=>0,"msg"=>"Success","data"=>$return_data) );
 }
 
-function get_company(){
-	$return_data    	= [];
-	$temp				= [];
-	$rs_company       	= db_query('id,employer_name','cms_master_employer','is_active = 1');
-	for($i = 0; $i < count($rs_company); $i++)
-    {
-		$temp['id']   = $rs_company[$i]['id'];
-		$temp['desc'] = $rs_company[$i]['employer_name'];
-		$return_data[] = $temp;
-	}
-
-	return json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data, "defaultValue"=>$rs_company[0]['id'] ) );
-	//echo json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data, "defaultValue"=>$rs_company[0]['id'] ) );exit;
-}
 
 
-function get_assignee(){
-	$return_data    	= [];
-	$temp				= [];
-	$rs_assign        	= db_query("id,name,office_email",
-							   'cms_employees','is_active = 1', '', '', 'cms_employees.name');
-	for($i = 0; $i < count($rs_assign); $i++)
-    {
-		$temp['id']   = $rs_assign[$i]['id'];
-		$temp['desc'] = $rs_assign[$i]['name'];
-		$return_data[] = $temp;
-	}
-	return json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );
-	//echo json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );exit;
-}
-function get_emp(){
-	$return_data    	= [];
-	$temp				= [];
-	//$access = get_accessibility(32,$_SESSION['access']);
-	//if(isset($access->viewall) && $access->viewall == 1)
-	//{
-		$emp        	= db_query('cms_employees.id,cms_employees.name,cms_employees.office_email'
-								  ,'cms_employees
-								  inner join cms_tasks_new on cms_employees.id = cms_tasks_new.created_by'
-								  ,'cms_employees.is_active = 1 GROUP BY cms_employees.id ORDER BY cms_employees.name ASC');
-	//}
-	/* else
-	{
-		$emp        	= db_query('id,name,office_email','cms_employees',"id =" . $_SESSION['emp_id'] . " AND is_active = 1", '', '', 'cms_employees.name');
-	} */
-	for($i = 0; $i < count($emp); $i++)
-    {
-		$temp['id']   = $emp[$i]['id'];
-		$temp['desc'] = $emp[$i]['name'];
-		$return_data[] = $temp;
-	}
-	return json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );
-	//echo json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );exit;
-}
+
+
 
 function get_sbg_chart($params)
 {

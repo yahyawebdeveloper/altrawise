@@ -221,35 +221,27 @@ function getBusinessDateCount (startDate, endDate, holidays = false) {
 function filterNumbers(min, max) {
     return function (a) { return a >= min && a <= max; };
 }
-$.fn.get_everything_at_once = function()
-{
-	try
-	{
-		var data	= ['get_sbd','get_sbg','get_company','get_taskTypes','get_priority','get_taskGroups','get_status','get_assignee','get_emp','get_search_status'];										
-	 	$.fn.fetch_data
-		(
-			$.fn.generate_parameter('get_everything_at_once',data),
-			function(return_data)
-			{
-				if(return_data)
-				{
-					
-					var allData = return_data.data;
-					var allDataArray;
-					for( let i=0;i<allData.length;i++){
-						allDataArray = JSON.parse(allData[i]);
-						window[data[i]](allDataArray.data);
-					}
-					
-				}
-			},true
-		);
-	}
-	catch(err)
-	{
-		console.log(err.message);
-		//$.fn.log_error(arguments.callee.caller,err.message);
-	}
+$.fn.get_everything_at_once_altrawise = function (data, details = false) {
+  try {
+    $.fn.fetch_data(
+      $.fn.generate_parameter("get_everything_at_once_altrawise", data),
+      function (return_data) {
+        if (return_data) {
+          var allData = return_data.data;
+          var allDataArray;
+          for (let i = 0; i < allData.length; i++) {
+            allDataArray = JSON.parse(allData[i]);
+
+            window[data[i].func](allDataArray.data, details);
+          }
+        }
+      },
+      true
+    );
+  } catch (err) {
+    // console.log(err.message);
+    $.fn.log_error(arguments.callee.caller,err.message);
+  }
 };
 $.fn.populate_upload_schedule = function (data)
 {
@@ -775,7 +767,7 @@ $.fn.populate_assignee_row = function(r_data, mode, is_assignee = true, i = fals
                                         <i class="fa fa-tasks fa-fw" aria-hidden="true"></i> CheckList
                                     </button>`;
             btn_edit = `<a href="javascript:void(0);" class="action-icon btn_assignee_edit" data-xid="${i}" data-status="${r_data.status_id}"> <i class="mdi mdi-square-edit-outline"></i></a>`;
-			btn_link = `<a href="documents/outbound-documents/assignee/${r_data.id}" data-navigo><button type="button" class="btn btn-primary waves-light waves-effect btn-xs"><i class="fa fa-plus" aria-hidden="true"></i> Doc</button></a>`;
+			btn_link = ``;
         }
 		let deadlineDays = 0;
 		let status_name = (r_data.status_name) ? r_data.status_name : 'Not Set';
@@ -799,14 +791,14 @@ $.fn.populate_assignee_row = function(r_data, mode, is_assignee = true, i = fals
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-2">
+				<div class="col-sm-4">
 					<div class="my-3 my-sm-0">
 						<p class="mb-0"><b>Status:</b> ${status_name}</p>
 						<p class="mb-0 text-muted"><b>Deadline:</b> ${deadline_date}</p>
-						<p class="mb-0 text-muted">${deadlineDays} days</p>
+					
 					</div>
 				</div>
-				<div class="col-sm-4">
+				<div class="col-sm-2">
 					<div class="text-center button-list">
 						${btn_link}
 						${btn_checklist}
@@ -1463,9 +1455,9 @@ function get_priority(rowData = false)
 			$('#dd_priority').html(row);
 			$('#dd_priority').val(rowData[0].id);
 			$('#dd_priority').select2();
-			$('#search_priority').html(row);
-			$('#search_priority').val('');
-			$('#search_priority').select2();
+			$('#dd_priority_search').html(row);
+			$('#dd_priority_search').val('');
+			$('#dd_priority_search').select2();
 		}
 	}
 	catch(err)
@@ -1539,9 +1531,9 @@ function get_assignee(rowData = false)
 			$('#dd_approver').html(row);
 			$('#dd_approver').val(rowData[0].id);
 			$('#dd_approver').select2();
-			$('#search_assignee').html(row);
-			$('#search_assignee').val('');
-			$('#search_assignee').select2();
+			$('#dd_assign_to_search').html(row);
+			$('#dd_assign_to_search').val('');
+			$('#dd_assign_to_search').select2();
 		}
 	}
 	catch(err)
@@ -1579,7 +1571,7 @@ $.fn.get_departments = function(e)
 								</option>`;
 					}
 					$(e).html(row);
-					$(e).val(0);
+					$(e).val(0).change();
 					$(e).select2();
 				}
 			},true
@@ -1591,24 +1583,27 @@ $.fn.get_departments = function(e)
 		//$.fn.log_error(arguments.callee.caller,err.message);
 	}
 };
-$.fn.get_list = function (is_scroll)
+$.fn.get_list = function (is_scroll, data = null)
 {
     try 
     {
-    	let status_search = [""];		
-		var data	= 
-		{
-			title			: $('#txt_title_search')	.val(),
-			status			: $('#dd_status_search').val(),
-			assign_to 		: $('#dd_assign_to_search').val(),
-			created_by 		: $('#dd_created_by_search').val(),
-			dept_id 		: $('#dd_dept_search').val(),
-			view_all		: 1,//MODULE_ACCESS.view_it_all,
-			start_index		: RECORD_INDEX,
-			limit			: LIST_PAGE_LIMIT,			
-			is_admin		: SESSIONS_DATA.is_admin,		
-			emp_id			: SESSIONS_DATA.emp_id
-	 	};
+    	let status_search = [""];
+		if(!data){
+			var data	= 
+			{
+				title			: $('#txt_title_search')	.val(),
+				status			: $('#dd_status_search').val(),
+				assign_to 		: $('#dd_assign_to_search').val(),
+				created_by 		: $('#dd_created_by_search').val(),
+				dept_id 		: $('#dd_dept_search').val(),
+				view_all		: 1,//MODULE_ACCESS.view_it_all,
+				start_index		: RECORD_INDEX,
+				limit			: LIST_PAGE_LIMIT,			
+				is_admin		: SESSIONS_DATA.is_admin,		
+				emp_id			: SESSIONS_DATA.emp_id
+			};
+		}
+		
 	 	if(is_scroll)
 	 	{
 	 		data.start_index =  RECORD_INDEX;
@@ -2119,9 +2114,9 @@ function get_emp(rowData = false)
 			$('#dd_batch_assign').html(row);
 			$('#dd_batch_assign').val(rowData[0].id);
 			$('#dd_batch_assign').select2();
-			$('#search_emp').html(row);
-			$('#search_emp').val('');
-			$('#search_emp').select2();
+			$('#dd_created_by_search').html(row);
+			$('#dd_created_by_search').val('');
+			$('#dd_created_by_search').select2();
 		}
 	}
 	catch(err)
@@ -2234,9 +2229,9 @@ $.fn.populate_detail_form = function(task_no)
                                                     </button>`;
 							
 							if(r_data.doc_no) {
-								btn_link = `<a href="documents/outbound-documents/${r_data.doc_no}" data-navigo><button type="button" class="btn btn-primary waves-light waves-effect btn-xs"><i class="far fa-eye" aria-hidden="true"></i> Doc</button></a>`;
+								btn_link = ``;
 							}else {
-								btn_link = `<a href="documents/outbound-documents/assignee/${r_data.id}" data-navigo><button type="button" class="btn btn-primary waves-light waves-effect btn-xs"><i class="fa fa-plus" aria-hidden="true"></i> Doc</button></a>`;
+								btn_link = ``;
 							}
 							
 							btn_edit = `<a href="javascript:void(0);" class="action-icon btn_assignee_edit" data-xid="${i}" data-status="${r_data.status_id}"> <i class="mdi mdi-square-edit-outline"></i></a>`;
@@ -2298,14 +2293,14 @@ $.fn.populate_detail_form = function(task_no)
 											</div>
 										</div>
 									</div>
-									<div class="col-sm-2">
+									<div class="col-sm-4">
 										<div class="my-3 my-sm-0">
 											<p class="mb-0"><b>Status:</b> ${status_name}</p>
 											<p class="mb-0 text-muted"><b>Deadline:</b> ${deadline_date}</p>
-											<p class="mb-0 text-muted">${deadlineDays} days</p>
+											
 										</div>
 									</div>
-									<div class="col-sm-4">
+									<div class="col-sm-2">
 										<div class="text-center button-list">
 											${btn_link}
 											${btn_checklist}
@@ -2869,8 +2864,29 @@ $.fn.prepare_form = function()
 			year:2022
 		}
         get_holidays_list(dataToSend);
-		$.fn.get_everything_at_once();
-		e = "#searchDepartment";
+		
+		
+		var params = {
+			emp_id:SESSIONS_DATA.emp_id
+		}
+		var data = [
+			{ func: "get_sbd", params: params },
+			{ func: "get_sbg", params: params },
+			
+			{ func: "get_company", params: params },
+			{ func: "get_taskTypes", params: params },
+			
+			{ func: "get_priority", params: params },
+			{ func: "get_taskGroups", params: params },
+			{ func: "get_status", params: params },
+			{ func: "get_assignee", params: params },
+			{ func: "get_emp", params: params },
+			{ func: "get_search_status", params: params },
+			
+		];
+		
+		$.fn.get_everything_at_once_altrawise(data);
+		e = "#dd_dept_search";
 		$.fn.get_departments(e);
 		e = "#formDepartment";
 		$.fn.get_departments(e);
@@ -2917,7 +2933,7 @@ $.fn.prepare_form = function()
 		$("#dd_due_days").select2();
 		$("#dd_reviewer_due_days").select2();
 		$("#dd_approver_due_days").select2();
-		$.fn.get_list(false);
+		
 		$.fn.get_tasks_drop_down_values();
 		$.fn.intialize_fileupload('upload_schedule','upload_schedule_file');
 		$.fn.intialize_fileupload('fileupload_schedule','files_schedule');	
@@ -2928,7 +2944,20 @@ $.fn.prepare_form = function()
 		$('#dd_status').select2({
 			dropdownParent: $("#addEditAssigneeModal")
 		});
-		
+		var data	= 
+		{
+			title			: $('#txt_title_search')	.val(),
+			status			: null,//$('#dd_status_search').val(),
+			assign_to 		: $('#dd_assign_to_search').val(),
+			created_by 		: $('#dd_created_by_search').val(),
+			dept_id 		: 0,//$('#dd_dept_search').val(),
+			view_all		: 1,//MODULE_ACCESS.view_it_all,
+			start_index		: RECORD_INDEX,
+			limit			: LIST_PAGE_LIMIT,			
+			is_admin		: SESSIONS_DATA.is_admin,		
+			emp_id			: SESSIONS_DATA.emp_id
+		};
+		$.fn.get_list(false,data);
 	}
 	catch(err)
 	{
