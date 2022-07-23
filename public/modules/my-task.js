@@ -584,21 +584,20 @@ $.fn.get_everything_at_once_altrawise = function (data, details = false) {
 		 {
 			 status_search = $('#dd_status_search').val();
 		 }
-		 //group = (group == 'daily') ? '' : group;
-		 //$('#dd_task_group_search').val(group).change();
+		 
 		 var data	= 
 		 {
-			 title			: $('#txt_title_search')	.val(),
-			 status			: status_search.toString(),
-			 assign_to 		: $('#dd_assign_to_search').val(),
-			 created_by 		: $('#dd_created_by_search').val(),	
-			 group			: group,//$('#dd_task_group_search').val(),
-			 company			: $('#dd_task_company_search').val(),
-			 view_all		: 0,//MODULE_ACCESS.viewall,
-			 start_index		: 0,
-			 limit			: 10000,			
-			 is_admin		: SESSIONS_DATA.is_admin,		
-			 emp_id			: SESSIONS_DATA.emp_id
+			title			: $('#txt_title_search')	.val(),
+			status			: status_search.toString(),
+			assign_to 		: $('#dd_assign_to_search').val(),
+			created_by 		: $('#dd_created_by_search').val(),	
+			group			: $('#dd_task_group_search').val(),
+			company			: $('#dd_task_company_search').val(),
+			view_all		: MODULE_ACCESS.viewall,
+			start_index		: 0,
+			limit			: 10000,			
+			is_admin		: SESSIONS_DATA.is_admin,		
+			emp_id			: SESSIONS_DATA.emp_id
 		  };
 		 
 		  $.fn.fetch_data
@@ -1223,11 +1222,11 @@ $.fn.get_everything_at_once_altrawise = function (data, details = false) {
 														 <i class="fa fa-tasks fa-fw" aria-hidden="true"></i> Checklist
 													 </button>`;
 							 
-							 if(r_data.doc_no) {
+							 /* if(r_data.doc_no) {
 								 btn_link = `<a href="documents/outbound-documents/${r_data.doc_no}" data-navigo><button type="button" class="btn btn-primary waves-light waves-effect btn-xs"><i class="far fa-eye" aria-hidden="true"></i> Doc</button></a>`;
 							 }else {
 								 btn_link = `<a href="documents/outbound-documents/assignee/${r_data.id}" data-navigo><button type="button" class="btn btn-primary waves-light waves-effect btn-xs"><i class="fa fa-plus" aria-hidden="true"></i> Doc</button></a>`;
-							 }
+							 } */
 							 
 							 btn_edit = `<a href="javascript:void(0);" class="action-icon btn_assignee_edit"  data-status="${r_data.status_id}"> <i class="mdi mdi-square-edit-outline"></i></a>`;
 						 }
@@ -1287,14 +1286,14 @@ $.fn.get_everything_at_once_altrawise = function (data, details = false) {
 											 </div>
 										 </div>
 									 </div>
-									 <div class="col-sm-2">
+									 <div class="col-sm-4">
 										 <div class="my-3 my-sm-0">
 											 <p class="mb-0"><b>Status:</b> ${status_name}</p>
 											 <p class="mb-0 text-muted"><b>Deadline:</b> ${deadline_date}</p>
-											 <p class="mb-0 text-muted">${deadlineDays} days</p>
+											 
 										 </div>
 									 </div>
-									 <div class="col-sm-4">
+									 <div class="col-sm-2">
 										 <div class="text-center button-list">
 											 ${btn_link}
 											 ${btn_checklist}
@@ -2193,7 +2192,7 @@ $.fn.get_everything_at_once_altrawise = function (data, details = false) {
 										 <i class="fa fa-tasks fa-fw" aria-hidden="true"></i> CheckList
 									 </button>`;
 			 btn_edit = `<a href="javascript:void(0);" class="action-icon btn_assignee_edit"  data-status="${r_data.status_id}"> <i class="mdi mdi-square-edit-outline"></i></a>`;
-			 btn_link = `<a href="documents/outbound-documents/assignee/${r_data.id}" data-navigo><button type="button" class="btn btn-primary waves-light waves-effect btn-xs"><i class="fa fa-plus" aria-hidden="true"></i> Doc</button></a>`;
+			/*  btn_link = `<a href="documents/outbound-documents/assignee/${r_data.id}" data-navigo><button type="button" class="btn btn-primary waves-light waves-effect btn-xs"><i class="fa fa-plus" aria-hidden="true"></i> Doc</button></a>`; */
 		 }
 		 let deadlineDays = 0;
 		 let status_name = (r_data.status_name) ? r_data.status_name : 'Not Set';
@@ -2217,14 +2216,14 @@ $.fn.get_everything_at_once_altrawise = function (data, details = false) {
 						 </div>
 					 </div>
 				 </div>
-				 <div class="col-sm-2">
+				 <div class="col-sm-4">
 					 <div class="my-3 my-sm-0">
 						 <p class="mb-0"><b>Status:</b> ${status_name}</p>
 						 <p class="mb-0 text-muted"><b>Deadline:</b> <font style='font-size:13px'>${deadline_date}</font></p>
-						 <p class="mb-0 text-muted">${deadlineDays} days</p>
+						
 					 </div>
 				 </div>
-				 <div class="col-sm-4">
+				 <div class="col-sm-2">
 					 <div class="text-center button-list">
 						 ${btn_link}
 						 ${btn_checklist}

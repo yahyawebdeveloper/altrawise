@@ -147,8 +147,22 @@ $.fn.show_hide_form = function(form_status,reset_form)
         $('#h4_primary_no')	.text('ID. : -');
         $('#btn_save')		.html('<i class="fa fa-check"> </i> Save');
 		$.fn.get_departments();
-		 var data	= ['get_sbd','get_sbg','get_taskTypes','get_priority','get_taskGroups','get_status'];
-		$.fn.get_everything_at_once(data);
+		
+		
+		var params = {
+			emp_id:SESSIONS_DATA.emp_id
+		}
+		var data = [
+			{ func: "get_sbd", params: params },
+			{ func: "get_sbg", params: params },
+			{ func: "get_taskTypes", params: params },
+			{ func: "get_priority", params: params },
+			{ func: "get_taskGroups", params: params },
+			{ func: "get_status", params: params },
+		];
+		
+		 $.fn.get_everything_at_once_altrawise(data);
+		 
 		$("#addNewAssignee").attr("disabled","disabled");
 		
     }
@@ -522,8 +536,21 @@ $.fn.populate_detail_form = function(task_id)
                 let assignees   	= return_data.data.assignees;
 				let created_date 	= return_data.data.details.created_date;
 				
-				var methods	= ['get_sbd','get_sbg','get_taskTypes','get_taskGroups','get_priority','get_status'];
-				$.fn.get_everything_at_once(methods,data);
+				
+				
+				var params = {
+			emp_id:SESSIONS_DATA.emp_id
+		}
+		var methods = [
+			{ func: "get_sbd", params: params },
+			{ func: "get_sbg", params: params },
+			{ func: "get_taskTypes", params: params },
+			{ func: "get_taskGroups", params: params },
+			{ func: "get_priority", params: params },
+			{ func: "get_status", params: params },
+		];
+		
+		 $.fn.get_everything_at_once_altrawise(methods);
 		
 				$("#task_creation_date").val(created_date);
                 $.fn.show_hide_form	('EDIT', true);
@@ -2381,34 +2408,27 @@ function get_search_schedule_type(rowData = false)
 	}
 };
 
-$.fn.get_everything_at_once = function(data,details = false)
-{
-	try
-	{										
-	 	$.fn.fetch_data
-		(
-			$.fn.generate_parameter('get_everything_at_once',data),
-			function(return_data)
-			{
-				if(return_data)
-				{
-					
-					var allData = return_data.data;
-					var allDataArray;
-					for( let i=0;i<allData.length;i++){
-						allDataArray = JSON.parse(allData[i]);
-						window[data[i]](allDataArray.data,details);
-					}
-					
-				}
-			},true
-		);
-	}
-	catch(err)
-	{
-		console.log(err.message);
-		//$.fn.log_error(arguments.callee.caller,err.message);
-	}
+$.fn.get_everything_at_once_altrawise = function (data, details = false) {
+  try {
+    $.fn.fetch_data(
+      $.fn.generate_parameter("get_everything_at_once_altrawise", data),
+      function (return_data) {
+        if (return_data) {
+          var allData = return_data.data;
+          var allDataArray;
+          for (let i = 0; i < allData.length; i++) {
+            allDataArray = JSON.parse(allData[i]);
+
+            window[data[i].func](allDataArray.data, details);
+          }
+        }
+      },
+      true
+    );
+  } catch (err) {
+    // console.log(err.message);
+    $.fn.log_error(arguments.callee.caller,err.message);
+  }
 };
 function get_search_company(rowData = false)
 {
@@ -2719,7 +2739,7 @@ $.fn.bind_command_events = function()
 			$("#assignee_list").empty();
 			$("a[data-bs-toggle]").removeClass("active");
 			$("#btn_show_group").addClass("active");
-			$.fn.get_list_item_group();
+			$.fn.get_list(false);
 			
         });
 		$('#closeSearch').on('click', function(event) 
@@ -2810,10 +2830,26 @@ $.fn.prepare_form = function()
         }
 		$.fn.get_tasks_drop_down_values();
 		 $.fn.set_validation_form();
-		 var data	= ['get_search_status','get_search_assignee','get_search_company','get_search_schedule_type','get_search_created_by'];
-		$.fn.get_everything_at_once(data);
+		 
+		
+		var params = {
+			emp_id:SESSIONS_DATA.emp_id
+		}
+		var data = [
+			{ func: "get_search_status", params: params },
+			{ func: "get_search_assignee", params: params },
+			
+			{ func: "get_search_company", params: params },
+			{ func: "get_search_schedule_type", params: params },
+			
+			{ func: "get_search_created_by", params: params },
+			
+		];
+		
+		 $.fn.get_everything_at_once_altrawise(data);
+		 
 		var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
-		$.fn.get_list_item_group();
+		$.fn.get_list(false);
 		$('#dd_assign_to').select2({
 			dropdownParent: $("#addEditAssigneeModal")
 		});
