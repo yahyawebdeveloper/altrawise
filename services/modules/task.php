@@ -1496,22 +1496,7 @@ function get_everything_at_once($params){
 	}
 	echo json_encode( array( "code"=>0, "msg"=>"Success", 'data'=>$dataArray ) );exit;
 }
-function get_sbd(){
-	$return_data    	= [];
-	$temp				= [];
-	$rs_sbd       		= db_query('id,descr','cms_master_list','category_id = 48 AND is_active = 1');
 
-    if(is_array($rs_sbd)) {
-        for($i = 0; $i < count($rs_sbd); $i++) {
-            $temp['id']   = $rs_sbd[$i]['id'];
-            $temp['desc'] = $rs_sbd[$i]['descr'];
-            $return_data[] = $temp;
-        }
-    }
-	return json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );
-	//echo json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );exit;
-	//return json_encode( array("code"=>0,"msg"=>"Success","data"=>$return_data) );
-}
 function get_search_priority(){
 	$return_data    	= [];
 	$temp				= [];
@@ -1525,115 +1510,7 @@ function get_search_priority(){
 	echo json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );exit;
 	//return json_encode( array("code"=>0,"msg"=>"Success","data"=>$return_data) );
 }
-function get_search_status(){
-	$return_data    	= [];
-	$temp				= [];
-	$rs_task        	= db_query('id,descr','cms_master_list','category_id = 42 AND is_active = 1');
-	for($i = 0; $i < count($rs_task); $i++)
-    {
-		$temp['id']   = $rs_task[$i]['id'];
-		$temp['desc'] = $rs_task[$i]['descr'];
-		$return_data[] = $temp;
-	}
-	return json_encode( array("code"=>0,"msg"=>"Success","data"=>$return_data) );
-	//return json_encode( array("code"=>0,"msg"=>"Success","data"=>$return_data) );
-}
-function get_search_assignee(){
-	$return_data    	= [];
-	$temp				= [];
-	$rs_assign        	= db_query("id,name,office_email,IFNULL(JSON_UNQUOTE(JSON_EXTRACT(json_field, '$.chat_user_id')),'') as chat_username",
-							   'cms_employees','is_active = 1', '', '', 'cms_employees.name');
-	for($i = 0; $i < count($rs_assign); $i++)
-    {
-		$temp['id']   = $rs_assign[$i]['id'];
-		$temp['desc'] = $rs_assign[$i]['name'];
-		$return_data[] = $temp;
-	}
-	return json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );
-	//echo json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );exit;
-	//return json_encode( array("code"=>0,"msg"=>"Success","data"=>$return_data) );
-} 
-function get_search_created_by(){
-	$return_data    	= [];
-	$temp				= [];
-	$emp        	= db_query('cms_employees.id,cms_employees.name,cms_employees.office_email'
-							  ,'cms_employees
-							  inner join cms_tasks_new on cms_employees.id = cms_tasks_new.created_by'
-							  ,'cms_employees.is_active = 1 GROUP BY cms_employees.id ORDER BY cms_employees.name ASC');
-	if( count($emp) > 0 )
-	{	
-		for($i = 0; $i < count($emp); $i++)
-		{
-			$temp['id']   = $emp[$i]['id'];
-			$temp['desc'] = $emp[$i]['name'];
-			$return_data[] = $temp;
-		}
-	}
-	return json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );
-	//echo json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );exit;
-	//return json_encode( array("code"=>0,"msg"=>"Success","data"=>$return_data) );
-}
-function get_search_schedule_type(){
-	$return_data    	= [];
-	$temp				= [];
-	$rs_group_search    = db_query("DISTINCT IF(IFNULL(cms_master_tasks.schedule_type, '') = '', 'NOT SCHEDULED', cms_master_tasks.schedule_type) AS s_type",
-							   'cms_tasks_new LEFT JOIN cms_master_tasks ON cms_tasks_new.master_task_no = cms_master_tasks.task_no',
-							   'cms_tasks_new.is_active = 1');
-	for($i = 0; $i < count($rs_group_search); $i++)
-    {
-		$temp['id']   = $rs_group_search[$i]['s_type'];
-		$temp['desc'] = $rs_group_search[$i]['s_type'];
-		$return_data[] = $temp;
-	}
-	return json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );
-	//echo json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );exit;
-	//return json_encode( array("code"=>0,"msg"=>"Success","data"=>$return_data) );
-}
-function get_search_company(){
-	$return_data    	= [];
-	$temp				= [];
-	$rs_company       	= db_query('id,employer_name','cms_master_employer','is_active = 1');
-	for($i = 0; $i < count($rs_company); $i++)
-    {
-		$temp['id']   = $rs_company[$i]['id'];
-		$temp['desc'] = $rs_company[$i]['employer_name'];
-		$return_data[] = $temp;
-	}
-	return json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );
-	//echo json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );exit;
-	//return json_encode( array("code"=>0,"msg"=>"Success","data"=>$return_data) );
-}
-function get_sbg(){
-	$return_data    	= [];
-	$temp				= [];
-	$rs_sbg       		= db_query('id,descr','cms_master_list','category_id = 47 AND is_active = 1');
 
-    if(is_array($rs_sbg)) {
-        for($i = 0; $i < count($rs_sbg); $i++) {
-            $temp['id']   = $rs_sbg[$i]['id'];
-            $temp['desc'] = $rs_sbg[$i]['descr'];
-            $return_data[] = $temp;
-        }
-    }
-	return json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );
-	//echo json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );exit;
-}
-
-function get_departments(){
-	$return_data    	= [];
-	$temp				= [];
-	$rs_dept       		= db_query('id,descr','cms_master_list','category_id = 1 AND is_active = 1');
-
-    if(is_array($rs_dept)) {
-        for($i = 0; $i < count($rs_dept); $i++) {
-            $temp['id']   = $rs_dept[$i]['id'];
-            $temp['desc'] = $rs_dept[$i]['descr'];
-            $return_data[] = $temp;
-        }
-    }
-	
-	echo json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );exit;
-}
 function get_company(){
 	$return_data    	= [];
 	$temp				= [];
@@ -1648,37 +1525,8 @@ function get_company(){
 	return json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data, "defaultValue"=>$rs_company[0]['id'] ) );
 	//echo json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data, "defaultValue"=>$rs_company[0]['id'] ) );exit;
 }
-function get_taskTypes(){
-	$return_data    	= [];
-	$temp				= [];
-	$rs_type       		= db_query('id,descr','cms_master_list','category_id = 44 AND is_active = 1');
 
-    if(is_array($rs_type)) {
-        for($i = 0; $i < count($rs_type); $i++) {
-            $temp['id']   = $rs_type[$i]['id'];
-            $temp['desc'] = $rs_type[$i]['descr'];
-            $return_data[] = $temp;
-        }
-    }
-	return json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );
-	//echo json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );exit;
-}
 
-function get_priority(){
-	$return_data    	= [];
-	$temp				= [];
-	$rs_priority       	= db_query('id,descr','cms_master_list','category_id = 43 AND is_active = 1');
-
-    if(is_array($rs_priority)) {
-        for($i = 0; $i < count($rs_priority); $i++) {
-            $temp['id']   = $rs_priority[$i]['id'];
-            $temp['desc'] = $rs_priority[$i]['descr'];
-            $return_data[] = $temp;
-        }
-    }
-	return json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );
-	//echo json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );exit;
-}
 function get_assignee(){
 	$return_data    	= [];
 	$temp				= [];
@@ -1714,37 +1562,6 @@ function get_emp(){
 		$temp['desc'] = $emp[$i]['name'];
 		$return_data[] = $temp;
 	}
-	return json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );
-	//echo json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );exit;
-}
-function get_taskGroups(){
-	$return_data    	= [];
-	$temp				= [];
-	$rs_group       	= db_query('id,descr','cms_master_list','category_id = 49 AND is_active = 1');
-
-    if(is_array($rs_group)) {
-        for($i = 0; $i < count($rs_group); $i++) {
-            $temp['id']   = $rs_group[$i]['id'];
-            $temp['desc'] = $rs_group[$i]['descr'];
-            $return_data[] = $temp;
-        }
-    }
-	return json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );
-	//echo json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );exit;
-}
-
-function get_status(){
-	$return_data    	= [];
-	$temp				= [];
-	$rs_task        	= db_query('id,descr','cms_master_list','category_id = 42 AND is_active = 1');
-
-    if(is_array($rs_task)) {
-        for($i = 0; $i < count($rs_task); $i++) {
-            $temp['id']   = $rs_task[$i]['id'];
-            $temp['desc'] = $rs_task[$i]['descr'];
-            $return_data[] = $temp;
-        }
-    }
 	return json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );
 	//echo json_encode( array( "code"=>0, "msg"=>"Success", "data"=>$return_data ) );exit;
 }
