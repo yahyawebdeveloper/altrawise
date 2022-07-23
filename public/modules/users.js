@@ -1446,7 +1446,63 @@ $.fn.get_cutter_config = function()
 $.fn.show_hide_form = function (form_status, reset_form)
 {
 	if (reset_form) $.fn.reset_form('form');
+	
+	//datepicker
+		$(`#dob_date,#start_date,#end_date,#txt_ep_applied_date,#txt_ep_expiry_date,#marriage_date,
+			#increment_date,#next_increment_date,
+			#leave_date,#his_join_date,#his_start_date,#his_end_date,
+			#his_increment_date,#his_next_increment_date,
+			#st_start_date,#st_end_date,#his_start_date,#his_end_date,#his_join_date,#his_increment_date,#his_next_increment_date`).flatpickr({  
+				altInput: true,
+				altFormat: "d-M-Y",
+				dateFormat: "Y-m-d",
+		});
 
+		//timepicker
+		flatpickrStartTime = $("#shift_st_start_time").flatpickr({
+			enableTime: true,
+			noCalendar: true,
+			dateFormat: "h:i K",
+			minTime: "7:00",
+    		maxTime: "22:00",
+		});
+
+		flatpickrStartTime.minuteElement.style.display = 'none';
+
+		flatpickerEndTime = $("#shift_st_end_time").flatpickr({
+			enableTime: true,
+			noCalendar: true,
+			dateFormat: "h:i K",
+			minTime: "7:00",
+    		maxTime: "22:00",
+		});
+
+		flatpickerEndTime.minuteElement.style.display = 'none';
+
+		flatpickrScreenST = $('#st_start_time').flatpickr({
+			enableTime: true,
+			noCalendar: true,
+			dateFormat: "h:i K",
+			minTime: "7:00",
+    		maxTime: "22:00",
+		});
+
+		flatpickrScreenST.minuteElement.style.display = 'none';
+
+		flatpickrScreenET = $('#st_end_time').flatpickr({
+			enableTime: true,
+			noCalendar: true,
+			dateFormat: "h:i K",
+			minTime: "7:00",
+    		maxTime: "22:00",
+		});
+
+		flatpickrScreenET.minuteElement.style.display = 'none';
+
+		$('.flatpickr-time-separator').hide();
+		$('.flatpickr-minute').parent().hide();
+		$('.flatpickr-calendar.noCalendar').css("width", "150");
+		
 	if (form_status == 'NEW')
 	{
 		$('#list_div, #btn_new').hide(400);
@@ -2829,61 +2885,7 @@ $.fn.prepare_form = function()
 			$.getScript('./assets/libs/flatpickr/flatpickr.min.js');
 		} */
 
-		//datepicker
-		$(`#dob_date,#start_date,#end_date,#txt_ep_applied_date,#txt_ep_expiry_date,#marriage_date,
-			#increment_date,#next_increment_date,
-			#leave_date,#his_join_date,#his_start_date,#his_end_date,
-			#his_increment_date,#his_next_increment_date,
-			#st_start_date,#st_end_date,#his_start_date,#his_end_date,#his_join_date,#his_increment_date,#his_next_increment_date`).flatpickr({  
-				altInput: true,
-				altFormat: "d-M-Y",
-				dateFormat: "Y-m-d",
-		});
-
-		//timepicker
-		flatpickrStartTime = $("#shift_st_start_time").flatpickr({
-			enableTime: true,
-			noCalendar: true,
-			dateFormat: "h:i K",
-			minTime: "7:00",
-    		maxTime: "22:00",
-		});
-
-		flatpickrStartTime.minuteElement.style.display = 'none';
-
-		flatpickerEndTime = $("#shift_st_end_time").flatpickr({
-			enableTime: true,
-			noCalendar: true,
-			dateFormat: "h:i K",
-			minTime: "7:00",
-    		maxTime: "22:00",
-		});
-
-		flatpickerEndTime.minuteElement.style.display = 'none';
-
-		flatpickrScreenST = $('#st_start_time').flatpickr({
-			enableTime: true,
-			noCalendar: true,
-			dateFormat: "h:i K",
-			minTime: "7:00",
-    		maxTime: "22:00",
-		});
-
-		flatpickrScreenST.minuteElement.style.display = 'none';
-
-		flatpickrScreenET = $('#st_end_time').flatpickr({
-			enableTime: true,
-			noCalendar: true,
-			dateFormat: "h:i K",
-			minTime: "7:00",
-    		maxTime: "22:00",
-		});
-
-		flatpickrScreenET.minuteElement.style.display = 'none';
-
-		$('.flatpickr-time-separator').hide();
-		$('.flatpickr-minute').parent().hide();
-		$('.flatpickr-calendar.noCalendar').css("width", "150");
+		
 
 		//validation
 		$('#detail_form').parsley(
