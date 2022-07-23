@@ -49,45 +49,45 @@ if(isset($_SERVER['REQUEST_METHOD']))
 		    echo get_modules($param->data);
 		    return;
 		}
-		/*
+		
 		else if($param->method === 'get_sbd')
         {
-        	require_once constant('MODULES_DIR') 	. '/task.php';
+        	require_once constant('MODULES_DIR') 	. '/common.php';
          	echo get_sbd();
 		}
 		else if($param->method === 'get_search_status')
         {
-        	require_once constant('MODULES_DIR') 	. '/task.php';
+        	require_once constant('MODULES_DIR') 	. '/common.php';
          	echo get_search_status();
 		}
 		else if($param->method === 'get_search_assignee')
         {
-        	require_once constant('MODULES_DIR') 	. '/task.php';
+        	require_once constant('MODULES_DIR') 	. '/common.php';
          	echo get_search_assignee();
 		}
 		else if($param->method === 'get_search_created_by')
         {
-        	require_once constant('MODULES_DIR') 	. '/task.php';
+        	require_once constant('MODULES_DIR') 	. '/common.php';
          	echo get_search_created_by();
 		}
 		else if($param->method === 'get_search_schedule_type')
         {
-        	require_once constant('MODULES_DIR') 	. '/task.php';
+        	require_once constant('MODULES_DIR') 	. '/common.php';
          	echo get_search_schedule_type();
 		}
 		else if($param->method === 'get_search_company')
         {
-        	require_once constant('MODULES_DIR') 	. '/task.php';
+        	require_once constant('MODULES_DIR') 	. '/common.php';
          	echo get_search_company();
 		}
 		else if($param->method === 'get_sbg')
         {
-        	require_once constant('MODULES_DIR') 	. '/task.php';
+        	require_once constant('MODULES_DIR') 	. '/common.php';
          	echo get_sbg();
 		}
 		else if($param->method === 'get_departments')
         {
-        	require_once constant('MODULES_DIR') 	. '/task.php';
+        	require_once constant('MODULES_DIR') 	. '/common.php';
          	echo get_departments();
 		}
 		else if($param->method === 'get_company')
@@ -97,29 +97,29 @@ if(isset($_SERVER['REQUEST_METHOD']))
 		}
 		else if($param->method === 'get_taskTypes')
         {
-        	require_once constant('MODULES_DIR') 	. '/task.php';
+        	require_once constant('MODULES_DIR') 	. '/common.php';
          	echo get_taskTypes();
-		}
+		}/*
 		else if($param->method === 'get_everything_at_once')
         {
         	require_once constant('MODULES_DIR') 	. '/task.php';
          	echo get_everything_at_once($param->data);
 		}
-		else if($param->method === 'get_priority')
+		*/else if($param->method === 'get_priority')
         {
-        	require_once constant('MODULES_DIR') 	. '/task.php';
+        	require_once constant('MODULES_DIR') 	. '/common.php';
          	echo get_priority();
 		}
 		else if($param->method === 'get_taskGroups')
         {
-        	require_once constant('MODULES_DIR') 	. '/task.php';
+        	require_once constant('MODULES_DIR') 	. '/common.php';
          	echo get_taskGroups();
 		}
 		else if($param->method === 'get_status')
         {
-        	require_once constant('MODULES_DIR') 	. '/task.php';
+        	require_once constant('MODULES_DIR') 	. '/common.php';
          	echo get_status();
-		}
+		}/*
 		else if($param->method === 'get_schedule_tasks_list')
 		{
          	require_once constant('MODULES_DIR') 	. '/task.php';
