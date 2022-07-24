@@ -829,7 +829,7 @@ $.fn.get_everything_at_once_altrawise = function (data, details = false) {
 					 <div class="card-body">
 						 
 						 <!-- Title-->
-						 <h4 class="mt-0"><a href="javascript:void(0);" class="text-dark sp-line-2 custom">${data[i].task_title}</a></h4>
+						 <h4 class="mt-0"><a title="${data[i].task_title}" href="javascript:void(0);" class="text-dark sp-line-2 custom">${data[i].task_title}</a></h4>
 						 <p class="text-muted text-uppercase"><i class="mdi mdi-clock"></i> <small>${due_date}</small></p>
 						 <div class="badge bg-soft-danger text-danger mb-3">${data[i].days_left} Days to Due</div>
 						 <div class="badge bg-soft-success text-success mb-3">${data[i].reply_count} Replies</div>
@@ -1567,7 +1567,7 @@ $.fn.get_everything_at_once_altrawise = function (data, details = false) {
 				 {
 					 $.fn.populate_list(return_data.data,false,2);
 				 }
-			 }, false, '', true, true
+			 }, false, '', true, false
 		 );
 	 }
 	 catch (e) 

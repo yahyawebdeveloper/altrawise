@@ -395,7 +395,7 @@ $.fn.populate_list = function (data,is_scroll,list_id)
 						
 						
                         createdByInitialHTML = '<div class="avatar-initials" width="30" height="30" data-name="'+data[i].created_by_name+'"></div>';
-                        row += `<li class='list-group-item task-item' onclick='$.fn.populate_detail_form(${data[i].id})'>
+                        row += `<li class='list-group-item task-item' data-value='${escape(JSON.stringify(data[i]))}'  onclick='$.fn.populate_detail_form(unescape($(this).attr("data-value")))'>
                                     <div class='row'>
 
                                         <div class='col-sm-4 col-lg-4'>
@@ -421,11 +421,11 @@ $.fn.populate_list = function (data,is_scroll,list_id)
                                     </div>
                                 </li>`;
 								
-								row1 += `<div class="col-lg-4" onclick='$.fn.populate_detail_form("${data[i].id}")'>
+								row1 += `<div class="col-lg-4" data-value='${escape(JSON.stringify(data[i]))}'  onclick='$.fn.populate_detail_form(unescape($(this).attr("data-value")))'>
 				<div class="card project-box hoverCustom activeCustom">
 					<div class="card-body">
 						<!-- Title-->
-						<h4 class="mt-0"><a href="javascript:void(0)" class="text-dark sp-line-2 custom">${data[i].task_title}</a></h4>
+						<h4 class="mt-0"><a href="javascript:void(0)" title="${data[i].task_title}" class="text-dark sp-line-2 custom">${data[i].task_title}</a></h4>
 						
 						<p class="text-muted font-13 mb-3 sp-line-2 custom"><i>${$.fn.decodeURIComponentSafe(data[i].descr)}
 						</i></p>
@@ -517,210 +517,46 @@ function getInitials(){
 	});
 }
 
-$.fn.populate_detail_form = function(task_id)
+$.fn.populate_detail_form = function(data)
 {
 	try
 	{  
 		$("#showSearchDiv").hide();
 		$("#btn_new").hide();
 		$.fn.get_departments();
-		
-		$.fn.fetch_data
-		(
-			
-		    $.fn.generate_parameter('get_task_template_detail', {task_id : task_id}),
-		    function(return_data)
-		    {  
-				console.log(return_data,"rd");
-                let data        	= return_data.data.details;
-                let assignees   	= return_data.data.assignees;
-				let created_date 	= return_data.data.details.created_date;
-				
-				
-				
-				var params = {
-			emp_id:SESSIONS_DATA.emp_id
-		}
-		var methods = [
-			{ func: "get_sbd", params: params },
-			{ func: "get_sbg", params: params },
-			{ func: "get_taskTypes", params: params },
-			{ func: "get_taskGroups", params: params },
-			{ func: "get_priority", params: params },
-			{ func: "get_status", params: params },
-		];
-		
-		 $.fn.get_everything_at_once_altrawise(methods);
-		
-				$("#task_creation_date").val(created_date);
-                $.fn.show_hide_form	('EDIT', true);
-		
-                let duedate = '';
-                if(data.due_date != null && data.due_date != '')
-                {
-					console.log(data.due_date,"start");
-                    duedate = moment(data.due_date).format(UI_DATE_FORMAT);
-					console.log(data.due_date,"end");
-                }
-				flatpickr = $("#dp_date").flatpickr({
-					altInput: true,
-					altFormat: "d-M-Y",
-					dateFormat: "Y-m-d",
-				});
-				console.log(data);
-                TASK_ID						= data.id;
-                $('#h4_primary_no')			.text('Task No : ' + data.id);
-                $('#txt_task')      		.val(data.task_title);
-                $('#txtarea_descr') 		.val($.fn.decodeURIComponentSafe(data.descr));
-                $('#txtarea_descr_action') 	.val($.fn.decodeURIComponentSafe(data.descr_action));
-                $('#btn_status')			.data('value', data.status_id);
-				$('#dd_status')     		.val(250).change();
-                $('#dd_priority')   		.val(data.priority).change();
-				$('#dd_group')   			.val(data.task_group).change();
-                flatpickr       			.setDate(data.due_date);
-				
-                $('#dd_type')       		.val(data.task_type_id).change();
-                $('#dd_dept')       		.val(data.dept_id).change();
-                
-                $.fn.change_status_btn(data.status_id);
-                $('#btn_status')	.attr('disabled',false);
-                APPROVER_ID			= data.approver_id;
-                REVIEWER_ID			= data.reviewer_id;
-                let json_field = $.fn.get_json_string(data.json_field);
-                
-                if(json_field != false)
-                {
-                    
-                   
-                    
-                    $('#div_review').hide();
-                    $('#div_approve').hide();
-                    
-                    if(SESSIONS_DATA.emp_id == data.reviewer_id && json_field.sent_for_review != undefined && json_field.reviewed_by_name == undefined)
-                    {
-                        $('#div_review').show();
-                    }
-                    else if(SESSIONS_DATA.emp_id == data.approver_id && json_field.reviewed_by_name != undefined && json_field.approved_by_name == undefined)
-                    {
-                        $('#div_approve').show();
-                    }
-                    
-                    
-                    if(json_field.sent_for_review != undefined)
-                    {
-                        $('#div_approval_trail').show();
-                        if(json_field.sent_for_review_date != undefined)
-                        {
-                            $('#div_approval_trails').html("Sent for Review on : " + json_field.sent_for_review_date);
-                        }
-                        if(json_field.reviewed_by_name != undefined)
-                        {
-                            $('#div_approval_trails').append("<br/>Reviewed on : " + json_field.reviewed_date + ' By : ' + json_field.reviewed_by_name);
-                        }
-                        if(json_field.approved_by_name != undefined)
-                        {
-                            $('#div_approval_trails').append("<br/>Approved on : " + json_field.approved_date + ' By : ' + json_field.approved_by_name);
-                        }
-                    }
-                    
-                    if(json_field.checklist)
-                    {
-                        $.fn.populate_checklist(json_field.checklist);
-                    }
-                    
-                }
-                // IF not owner disable the editing
-                if (SESSIONS_DATA.emp_id != Number(data.created_by))
-                {
-                    $.fn.disable_master_task_form();
-                }
+		var data    = JSON.parse(data);
+        $.fn.show_hide_form ('EDIT', true);
+        
+        TASK_TEMPLATE_ID            = data.id;
+        $("#files")                 .empty();
+        $('#h4_primary_no')         .text('ID : ' + TASK_TEMPLATE_ID);
+        $('#txt_task')              .val(data.task_title);
+        $('#txtarea_descr')         .val($.fn.decodeURIComponentSafe(data.descr));
+        $('#txtarea_descr_action')  .val($.fn.decodeURIComponentSafe(data.descr_action));
+        $('#dd_type')               .val(data.task_type_id).change();
+        $('#dd_dept')               .val(data.dept_id).change();
 
-                if(parseInt(data.freeze_it) == 0)
-                {
-                    $.fn.disable_master_task_form();
-                    $('#div_trail_btn').hide();
-                }
-                
-                $('#btn_save').html('<i class="mdi mdi-update"></i> Update').data({'mode' : 'edit', 'id' : data.id});
-
-                $("#tbl_assign_to tbody").find("tr:not('#base_row_assignee')").remove();
-                //populate assignees list
-                var assignees_array = [];
-                if(assignees)
-                {
-					var statusArray = new Array();
-                    for(let i = 0; i < assignees.length;i++)
-		            {
-                        let r_data = assignees[i];
-						statusArray.push(r_data.status_id);
-                        assignees_array.push(r_data.user_id);
-                        let btn_link = btn_edit = btn_delete = btn_delete_dropdown = btn_edit_dropdown = btn_link_dropdown = btn_checklist_dropdown = btn_checklist = '';
-                        if (SESSIONS_DATA.emp_id == Number(r_data.created_by))
-                        {
-                            btn_delete = `<a href="javascript:void(0);" class="action-icon" onClick="$.fn.remove_assignee('${r_data.id}')"> <i class="mdi mdi-delete"></i></a>`;
-							
-                        }
-                        if (SESSIONS_DATA.emp_id == Number(r_data.created_by) || SESSIONS_DATA.emp_id == Number(r_data.user_id))
-                        {
-                            btn_checklist = `<button type="button" class="btn btn-warning waves-effect waves-light btn-xs" onclick="$.fn.view_checklist('${escape(JSON.stringify(r_data))}')">
-                                                        <i class="fa fa-tasks fa-fw" aria-hidden="true"></i> CheckList
-                                                    </button>`;
-
-							
-						btn_edit = `<a href="javascript:void(0);" class="action-icon btn_assignee_edit" data-xid="${i}" data-status="${r_data.status_id}"> <i class="mdi mdi-square-edit-outline"></i></a>`;
-							
-                        }
-						
-                        let row = `<div class="card mb-2 assignee-row assignee-row-${r_data.id}" data='${JSON.stringify(r_data)}' id="assignee-row-${r_data.id}">
-							<div class="card-body">
-								<div class="row align-items-center assignee-row-data">
-									<div class="col-sm-4">
-										<div class="d-flex align-items-start">
-											<div class="w-100">
-												<h4 class="mt-0 mb-2 font-16">${r_data.name}</h4>
-												<p class="mb-1"><b>Action:</b> ${r_data.action}</p>
-											</div>
-										</div>
-									</div>
-									
-									<div class="col-sm-4">
-										<div class="text-center button-list">
-											${btn_link}
-											${btn_checklist}
-										</div>
-									</div>
-									
-									<div class="col-sm-2">
-										<div class="text-sm-end text-center mt-2 mt-sm-0">
-											${btn_edit}
-											${btn_delete}
-										</div>
-									</div> <!-- end col-->
-								</div> <!-- end row -->
-								
-							</div>
-						</div>`;
-                        $('#assignee_list').append(row);
-
-						
-
-                        
-                    }
-                    
-                }
-                if(isNaN(parseInt(data.reviewer_id)) == false)
-                {    
-                    if(json_field.sent_for_review == undefined && $.inArray(SESSIONS_DATA.emp_id, assignees_array) !== -1)
-                    {
-                        $('#div_send_review').show();
-                    }
-                    else
-                    {
-                        $('#div_send_review').hide();
-                    }
-                }
-            }, false, '', true, true
-		);	
+        $.fn.change_switchery($('#chk_status'),(parseInt(data.is_active) ? true : false));
+        CODE_TRIGGERED      = false;
+        
+        let json_field = $.fn.get_json_string(data.json_field);
+        
+        if(json_field != false)
+        {
+            data.attachment = json_field.attachment;
+            $.fn.populate_attachments(data);
+            
+            if(json_field.checklist)
+            {
+                $.fn.populate_checklist(json_field.checklist);
+            }
+            
+        }
+        // IF not owner disable the editing
+        if (SESSIONS_DATA.emp_id != Number(data.created_by))
+        {
+            $('#btn_save').hide();
+        }	
 	}
 	catch(err)
 	{

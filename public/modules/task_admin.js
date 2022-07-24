@@ -1743,7 +1743,7 @@ $.fn.populate_list = function (data,is_scroll)
 											<input type="checkbox" class="check_it form-check-input mb-1 m-0" id="chk_${i}" data-val="${data[i].task_no}" name="chk_${i}" style="display:none" />
 										</div>
 										<div class="sp-line-2 custom">
-											<a href="javascript:void(0);" class="text-white">${data[i].task_title}</a>
+											<a href="javascript:void(0);" title="${data[i].task_title}" class="text-white">${data[i].task_title}</a>
 										</div>
 									</h4>
                                     <div class="card-body">
