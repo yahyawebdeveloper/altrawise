@@ -332,10 +332,10 @@ $.fn.get_faq_report = function()
 	{
 		var data	= 
 		{
-			//date_from   		: $('#from_date').val(),
-           // date_to     		: $('#to_date').val(),
-		    date_from		    : "2022-01-20",
-		    date_to             : "2022-12-20",
+			date_from   		: $('#from_date').val(),
+            date_to     		: $('#to_date').val(),
+		   // date_from		    : "2022-01-20",
+		   // date_to             : "2022-12-20",
             question_category   : $('#search_question_category').val(),
             category   			: $('#search_category').val(),
             question 			: $('#search_question').val(),
@@ -748,7 +748,7 @@ $.fn.bind_command_events = function()
 		$("#dp_search_date").flatpickr({
             mode:"range",
             altFormat: "d-M-Y",
-            dateFormat: "Y-m-d",
+            dateFormat: "d-M-Y",
             onChange:function(selectedDates){
                 var _this=this;
                 var dateArr=selectedDates.map(function(date){return _this.formatDate(date,'Y-m-d');});

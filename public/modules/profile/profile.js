@@ -13,7 +13,7 @@ $.fn.populate_detail_form = function ()
 {
 	try
 	{
-
+		$('.populate').select2();
 		var data =
 		{
 			id: SESSIONS_DATA.emp_id
@@ -73,7 +73,7 @@ $.fn.populate_detail_form = function ()
 
 							$('#div_general_skills').attr('data-id', json_field.general_skills);
 							$('#div_specific_skills').attr('data-id', json_field.specific_skills);
-
+							
 							if (json_field.mail)
 							{
 								$('#dd_mail_type').val(json_field.mail.type).change();
@@ -191,7 +191,7 @@ $.fn.get_profile_dropdown_data = function()
         {   
             emp_id   : SESSIONS_DATA.emp_id,
         };
-       
+     
         $.fn.fetch_data
         ( 
             $.fn.generate_parameter('get_profile_dropdown_data', data),
@@ -212,7 +212,7 @@ $.fn.get_profile_dropdown_data = function()
 };
 
 $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
-{ console.log('tttttt');
+{ 
     try
     {  
 		  $('#dd_general_skills').empty();
@@ -230,6 +230,7 @@ $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
             for (let item of dd_data.skills_specific)
             {
                 $('#dd_specific_skills').append(`<option  data-type="skills_specific"  value="${item.id}">${item.skills_name} </option>`);
+				
             }
           }
         
@@ -533,6 +534,7 @@ $.fn.bind_command_events = function ()
 
 					var str = $('#div_general_skills').attr('data-id');
 					str ? $('#dd_general_skills').val(str.split(',')).change() : $('#dd_general_skills').val('').change();
+					
 
 					break;
 				case 'btn_edit_specific_skills':
@@ -541,7 +543,7 @@ $.fn.bind_command_events = function ()
 
 					var str = $('#div_specific_skills').attr('data-id');
 					str ? $('#dd_specific_skills').val(str.split(',')).change() : $('#dd_specific_skills').val('').change();
-
+					
 					break;
 			}
 		});
@@ -699,7 +701,7 @@ $.fn.bind_command_events = function ()
 
 					break;
 				case 'btn_save_general_skills':
-					//					console.log($('#dd_general_skills').val().toString());
+					//console.log($('#dd_general_skills').val().toString());
 					var data = {
 						id: EMP_ID,
 						emp_id: SESSIONS_DATA.emp_id,
@@ -854,6 +856,8 @@ $.fn.form_load = function ()
 	try
 	{
 		//SESSIONS_DATA = JSON.parse($('#session_data').val());
+		$('.populate').select2();
+		$.fn.get_profile_dropdown_data();
 		$.fn.populate_detail_form();
 		$.fn.bind_command_events();
 		$.fn.init_upload_file();

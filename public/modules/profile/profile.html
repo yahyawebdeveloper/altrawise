@@ -1,5 +1,14 @@
-<link href="./assets/libs/fullcalendar/main.min.css" rel="stylesheet" type="text/css" />
-<!-- start page title -->
+<!-- third party css -->
+<link href="assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/datatables.net-select-bs5/css//select.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/dropify/css/dropify.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/mohithg-switchery/switchery.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/jquery-fileupload/css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
+<!-- third party css end -->
 <div class="row">
     <div class="col-12">
         <div class="page-title-box">
@@ -117,7 +126,7 @@
                                                   <span href="" id="div_current_address"></span>
                                                   <span id="btn_edit_current_address" class="btn-edit-details" title="Edit Home Address"><i class="fa fa-pencil" aria-hidden="true"><i class="mdi mdi-square-edit-outline"></i></i></span>
                                                 </div>
-                                                <div id="edit_current_address" class="edit-container" style="display:none;">
+                                                <div id="edit_current_address" class="edit-container" style="display:none;" >
                                                   <textarea class="form-control" id="txt_current_address"></textarea>
                                                   <a class="btn btn-success btn-save-edit" id="btn_save_current_address" style="margin: 0 5px;">Save</a>
                                                   <a class="btn btn-light waves-effect waves-light m-1 btn-cancel-edit" id="btn_cancel_current_address"><i class="fa fa-times me-1"></i> Cancel</a>
@@ -131,7 +140,7 @@
                                                   <span href="" id="div_general_skills"></span>
                                                   <span id="btn_edit_general_skills" class="btn-edit-details" title="Edit General Skills"><i class="fa fa-pencil" aria-hidden="true"><i class="mdi mdi-square-edit-outline"></i></i></span>
                                                 </div>
-                                                <div id="edit_general_skills" class="edit-container" style="display:none;" data-obj='<?php echo json_encode($skills_general) ?>'>
+                                                <div id="edit_general_skills" class="edit-container" style="display:none;" data-obj='[{"id":"7","skills_name":"Teamwork"},{"id":"8","skills_name":"Communication"},{"id":"9","skills_name":"Problem solving"},{"id":"10","skills_name":"Self-management"}]'>
                                                   <select id="dd_general_skills" data-toggle="select2" multiple placeholder="Select" data-width="100%" class="form-control populate form-select "  multiple>
                                                     
                                                   </select>
@@ -147,7 +156,7 @@
                                                   <span href="" id="div_specific_skills"></span>
                                                   <span id="btn_edit_specific_skills" class="btn-edit-details" title="Title Specific Skills"><i class="fa fa-pencil" aria-hidden="true"><i class="mdi mdi-square-edit-outline"></i></i></span>
                                                 </div>
-                                                <div id="edit_specific_skills" class="edit-container" style="display:none;" data-obj='<?php echo json_encode($skills_specific) ?>'>
+                                                <div id="edit_specific_skills" class="edit-container" style="display:none;" data-obj='[{"id":"1","skills_name":"PHP"},{"id":"2","skills_name":"Java"},{"id":"3","skills_name":"Android"},{"id":"4","skills_name":"Mysql"},{"id":"5","skills_name":"Dot Net"},{"id":"6","skills_name":"Oracle"}]'>
                                                   <select id="dd_specific_skills" style="width:100%" class="populate" multiple>
                                                      
                                                   </select>
@@ -428,4 +437,34 @@
     </div>
 </div>
 <!--End-->
+<!-- <script src="./modules/quotation.js"></script> -->
+<!-- third party js -->
+<script src="assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+<script src="assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="assets/libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
+<script src="assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="assets/libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js"></script>
+<script src="assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="assets/libs/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+<script src="assets/libs/datatables.net-select/js/dataTables.select.min.js"></script>
+<script src="assets/libs/pdfmake/build/pdfmake.min.js"></script>
+<script src="assets/libs/pdfmake/build/vfs_fonts.js"></script>
+<script src="assets/libs/dropzone/min/dropzone.min.js"></script>
+<script src="assets/libs/dropify/js/dropify.min.js"></script>
+<!-- <script src="assets/libs/select2/js/select2.min.js"></script> -->
+<script src="assets/libs/mohithg-switchery/switchery.min.js"></script>
+<script src="assets/libs/flatpickr/flatpickr.min.js"></script>
+<!-- <script src="assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script> -->
+<script src="assets/libs/parsleyjs/parsley.min.js"></script>
+<!-- third party js ends -->
+<script src="./assets/js/moment.js/2.18.1/moment.min.js"></script>
+
+<script src="assets/js/jspdf/plugins/jspdf.debug.js"></script>
+<script src="assets/js/jspdf/plugins/jspdf.min.js"></script>
+<script src="assets/js/jspdf/plugins/jspdf.plugin.autotable.js"></script>
+<script src="assets/js/jspdf/exportpdf.js"></script>
+<script src="assets/js/custom/md5.js"></script>
 
