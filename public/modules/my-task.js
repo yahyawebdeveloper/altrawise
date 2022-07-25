@@ -253,7 +253,7 @@ $.fn.get_everything_at_once_altrawise = function (data, details = false) {
 									</div> <!-- end card-->
 								</div>`;
 
-					$('#list_task_group').append(row + rowToday + rowOverDue);					
+					$('#list_task_group').append(row);//+ rowToday + rowOverDue					
 				}
 
 

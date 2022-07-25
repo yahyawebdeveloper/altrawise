@@ -523,8 +523,10 @@ $.fn.populate_detail_form = function(data)
 	{  
 		$("#showSearchDiv").hide();
 		$("#btn_new").hide();
-		$.fn.get_departments();
+		
 		var data    = JSON.parse(data);
+		console.log(data);
+		$.fn.get_departments(data.dept_id);
         $.fn.show_hide_form ('EDIT', true);
         
         TASK_TEMPLATE_ID            = data.id;
@@ -534,7 +536,7 @@ $.fn.populate_detail_form = function(data)
         $('#txtarea_descr')         .val($.fn.decodeURIComponentSafe(data.descr));
         $('#txtarea_descr_action')  .val($.fn.decodeURIComponentSafe(data.descr_action));
         $('#dd_type')               .val(data.task_type_id).change();
-        $('#dd_dept')               .val(data.dept_id).change();
+        //$('#dd_dept')               .val(data.dept_id).change();
 
         $.fn.change_switchery($('#chk_status'),(parseInt(data.is_active) ? true : false));
         CODE_TRIGGERED      = false;
@@ -1689,7 +1691,7 @@ function get_sbg(rowData = false,details=false)
 	}
 };
 
-$.fn.get_departments = function()
+$.fn.get_departments = function(dept_id = null)
 {
 	try
 	{
@@ -1713,7 +1715,11 @@ $.fn.get_departments = function()
 								</option>`;
 					}
 					$('#dd_dept').html(row);
-					$('#dd_dept').val(0);
+					if( !dept_id)
+						$('#dd_dept').val(0);
+					else
+						$('#dd_dept').val(dept_id).change();
+					console.log(dept_id);
 					$('#dd_dept').select2();
 				}
 			},true
