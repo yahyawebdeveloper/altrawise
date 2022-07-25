@@ -1368,6 +1368,7 @@ $.fn.bind_command_events = function ()
             btn_save = Ladda.create(this);
             btn_save.start();
             $.fn.save_edit_form();
+            window.location.reload();
         });
 
         $('#btn_back, #btn_cancel').click(function (e)

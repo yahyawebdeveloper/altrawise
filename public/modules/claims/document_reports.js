@@ -182,7 +182,8 @@ $.fn.populate_list_form = function (data, is_scroll)
 				}
 				row += `</tr>`;
 			}
-			$('#tbl_list tbody').append(row);
+			$('#tbl_list tbody').empty().append(row);
+			$('.total-results').html(data.length);
 			$('#div_load_more').show();
 
 			
@@ -350,7 +351,7 @@ $.fn.get_list = function(is_scroll)
         $.fn.fetch_data(
             $.fn.generate_parameter('get_document_list_for_approval', param),
             function(return_data) {  
-                if (return_data.data) { 
+                if (return_data.data){ 
                     var len = return_data.data.length;
                     if (return_data.data.rec_index)
                     {
@@ -385,7 +386,8 @@ $.fn.get_list = function(is_scroll)
                             $.fn.show_right_success_noty('No more records to be loaded');
                         }
                     }
-                }else{
+                }
+				else if(return_data.code == 1){
 					$('#btn_load_more').hide();
 					$.fn.data_table_destroy();
 					$('#tbl_list tbody').empty().append
@@ -489,6 +491,18 @@ $.fn.prepare_form = function ()
 				},
 			}
 		);
+
+		$("#dp_search_date").flatpickr({
+            mode:"range",
+            altFormat: "d-M-Y",
+            dateFormat: "d-m-Y",
+            onChange:function(selectedDates){
+                var _this=this;
+                var dateArr=selectedDates.map(function(date){return _this.formatDate(date,'Y-m-d');});
+                $('#from_search_date').val(dateArr[0]);
+                $('#to_search_date').val(dateArr[1]);
+            },
+        });
 
 
 		$.fn.get_drop_down_values();
@@ -793,6 +807,8 @@ $.fn.bind_command_events = function ()
 				let input_html = `<div class="errorContainer">
 										<input type="text" id="dp_search_date" class="form-control flatpickr-input search-value" placeholder="16-06-2021 to 30-06-2021" readonly="readonly">
 									</div>
+									<input type="hidden" id="from_search_date">
+                                    <input type="hidden" id="to_search_date">
 									<input type="hidden" class="date_range_value" name="search_value" id="date_range_value">`;
 
 
@@ -801,7 +817,7 @@ $.fn.bind_command_events = function ()
 				this_class.parents('.condition-row').find('.search-value').flatpickr({
 							mode:"range",
 							altFormat: "d-M-Y",
-							dateFormat: "Y-m-d",
+							dateFormat: "d-m-Y",
 							onChange:function(selectedDates){
 								var _this=this;
 								var dateArr=selectedDates.map(function(date){return _this.formatDate(date,'Y-m-d');});
@@ -846,6 +862,7 @@ $.fn.bind_command_events = function ()
 			e.preventDefault();
 			$.fn.reset_form();
 			$.fn.reset_search();
+			RECORD_INDEX = 0;
 			$.fn.get_list(true);
 		});
 

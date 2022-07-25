@@ -63,9 +63,9 @@ $.fn.data_table_destroy = function ()
 $.fn.get_list = function (is_scroll)
 {
     try
-    {
+    { console.log('inside get list');
         var data =
-        {
+        { 
             // client_id: $('#dd_client_search').val(),
             title: $('#txt_title_search').val(),
             created_by: $('#dd_created_by_search').val(),
@@ -391,8 +391,10 @@ $.fn.save_edit_form = function ()
 
                     $('#h4_primary_no').text('Document Number : ' + return_data.data.details.doc_no);
                     $.fn.show_right_success_noty('Data has been recorded successfully');
+                    $('#list_div').show(400);
+					$('#new_div').hide(400);
                 }
-            }, false, btn_save
+            }
         );
 
     }
@@ -1610,9 +1612,11 @@ $.fn.bind_command_events = function ()
         $('#btn_save').click(function (e)
         {
             e.preventDefault();
-            btn_save = Ladda.create(this);
-            btn_save.start();
+            RECORD_INDEX = 0;
+			btn_save = Ladda.create(this);
+			btn_save.start();
             $.fn.save_edit_form();
+            window.location.reload();
         });
 
         $('#btn_back, #btn_cancel').click(function (e)

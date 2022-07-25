@@ -92,10 +92,12 @@ $.fn.get_list = function()
 	    	filter_val += $(this).val() + ",";
 	  	}); */
 		let company_id = SESSIONS_DATA.company_id;
-
 		let emp_id = SESSIONS_DATA.emp_id;
+
 		let myDate = new Date(); 
-		let end_date = Math.round(myDate.getTime()/1000.0);
+		var myDates = new Date(myDate);
+		myDates.setDate(myDates.getDate() + 30);
+		let end_date = Math.round(myDates.getTime()/1000.0);
 			var datas =
 			{
 				filter_val: '1,2,3,4',
@@ -104,20 +106,27 @@ $.fn.get_list = function()
 				start: '1500550716',
 				end:end_date
 			};
-			console.log(end_date);
+		
 			let event_value_arr = [];
 			$.fn.write_data
 			( 
 				$.fn.generate_parameter('get_user_events','', datas),
 				function (return_data){
-					if (return_data.data){console.log(return_data.data);
+					if (return_data.data){
 							for(var i = 0, l = return_data.data.length; i < l; i++) {
 								
 								let event_value = {};
 								event_value['id'] = return_data.data[i].id;
 								event_value['title'] = return_data.data[i].title;
 								event_value['start'] = return_data.data[i].start;
-								event_value['end'] = return_data.data[i].end;
+								if(return_data.data[i].start != return_data.data[i].end){
+									var end = new Date(return_data.data[i].end);
+									end.setDate(end.getDate());
+								}
+								else{
+									end = return_data.data[i].end;
+								}
+								event_value['end'] = end;
 								event_value['type'] = return_data.data[i].type;
 								if(return_data.data[i].type == "holiday"){
 									className='bg-success';

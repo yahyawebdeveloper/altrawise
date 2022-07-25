@@ -60,8 +60,6 @@ $.fn.reset_form = function (form)
 			$('#doc_search_date').val('');
 			$('#from_search_date').val('');
 			$('#to_search_date').val('');
-			$flatpickr = $("#doc_search_date").flatpickr();
-			$flatpickr.clear();
             $('#dd_search_category').val('').change();
         }
         else if (form == 'form')
@@ -201,8 +199,7 @@ $.fn.populate_list_form = function (data, is_scroll)
 	}
 	catch (err)
 	{
-		console.log(err.message);
-			//$.fn.log_error(arguments.callee.caller,err.message);
+		$.fn.log_error(arguments.callee.caller,err.message);
 	}
 };
 
@@ -503,7 +500,7 @@ $.fn.save_form = function ()
 	}
 	catch (err)
 	{
-		console.log(err.message);
+		//console.log(err.message);
 		$.fn.log_error(arguments.callee.caller, err.message);
 	}
 };
@@ -935,6 +932,7 @@ $.fn.bind_command_events = function ()
 			btn_save = Ladda.create(this);
 			btn_save.start();
 			$.fn.save_form();
+			window.location.reload();
 		});
 
 		$('#btn_add_remark').click(function (e)
@@ -1025,8 +1023,8 @@ $.fn.bind_command_events = function ()
 		$.fn.init_upload_file();
 	}
 	catch (err)
-	{ console.log(err);
-		//$.fn.log_error(arguments.callee.caller, err.message);
+	{ 
+		$.fn.log_error(arguments.callee.caller, err.message);
 	}
 };
 

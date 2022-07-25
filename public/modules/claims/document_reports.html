@@ -12,7 +12,7 @@
                     <a href="javascript:void(0);" id="btn_search1" class="btn btn-success mb-2 panel-collapse"><i class="fe-search me-1"></i>Search</a>
                 </div>-->
                 <h4 class="page-title">
-                     Document Reports</h4>
+                     Document Reports&nbsp;&nbsp;<span id="total_records" class="total-results badge rounded-pill bg-warning small-pill">0</span></h4>
                 </h4>
             </div>
         </div>
@@ -99,6 +99,11 @@
                             <tbody>    
                             </tbody>
                         </table>
+                        <!-- <div id="div_load_more" class="d-flex justify-content-center load-more" style="display: none;">
+                            <button id="btn_load_more" type="button" class="btn btn-sm btn-info waves-effect waves-light rounded-pill ">
+                                <i class="fa fa-arrow-down"></i>&nbsp;&nbsp;Load More&nbsp;&nbsp;<i class="fa fa-arrow-up"></i>
+                            </button>
+                        </div> -->
                     </div>
                 </div>
             </div> <!-- end card-->
@@ -135,9 +140,9 @@
 					</div>
                 </div>
                 <div class="modal-footer">
-					<button type="button" class="btn btn-default close"  data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-times"></i> Cancel</button>
-                    <button type="button" class="btn btn-primary ladda-button" data-style="expand-left" id="btn_verify">Confirm</button>
-                    <button type="button" class="btn btn-primary ladda-button" data-style="expand-left" id="btn_approve">Confirm</button>
+					<button type="button" class="btn btn-light waves-effect waves-light"  data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-times"></i> Cancel</button>
+                    <button type="button" class="btn btn-success" data-style="expand-left" id="btn_verify">Confirm</button>
+                    <button type="button" class="btn btn-success" data-style="expand-left" id="btn_approve">Confirm</button>
                 </div>
             </form>
         </div>
@@ -185,8 +190,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-light waves-effect waves-light" data-bs-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
 					<button type="button" class="btn btn-success" data-style="expand-left" data-spinner-color="#000000" id="btn_add_remark">Save</button>
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
                 </div>
             </form>
         </div>

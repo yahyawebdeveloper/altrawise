@@ -102,7 +102,9 @@ $.fn.get_list = async function()
   		let emp_id = SESSIONS_DATA.emp_id;
 		
 		let myDate = new Date(); 
-		let end_date = Math.round(myDate.getTime()/1000.0);
+		var myDates = new Date(myDate);
+		myDates.setDate(myDates.getDate() + 30);
+		let end_date = Math.round(myDates.getTime()/1000.0);
 		var datas =
 		{
 			filter_val: '1,2,3,4',
@@ -123,7 +125,14 @@ $.fn.get_list = async function()
 							event_value['id'] = return_data.data[i].id;
 							event_value['title'] = return_data.data[i].title;
 							event_value['start'] = return_data.data[i].start;
-							event_value['end'] = return_data.data[i].end;
+							if(return_data.data[i].start != return_data.data[i].end){
+								var end = new Date(return_data.data[i].end);
+								end.setDate(end.getDate());
+							}
+							else{
+								end = return_data.data[i].end;
+							}
+							event_value['end'] = end;
 							event_value['type'] = return_data.data[i].type;
 							if(return_data.data[i].type == "holiday"){
 								className='bg-success';
