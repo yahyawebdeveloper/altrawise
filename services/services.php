@@ -643,12 +643,7 @@ if(isset($_SERVER['REQUEST_METHOD']))
 			echo get_leave_approval_dropdown_data($param->data);
 			return;
 		}
-		else if ($param->method === 'get_profile_dropdown_data') 
-		{
-			require_once constant('MODULES_DIR') . '/common.php';
-			echo get_profile_dropdown_data($param->data);
-			return;
-		}
+		
 		//--------Added by Surekha-----------
 		
 // 		else if($param->method === 'get_document_list')
@@ -2365,6 +2360,12 @@ if(isset($_SERVER['REQUEST_METHOD']))
 			return;
 		}
 		// Attendance
+		else if ($param->method === 'get_profile_dropdown_data') 
+		{
+			require_once constant('MODULES_DIR') . '/common.php';
+			echo get_profile_dropdown_data($param->data);
+			return;
+		}
 require_once  'transporter.php';
 		
 	}

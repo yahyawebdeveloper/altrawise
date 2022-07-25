@@ -940,7 +940,9 @@ function get_dropdown_meeting($params) {
         handle_exception($e);
     }
 
-    /** For Profile Dropdown */
+    
+}
+/** For Profile Dropdown */
 function get_profile_dropdown_data($params) {
     try
     {  
@@ -955,7 +957,6 @@ function get_profile_dropdown_data($params) {
     {
         handle_exception($e);
     }
-}
 }
 
 ?>
