@@ -371,7 +371,7 @@ $.fn.populate_list = function (data,is_scroll,list_id)
                     RECORD_INDEX = data.rec_index;
                 }
                 data = data.list;
-
+				$('#list_task').html("");
                 for(var i = 0; i < data.length; i++)
                 {
 					initialHTML			= '';
@@ -1960,39 +1960,29 @@ $.fn.get_list_waiting_for_review_approval = function (type)
 $.fn.get_list = function (is_scroll)
 {
     try 
-    {	
-		let status_search = [""];
-		if($('#dd_status_search').val() != null)
-		{
-			status_search = $('#dd_status_search').val();
-		}
-		
-		var data	= 
-		{
-			title			: $('#txt_title_search')	.val(),
-			status			: status_search.toString(),
-			assign_to 		: $('#dd_assign_to_search').val(),
-			created_by 		: $('#dd_created_by_search').val(),	
-			group			: $('#dd_task_group_search').val(),
-			company			: $('#dd_task_company_search').val(),
-			view_all		: MODULE_ACCESS.viewall,
-			start_index		: RECORD_INDEX,
-			limit			: LIST_PAGE_LIMIT,			
-			is_admin		: SESSIONS_DATA.is_admin,		
-			emp_id			: SESSIONS_DATA.emp_id,
-			is_active       : $('#chk_status_search').is(':checked') ? 1 : 0
-	 	};
-	 	
-	 	if(is_scroll)
-	 	{
-	 		data.start_index =  RECORD_INDEX;
-	 	}
-	 	
-	 	$.fn.fetch_data_for_list
-		(	
-			$.fn.generate_parameter('get_tasks_template_list',data),
-			$.fn.populate_list,is_scroll,'list_task_template'
-		); 
+    {
+        var data    = 
+        {
+            title           : $('#txt_title_search')    .val(),
+            created_by      : $('#dd_created_by_search').val(),
+            view_all        : MODULE_ACCESS.view_it_all,
+            start_index     : RECORD_INDEX,
+            limit           : LIST_PAGE_LIMIT,          
+            is_admin        : SESSIONS_DATA.is_admin,       
+            emp_id          : SESSIONS_DATA.emp_id,
+            is_active       : $('#chk_status_search').is(':checked') ? 1 : 0
+        };
+       
+        if(is_scroll)
+        {
+            data.start_index =  RECORD_INDEX;
+        }
+        
+        $.fn.fetch_data_for_list
+        (
+            $.fn.generate_parameter('get_tasks_template_list',data),
+            $.fn.populate_list,is_scroll,'list_task_template'
+        ); 
     } 
     catch (e) 
     {

@@ -1251,42 +1251,29 @@ $.fn.get_task_template_list = function (is_scroll)
         $.fn.log_error(arguments.callee.caller, e.message);
     }
 }
-$.fn.pick_this_template = function (task_id)
+$.fn.pick_this_template = function (obj)
 {
     try 
     {
-    	$.fn.fetch_data
-		(
-			$.fn.generate_parameter('get_task_template_detail', {task_id : task_id}),
-		    function(return_data)
-		    {   
-				var data = return_data.data.details;
-				var assignees = return_data.data.assignees;
-				$('#txt_task')      		.val(data.task_title);
-				$('#txtarea_descr') 		.val($.fn.decodeURIComponentSafe(data.descr));
-				$('#txtarea_descr_action') 	.val($.fn.decodeURIComponentSafe(data.descr_action));
-				$('#dd_type')   			.val(data.task_type_id).change();
-				$('#dd_dept')   			.val(data.dept_id).change();
-				$("#task_creation_date")	.val(data.created_date);
-				flatpickr = $("#dp_due_date")	.flatpickr({
-						altInput: true,
-						altFormat: "d-M-Y",
-						dateFormat: "Y-m-d",
-				});
-				flatpickr       			.setDate(data.due_date);
-				$('#dd_priority')   		.val(data.priority_id).change();
-				$("#dd_group")				.val(data.task_group_id).change();
-				
-				let json_field = $.fn.get_json_string(data.json_field);
+    	let data = JSON.parse(unescape($(obj).closest('tr').attr('data-value')));
 
-				if(json_field.checklist)
-				{
-					$.fn.populate_checklist(json_field.checklist);
-				}
-			}, false, '', true, true
-		);
+    	if(data)
+		{
+    		$('#txt_task')      		.val(data.task_title);
+            $('#txtarea_descr') 		.val($.fn.decodeURIComponentSafe(data.descr));
+            $('#txtarea_descr_action') 	.val($.fn.decodeURIComponentSafe(data.descr_action));
+            $('#dd_type')   			.val(data.task_type_id).change();
+            $('#dd_dept')   			.val(data.dept_id).change();
+            
+            let json_field = $.fn.get_json_string(data.json_field);
+
+            if(json_field.checklist)
+        	{
+            	$.fn.populate_checklist(json_field.checklist);
+        	}
+            
+		}
     	$('#task_template_modal').modal('hide');
-		$("#btn_save").attr("data-template-id",task_id);
     } 
     catch (e)
     {
@@ -1306,7 +1293,7 @@ $.fn.populate_task_template = function (data)
 				row += `<tr class="timesheet" data-value='${escape(JSON.stringify(data[i]))}'>
 			                <td>${data[i].task_title}</td>
 			                <td>${$.fn.decodeURIComponentSafe(data[i].descr)}</td>
-			                <td><button type="button" class="btn btn-success waves-effect waves-light" onclick="$.fn.pick_this_template('${data[i].id}')"><i class="fa fa-download"></i> Pick This</button></td>          
+			                <td><button type="button" class="btn btn-success waves-effect waves-light" onclick="$.fn.pick_this_template(this)"><i class="fa fa-download"></i> Pick This</button></td>          
 			            </tr>`;
 			}
 			$('#tbl_task_template_body').append(row);

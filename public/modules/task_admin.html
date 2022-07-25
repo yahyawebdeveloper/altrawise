@@ -35,81 +35,98 @@
 			</div>
 		</div>
 		<div class="card-body">
-			<!-- SEARCH ROW 1 -->
-				<div class="col-xl-12">
-					<div class="col-xl-6 searchCol">
-						 <div class="row">
-							<div class="col-md-12">
-								<label for="simpleinput" class="form-label">Title</label>
-								<input type="text" id="txt_title_search" placeholder="Required" required="required" class="form-control">
+			<!-- SEARCH ROW 1 START -->
+				<div class="row mt-3">
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md-4">
+								<label for="simpleinput" class="col-form-label">Title</label>
+							</div>
+							<div class="col-md-8 errorContainer">
+								<input type="text" id="txt_title_search" class="form-control">
 							</div>
 						</div>
 					</div>
-					<div class="col-xl-6 searchCol">
-						 <div class="row">
-							<div class="col-md-12">
-								<label for="simpleinput" class="form-label">Priority</label>
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md-4">
+								<label for="simpleinput" class="col-form-label">Priority</label>
+							</div>
+							<div class="col-md-8 errorContainer">
 								<select class="form-control priority" id="dd_priority_search" data-toggle="select2" data-width="100%">
 								</select>
 							</div>
 						</div>
 					</div>
 				</div>
-			<!-- SEARCH ROW 1 -->
-			<!-- SEARCH ROW 2 -->
-				<div class="col-xl-12">
-					<div class="col-xl-6 searchCol">
-						 <div class="row">
-							<div class="col-md-12">
-								<label for="simpleinput" class="form-label">Assign To</label>
+			<!-- SEARCH ROW 1 END -->
+			<!-- SEARCH ROW 2 START -->
+				<div class="row mt-3">
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md-4">
+								<label for="simpleinput" class="col-form-label">Assign To</label>
+							</div>
+							<div class="col-md-8 errorContainer">
 								<select class="form-control assignTo" id="dd_assign_to_search" data-toggle="select2" data-width="100%">
 								</select>
 							</div>
 						</div>
 					</div>
-					<div class="col-xl-6 searchCol">
-						 <div class="row">
-							<div class="col-md-12">
-								<label for="simpleinput" class="form-label">Created By</label>
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md-4">
+								<label for="simpleinput" class="col-form-label">Created By</label>
+							</div>
+							<div class="col-md-8 errorContainer">
 								<select class="form-control createdBy" id="dd_created_by_search" data-toggle="select2" data-width="100%">
 								</select>
 							</div>
 						</div>
 					</div>
 				</div>
-			<!-- SEARCH ROW 2 -->
-			<!-- SEARCH ROW 3 -->
-				<div class="col-xl-12">
-					<div class="col-xl-6 searchCol">
-						 <div class="row">
-							<div class="col-md-12">
-								<label for="simpleinput" class="form-label">Department</label>
+			<!-- SEARCH ROW 2 END -->
+			<!-- SEARCH ROW 3 START -->
+				<div class="row mt-3">
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md-4">
+								<label for="simpleinput" class="col-form-label">Department</label>
+							</div>
+							<div class="col-md-8 errorContainer">
 								<select class="form-control"  id="dd_dept_search" data-toggle="select2" data-width="100%">
-									
 								</select>
 							</div>
 						</div>
 					</div>
-					<div class="col-xl-6 searchCol">
-						 <div class="row">
-							<div class="col-md-12">
-								<label for="simpleinput" class="form-label">Status</label>
-								<select id="dd_status_search" style="width:100%" class="populate" >
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md-4">
+								<label for="simpleinput" class="col-form-label">Status</label>
+							</div>
+							<div class="col-md-8 errorContainer">
+								<select id="dd_status_search" style="width:100%" class="form-control populate" >
 								</select>
 							</div>
 						</div>
 					</div>
 				</div>
-			<!-- SEARCH ROW 3 -->
-			<!-- SEARCH ROW 4 -->
-				<div class="col-xl-12" style="text-align:right;overflow:auto;">
-					<div class="mt-3">
-						
-						<button type="button" id="btn_dept_reset" class="btn btn-light waves-effect waves-light" ><i class="mdi mdi-refresh"></i> Reset</button>
-						<button type="submit" id="btn_search" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-magnify"></i> Search</button>
+			<!-- SEARCH ROW 3 END -->
+			<!-- SEARCH ROW 4 START -->
+				<div class="row mt-3">
+					<div class="col-md-12" style="text-align:right">
+						<div class="row">
+							<div class="col-md-4">
+								&nbsp;
+							</div>
+							<div class="col-md-8">
+								<button type="button" id="btn_dept_reset" class="btn btn-light waves-effect waves-light" ><i class="mdi mdi-refresh"></i> Reset</button>
+								<button type="submit" id="btn_search" class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-magnify"></i> Search</button>
+							</div>
+						</div>
 					</div>
 				</div>
-			<!-- SEARCH ROW 4 -->
+			<!-- SEARCH ROW 4 END -->
 		</div>
 	</div>
 </div>
@@ -142,192 +159,342 @@
                             	<div class="row">
 	                            	<div class="col-md-12">
 		                                <form class="form-horizontal" data-validate="parsley" id="detail_form">
-						                        <div class="row mb-3">
-													<div class="col-md-11" style="padding-right:0;" >
-														<label for="simpleinput" class="form-label">Task Title</label>
-														<input type="text" id="txt_task" placeholder="Required" required="required" class="form-control">
-														
+											<!-- ROW 1 START -->
+												<div class="row mt-3">
+													<div class="col-md-12">
+														<div class="row">
+															<div class="col-md-2">
+																<label for="simpleinput" class="col-form-label">Task Title</label>
+															</div>
+															<div class="col-md-9 errorContainer" style="padding-right:0">
+																<input type="text" id="txt_task" placeholder="Required" required="required" class="form-control">
+															</div>
+															<div class="col-md-1 p-0">
+																<button type="button"  id="btn_pickup" class="btn btn-warning waves-effect waves-light" >Pickup</button>
+															</div>
+														</div>
 													</div>
-													<div class="col-md-1" style="margin-top:1.75rem;padding-left:0;">
-														<button type="button"  id="btn_pickup" class="btn btn-warning waves-effect waves-light" >Pickup</button>
+												</div>
+											<!-- ROW 1 END -->
+											<!-- ROW 2 START -->
+												<div class="row mt-3">
+													<div class="col-md-12">
+														<div class="row">
+															<div class="col-md-2">
+																<label for="simpleinput" class="col-form-label">Description</label>
+															</div>
+															<div class="col-md-10 errorContainer">
+																<textarea id="txtarea_descr" class="form-control fullscreen" rows="5" placeholder="Required" required="required"></textarea>
+															</div>
+														</div>
 													</div>
 												</div>
-						                  
-						
-						                    <div class="row mb-3">
-													<div class="col-md-12" >
-														<label for="simpleinput" class="form-label">Description</label>
-														<textarea id="txtarea_descr" class="form-control fullscreen" rows="5" placeholder="Required" required="required"></textarea>
+											<!-- ROW 2 END -->
+											<!-- ROW 3 START -->
+												<div class="row mt-3">
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-4">
+																<label for="simpleinput" class="col-form-label">SBG</label>
+															</div>
+															<div class="col-md-8 errorContainer">
+																<select id="dd_sbg" required="required" class="form-control country" data-toggle="select2" data-width="100%">
+																	<option>Select</option>
+																</select>
+															</div>
+														</div>
 													</div>
-											</div>
-						                   
-											<div class="row mb-3">
-												<div class="col-md-6" >
-													<label for="simpleinput" class="form-label">SBG</label>
-													<select id="dd_sbg" required="required" class="form-control country" data-toggle="select2" data-width="100%">
-														<option>Select</option>
-													</select>
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-4">
+																<label for="simpleinput" class="col-form-label">SBD</label>
+															</div>
+															<div class="col-md-8 errorContainer">
+																<select id="dd_sbd" required="required" class="form-control country" data-toggle="select2" data-width="100%">
+																	<option>Select</option>
+																</select>
+															</div>
+														</div>
+													</div>
 												</div>
-												<div class="col-md-6" >
-													<label for="simpleinput" class="form-label">SBD</label>
-													<select id="dd_sbd" required="required" class="form-control country" data-toggle="select2" data-width="100%">
-														<option>Select</option>
-													</select>
+											<!-- ROW 3 END -->
+											<!-- ROW 4 START -->
+												<div class="row mt-3">
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-4">
+																<label for="simpleinput" class="col-form-label">Company</label>
+															</div>
+															<div class="col-md-8 errorContainer">
+																<select id="dd_company" required="required" class="form-control company" data-toggle="select2" data-width="100%">
+																	<option>Select</option>
+																</select>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-4">
+																<label for="simpleinput" class="col-form-label">Task Group</label>
+															</div>
+															<div class="col-md-8 errorContainer">
+																<select id="dd_group" required="required" class="form-control country" data-toggle="select2" data-width="100%">
+																	<option>Select</option>
+																</select>
+															</div>
+														</div>
+													</div>
 												</div>
-											</div>
-										
-											<div class="row mb-3">
-												<div class="col-md-6" >
-													<label for="simpleinput" class="form-label">Company</label>
-													<select id="dd_company" required="required" class="form-control company" data-toggle="select2" data-width="100%">
-														<option>Select</option>
-													</select>
+											<!-- ROW 4 END -->
+											<!-- ROW 5 START -->
+												<div class="row mt-3">
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-4">
+																<label for="simpleinput" class="col-form-label">Task Type</label>
+															</div>
+															<div class="col-md-8 errorContainer">
+																<select id="dd_type" required="required" class="form-control country" data-toggle="select2" data-width="100%">
+																	<option>Select</option>
+																</select>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-4">
+																<label for="simpleinput" class="col-form-label">Priority</label>
+															</div>
+															<div class="col-md-8 errorContainer">
+																<select id="dd_priority" required="required" class="form-control country" data-toggle="select2" data-width="100%">
+																	<option>Select</option>
+																</select>
+															</div>
+														</div>
+													</div>
 												</div>
-												<div class="col-md-6" >
-													<label for="simpleinput" class="form-label">Task Group</label>
-													<select id="dd_group" required="required" class="form-control country" data-toggle="select2" data-width="100%">
-														<option>Select</option>
-													</select>
+											<!-- ROW 5 END -->
+											<!-- ROW 6 START -->
+												<div class="row mt-3">
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-4">
+																<label for="simpleinput" class="col-form-label">Status</label>
+															</div>
+															<div class="col-md-8 errorContainer">
+																<input type="checkbox" id="chk_status" name="chk_status" checked class="js-switch" data-color="#99d683" />
+																<label class="col-sm-3 control-label" id="lbl_status" style="text-align:right">ACTIVE</label>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-4">
+																<label for="simpleinput" class="col-form-label">Department</label>
+															</div>
+															<div class="col-md-8 errorContainer">
+																<select class="form-control" id="formDepartment" data-toggle="select2" data-width="100%">
+																	<option>Select</option>
+																</select>
+															</div>
+														</div>
+													</div>
 												</div>
-											</div>
+											<!-- ROW 6 END -->
+											<!-- ROW 7 START -->
+												<div class="row mt-3">
+													<div class="col-md-12">
+														<div class="row">
+															<div class="col-md-6" style="text-align:right" ><button class="btn btn-primary waves-effect waves-light" id="btn_duplicate"><i class="fa fa-random"></i> Duplicate</a></div>
+														</div>
+													</div>
+												</div>
+											<!-- ROW 7 END -->
+											<!-- ROW 8 START -->
+												<div class="row mt-3" id="div_dd_schedule">
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-4">
+																<label for="simpleinput" class="col-form-label">Schedule/One Time</label>
+															</div>
+															<div class="col-md-8 errorContainer">
+																<select class="form-control" id="dd_schedule_or_one_time" data-toggle="select2" data-width="100%">
+																	<option value="0">One Time</option>
+																	<option value="1">Schedule</option>
+																</select>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-6" id="div_task_one_time">
+														<div class="row">
+															<div class="col-md-4">
+																<label for="simpleinput" class="col-form-label">Due date</label>
+															</div>
+															<div class="col-md-8 errorContainer">
+																<input required type="text" id="dp_due_date" class="form-control flatpickr-input" placeholder="dd-mmm-yyyy" readonly="readonly">
+															</div>
+														</div>
+													</div>
+												</div>
+											<!-- ROW 8 END -->
 											
-											<div class="row mb-3">
-												<div class="col-md-6" >
-													<label for="simpleinput" class="form-label">Task Type</label>
-													<select id="dd_type" required="required" class="form-control country" data-toggle="select2" data-width="100%">
-														<option>Select</option>
-													</select>
-												</div>
-												<div class="col-md-6" >
-													<label for="simpleinput" class="form-label">Priority</label>
-													<select id="dd_priority" required="required" class="form-control country" data-toggle="select2" data-width="100%">
-														<option>Select</option>
-													</select>
-												</div>
-											</div>
-											<div class="row mb-3">
-												<div class="col-md-6" >
-													<label for="simpleinput" class="form-label">Status</label><br>
-													<input type="checkbox" id="chk_status" name="chk_status" checked class="js-switch" data-color="#99d683" />
-													<label class="col-sm-3 control-label" id="lbl_status" style="text-align:right">ACTIVE</label>
-												</div>
-												<div class="col-md-6" >
-													<label for="simpleinput" class="form-label">Department</label>
-													<select class="form-control" id="formDepartment" data-toggle="select2" data-width="100%">
-														<option>Select</option>
-													</select>
-												</div>
-											</div>
-											<div class="row mb-3">
-												<div class="col-md-6 text-right" ><button class="btn btn-primary waves-effect waves-light" id="btn_duplicate"><i class="fa fa-random"></i> Duplicate</a></div>
-												<div class="col-md-6" ></div>
-											</div>
-											<div class="row mb-3" id="div_dd_schedule">
-												<div class="col-md-6" >
-													<label for="simpleinput" class="form-label">Schedule/One Time</label>
-													<select class="form-control" id="dd_schedule_or_one_time" data-toggle="select2" data-width="100%">
-														<option value="0">One Time</option>
-		                                                <option value="1">Schedule</option>
-													</select>
-												</div>
-												<div class="col-md-6" >
-													<label for="simpleinput" class="form-label">Due date</label>
-													<input required type="text" id="dp_due_date" class="form-control flatpickr-input" placeholder="dd-mmm-yyyy" readonly="readonly">
-												</div>
-											</div>
-											<div id="div_task_schedule" style="display:none">
+											<div class="mt-3" id="div_task_schedule" style="display:none">
 												<div class="row mb-3">
-													<div class="col-md-6" >
-														<label for="simpleinput" class="form-label">Roll Over</label><br>
-														<input type="checkbox" id="chk_roll_over" name="chk_roll_over" checked class="js-switch form-control" data-color="#99d683" />
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-4">
+																<label for="simpleinput" class="col-form-label">Roll Over</label>
+															</div>
+															<div class="col-md-8 errorContainer">
+																<input type="checkbox" id="chk_roll_over" name="chk_roll_over" checked class="js-switch form-control" data-color="#99d683" />
+															</div>
+														</div>
 													</div>
-													<div class="col-md-6" id="div_roll_over" style="display: none" >
-														<label for="simpleinput" class="form-label">Freeze Date</label>
-														<input id="dp_freeze_date" type="text" class="form-control flatpickr-input" placeholder="dd-mmm-yyyy" readonly="readonly" required="required">
+													<div class="col-md-6" id="div_roll_over" style="display: none">
+														<div class="row">
+															<div class="col-md-4">
+																<label for="simpleinput" class="col-form-label">Freeze Date</label>
+															</div>
+															<div class="col-md-8 errorContainer">
+																<input id="dp_freeze_date" type="text" class="form-control flatpickr-input" placeholder="dd-mmm-yyyy" readonly="readonly" required="required">
+															</div>
+														</div>
 													</div>
 												</div>
 												<div class="row mb-3">
 													<div class="col-md-12" >
-														<label for="simpleinput" class="form-label">Schedule Description</label>
-														<h5 id="lbl_schedule_desc" class="mt-0">This task scheduled to repeat Monthly, it will start on <b>2019-07-01 09:00</b><br> next run time will be on <b>[ 2019-07-01 09:00 ]</b></h5>
-													</div>
-													<div class="col-md-6" >
+														<div class="row">
+															<div class="col-md-2">
+																<label for="simpleinput" class="col-form-label">Schedule Description</label>
+															</div>
+															<div class="col-md-10">
+																<h5 id="lbl_schedule_desc" class="mt-0">This task scheduled to repeat Monthly, it will start on <b>2019-07-01 09:00</b><br> next run time will be on <b>[ 2019-07-01 09:00 ]</b></h5>
+															</div>
+														</div>
 													</div>
 												</div>
 												<div class="row mb-3">
 													<div class="col-md-6" >
 														<div class="row">
-															<div class="col-md-6" >
-																<label for="simpleinput" class="form-label">Start On</label>
+															<div class="col-md-4" >
+																<label for="simpleinput" class="col-form-label">Start On</label>
+															</div>
+															<div class="col-md-8" >
 																<input id="dp_start_date" type="text" class="form-control flatpickr-input"  placeholder="dd-mmm-yyyy" required="required">
 															</div>
 														</div>
 													</div>
 													<div class="col-md-6" >
-														<label for="simpleinput" class="form-label">Expire On</label>
-														<input id="dp_expire_date" type="text" class="form-control flatpickr-input"  placeholder="dd-mmm-yyyy">
+														<div class="row">
+															<div class="col-md-4" >
+																<label for="simpleinput" class="form-label">Expire On</label>
+															</div>
+															<div class="col-md-8" >
+																<input id="dp_expire_date" type="text" class="form-control flatpickr-input"  placeholder="dd-mmm-yyyy">
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="row mb-3">
+													<div class="col-md-12" >
+														<div class="row">
+															<div class="col-md-2" >
+																<label for="simpleinput" class="col-form-label">Schedule Type</label>
+															</div>
+															<div class="col-md-10" >
+																<button class="btn btn-dark waves-effect waves-light" id="btn_daily">Daily</button>
+																<button class="btn btn-primary waves-effect waves-light" id="btn_weekly">Weekly</button>
+																<button class="btn btn-pink waves-effect waves-light" id="btn_monthly">Monthly</button>
+																<button class="btn btn-info waves-effect waves-light" 	id="btn_quarterly">Quarterly</button>
+																<button class="btn btn-warning waves-effect waves-light" id="btn_biannually">Biannually</button>
+																<button class="btn btn-success waves-effect waves-light" id="btn_yearly">Yearly</button>
+															</div>
+														</div>
 													</div>
 												</div>
 												<div class="row mb-3">
 													<div class="col-md-6" >
-														<label for="simpleinput" class="form-label">Schedule Type</label><br>
-														<button class="btn btn-dark waves-effect waves-light" id="btn_daily">Daily</button>
-														<button class="btn btn-primary waves-effect waves-light" id="btn_weekly">Weekly</button>
-														<button class="btn btn-pink waves-effect waves-light" id="btn_monthly">Monthly</button>
-														<button class="btn btn-info waves-effect waves-light" 	id="btn_quarterly">Quarterly</button>
-														<button class="btn btn-warning waves-effect waves-light" id="btn_biannually">Biannually</button>
-														<button class="btn btn-success waves-effect waves-light" id="btn_yearly">Yearly</button>
+														<div class="row">
+															<div class="col-md-4" >
+																<label for="simpleinput" class="col-form-label">Reviewer</label>
+															</div>
+															<div class="col-md-8" >
+																<select class="form-control" id="dd_reviewer" data-toggle="select2" data-width="100%">
+																</select>
+															</div>
+														</div>
 													</div>
 													<div class="col-md-6" >
-													</div>
-												</div>
-												<div class="row mb-3">
-													<div class="col-md-6" >
-														<label for="simpleinput" class="form-label">Reviewer</label>
-														<select class="form-control" id="dd_reviewer" data-toggle="select2" data-width="100%">
-														</select>
-													</div>
-													<div class="col-md-6" >
-														<label for="simpleinput" class="form-label">Approver</label>
-														<select class="form-control" id="dd_approver" data-toggle="select2" data-width="100%">
-														</select>
-													</div>
-												</div>
-												<div class="row mb-3">
-													<div class="col-md-6" >
-														<label for="simpleinput" class="form-label">Assignee Due Date</label>
-														<select id="dd_due_days" style="width:100%" class="form-control" required="required">
-			                                            	<option value="1">1 Day</option>    
-			                                            </select>
-														<p class="text-left text-danger"><strong>*From the date of the task generated</strong></p>
-													</div>
-													<div class="col-md-6" >
+														<div class="row">
+															<div class="col-md-4" >
+																<label for="simpleinput" class="col-form-label">Approver</label>
+															</div>
+															<div class="col-md-8" >
+																<select class="form-control" id="dd_approver" data-toggle="select2" data-width="100%">
+																</select>
+															</div>
+														</div>
 													</div>
 												</div>
 												<div class="row mb-3">
 													<div class="col-md-6" >
-														<label for="simpleinput" class="form-label">Reviewer Due Date</label>
-														<select id="dd_reviewer_due_days" style="width:100%" class="form-control" required="required">
-			                                            	<option value="1">1 Day</option>    
-			                                            </select>
-														<p class="text-left text-danger"><strong>*From the date of the task generated</strong></p>
+														<div class="row">
+															<div class="col-md-4" >
+																<label for="simpleinput" class="col-form-label">Assignee Due Date</label>
+															</div>
+															<div class="col-md-8" >
+																<select id="dd_due_days" style="width:100%" class="form-control" required="required">
+																	<option value="1">1 Day</option>    
+																</select>
+															</div>
+														</div>
 													</div>
 													<div class="col-md-6" >
+														<div class="row">
+															<p class="text-left text-danger col-form-label"><strong>*From the date of the task generated</strong></p>
+														</div>
 													</div>
 												</div>
 												<div class="row mb-3">
 													<div class="col-md-6" >
-														<label for="simpleinput" class="form-label">Approver Due Date</label>
-														<select id="dd_approver_due_days" style="width:100%" class="form-control" required="required">
-			                                            	<option value="1">1 Day</option>    
-			                                            </select>
-														<p class="text-left text-danger"><strong>*From the date of the task generated</strong></p>
+														<div class="row">
+															<div class="col-md-4" >
+																<label for="simpleinput" class="col-form-label">Reviewer Due Date</label>
+															</div>
+															<div class="col-md-8" >
+																<select id="dd_reviewer_due_days" style="width:100%" class="form-control" required="required">
+																	<option value="1">1 Day</option>    
+																</select>
+															</div>
+														</div>
 													</div>
 													<div class="col-md-6" >
+														<div class="row">
+															<p class="text-left text-danger col-form-label"><strong>*From the date of the task generated</strong></p>
+														</div>
+													</div>
+												</div>
+												<div class="row mb-3">
+													<div class="col-md-6" >
+														<div class="row">
+															<div class="col-md-4" >
+																<label for="simpleinput" class="col-form-label">Approver Due Date</label>
+															</div>
+															<div class="col-md-8" >
+																<select id="dd_approver_due_days" style="width:100%" class="form-control" required="required">
+																	<option value="1">1 Day</option>    
+																</select>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-6" >
+														<div class="row">
+															<p class="text-left text-danger col-form-label"><strong>*From the date of the task generated</strong></p>
+														</div>
 													</div>
 												</div>	
 											</div>
-											<div class="row mb-3" id="div_footer">
+											<div class="row mt-3 mb-3" id="div_footer">
 												<div class="col-md-6"></div>
 												<div class="col-md-6" style="text-align:right;" id="div_btn">
 													<button type="button" id="btn_cancel" class="btn btn-light waves-effect waves-light" ><i class="mdi mdi-refresh"></i> Reset</button>
@@ -349,86 +516,19 @@
 													</div>
 													<div class="col-sm-6">
 														<div class="text-sm-end">
-															<!-- <button type="button" class="btn btn-success waves-effect waves-light me-1"><i class="mdi mdi-cog"></i></button> -->
 															<button type="button" class="btn btn-danger waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#addEditAssigneeModal"><i class="mdi mdi-plus-circle me-1"></i> Add New</button>
 														</div>
 													</div><!-- end col-->
 												</div>
 											</div>
 											<div class="card-body">
-												
 												<div class="row">
 													<div id="assignee_list"></div>
 												</div>
-												
 											</div> <!-- end card-body-->
 										</div> <!-- end card-->
-
-										
-
 									</div> <!-- end col -->
 								</div>
-								<!-- end row -->
-								<!-- <div class="card" id="div_assignee">
-									<div class="card-body">
-										<h5 class="text-uppercase bg-light p-2 mt-0 mb-3">Assignee</h5>
-										<div class="col-xl-12">
-											<form class="form-horizontal" data-validate="parsley" id="assignee_form">
-												<table  data-buttons-class="xs btn-light" class="table-bordered custom" id="tbl_assign_to">
-													<thead class="table-light">
-														<tr>
-															<th width="25%">Assign To</th>
-															<th  >Action</th>
-															<th width="15%">Deadline</th>
-															<th width="15%">Status</th>
-															<th >Action</th>
-														</tr>
-													</thead>
-												
-												
-													<tbody>
-														<tr id="base_row_assignee">
-															<td>
-																<select id="dd_assign_to" class="form-control" required="true" style="width:100%;">
-																	<optgroup label="Individual" id="dd_assign_to_individual">
-																	</optgroup>
-																	<optgroup label="Company" id="dd_assign_to_company">
-																	</optgroup>
-																</select>
-															</td>
-															<td>
-																<input type="text" class="form-control marginBottom10px" id="txt_action" maxlength="200" required="required" >
-															</td>
-															<td>
-																<input type="text" id="deadline_date" class="form-control flatpickr-input"  placeholder="dd-mmm-yyyy" required="required">
-															</td>
-															<td>
-																<select id="dd_status" style="width:100%" class="form-control">
-																</select>
-															</td>
-															<td>
-																<span class="btn btn-blue waves-effect waves-light fileinput-button btn-xs" id="btn_add_image">
-																	<span><i class="mdi mdi-upload"></i></span>
-																	<input id="doc_upload" type="file" name="qqfile">
-																</span>
-																<button id="btn_add_assignee" type="button" class="btn btn-info waves-effect waves-light btn-xs" data-mode="0">
-																	Add
-																</button>
-															</td>
-														</tr>
-													</tbody>
-												</table>
-											</form>
-											<div id="files_div">
-												<div class="form-group">
-													<div id="doc_upload_files" class="col-sm-12"></div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div> -->
-								
-								
                             </div>
                         </div>
                     </div>
