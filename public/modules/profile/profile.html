@@ -1,0 +1,431 @@
+<link href="./assets/libs/fullcalendar/main.min.css" rel="stylesheet" type="text/css" />
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="page-title">&nbsp;User Profile</h4>
+        </div>
+    </div>
+</div>     
+<!-- end page title --> 
+<!--start-->
+<div id="wrap">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 totalleave" style="display:block;">
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+
+                        <div class="row">
+							
+                            <div class="col-md-2">
+                            
+                                <div id="div_photo_container" class="pull-left" style="margin: 0 20px 20px 0">
+                                    <img id="img_emp_photo" src="" width="120" height="120" onerror="$.fn.load_default_img()" class="pull-left" style="margin: 0 20px 20px 0">
+                                    <button type="button" class="btn btn-primary-alt ladda-button" data-style="expand-left" data-spinner-color="#000000" id="btn_edit_photo" style="width: 100px;display:none" >Edit</button>
+                                    <button type="button" class="btn btn-primary-alt ladda-button" style="display:none" data-style="expand-left" data-spinner-color="#000000" id="btn_edit_done">Apply</button>
+                                    <span class="btn btn-success fileinput-button" id="btn_add_image" style="display: none">
+                                      <span>Browse File</span>
+                                      <input id="fileupload" type="file" name="files[]" data-extension="png,jpg,jpeg">
+                                    </span>
+                                   </div>
+                            
+                            </div>
+                            
+                            <div class="col-md-10">
+
+                                <div class="table-responsive">
+                                    
+                                    <table class="table table-condensed">
+                                        <h3><strong><span id="div_name"></span></strong> <span id="btn_edit" style="cursor: pointer" title="Edit Details"><i class="fa fa-pencil" aria-hidden="true"><i class="mdi mdi-square-edit-outline"></i></i></span></h3>
+                                        
+                                        <tbody class="personal-details">
+                                            
+                                            <tr>
+                                                <td>Designation</td>
+                                                <td id="div_desg"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Reporting To</td>
+                                                <td id="div_reporting_to"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Employer</td>
+                                                <td id="div_employer"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Department</td>
+                                                <td id="div_dept"></td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td>About</td>
+                                                <td></td>
+                                            </tr>
+                                            
+                                            
+                                            <tr>
+                                                <td >Email</td>
+                                                <td >
+                                                  <div id="view_email">
+                                                    <a href="" id="div_email"></a>
+                                                    <span id="btn_edit_email" class="btn-edit-details" title="Edit Email"><i class="fa fa-pencil" aria-hidden="true"><i class="mdi mdi-square-edit-outline"></i></i></span>
+                                                  </div>
+                                                  <div id="edit_email" class="edit-container" style="display:none;">
+                                                    <input type="email" class="form-control" id="txt_email" data-parsley-type="email" required>
+                                                    <a class="btn btn-success btn-save-edit" id="btn_save_email" style="margin: 0 5px;">Save</a>
+                                                    <a class="btn btn-light waves-effect waves-light m-1 btn-cancel-edit" id="btn_cancel_email"><i class="fa fa-times me-1"></i>Cancel</a>
+                                                  </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Phone</td>
+                                                <td class="form-inline">
+                                                  <div id="view_phone" class="view-container">
+                                                    <span><i class="fa fa-phone fa-fw" aria-hidden="true"></i>: </span><span id="div_phone" style="margin-right: 15px;"></span>
+                                                    <span><i class="fa fa-mobile fa-fw" aria-hidden="true"></i>: </span><span id="div_mobile"></span>
+                                                    <span id="btn_edit_phone" class="btn-edit-details" title="Edit Phone Number"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+                                                  </div>
+                                                  <div id="edit_phone" class="edit-container form-group" style="display: none;">
+                                                    <label for="txt_phone">Home: </label>
+                                                    <input class="form-control" id="txt_phone" data-parsley-type="digits" required>
+                                                    <label for="txt_mobile">Mobile(MY): </label>
+                                                    <input class="form-control" id="txt_mobile" data-parsley-type="digits" required>
+                                                    <a class="btn btn-success btn-save-edit" id="btn_save_phone" style="margin: 0 5px;">Save</a>
+                                                    <a class="btn btn-light waves-effect waves-light m-1 btn-cancel-edit" id="btn_cancel_phone"><i class="fa fa-times me-1"></i> Cancel</a>
+                                                  </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                              <td>Home Address</td>
+                                              <td>
+                                                <div id="view_home_address" class="view-container">
+                                                  <span href="" id="div_home_address"></span>
+                                                  <span id="btn_edit_home_address" class="btn-edit-details" title="Edit Home Address"><i class="fa fa-pencil" aria-hidden="true"><i class="mdi mdi-square-edit-outline"></i></i></span>
+                                                </div>
+                                                <div id="edit_home_address" class="edit-container" style="display:none;">
+                                                  <textarea class="form-control" id="txt_home_address"></textarea>
+                                                  <a class="btn btn-success btn-save-edit" id="btn_save_home_address" style="margin: 0 5px;">Save</a>
+                                                  <a class="btn btn-light waves-effect waves-light m-1 btn-cancel-edit" id="btn_cancel_home_address"><i class="fa fa-times me-1"></i> Cancel</a>
+                                                </div>
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td>Current Address</td>
+                                              <td>
+                                                <div id="view_current_address" class="view-container">
+                                                  <span href="" id="div_current_address"></span>
+                                                  <span id="btn_edit_current_address" class="btn-edit-details" title="Edit Home Address"><i class="fa fa-pencil" aria-hidden="true"><i class="mdi mdi-square-edit-outline"></i></i></span>
+                                                </div>
+                                                <div id="edit_current_address" class="edit-container" style="display:none;">
+                                                  <textarea class="form-control" id="txt_current_address"></textarea>
+                                                  <a class="btn btn-success btn-save-edit" id="btn_save_current_address" style="margin: 0 5px;">Save</a>
+                                                  <a class="btn btn-light waves-effect waves-light m-1 btn-cancel-edit" id="btn_cancel_current_address"><i class="fa fa-times me-1"></i> Cancel</a>
+                                                </div>
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td>Soft Skills</td>
+                                              <td>
+                                                <div id="view_general_skills" class="view-container">
+                                                  <span href="" id="div_general_skills"></span>
+                                                  <span id="btn_edit_general_skills" class="btn-edit-details" title="Edit General Skills"><i class="fa fa-pencil" aria-hidden="true"><i class="mdi mdi-square-edit-outline"></i></i></span>
+                                                </div>
+                                                <div id="edit_general_skills" class="edit-container" style="display:none;" data-obj='<?php echo json_encode($skills_general) ?>'>
+                                                  <select id="dd_general_skills" data-toggle="select2" multiple placeholder="Select" data-width="100%" class="form-control populate form-select "  multiple>
+                                                    
+                                                  </select>
+                                                  <a class="btn btn-success btn-save-edit" id="btn_save_general_skills" style="margin: 0 5px;">Save</a>
+                                                  <a class="btn btn-light waves-effect waves-light m-1 btn-cancel-edit" id="btn_cancel_general_skills"><i class="fa fa-times me-1"></i> Cancel</a>
+                                                </div>
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td>Technical Skills</td>
+                                              <td>
+                                                <div id="view_specific_skills" class="view-container">
+                                                  <span href="" id="div_specific_skills"></span>
+                                                  <span id="btn_edit_specific_skills" class="btn-edit-details" title="Title Specific Skills"><i class="fa fa-pencil" aria-hidden="true"><i class="mdi mdi-square-edit-outline"></i></i></span>
+                                                </div>
+                                                <div id="edit_specific_skills" class="edit-container" style="display:none;" data-obj='<?php echo json_encode($skills_specific) ?>'>
+                                                  <select id="dd_specific_skills" style="width:100%" class="populate" multiple>
+                                                     
+                                                  </select>
+                                                  <a class="btn btn-success btn-save-edit" id="btn_save_specific_skills" style="margin: 0 5px;">Save</a>
+                                                  <a class="btn btn-light waves-effect waves-light m-1 btn-cancel-edit" id="btn_cancel_specific_skills"><i class="fa fa-times me-1"></i> Cancel</a>
+                                                </div>
+                                              </td>
+                                            </tr>
+                                        
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        
+                        </div>
+                        <hr>
+                        <!---Tab started-->
+                        <div class="row">
+
+                            <div class="col-xl-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <ul class="nav nav-tabs nav-bordered nav-justified">
+                                            <li class="nav-item" id="mail-tab">
+                                                <a href="#mail" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
+                                                    Mail
+                                                </a>
+                                            </li>
+                                            <li class="nav-item" id="detail-tab">
+                                                <a href="#detail1" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                                    Details
+                                                </a>
+                                            </li>
+                                            <li class="nav-item" id="assets-tab">
+                                                <a href="#assets" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                                    Assets
+                                                </a>
+                                            </li>
+                                            <li class="nav-item" id="document-tab">
+                                                <a href="#attach" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                                    Documents
+                                                </a>
+                                            </li>
+                                            <li class="nav-item" id="exit-tab">
+                                                <a href="#exit" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                                    Exit Checklist
+                                                </a>
+                                            </li>
+                                           
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active clearfix" id="mail">
+                                            <form class="form-horizontal" data-validate="parsley" id="mail_form">
+                                                <div class="row mt-2">
+                                                    <div class="col-lg-6">
+                                                        <!--Mail Type -->
+                                                        <div class="row">
+                                                            <label for="dd_mail_type" class="col-4 col-form-label">Mail Type</label>
+                                                            <div class="col-7 errorContainer">
+                                                                <select class="form-control populate" data-toggle="select2" data-width="100%" id="dd_mail_type" required>
+                                                                    <option value="1">Gmail</option>
+                                                                    <option value="2">Yahoo</option>
+                                                                    <option value="3">Other</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <!-- Outgoing server -->
+                                                        <div class="row justify-content-end">
+                                                            <label for="txt_mail_outserver_name" class="col-4 col-form-label">Outgoing server</label>
+                                                            <div class="col-7 errorContainer">
+                                                                <input type="text" class="form-control marginBottom10px" id="txt_mail_outserver_name">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-2">
+                                                <div class="col-lg-6">
+                                                    <!-- Port -->
+                                                    <div class="row">
+                                                        <label for="txt_mail_outserver_port" class="col-4 col-form-label">Port</label>
+                                                        <div class="col-7 errorContainer">
+                                                            <input type="number" class="form-control marginBottom10px" id="txt_mail_outserver_port">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <!-- User Name -->
+                                                    <div class="row justify-content-end">
+                                                        <label for="txt_mail_username" class="col-4 col-form-label">User Name</label>
+                                                        <div class="col-7 errorContainer">
+                                                            <input type="email" class="form-control marginBottom10px" id="txt_mail_username">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <div class="col-lg-6">
+                                                    <!-- Incoming server -->
+                                                    <div class="row">
+                                                        <label for="txt_mail_server_name" class="col-4 col-form-label">Incoming server</label>
+                                                        <div class="col-7 errorContainer">
+                                                            <input type="text" class="form-control marginBottom10px" id="txt_mail_inserver_name">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <!-- Port -->
+                                                    <div class="row justify-content-end">
+                                                        <label for="txt_mail_server_name" class="col-4 col-form-label">Port</label>
+                                                        <div class="col-7 errorContainer">
+                                                            <input type="number" class="form-control marginBottom10px" id="txt_mail_inserver_port">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div class="row mt-2">
+                                                <div class="col-lg-6">
+                                                    <!-- Password -->
+                                                    <div class="row">
+                                                        <label for="txt_mail_password" class="col-4 col-form-label">Password</label>
+                                                        <div class="col-7 errorContainer">
+                                                            <input type="password" class="form-control marginBottom10px" id="txt_mail_password">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <!-- From Name -->
+                                                    <div class="row justify-content-end">
+                                                        <label for="txt_mail_from_email" class="col-4 col-form-label">From Name</label>
+                                                        <div class="col-7 errorContainer">
+                                                            <input type="text" class="form-control marginBottom10px" id="txt_mail_from_name" >
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                              <div class="clearfix"></div>
+                                              <div class="row mt-2">
+                                                <div class="col-lg-6">
+                                                    <!-- Require Authentication -->
+                                                    <div class="row">
+                                                        <label for="txt_mail_from_email" class="col-4 col-form-label">Require Authentication</label>
+                                                        <div class="col-7 errorContainer">
+                                                            <input type="checkbox" id="chk_mail_require_auth"  class="form-check-input"  name="chk_mail_require_auth">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                            <div><br></div>
+                                            <div class="form-group align-right">
+                                                <button id="btn_test_email" type="button" class="btn btn-light waves-effect waves-light m-1"><i class="fa fa-location-arrow" aria-hidden="true"></i> Test Email</button>
+                                               
+                                                <button id="btn_save_mail" type="button" class="btn btn-success waves-effect waves-light mt-1 mb-1 ladda-button" data-color="green" data-style="expand-left"><i class="fa fa-check me-1"></i> Save</button>
+                                            </div>
+                                              
+                                              </form>
+                                              <div class="clearfix"></div>
+                                           </div>
+
+                                         <div class="tab-pane" id="detail1">
+                                            <div class="row mt-2">
+                                                <div class="col-lg-6">
+                                                    <!-- Home Country -->
+                                                    <div class="row">
+                                                        <h5 class="col-sm-6">Home Country</h5>
+                                                        <h5 class="col-sm-6" id="div_home_country">gcdfhdh</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <!-- Nationality -->
+                                                    <div class="row justify-content-end">
+                                                        <h5 class="col-sm-6">Nationality</h5>
+                                                        <h5 class="col-sm-6" id="div_nationality">fxd</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <div class="col-lg-6">
+                                                    <div class="row">
+                                                        <h5 class="col-sm-6">Start Date</h5>
+                                                        <h5 class="col-sm-6" id="div_start_date"></h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="row justify-content-end">
+                                                        <h5 class="col-sm-6">End Date</h5>
+                                                        <h5 class="col-sm-6" id="div_end_date"></h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <div class="col-lg-6">
+                                                    <div class="row">
+                                                        <h5 class="col-sm-6">Notice Period</h5>
+                                                        <h5 class="col-sm-6" id="div_notice_period"></h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="row justify-content-end">
+                                                        <h5 class="col-sm-6">EP Expiry Date</h5>
+                                                        <h5 class="col-sm-6" id="div_ep_expiry_date"></h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <div class="col-sm-6" id="leaving_div">
+                                                    <div class="row">
+                                                        <h5 class="col-sm-6">Leaving Date/Reason</h5>
+                                                        <h5 class="col-sm-6""><span id="div_leaving_date"></span>/<span id="div_reason"></span></h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                         </div>
+
+                                         <div class="tab-pane" id="assets">
+                                               <div class="table-responsive">
+                                                   <table class="table table-striped" id="tbl_asset">
+                                                     <thead>
+                                                         <tr>
+                                                             <th>Asset Type</th>
+                                                             <th>Owner</th>
+                                                             <th>Brand</th>
+                                                             <th>Taken Date</th>
+                                                             <th>Return Date</th>
+                                                         </tr>
+                                                     </thead>
+                                                     <tbody>
+                                                         
+                                                     </tbody>
+                                                 </table>	
+                                               </div>
+                                           </div>
+                                           
+                                           <div class="tab-pane" id="attach">
+                                               <div class="table-responsive">
+                                                   <table class="table table-striped" id="tbl_salary">
+                                                     <thead>
+                                                         <tr>
+                                                             <th></th>
+                                                             <th>Category</th>
+                                                             <th>Filename</th>
+                                                             <th>Remarks</th>
+                                                         </tr>
+                                                     </thead>
+                                                     <tbody id="tbl_attachment">
+                                                     </tbody>
+                                                 </table>	
+                                               </div>
+                                           </div>
+
+                                         <div class="tab-pane" id="exit">
+                                               <div class="table-responsive">
+                                                   <table class="table table-striped" id="tbl_exit_checklist">
+                                                     <thead>
+                                                         <tr>
+                                                             <th></th>
+                                                             <th>Category</th>
+                                                             <th>Filename</th>
+                                                             <th>Remarks</th>
+                                                         </tr>
+                                                     </thead>
+                                                     <tbody id="tbl_exit">
+                                                     </tbody>
+                                                 </table>	
+                                               </div>
+                                           </div>
+                                        </div>
+                                </div>
+                            </div>    
+                         <!---Tab end-->
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- end row -->
+    </div>
+</div>
+<!--End-->
+

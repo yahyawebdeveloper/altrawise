@@ -240,10 +240,11 @@
 			 //if root index - dashboard
 			
 			 if(route_url == "") { //for dashboard module - default route url is empty
-				if(SESSIONS_DATA.is_admin==1)
+				/*if(SESSIONS_DATA.is_admin==1)
 				{route_url = "dashboard/admin";}
 				else
-				{route_url = "dashboard/user";}
+				{route_url = "dashboard/user";}*/
+				route_url = "profile";
 			 }
 			
 			 //get module access based on route url
@@ -277,19 +278,25 @@
 			 
 			 done(true); //if have access - proceed
 		 };
- 
+		
 		
 		 router
 		
-			 .on("/", () => { //admin dashboard route
+			/*.on("/", () => { 
 				if(SESSIONS_DATA.is_admin==1){
 				$.fn.load_form('./modules/dashboard/admin_dash.html');
 				}else
 				{$.fn.load_form('./modules/dashboard/user_dash.html');}
+			}, { before: middleware })*/
+
+			.on("/dashboard/admin", () => { //admin dashboard route
+				$.fn.load_form('./modules/dashboard/admin_dash.html');
 			}, { before: middleware })
-			
 			.on("/dashboard/user", () => { //user dashboard route
 				$.fn.load_form('./modules/dashboard/user_dash.html');
+			}, { before: middleware })
+			.on("/", () => { //user dashboard route
+				$.fn.load_form('./modules/profile/profile.html');
 			}, { before: middleware })
 		    
 			 .on("/signout", () => { //signout route

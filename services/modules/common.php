@@ -939,6 +939,23 @@ function get_dropdown_meeting($params) {
     {
         handle_exception($e);
     }
+
+    /** For Profile Dropdown */
+function get_profile_dropdown_data($params) {
+    try
+    {  
+       
+        $emp_id                     = if_property_exist($params, 'emp_id',false);
+       
+       $drop_down_groups['skills_general']   = db_query('id,skills_name','cms_skills',"type_id = 67 AND is_active = 1");   
+       $drop_down_groups['skills_specific']  = db_query('id,skills_name','cms_skills',"type_id = 68 AND is_active = 1");  
+       return handle_success_response('Success', $drop_down_groups);
+    }
+    catch (Exception $e)
+    {
+        handle_exception($e);
+    }
+}
 }
 
 ?>
