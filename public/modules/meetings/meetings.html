@@ -104,6 +104,11 @@
                 <div class="card-body">
 					<h5>List</h5><br>
                     <div class="list-group" id="list_appt"></div>
+					<div id="div_load_more" class="d-flex justify-content-center load-more mt-2" style="display: none;">
+						<button id="btn_load_more" type="button" class="btn btn-sm btn-info waves-effect waves-light rounded-pill ">
+							<i class="fa fa-arrow-down"></i>&nbsp;&nbsp;Load More&nbsp;&nbsp;<i class="fa fa-arrow-up"></i>
+						</button>
+					</div>
                 </div>
             </div> <!-- end card-->
         </div> <!-- end col -->
@@ -122,276 +127,189 @@
 <div id="page-content">
 	<div id="wrap">
 		<div class="container-fluid">
+			<!--//////////////////////////////////////////////////////-->
 			<div class="row" id="new_div" style="display: none">
-
-				<div class="col-sm-12">
-
-					<div class="panel panel-primary">
-						<div class="panel-heading">
-							<h4 id="h4_primary_no">Meetings</h4>
-							<div class="options">
-								<a href="#" id="btn_back" class="btn-panel-opts" title="Back to list">
-									<i class="fa fa-arrow-circle-left fa-lg fa-fw" aria-hidden="true"></i>
-									<span class="hidden-xs">Back to list</span>
-								</a>
+				<div class="">
+					<div class="row mt-3 mb-1">
+						<div class="col-12">
+							<div class="page-title-box">
+								<div class="page-title-right">
+									<a href="javascript:void(0);" id="btn_back" class="btn btn-secondary"><i class="fe-arrow-left me-1"></i>Back</a>
+								</div>
+								<h4 class="page-title">
+									Meetings</span>
+								</h4>
 							</div>
 						</div>
-
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-md-12">
-									<form class="form-horizontal" data-validate="parsley" id="detail_form">
-
-										<div class="form-group">
-											<label class="control-label col-sm-2">Title</label>
-											<div class="col-sm-10">
-												<input type="text" id="txt_title" class="form-control" placeholder="Add title" required="required">
-												<input type="hidden" id="txt_template" value="">
-											</div>
-										</div>
-
-										<div class="form-group">
-											<label class="control-label col-sm-2">Name</label>
-											<div class="col-sm-10 error-container">
-												<select id="dd_client" class="populate" required="required" style="z-index:-1">
-												</select>
-											</div>
-										</div>
-
-										<!--<div class="form-group">
-											<label class="control-label col-sm-2">Attendees</label>
-											<div class="col-sm-10">
-												<select id="dd_attendees1" multiple data-parsley-disabled>
-													<?php
-													//for ($i = 0; $i < count($to); $i++) {
-													?>
-														<option value="<?php //echo ($to[$i]['id']) ?>" data='<?php //echo (json_encode($to[$i])); ?>'><?php //echo ($to[$i]['name']) ?></option>
-													<?php
-													//}
-													?>
-												</select>
-											</div>
-										</div>-->
-										<div class="clearfix"></div>
-										<div class="form-group">
-										<label class="col-sm-2 control-label">Attendees</label>
-                                                <div class="col-sm-10">
-                                                    <div class="form-group" id="verifiers_div">
-                                                        <!-- <input type="text" class="form-control marginBottom10px" id="txt_email"> -->
-														
-                                                        <select id="dd_attendees" class="populate" multiple="multiple">
-                                                        <optgroup label="Individual" id="dd_attendees_individual">
-                                                        </optgroup>
-                                                        <optgroup label="Company" id="dd_attendees_company">
-                                                        </optgroup>
-                                                        </select>
-                                                    </div>
-                                                </div>
-										</div>					
-										<div class="form-group">
-											<label for="dp_date" class="control-label col-sm-2">Start</label>
-											<div class="col-sm-3 error-container">
-												<div class="input-group">
-													<input id="dp_date_start" type="text" class="form-control" data-date-format="dd-M-yyyy" required sytle="z-index:-1">
-													<span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+					</div> 
+					<div class="col-sm-12">
+						<div class="panel panel-primary">
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-12">
+										<form class="form-horizontal" data-validate="parsley" id="detail_form">
+											<div class="row mb-3">
+												<div class="col-md-12" style="padding-right:0;" >
+													<label for="simpleinput" class="form-label">Title</label>
+													<input type="text" id="txt_task" placeholder="Required" required="required" class="form-control">
+													
 												</div>
 											</div>
-											<div class="col-sm-1 error-container">
-												<input id="tp_time_start" type="text" class="form-control" style="box-sizing: border-box !important;" required>
-											</div>
-
-											<label for="dp_date" class="control-label col-sm-2">End</label>
-											<div class="col-sm-3 error-container">
-												<div class="input-group">
-													<input id="dp_date_end" type="text" class="form-control" data-date-format="dd-M-yyyy" required>
-													<span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-												</div>
-											</div>
-											<div class="col-sm-1 error-container">
-												<input id="tp_time_end" type="text" class="form-control" style="box-sizing: border-box !important;" required>
-											</div>
-
-										</div>
-
-										<div class="form-group">
-											<label class="control-label col-sm-2">Type</label>
-											<div class="col-sm-4 error-container">
-												<div class="select2-hide">
-													<select id="dd_category" class="populate">
+											<div class="row mb-3">
+												<div class="col-md-12" >
+													<label for="simpleinput" class="form-label">Name</label>
+													<select id="dd_client" required="required" class="form-control country" data-toggle="select2" data-width="100%">
 													</select>
 												</div>
 											</div>
-
-											<label class="control-label col-sm-2">Meeting Mode</label>
-											<div class="col-sm-4 error-container">
-												<div class="select2-hide">
-													<select id="dd_meeting_mode" class="populate" required="required">
+											<div class="row mb-3">
+												<div class="col-md-12" >
+													<label for="simpleinput" class="form-label">Attendees</label>
+													<select id="dd_status_search" class="form-control populate" data-width="100%" multiple>
+													</select>
 													</select>
 												</div>
 											</div>
-
-										</div>
-
-										<div class="form-group">
-											<label for="" class="control-label col-sm-2">Status</label>
-											<div class="col-sm-4">
-												<div class="btn-group">
-													<button type="button" id="btn_status" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" name="button">
+											<div class="row mb-3">
+												<div class="col-md-6" >
+													<label for="simpleinput" class="form-label">Start</label>
+													<input required type="text" id="dp_date_start" class="form-control flatpickr-input" placeholder="dd-mm-yyyy" readonly="readonly">
+												</div>
+												<div class="col-md-6" >
+													<label for="simpleinput" class="form-label">End</label>
+													<input required type="text" id="dp_date_end" class="form-control flatpickr-input" placeholder="dd-mm-yyyy" readonly="readonly">
+												</div>
+											</div>
+										
+											<div class="row mb-3">
+												<div class="col-md-6" >
+													<label for="simpleinput" class="form-label">Type</label>
+													<select id="dd_category" required="required" class="form-control country" data-toggle="select2" data-width="100%">
+													</select>
+												</div>
+												<div class="col-md-6" >
+													<label for="simpleinput" class="form-label">Meeting Mode</label>
+													<select id="dd_meeting_mode" required="required" class="form-control country" data-toggle="select2" data-width="100%">
+													</select>
+												</div>
+											</div>
+											
+											<div class="row mb-3">
+												<div class="col-md-6" >
+													<label for="simpleinput" class="form-label">Status</label>
+													<button type="button" id="btn_status" class="form-control btn btn-primary dropdown-toggle" data-toggle="dropdown" name="button">
 														<span id="btn_status_text" class="text-left">New Appointment</span>
 														<span class="caret text-right"></span>
 													</button>
 													<ul class="dropdown-menu dropdown-menu-left" role=menu>
 													</ul>
 												</div>
+												<div class="col-md-6" >
+													<label for="simpleinput" class="form-label">Location</label>
+													<input type="text" id="txt_location" placeholder="Required" required="required" class="form-control">
+												</div>
 											</div>
-
-											<label class="control-label col-sm-2">Location</label>
-											<div class="col-sm-4 error-container">
-												<input type="text" class="form-control marginBottom10px" id="txt_location" placeholder="Add Location" required="required">
-											</div>
-
-										</div>
-
-										<div id="div_postpone" style="display: none;">
-											<div class="form-group">
-												<label for="dp_date" class="control-label col-sm-2">Start</label>
-												<div class="col-sm-3 error-container">
-													<div class="input-group">
-														<input id="dp_pp_date_start" type="text" class="form-control" data-date-format="dd-M-yyyy">
-														<span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+											
+											<div id="div_postpone" style="display: none;">
+												<div class="form-group">
+													<label for="dp_date" class="control-label col-sm-2">Start</label>
+													<div class="col-sm-3 error-container">
+														<div class="input-group">
+															<input id="dp_pp_date_start" type="text" class="form-control" data-date-format="dd-M-yyyy">
+															<span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+														</div>
+													</div>
+													<div class="col-sm-1 error-container">
+														<input id="tp_pp_time_start" type="text" class="form-control" style="box-sizing: border-box !important;">
+													</div>
+				
+													<label for="dp_date" class="control-label col-sm-2">End</label>
+													<div class="col-sm-3 error-container">
+														<div class="input-group">
+															<input id="dp_pp_date_end" type="text" class="form-control" data-date-format="dd-M-yyyy">
+															<span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+														</div>
+													</div>
+													<div class="col-sm-1 error-container">
+														<input id="tp_pp_time_end" type="text" class="form-control" style="box-sizing: border-box !important;">
 													</div>
 												</div>
-												<div class="col-sm-1 error-container">
-													<input id="tp_pp_time_start" type="text" class="form-control" style="box-sizing: border-box !important;">
-												</div>
+											</div>
+				
 
-												<label for="dp_date" class="control-label col-sm-2">End</label>
-												<div class="col-sm-3 error-container">
-													<div class="input-group">
-														<input id="dp_pp_date_end" type="text" class="form-control" data-date-format="dd-M-yyyy">
-														<span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+											<div class="row mb-3">
+												<div class="col-md-12" >
+													<label for="simpleinput" class="form-label">Description</label>
+													<div class="col-md-10" contenteditable="true" id="text_editor"></div>
+												</div>
+											</div>
+											
+											<div class="row mb-3">
+												<div class="col-md-12" id="div_outcome" style="display: none;" >
+													<label for="simpleinput" class="form-label">Meeting OutCome</label>
+													<textarea id="txt_outcome" class="form-control" rows="3"></textarea>
+												</div>
+											</div>
+											<div class="row mb-3">
+												<div class="col-md-12" >
+													<h4><button class="btn-primary btn" id="claim_details_toggle"><i class="fa fa-chevron-up"></i> Claims</button> </h4>
+
+													<div id="div_claim" style="display: none;">
+														<div class="row mb-3">
+															<div class="col-md-6" >
+																<label for="simpleinput" class="form-label">Cost</label>
+																<input type="number" min="0.00" step="0.01" value="0.00" class="form-control marginBottom10px" id="txt_cost" required data-width="100%">
+															</div>
+															<div class="col-md-6" >
+																<label for="simpleinput" class="form-label">SST/GST</label>
+																<input type="number" min="0.00" step="0.01" value="0.00" class="form-control marginBottom10px" id="txt_gst" required data-width="100%">
+															</div>
+														</div>
+														<div class="row mb-3">
+															<div class="col-md-6" >
+																<label for="simpleinput" class="form-label">Round Up</label>
+																<input type="number" step="0.01" value="0.00" class="form-control marginBottom10px" id="txt_roundup" required data-width="100%">
+															</div>
+															<div class="col-md-6" >
+																<label for="simpleinput" class="form-label">Total</label>
+																<input type="number" step="0.01" value="0.00" class="form-control marginBottom10px" id="txt_total" required readonly="readonly" data-width="100%">
+															</div>
+														</div>
+														<div class="row mb-3">
+															<div class="col-md-6" >
+																<label for="simpleinput" class="form-label">File</label>
+																<span class="btn btn-success fileinput-button form-control" id="btn_add_image">
+																	<span>Browse File</span>
+																	<input id="fileupload" type="file" name="files">
+																</span>
+																<div id="files"></div>
+															</div>
+															<div class="col-md-6" >
+																<label for="simpleinput" class="form-label">Nature of Expenses</label>
+																<select id="dd_expenses" required="required" class="form-control country" data-toggle="select2" data-width="100%">
+																</select>
+															</div>
+														</div>
 													</div>
 												</div>
-												<div class="col-sm-1 error-container">
-													<input id="tp_pp_time_end" type="text" class="form-control" style="box-sizing: border-box !important;">
+											</div>
+											<div class="row mb-3">
+												<div class="col-md-12">
+													<div class="text-sm-end">
+														<button type="button" id="btn_cancel"  class="btn btn-secondary waves-effect waves-light" ><i class="fa fa-times"></i> Cancel</button>
+														<button type="button" id="btn_save"  class="btn btn-success waves-effect waves-light" ><i class="mdi mdi-plus-circle me-1"></i> Save</button>
+													</div>
 												</div>
 											</div>
-										</div>
-
-
-										<div class="form-group">
-											<label class="control-label col-sm-2">Description</label>
-											<div class="col-sm-10">
-												<div class="col-md-10" contenteditable="true" id="text_editor"></div>
-											</div>
-										</div>
-
-										<div class="form-group" id="div_outcome" style="display: none;">
-											<label class="control-label col-sm-2">Meeting OutCome</label>
-											<div class="col-sm-10 error-container">
-												<textarea id="txt_outcome" class="form-control" rows="3"></textarea>
-											</div>
-										</div>
-
-										<br />
-
-										<h4><button class="btn-primary btn" id="claim_details_toggle"><i class="fa fa-chevron-up"></i> Claims</button> </h4>
-										<div id="div_claim" style="display: none;">
-											<div class="form-group">
-
-												<label for="log_date" class="col-sm-2 control-label">File</label>
-												<div class="col-sm-10">
-													<span class="btn btn-success fileinput-button" id="btn_add_image">
-														<span>Browse File</span>
-														<input id="fileupload" type="file" name="files[]">
-													</span>
-													<div id="files"></div>
-												</div>
-
-											</div>
-
-											<div class="form-group">
-												<label class="control-label col-sm-2">Cost</label>
-												<div class="col-sm-4 error-container">
-													<input type="number" min="0.00" step="0.01" value="0.00" class="form-control marginBottom10px" id="txt_cost" required>
-												</div>
-												<label class="control-label col-sm-2">SST/GST</label>
-												<div class="col-sm-4 error-container">
-													<input type="number" min="0.00" step="0.01" value="0.00" class="form-control marginBottom10px" id="txt_gst" required>
-												</div>
-											</div>
-
-											<div class="form-group">
-												<label class="control-label col-sm-2">Round Up</label>
-												<div class="col-sm-4 error-container">
-													<input type="number" step="0.01" value="0.00" class="form-control marginBottom10px" id="txt_roundup" required>
-												</div>
-												<label class="control-label col-sm-2">Total</label>
-												<div class="col-sm-4 error-container">
-													<input type="number" step="0.01" value="0.00" class="form-control marginBottom10px" id="txt_total" required readonly="readonly">
-												</div>
-											</div>
-
-											<div class="form-group">
-												<label class="col-sm-2 control-label">Nature of Expenses</label>
-												<div class="col-sm-4 error-container">
-													<select id="dd_expenses" style="width:100%" class="populate">
-														<option value="">Please Select</option>
-													</select>
-												</div>
-											</div>
-
-											<!-- <div class="form-group">
-				                                	<div class="col-sm-2"></div>
-				                                	<div class="col-sm-10">
-					                                	<div class="table-responsive">
-					                                    	<table class="table table-striped" id="tbl_receipt">
-					                                        	<thead>
-					                                            	<tr>
-					                                                	<th>File</th>
-					                                                   	<th>Amount</th>
-					                                                   	<th>Action</th>
-					                                               	</tr>
-					                                                </thead>
-					                                                <tbody>
-																		<tr id="base_row">
-																			<td width="50%">
-																				<div class="col-sm-12"></div>
-																			</td>
-																			<td width="30%"></td>
-																			<td width="20%"></td>
-																		</tr>
-					                                        	</tbody>
-					                                    	</table>
-					                                  	</div>
-				                                	</div>
-				                                </div> -->
-
-										</div>
-										<!--End tab-three-->
-
-
-
-
-									</form>
+										</form>
+									</div>
 								</div>
-
 							</div>
-
-							<p class="pull-right">
-							<div class="btn-toolbar" style="text-align:right" id="div_btn">
-								<a href="#" class="btn btn-default" id="btn_cancel"><i class="fa fa-times"></i> Cancel</a>
-								<a href="#" class="btn btn-primary-alt ladda-button" data-style="expand-left" data-spinner-color="#000000" id="btn_save"><i class="fa fa-check"></i> Save</a>
-							</div>
-							</p>
-
 						</div>
 					</div>
-
-				</div>
-
+				</div><!-- end row -->			
 			</div>
-
+			<!-- //////////////////////////////////////////////////////////////////-->
 		</div>
 	</div>
 </div>

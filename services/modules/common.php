@@ -889,7 +889,7 @@ function get_dropdown_meeting($params) {
         $lead_access_view_all       = if_property_exist($params, 'lead_access_view_all',false);
         $lead_access_view           = if_property_exist($params, 'lead_access_view',false);
 
-        if (isset($lead_access_view) && $lead_access_view == 1) {
+        if (isset($lead_access_view) && $lead_access_view != 1) {
             $drop_down['emp']    = db_query('id,name,office_email', 'cms_employees', 'is_active = 1');
             $where  =  "cms_clients.is_active = 1";
         } else {

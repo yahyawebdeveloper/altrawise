@@ -10,10 +10,10 @@ $.fn.reset_form = function (form)
         if (form == 'list')
         {
             $('#txt_title_search').val('');
-           // $('#dd_status_search').val(["149"]).multiselect('reload');
-            $('#dd_status_search').val(["149"]);
-            $('#dd_client_to_search').val('').change();
+            $('#dd_status_search').val('').change();
+            $('#dd_client_search').val('').change();
             $('#dd_created_by_search').val('').change();
+            $('#dp_search_date').val('');
         }
         else if (form == 'form')
         {
@@ -97,8 +97,8 @@ $.fn.add_edit_form = function ()
 
         let time_start = moment($('#tp_time_start').val(), 'h:mm A');
         let time_end = moment($('#tp_time_end').val(), 'h:mm A');
-        let date_start = moment($('#dp_date_start').val(), UI_DATE_FORMAT);
-        let date_end = moment($('#dp_date_end').val(), UI_DATE_FORMAT);
+        let date_start = moment($('#dp_date_start').val(), 'YYYY-MM-DD HH:mm:ss');
+        let date_end = moment($('#dp_date_end').val(), 'YYYY-MM-DD HH:mm:ss');
         let meeting_url = '';
         let json_data = $.fn.get_json_string($.fn.get_json_string($('#dd_meeting_mode option:selected').attr('data')).json_field).meeting_url;
 
@@ -120,7 +120,6 @@ $.fn.add_edit_form = function ()
        
         let data =
         {
-
             id: APPT_ID,
             client_id: $('#dd_client').val(),
             to: $.fn.get_attendees(),
@@ -187,8 +186,6 @@ $.fn.add_edit_form = function ()
                             $.fn.show_hide_form('EDIT', false);
                             $('#btn_save').html('Update Appointment');
                         }
-
-
                     }
                 }, false, btn_save
             );
@@ -375,7 +372,7 @@ $.fn.get_list = function (is_scroll)
         {
             title: $('#txt_title_search').val(),
             status: status_search.toString(),
-            client: $('#dd_client_to_search').val(),
+            client: $('#dd_client_search').val(),
             created_by: $('#dd_created_by_search').val(),
             from_date: $('#from_search_date').val(),
             to_date: $('#to_search_date').val(),
@@ -392,11 +389,47 @@ $.fn.get_list = function (is_scroll)
             data.start_index = RECORD_INDEX;
         }
 
-        $.fn.fetch_data_for_list
+       /*  $.fn.fetch_data_for_list
             (
                 $.fn.generate_parameter('get_meetings_list', data),
                 $.fn.populate_list, is_scroll, 'list_appt'
-            );
+            ); */
+
+        $.fn.fetch_data(
+            $.fn.generate_parameter('get_meetings_list', data),
+            function(return_data) {  console.log(return_data);
+                    if (return_data.data.list) {
+                    var len = return_data.data.list.length;
+                    if (return_data.data.rec_index)
+                    {
+                        RECORD_INDEX = return_data.data.rec_index;
+                    }
+                    if (return_data.code == 0 && len != 0)
+                    {
+                        $.fn.populate_list(return_data.data, is_scroll);
+                        $('#btn_load_more').show();
+                    }
+                    else if (return_data.code == 1 || len == 0)
+                    {
+                        if (!is_scroll)
+                        {
+                            $('#btn_load_more').hide();
+                            $('#list_appt').empty().append
+                                (
+                                    `<div class="list-placeholder">No records found!</div>`
+                                );
+                            $.fn.show_right_error_noty('No records found');
+                        }
+                        else if (is_scroll)
+                        {
+                            $('#btn_load_more').hide();
+                            $.fn.show_right_success_noty('No more records to be loaded');
+                        }
+                    }
+                } 
+            }
+        );
+
     }
     catch (e) 
     {
@@ -436,7 +469,7 @@ $.fn.get_attendance = function ()
 $.fn.populate_list = function (data, is_scroll, list_id)
 { 
     try
-    {
+    { console.log('hi inside populate list');
         if (is_scroll == false)
         {
             $('#list_appt').empty();
@@ -502,7 +535,6 @@ $.fn.populate_list = function (data, is_scroll, list_id)
                                 </div>
                             </li>`;
                 }
-
             }
             $('#list_appt').append(row);
             $('#div_load_more').show();
@@ -790,7 +822,7 @@ $.fn.prepare_form = function ()
 
         $.fn.load_editor('text_editor');
         //$('#dd_status_search').val(["149"]).multiselect('reload');
-        $('#dd_status_search').val(["149"]);
+       // $('#dd_status_search').val('');
         $.fn.get_list(false);
         $.fn.init_upload_file();
     }
@@ -850,10 +882,18 @@ $.fn.populate_dd_values = function(element_id, dd_data, is_search = false)
             $('#'+element_id).append(`<option value="">All</option>`);
         }
 
-        for (let item of dd_data)
-        {
-            $('#'+element_id).append(`<option value="${item.id}">${item.name}</option>`);
-        }   
+        if(element_id == 'dd_status_search'){
+            for (let item of dd_data)
+            {
+                $('#'+element_id).append(`<option value="${item.id}">${item.descr}</option>`);
+            }
+        }
+        else{
+            for (let item of dd_data)
+            {
+                $('#'+element_id).append(`<option value="${item.id}">${item.name}</option>`);
+            }   
+        }
     }
     catch(err)
     {
