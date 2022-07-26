@@ -78,11 +78,11 @@
                                 </a>
                 
                                 <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <a href="javascript:void(0);" data-toggle="modal" id="test" data-target="#change_pwd_modal" data-initial="false" data-backdrop="static" data-keyboard="false" class="dropdown-item notify-item">
                                     <i class="fe-lock"></i>
                                     <span rn="change_password">Change Password</span>
                                 </a>
-                
+                               
                                 <div class="dropdown-divider"></div>
                 
                                 <!-- item-->
@@ -616,7 +616,59 @@
                     <!-- Start Content-->
                     <div class="container-fluid" id="content_div">    
                     </div> <!-- container -->
-
+                    
+                        <!-- Change password modal Start-->
+                        <div class="modal fade" id="change_pwd_modal" tabindex="-1" role="dialog" aria-labelledby="changePwdModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header" >
+                                        <h4 class="modal-title" style="float:left" id="myModalLabel">Change Password</h4>
+                                        <button type="button" style="float:right" class="bootbox-close-button close"  data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    
+                                    <div class="modal-body">
+                                        <form class="form-horizontal" id="change_pwd_form" data-parsley="validate">
+                                            <div class="form-group">
+                                                <label for="txt_current_pwd" class="control-label col-sm-4">Current Password</label>
+                                                <div class="col-sm-7">
+                                                    <input id="txt_current_pwd" type="password" class="form-control" required tabindex=1 >
+                                                    <a href="#" class="reveal-btn" onclick="$.fn.toggle_reveal(this, 'txt_current_pwd')">show</a>
+                                                </div>
+                                            </div>
+                        
+                                            <div class="form-group">
+                                                <label for="txt_new_pwd" class="control-label col-sm-4">New Password</label>
+                                                <div class="col-sm-7">
+                                                    <input id="txt_new_pwd" type="password" class="form-control" data-required="true" tabindex=2 pattern="^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$" data-regexp-message="Password is not as per password policy">
+                                                    <a href="#" class="reveal-btn" onclick="$.fn.toggle_reveal(this, 'txt_new_pwd')">show</a>
+                                                </div>
+                                            </div>
+                        
+                                            <div class="form-group">
+                                                <label for="txt_confirm_pwd" class="control-label col-sm-4">Confirm New Password</label>
+                                                <div class="col-sm-7">
+                                                    <input id="txt_confirm_pwd" type="password" class="form-control" required data-parsley-matched="" tabindex=3 >
+                                                    <a href="#" class="reveal-btn" onclick="$.fn.toggle_reveal(this, 'txt_confirm_pwd')">show</a>
+                                                </div>
+                                            </div>
+                                            
+                                            <?php if (constant('API_ENV') === 'PROD') { ?>
+                                            <div class="form-group" id="div_response">
+                                                
+                                            </div>
+                                            <?php }?>
+                                            
+                                        </form>
+                                    </div>
+                        
+                                    <div class="modal-footer" id="div_footer">
+                                        <button id="btn_cancel_pwd_change" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        <button id="btn_update_pwd" type="button" class="btn btn-primary ladda-button" data-style="expand-left" data-spinner-color="#000000">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Change password modal End-->
                 </div> <!-- content -->
 
                 <!-- Footer Start -->
@@ -635,6 +687,7 @@
                             </div>
                         </div>
                     </div>
+                   
                 </footer>
                 <!-- end Footer -->
 
@@ -647,9 +700,6 @@
 
         </div>
         <!-- END wrapper -->
-
-        
-
 
         <!-- START FILE UPLOAD -->
         <script type="text/template" id="qq-template-manual-trigger">

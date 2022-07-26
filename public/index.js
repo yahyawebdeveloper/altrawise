@@ -15,7 +15,10 @@
 	 // $.fn.user_logout();	
  });
  
- 
+ $('#test').click(function ()
+ {
+	$('#change_pwd_modal').modal('show');
+ });
  $(document).ready(function () 
  {
 	 try
@@ -457,6 +460,8 @@
 			 
 		 //store current route in a global variable
 		 CURRENT_ROUTE = router.current[0];
+
+		
 		 
 	 }
 	 catch (err)
