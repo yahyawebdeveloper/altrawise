@@ -533,8 +533,8 @@
 		 CURRENT_ROUTE = router.current[0];
 	    
 		 /** FOOTER CHANGE PASSWORD  */
-		
-		// $.fn.password_check('txt_new_pwd');
+		 
+		 $.fn.password_check('txt_new_pwd');
 
         $('#change_pwd_form').parsley
             ({
