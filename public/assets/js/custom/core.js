@@ -1074,6 +1074,99 @@ $.fn.populate_dd = function (obj_id, data, empty_it = true, is_search = false, s
 	}
 };
 
+$.fn.password_check = function (element_id)
+{
+	try
+	{
+		//append necessary html block for the password policy
+		let password_container = `<div id="pwd-policy-${element_id}" class="password-policy">
+										<h4 class="pw-policy">Password Policy</h4>
+										<ul class ="pwdz-policy" style="list-style-type: none;">
+											<li><span class ="pw-policy-span" id="password-len-${element_id}"><i class="far fa-circle"></i>&nbsp;</span>Password length must be minimum 8 characters</li>
+											<li><span class="pw-policy-span" id="password-digit-${element_id}"><i class="far fa-circle"></i>&nbsp;</span>Password must contain at least one digit</li>
+											<li><span class="pw-policy-span" id="password-upper-${element_id}"><i class="far fa-circle"></i>&nbsp;</span>Password must contain at least one upper case</li>
+											<li><span class="pw-policy-span" id="password-lower-${element_id}"><i class="far fa-circle"></i>&nbsp;</span>Password must contain at least one lower case</li>
+											<li><span class="pw-policy-span" id="password-special-${element_id}"><i class="far fa-circle"></i>&nbsp;</span>Password must have at least one special character.</li>
+										</ul>
+									</div>`;
+
+		//$(`#${element_id}`).after(password_container);
+		
+		$(`#passwordpolicy`).after(password_container);
+		
+		$(`#${element_id}`).focusin(function () 
+		{
+			$(`#pwd-policy-${element_id}`).fadeIn();
+		});
+
+		$(`#${element_id}`).focusout(function () 
+		{
+			$(`#pwd-policy-${element_id}`).fadeOut('slow');
+		});
+
+		var upperCase = new RegExp('[A-Z]');
+		var lowerCase = new RegExp('[a-z]');
+		var numbers = new RegExp('[0-9]');
+		var specialCase = new RegExp('[!@#$%^&*]');
+		//            ^                                       ^   
+		$(`#${element_id}`).keyup(function () 
+		{
+			if ($(this).val().length >= 8) 
+			{
+				$(`#password-len-${element_id}`).html('<i class="far fa-check-circle" style="color: #00a63f;">');
+			}
+			else 
+			{
+				$(`#password-len-${element_id}`).html('<i class="far fa-circle" style="color: #726f6f;">');
+			}
+
+			if($(this).val().match(specialCase)) 
+			{ 
+				$(`#password-special-${element_id}`).html('<i class="far fa-check-circle" style="color: #00a63f;">');
+			}
+			else 
+			{
+				$(`#password-special-${element_id}`).html('<i class="far fa-circle" style="color: #726f6f;">');
+			}
+
+			if ($(this).val().match(numbers)) 
+			{
+				$(`#password-digit-${element_id}`).html('<i class="far fa-check-circle" style="color: #00a63f;">');
+			}
+			else 
+			{
+				$(`#password-digit-${element_id}`).html('<i class="far fa-circle" style="color: #726f6f;">');
+			}
+
+			if ($(this).val().match(upperCase)) 
+			{
+				$(`#password-upper-${element_id}`).html('<i class="far fa-check-circle" style="color: #00a63f;">');
+			}
+			else 
+			{
+				$(`#password-upper-${element_id}`).html('<i class="far fa-circle" style="color: #726f6f;">');
+			}
+
+			if ($(this).val().match(lowerCase)) 
+			{
+				$(`#password-lower-${element_id}`).html('<i class="far fa-check-circle" style="color: #00a63f;">');
+			}
+			else 
+			{
+				$(`#password-lower-${element_id}`).html('<i class="far fa-circle" style="color: #726f6f;">');
+			}
+
+			
+
+		});
+	}
+	catch (e)
+	{
+		$.fn.log_error(arguments.callee.caller, e.message);
+	}
+}
+
+
 $.fn.get_encrypt_password = function (password, salt, pbkdf2_rounds, rnd)
 {
 
@@ -1669,3 +1762,5 @@ $.fn.upload_file = function (file_container, field, field_val, attachment_data, 
 		$.fn.log_error(arguments.callee.caller, e.message);
 	}
 };
+
+

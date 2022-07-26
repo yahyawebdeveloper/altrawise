@@ -19,6 +19,77 @@
  {
 	$('#change_pwd_modal').modal('show');
  });
+ var btn_update_pass;
+	$.fn.toggle_reveal = function (btn, node_id)
+	{
+		try 
+		{
+			var type = $('#' + node_id).attr('type');
+
+			if (type == 'text')
+			{
+				$('#' + node_id).attr('type', 'password');
+				btn.innerText = 'show';
+			}
+			else if (type == 'password')
+			{
+				$('#' + node_id).attr('type', 'text');
+				btn.innerText = 'hide';
+			}
+		}
+		catch (e) 
+		{
+			$.fn.log_error(arguments.callee.caller, e.message);
+		}
+	}
+	$.fn.logoff_progress = function () 
+	{
+		var percent = 0;
+		var notice = $.pnotify
+			({
+				title: "Please wait we complete the progress",
+				type: 'info',
+				icon: 'fa fa-spin fa-refresh',
+				hide: false,
+				closer: false,
+				sticker: false,
+				opacity: 0.75,
+				shadow: false,
+				width: "300px"
+			});
+	
+		setTimeout(function () 
+		{
+			notice.pnotify
+				({
+					title: false
+				});
+			var interval = setInterval(function () 
+			{
+				percent += 2;
+				var options =
+				{
+					text: percent + "% complete."
+				};
+				if (percent == 80) options.title = "Almost There";
+				if (percent >= 100) 
+				{
+					window.clearInterval(interval);
+					options.title = "Done!";
+					options.type = "success";
+					options.hide = true;
+					options.closer = true;
+					options.sticker = true;
+					options.icon = 'fa fa-check';
+					options.opacity = 1;
+					options.shadow = true;
+					options.width = $.pnotify.defaults.width;
+					window.location = CURRENT_PATH + "logout.php";
+				}
+				notice.pnotify(options);
+			}, 60);
+		}, 1000);
+	}
  $(document).ready(function () 
  {
 	 try
@@ -460,9 +531,155 @@
 			 
 		 //store current route in a global variable
 		 CURRENT_ROUTE = router.current[0];
-
+	    
+		 /** FOOTER CHANGE PASSWORD  */
 		
-		 
+		// $.fn.password_check('txt_new_pwd');
+
+        $('#change_pwd_form').parsley
+            ({
+                successClass: 'has-success',
+                errorClass: 'has-error',
+                errors:
+                {
+                    classHandler: function (ele)
+                    {
+                        return $(ele).closest('.form-group');
+                    },
+                    errorsWrapper: '<ul class=\"help-block list-unstyled\"></ul>',
+                    errorElem: '<li></li>'
+                }
+            });
+
+        $('#change_pwd_modal').on('show.bs.modal', function (e)
+        {
+            var button = $(e.relatedTarget);
+            var initial_pswd = button.data('initial');
+
+            $('#btn_update_pwd').data('initial', initial_pswd);
+
+            if (initial_pswd == true)
+            {
+                $('#btn_cancel_pwd_change').hide();
+            }
+            else if (initial_pswd == false)
+            {
+                $('#btn_cancel_pwd_change').show();
+            }
+        });
+
+        $('#btn_update_pwd').on('click', function (e)
+        {
+            e.preventDefault();
+            btn_update_pass = Ladda.create(this);
+            btn_update_pass.start();
+            if ($('#change_pwd_form').parsley('validate') == false)
+            {
+                btn_update_pass.stop();
+                return;
+            }
+            else
+            {
+                var initial_pswd = $(this).data('initial');
+                var old_pwd = $('#txt_current_pwd').val();
+                var new_pwd = $('#txt_new_pwd').val();
+                var confirm_pwd = $('#txt_confirm_pwd').val();
+
+                var data =
+                {
+                    emp_id: SESSIONS_DATA.emp_id,
+                    old_pwd: old_pwd,
+                    new_pwd: new_pwd,
+                    email: SESSIONS_DATA.office_email,
+                    chat_user_id: SESSIONS_DATA.chat_user_id
+                }
+
+                if (confirm_pwd !== new_pwd)
+                {
+                    // TODO: Throw error password not Matched
+                    $.pnotify
+                        ({
+                            title: 'Error',
+                            type: 'error',
+                            text: `Password not matched`
+                        });
+                }
+                else
+                {
+                    (
+                        $.fn.fetch_data
+                            (
+                                $.fn.generate_parameter('change_password', data),
+                                function (return_data)
+                                {
+                                    $('#div_response').empty();
+                                    if (return_data.code == 1)
+                                    {
+                                        console.error("[ERROR] Failed to change password", return_data);
+                                    }
+                                    else
+                                    {
+                                        let class_name = "alert alert-dismissable alert-success";
+                                        let title = "<strong>Well done!</strong> Portal password successfully updated.";
+
+                                        if (return_data.data.portal != 1)
+                                        {
+                                            class_name = "alert alert-dismissable alert-danger";
+                                            title = "<strong>Oh snap!</strong> Updating Portal password Failed, contact Administrator."
+                                        }
+                                        $('#div_response').append
+                                            (`<div class="${class_name}">${title}
+                    			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    		</div>`);
+
+
+                                        class_name = "alert alert-dismissable alert-success";
+                                        title = "<strong>Well done!</strong> Email password successfully updated.";
+                                        if (return_data.data.email != 1)
+                                        {
+                                            class_name = "alert alert-dismissable alert-danger";
+                                            title = "<strong>Oh snap!</strong> Updating Email password Failed, contact Administrator."
+                                        }
+                                        $('#div_response').append
+                                            (`<div class="${class_name}">${title}
+                    			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    		</div>`);
+
+
+                                        class_name = "alert alert-dismissable alert-success";
+                                        title = "<strong>Well done!</strong> Chat password successfully updated";
+                                        if (return_data.data.chat != 1)
+                                        {
+                                            class_name = "alert alert-dismissable alert-danger";
+                                            title = "<strong>Oh snap!</strong> Updating Chat password Failed, contact Administrator."
+                                        }
+                                        $('#div_response').append
+                                            (`<div class="${class_name}">${title}
+                    			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    		</div>`);
+
+
+
+                                        $('#div_footer').hide();
+                                        $.fn.logoff_progress();
+                                    }
+                                }, false, btn_update_pass
+                            )
+                    )
+                }
+            }
+        });
+
+        if (SESSIONS_DATA.initial_pswd == 1)
+        {
+            $('#change_pwd_modal').modal
+                ({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+
+            $('#btn_cancel_pwd_change').hide();
+        } 
 	 }
 	 catch (err)
 	 {
